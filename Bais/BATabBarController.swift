@@ -15,7 +15,7 @@ import FirebaseDatabase
 import FirebaseAuth
 import Firebase
 
-open class ContainerScreen: ESTabBarController, CLLocationManagerDelegate {
+open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	
 	let gradientBar : GradientBar = GradientBar();
 	let locationManager : CLLocationManager = CLLocationManager();
@@ -32,7 +32,7 @@ open class ContainerScreen: ESTabBarController, CLLocationManagerDelegate {
 		
 		self.navigationController?.setNavigationBarHidden(true, animated: false);
 		
-		setContainerScreen();
+		setBATabBarController();
 		
 		locationManager.delegate = self;
 		let authorizationStatus = CLLocationManager.authorizationStatus();
@@ -59,12 +59,12 @@ open class ContainerScreen: ESTabBarController, CLLocationManagerDelegate {
 		}
 	}
 	
-	private func setContainerScreen(){
-		let v1 = WallScreen();
-		let v2 = CalendarScreen();
-		let v3 = BSWaterfallView();//UsersScreen();
-		let v4 = FriendsScreen();
-		let v5 = SettingsScreen();
+	private func setBATabBarController(){
+		let v1 = BAWallController();
+		let v2 = BACalendarController();
+		let v3 = BSWaterfallView();
+		let v4 = BAFriendsController();
+		let v5 = BASettingsController();
 		
 		v1.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
 		v2.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))

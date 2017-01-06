@@ -13,7 +13,7 @@ import AsyncDisplayKit
 import ESTabBarController
 import pop
 
-class ProfileScreen : UIViewController, UIScrollViewDelegate{
+class BAProfileController : UIViewController, UIScrollViewDelegate{
 	
 	var scrollNode : ASScrollNode = ASScrollNode();
 	var thisUser : User = User();

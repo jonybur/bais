@@ -13,7 +13,7 @@ import pop
 import AsyncDisplayKit
 
 protocol ChatCardDelegate: class {
-	func chatCardDidClick(sender: ASChatCard);
+	func chatCardDidClick(sender: BAChatCard);
 }
 
 protocol ChatCardButtonsDelegate:class {
@@ -21,7 +21,7 @@ protocol ChatCardButtonsDelegate:class {
 	func cancelButtonPress(sender: ASImageNode);
 }
 
-class ASChatCardButtons : ASDisplayNode{
+class BAChatCardButtons : ASDisplayNode{
 
 	weak var delegate : ChatCardButtonsDelegate?;
 	
@@ -70,13 +70,13 @@ class ASChatCardButtons : ASDisplayNode{
 	
 }
 
-class ASChatCard : ASButtonNode, ChatCardButtonsDelegate{
+class BAChatCard : ASButtonNode, ChatCardButtonsDelegate{
 	
 	var cardUser : User!;
 	
 	let height : CGFloat = 75;
 	let lastMessageNode = ASTextNode();
-	var chatCardButtons : ASChatCardButtons?;
+	var chatCardButtons : BAChatCardButtons?;
 	var chatIsEnabled : Bool = false;
 
 	weak var delegate : ChatCardDelegate?;
@@ -164,7 +164,7 @@ class ASChatCard : ASButtonNode, ChatCardButtonsDelegate{
 					switch (friendshipStatus!){
 					
 					case .invited:
-						self.chatCardButtons = ASChatCardButtons();
+						self.chatCardButtons = BAChatCardButtons();
 						self.chatCardButtons?.position = CGPoint(self.frame.width - (self.chatCardButtons?.frame.width)! / 2 - 10, self.frame.height / 2);
 						self.chatCardButtons?.delegate = self;
 						self.view.addSubnode(self.chatCardButtons!);

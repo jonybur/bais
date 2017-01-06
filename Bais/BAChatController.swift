@@ -27,7 +27,7 @@ import FirebaseAuth
 import JSQMessagesViewController
 import JSQSystemSoundPlayer
 
-class ChatScreen: JSQMessagesViewController {
+class BAChatController: JSQMessagesViewController {
 	
 	// MARK: Properties
 	let rootRef = FIRDatabase.database().reference();

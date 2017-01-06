@@ -13,12 +13,12 @@ import Firebase
 import FirebaseDatabase
 import CoreGraphics
 
-class FriendsScreen: UIViewController, ChatCardDelegate {
+class BAFriendsController: UIViewController, ChatCardDelegate {
 	
 	var scrollNode : ASScrollNode = ASScrollNode();
 	var yPosition : CGFloat = GradientBar.height;
 	let usersRef = FIRDatabase.database().reference().child("users");
-	var chatCards : [String:ASChatCard] = [String:ASChatCard]();
+	var chatCards : [String:BAChatCard] = [String:BAChatCard]();
 	
 	override func viewDidLoad() {
 		super.viewDidLoad();
@@ -82,7 +82,7 @@ class FriendsScreen: UIViewController, ChatCardDelegate {
 		friendRef.observeSingleEvent(of: .value, with: { (singleSnapshot: FIRDataSnapshot!) in
 			
 			let user = User(fromSnapshot: singleSnapshot);
-			let chatCard = ASChatCard(user);
+			let chatCard = BAChatCard(user);
 			chatCard.position = CGPoint(ez.screenWidth / 2, self.yPosition + chatCard.frame.height / 2);
 			self.yPosition += chatCard.frame.height + 1;
 			chatCard.delegate = self;
@@ -94,10 +94,10 @@ class FriendsScreen: UIViewController, ChatCardDelegate {
 	}
 	
 	// ASChatCard delegate methods
-	func chatCardDidClick(sender: ASChatCard) {
+	func chatCardDidClick(sender: BAChatCard) {
 	
 		let userToChat = sender.cardUser;
-		self.navigationController?.pushViewController(ChatScreen(withUser: userToChat!), animated: true);
+		self.navigationController?.pushViewController(BAChatController(withUser: userToChat!), animated: true);
 		
 	}
 

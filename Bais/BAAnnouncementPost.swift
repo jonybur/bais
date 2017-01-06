@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-class ASAnnouncementPost : ASWallPost{
+class BAAnnouncementPost : BAWallPost{
     
     let textNode : ASTextNode = ASTextNode();
     

@@ -1,5 +1,5 @@
 //
-//  ContainerScreen.swift
+//  BATabBarController.swift
 //  Claxon
 //
 //  Created by Jonathan Bursztyn on 18/7/16.
@@ -18,7 +18,7 @@ import pop
 import DGActivityIndicatorView
 import ESTabBarController
 
-class UsersScreen : ASViewController<ASScrollNode>, UserCardDelegate{
+class BAUsersController : ASViewController<ASScrollNode>, UserCardDelegate{
 	
 	var animating : Bool = false;
 	var scrollNode : ASScrollNode = ASScrollNode();
@@ -100,7 +100,7 @@ class UsersScreen : ASViewController<ASScrollNode>, UserCardDelegate{
 				return;
 			}
 			
-			let userCard = ASUserCard(user, yPosition: self.yPosition, column: column);
+			let userCard = BAUserCard(user, yPosition: self.yPosition, column: column);
 			userCard.delegate = self;
 			self.scrollNode.addSubnode(userCard);
 			
@@ -130,7 +130,7 @@ class UsersScreen : ASViewController<ASScrollNode>, UserCardDelegate{
 	}
 	
 	// ASUserCard delegate methods
-	func userCardButtonDidClick(sender: ASUserCard) {
+	func userCardButtonDidClick(sender: BAUserCard) {
 		switch (sender.friendshipStatus){
 		
 		case .noRelationship:
@@ -139,14 +139,14 @@ class UsersScreen : ASViewController<ASScrollNode>, UserCardDelegate{
 		case .invited:
 			break;
 		case .accepted:
-			self.navigationController?.pushViewController(ChatScreen(withUser: sender.cardUser), animated: true);
+			self.navigationController?.pushViewController(BAChatController(withUser: sender.cardUser), animated: true);
 			break;
 		default:break;
 			
 		}
 	}
 	
-	func userCardDidClick(sender: ASUserCard) {
+	func userCardDidClick(sender: BAUserCard) {
 		// animate card
 		if (animating){
 			return;
@@ -160,7 +160,7 @@ class UsersScreen : ASViewController<ASScrollNode>, UserCardDelegate{
 		spring?.springBounciness = 5;
 		spring?.completionBlock = {(animation, finished) in
 			
-			let nextView = ProfileScreen(user: sender.cardUser);
+			let nextView = BAProfileController(user: sender.cardUser);
 			
 			UIView.animate(withDuration: 0.3, animations: { () -> Void in
 				UIView.setAnimationCurve(UIViewAnimationCurve.easeInOut)

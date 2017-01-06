@@ -12,10 +12,10 @@ import pop
 import AwaitKit
 
 protocol EventCardDelegate: class {
-	func eventCardDidClick(sender: ASEventCard)
+	func eventCardDidClick(sender: BAEventCard)
 }
 
-class ASEventCard : ASButtonNode{
+class BAEventCard : ASButtonNode{
 	
 	var singleButton : ASButtonNode = ASButtonNode();
 	var leftButton : ASButtonNode = ASButtonNode();

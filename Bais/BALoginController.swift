@@ -14,7 +14,7 @@ import FirebaseAuth
 import FirebaseDatabase
 import CoreGraphics
 
-class LoginScreen: UIViewController, FBSDKLoginButtonDelegate {
+class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 	
 	let repeatVideo : UIRepeatingVideo = UIRepeatingVideo();
 	
@@ -114,6 +114,6 @@ class LoginScreen: UIViewController, FBSDKLoginButtonDelegate {
 	
 	@objc func userRegistered(_ notification: Notification) {
 		// pushes
-		self.navigationController?.pushViewController(ContainerScreen(), animated: true);
+		self.navigationController?.pushViewController(BATabBarController(), animated: true);
 	}
 }

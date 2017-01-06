@@ -62,9 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let screen : UIViewController!;
 		
 		if FIRAuth.auth()?.currentUser != nil && FBSDKProfile.current() != nil {
-			screen = ContainerScreen();
+			screen = BATabBarController();
 		} else {
-			screen = LoginScreen();
+			screen = BALoginController();
 		}
 		
 		navigationController.pushViewController(screen, animated: false)

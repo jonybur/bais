@@ -1,5 +1,5 @@
 //
-//  ContainerScreen.swift
+//  BATabBarController.swift
 //  Claxon
 //
 //  Created by Jonathan Bursztyn on 18/7/16.
@@ -16,7 +16,7 @@ import pop
 import DGActivityIndicatorView
 import ESTabBarController
 
-class CalendarScreen : UIViewController, EventCardDelegate{
+class BACalendarController : UIViewController, EventCardDelegate{
 	
 	var animating : Bool = false;
     var scrollNode : ASScrollNode = ASScrollNode();
@@ -63,7 +63,7 @@ class CalendarScreen : UIViewController, EventCardDelegate{
 				continue;
 			}
 			
-			let userCard : ASEventCard = ASEventCard(event: event, yPosition: yPosition);
+			let userCard : BAEventCard = BAEventCard(event: event, yPosition: yPosition);
 			userCard.delegate = self;
 			self.scrollNode.addSubnode(userCard);
 			yPosition += userCard.frame.height + 10;
@@ -83,7 +83,7 @@ class CalendarScreen : UIViewController, EventCardDelegate{
     }
 	
 	// ASEventCard delegate methods
-	func eventCardDidClick(sender: ASEventCard) {
+	func eventCardDidClick(sender: BAEventCard) {
 		
 		if (animating){
 			return;
@@ -97,7 +97,7 @@ class CalendarScreen : UIViewController, EventCardDelegate{
 		spring?.springBounciness = 5;
 		spring?.completionBlock = {(animation, finished) in
 			
-			let nextView = EventScreen(event: sender.facebookEvent);
+			let nextView = BAEventController(event: sender.facebookEvent);
 			
 			UIView.animate(withDuration: 0.3, animations: { () -> Void in
 				UIView.setAnimationCurve(UIViewAnimationCurve.easeInOut)

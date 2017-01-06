@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-class ASPicturePost : ASWallPost{
+class BAPicturePost : BAWallPost{
     
     let imageNode : ASNetworkImageNode = ASNetworkImageNode();
 	

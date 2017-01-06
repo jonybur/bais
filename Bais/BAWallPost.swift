@@ -1,5 +1,5 @@
 //
-//  ASWallPost.swift
+//  BAWallPost.swift
 //  Claxon
 //
 //  Created by Jonathan Bursztyn on 6/8/16.
@@ -11,7 +11,7 @@ import AsyncDisplayKit
 import AwaitKit
 
 // base class for all wall posts, contains header and lower buttons
-class ASWallPost : ASDisplayNode{
+class BAWallPost : ASDisplayNode{
 	
 	var instagramMedia : InstagramMedia = InstagramMedia();
     
@@ -80,7 +80,7 @@ class ASWallPost : ASDisplayNode{
 	}
 	
 	func createLowerButtons(){
-		let likeButton : ASLikeButton = ASLikeButton(likeCount: instagramMedia.likes);
+		let likeButton : BALikeButton = BALikeButton(likeCount: instagramMedia.likes);
 		likeButton.position = CGPoint(x: likeButton.frame.width / 2, y: self.frame.height + 15);
 		
 		self.addSubnode(likeButton);

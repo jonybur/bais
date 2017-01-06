@@ -10,7 +10,7 @@ import Foundation
 import AsyncDisplayKit
 import pop
 
-class ASLikeButton : ASButtonNode{
+class BALikeButton : ASButtonNode{
     
     var tapped : Bool = false;
     let likeButton : ASImageNode = ASImageNode();

@@ -14,7 +14,7 @@ import ESTabBarController
 import DGActivityIndicatorView
 import AwaitKit
 
-class WallScreen : UIViewController{
+class BAWallController : UIViewController{
     
     var scrollNode : ASScrollNode = ASScrollNode();
 	
@@ -50,21 +50,21 @@ class WallScreen : UIViewController{
 	@objc func initializeInterface(_ notification: Notification) {
 		
 		// TODO: check what can be derived in a secondary thread, there's a reason we're using ASDK here.
-		var wallCards : [ASWallPost] = [ASWallPost]();
+		var wallCards : [BAWallPost] = [BAWallPost]();
 		var yPosition : CGFloat = GradientBar.height + 10;
 
 		DispatchQueue.main.async(execute: { () -> Void in
 			
 			for media in FetchedContent.instagramMedia{
 				
-				var wallPost : ASWallPost;
+				var wallPost : BAWallPost;
 				
 				if (media is InstagramPicture){
-					wallPost = ASPicturePost(yPosition: yPosition, picture: media as! InstagramPicture);
+					wallPost = BAPicturePost(yPosition: yPosition, picture: media as! InstagramPicture);
 				} else if (media is InstagramVideo){
-					wallPost = ASVideoPost(yPosition: yPosition, video: media as! InstagramVideo);
+					wallPost = BAVideoPost(yPosition: yPosition, video: media as! InstagramVideo);
 				} else {
-					wallPost = ASWallPost(yPosition: yPosition, media: InstagramMedia());
+					wallPost = BAWallPost(yPosition: yPosition, media: InstagramMedia());
 				}
 			
 				yPosition += wallPost.frame.height + 10;

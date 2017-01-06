@@ -1,18 +1,18 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "003EAEE25B075AB35BA276BB4ACD71E3F4576662",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5DE4D2890D2E872651DC8CA57E0FC1E38E247B92",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F50970FDD9A73637F0802C23B728B6B5862D49A6" : 9223372036854775807,
     "B87FEC66C66CAD32EF9F257C1BA26354CB448952" : 9223372036854775807,
-    "003EAEE25B075AB35BA276BB4ACD71E3F4576662" : 9223372036854775807,
-    "F50970FDD9A73637F0802C23B728B6B5862D49A6" : 9223372036854775807
+    "5DE4D2890D2E872651DC8CA57E0FC1E38E247B92" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "05A0B4FD-6340-4E38-A763-E42D43C38AE6",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F50970FDD9A73637F0802C23B728B6B5862D49A6" : "AsyncDisplayKit\/",
     "B87FEC66C66CAD32EF9F257C1BA26354CB448952" : "PinterestSwift\/",
-    "003EAEE25B075AB35BA276BB4ACD71E3F4576662" : "bais\/",
-    "F50970FDD9A73637F0802C23B728B6B5862D49A6" : "AsyncDisplayKit\/"
+    "5DE4D2890D2E872651DC8CA57E0FC1E38E247B92" : "bais\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Bais",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -21,7 +21,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jonybur\/board-social-base.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "003EAEE25B075AB35BA276BB4ACD71E3F4576662"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5DE4D2890D2E872651DC8CA57E0FC1E38E247B92"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/demonnico\/PinterestSwift.git",

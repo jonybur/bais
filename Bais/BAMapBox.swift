@@ -1,5 +1,5 @@
 //
-//  UIMapBox.swift
+//  BAMapBox.swift
 //  BAIS
 //
 //  Created by Jonathan Bursztyn on 8/9/16.
@@ -12,7 +12,7 @@ import pop
 import AwaitKit
 import MapKit
 
-class UIMapBox : UIView, MKMapViewDelegate{
+class BAMapBox : UIView, MKMapViewDelegate{
 
 	static let mapHeight : CGFloat = 160;
 	static let mapWidth : CGFloat = ez.screenWidth - 40;
@@ -29,7 +29,7 @@ class UIMapBox : UIView, MKMapViewDelegate{
 	}
 	
 	convenience init (coordinate : CLLocationCoordinate2D, yPosition : CGFloat) {
-		self.init(frame: CGRect(0, 0, UIMapBox.mapWidth, UIMapBox.mapHeight));
+		self.init(frame: CGRect(0, 0, BAMapBox.mapWidth, BAMapBox.mapHeight));
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.showUberOptions(_:)), name: NSNotification.Name(rawValue: uberDownloadedKey), object: nil)
 		

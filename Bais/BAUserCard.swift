@@ -12,13 +12,13 @@ import Firebase
 import AsyncDisplayKit
 
 protocol UserCardDelegate: class {
-	func userCardButtonDidClick(sender: ASUserCard);
+	func userCardButtonDidClick(sender: BAUserCard);
 	
-	func userCardDidClick(sender: ASUserCard);
+	func userCardDidClick(sender: BAUserCard);
 
 }
 
-class ASUserCard : ASButtonNode{
+class BAUserCard : ASButtonNode{
 	
 	var cardUser : User!;
 	var friendshipStatus : FriendshipStatus = .undefined;

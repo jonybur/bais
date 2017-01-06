@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-class ASVideoPost : ASWallPost{
+class BAVideoPost : BAWallPost{
 	
 	let videoNode : ASVideoNode = ASVideoNode();
 	

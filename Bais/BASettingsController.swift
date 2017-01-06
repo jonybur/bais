@@ -11,7 +11,7 @@ import UIKit
 import AsyncDisplayKit
 import CoreGraphics
 
-class SettingsScreen: UIViewController {
+class BASettingsController: UIViewController {
 	
 	var scrollNode : ASScrollNode = ASScrollNode();
 	
@@ -36,8 +36,8 @@ class SettingsScreen: UIViewController {
 		setAddress(baisLogo.frame.maxY + 20);
 		
 		let location = CLLocationCoordinate2D(latitude:-34.591248, longitude:-58.393159);
-		let map : UIMapBox = UIMapBox(coordinate: location, yPosition: baisLogo.frame.maxY + 50);
-		map.center = CGPoint(x: ez.screenWidth / 2, y: baisLogo.frame.maxY + 50 + UIMapBox.mapHeight / 2);
+		let map : BAMapBox = BAMapBox(coordinate: location, yPosition: baisLogo.frame.maxY + 50);
+		map.center = CGPoint(x: ez.screenWidth / 2, y: baisLogo.frame.maxY + 50 + BAMapBox.mapHeight / 2);
 		
 		let descriptionAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular),
 		                             NSForegroundColorAttributeName: UIColor.black]

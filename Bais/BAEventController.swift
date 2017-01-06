@@ -13,7 +13,7 @@ import AsyncDisplayKit
 import ESTabBarController
 import pop
 
-class EventScreen : UIViewController, UIScrollViewDelegate{
+class BAEventController : UIViewController, UIScrollViewDelegate{
 	
 	var scrollNode : ASScrollNode = ASScrollNode();
 	var facebookEvent : Event = Event();
@@ -78,9 +78,9 @@ class EventScreen : UIViewController, UIScrollViewDelegate{
 		if (facebookEvent.place.isValid()){
 			setAddress(yPosition);
 			yPosition += 30;
-			let map : UIMapBox = UIMapBox(coordinate: self.facebookEvent.place.coordinates.coordinate, yPosition: yPosition);
-			map.center = CGPoint(x: CGFloat(ez.screenWidth / 2), y: yPosition + UIMapBox.mapHeight / 2);
-			yPosition += UIMapBox.mapHeight + 30;
+			let map : BAMapBox = BAMapBox(coordinate: self.facebookEvent.place.coordinates.coordinate, yPosition: yPosition);
+			map.center = CGPoint(x: CGFloat(ez.screenWidth / 2), y: yPosition + BAMapBox.mapHeight / 2);
+			yPosition += BAMapBox.mapHeight + 30;
 			self.scrollNode.view.addSubview(map);
 		}
 		
