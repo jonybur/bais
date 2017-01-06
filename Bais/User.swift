@@ -38,31 +38,31 @@ class User{
 		return firstName + " " + String(lastName.characters.first!) + ".";
 	}
 	
-	convenience init (fromSnapshot : FIRDataSnapshot){
-		
+	convenience init (fromNSDictionary : NSDictionary){
 		self.init();
-		setValuesFromSnapshot(fromSnapshot);
-		
+		setValuesFromDictionary(fromNSDictionary);
 	}
 	
-	private func setValuesFromSnapshot(_ fromSnapshot : FIRDataSnapshot){
-		
+	convenience init (fromSnapshot : FIRDataSnapshot){
+		self.init();
 		if let dictionary = fromSnapshot.value as? NSDictionary{
+			setValuesFromDictionary(dictionary);
+		}
+	}
+	
+	private func setValuesFromDictionary(_ dictionary : NSDictionary){
+		self.id = dictionary["id"] as! String;
+		self.facebookId = dictionary["facebook_id"] as! String;
+		self.firstName = dictionary["first_name"] as! String;
+		self.lastName = dictionary["last_name"] as! String;
+		self.nationality = dictionary["nationality"] as! String;
+		self.profilePicture = dictionary["profile_picture"] as! String;
+		
+		if let locationDictionary = dictionary["location"] as? NSDictionary{
+			let latitude = locationDictionary["lat"] as! Double;
+			let longitude = locationDictionary["lon"] as! Double;
 			
-			self.id = fromSnapshot.key;
-			self.facebookId = dictionary["facebook_id"] as! String;
-			self.firstName = dictionary["first_name"] as! String;
-			self.lastName = dictionary["last_name"] as! String;
-			self.nationality = dictionary["nationality"] as! String;
-			self.profilePicture = dictionary["profile_picture"] as! String;
-			
-			if let locationDictionary = dictionary["location"] as? NSDictionary{
-				let latitude = locationDictionary["lat"] as! Double;
-				let longitude = locationDictionary["lon"] as! Double;
-				
-				self.location = CLLocation(latitude: latitude, longitude: longitude);
-			}
-			
+			self.location = CLLocation(latitude: latitude, longitude: longitude);
 		}
 
 	}

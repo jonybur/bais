@@ -19,27 +19,47 @@
 
 import UIKit
 import AsyncDisplayKit
+import Foundation
+import FirebaseDatabase
+import Firebase
 
-class BSWaterfallViewCell: ASCellNode {
-	let imageNode = ASImageNode()
-	required init(with image : UIImage) {
+class BSWaterfallViewCell: ASCellNode, ASNetworkImageNodeDelegate {
+	
+	let imageNode = ASNetworkImageNode();
+	var cardUser : User!;
+	var friendshipStatus : FriendshipStatus = .undefined;
+	var ratio : CGSize!;
+	weak var delegate : UserCardDelegate?;
+	
+	required init(with user : User) {
 		super.init()
-		imageNode.image = image
+		
+		cardUser = user
+		
+		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false);
+		imageNode.shouldRenderProgressImages = true;
+		imageNode.delegate = self;
+		ratio = CGSize(width:0,height:0);
+		
 		self.addSubnode(self.imageNode)
 	}
 	
-	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-		let imageSize = imageNode.image?.size
-		print("imageNode= \(imageNode.bounds), image=\(imageSize)")
+	func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
 		
-		var imageRatio: CGFloat = 0.5
 		if imageNode.image != nil {
-			imageRatio = (imageNode.image?.size.height)! / (imageNode.image?.size.width)!
+			ratio = CGSize(width: (imageNode.image?.size.height)!, height: (imageNode.image?.size.width)!)
 		}
 		
-		let imagePlace = ASRatioLayoutSpec(ratio: imageRatio, child: imageNode)
+	}
 		
+	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+		let imageRatio: CGFloat = 1
+		
+		ratio = CGSize(width: imageRatio, height: imageRatio)
+		
+		let imagePlace = ASRatioLayoutSpec(ratio: imageRatio, child: imageNode)
 		let stackLayout = ASStackLayoutSpec.horizontal()
+		
 		stackLayout.justifyContent = .start
 		stackLayout.alignItems = .start
 		stackLayout.style.flexShrink = 1.0

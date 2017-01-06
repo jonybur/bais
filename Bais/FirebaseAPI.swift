@@ -115,6 +115,7 @@ class FirebaseAPI{
 						let messageRef = rootRef.child("users");
 						let itemRef = messageRef.child(user.uid);
 						let userItem = [
+							"id": user.uid,
 							"first_name": nsArray["first_name"] as! String,
 							"last_name": nsArray["last_name"] as! String,
 							"facebook_id": FBSDKAccessToken.current().userID!,

@@ -20,9 +20,13 @@ import ESTabBarController
 
 class BAUsersController : ASViewController<ASScrollNode>, UserCardDelegate{
 	
-	var animating : Bool = false;
-	var scrollNode : ASScrollNode = ASScrollNode();
-	var yPosition : CGFloat = GradientBar.height + 10;
+	var animating : Bool = false
+	var scrollNode : ASScrollNode = ASScrollNode()
+	var yPosition : CGFloat = GradientBar.height + 10
+	let usersRef = FIRDatabase.database().reference().child("users")
+	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
+	                                                    tintColor: ColorPalette.baisOrange,
+	                                                    size: 75)
 	
 	init() {
 		super.init(node: ASScrollNode());
@@ -31,10 +35,6 @@ class BAUsersController : ASViewController<ASScrollNode>, UserCardDelegate{
 	required init(coder: NSCoder){
 		super.init(node: ASScrollNode());
 	}
-	
-	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
-	                                                    tintColor: ColorPalette.baisOrange,
-	                                                    size: 75);
 	
 	override func viewDidLoad() {
 		
@@ -65,8 +65,6 @@ class BAUsersController : ASViewController<ASScrollNode>, UserCardDelegate{
 		super.viewDidAppear(animated);
 	}
 	
-	let usersRef = FIRDatabase.database().reference().child("users");
-	
 	private func observeLocation(){
 		let locationRef = usersRef.child((FIRAuth.auth()?.currentUser?.uid)!).child("location");
 		locationRef.observe(.value, with: { (snapshot: FIRDataSnapshot!) in
@@ -78,7 +76,7 @@ class BAUsersController : ASViewController<ASScrollNode>, UserCardDelegate{
 				
 				CurrentUser.location = CLLocation(latitude: latitude, longitude: longitude);
 			
-				self.observeUsers();
+				//self.observeUsers();
 				
 				// remove observer
 				locationRef.removeAllObservers();
@@ -87,49 +85,7 @@ class BAUsersController : ASViewController<ASScrollNode>, UserCardDelegate{
 		});
 	}
 	
-	private func observeUsers(){
-		var column : Bool = true;
-		var yLeftColumnPosition : CGFloat = 80;
-		var yRightColumnPosition : CGFloat = 80;
-		
-		usersRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
-			
-			let user = User(fromSnapshot: snapshot);
-			
-			if (user.id == (FIRAuth.auth()?.currentUser?.uid)!){
-				return;
-			}
-			
-			let userCard = BAUserCard(user, yPosition: self.yPosition, column: column);
-			userCard.delegate = self;
-			self.scrollNode.addSubnode(userCard);
-			
-			if (!column){
-				yLeftColumnPosition += userCard.frame.height + 10;
-				self.yPosition = yRightColumnPosition;
-			} else {
-				yRightColumnPosition += userCard.frame.height + 10;
-				self.yPosition = yLeftColumnPosition;
-			}
-			
-			column = !column;
-			
-			var yBottom : CGFloat;
-			if (yLeftColumnPosition > yRightColumnPosition){
-				yBottom = yLeftColumnPosition;
-			}else{
-				yBottom = yRightColumnPosition;
-			}
-			
-			self.scrollNode.view.contentSize = CGSize(width: ez.screenWidth, height: yBottom + 100);
-			
-			self.activityIndicatorView?.removeFromSuperview();
-		}
-
-	
-	}
-	
-	// ASUserCard delegate methods
+	//MARK: - ASUserCard delegate methods
 	func userCardButtonDidClick(sender: BAUserCard) {
 		switch (sender.friendshipStatus){
 		
@@ -178,8 +134,5 @@ class BAUsersController : ASViewController<ASScrollNode>, UserCardDelegate{
 			
 		}
 		sender.pop_add(spring, forKey: "sendAnimation");
-
-
 	}
-	
 }

@@ -19,13 +19,15 @@
 
 import UIKit
 import AsyncDisplayKit
+import FirebaseDatabase
+import FirebaseAuth
 
 class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASCollectionDataSource, ASCollectionDelegate {
-	
-	var _sections = [[UIImage]]()
+
+	var _sections = [[User]]()
 	let _collectionNode: ASCollectionNode!
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
-	let kNumberOfImages: UInt = 14
+	let usersRef = FIRDatabase.database().reference().child("users")
 	
 	init (){
 		let layout = MosaicCollectionViewLayout()
@@ -35,24 +37,31 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 		super.init(nibName: nil, bundle: nil);
 		layout.delegate = self
 		
-		_sections.append([]);
-		var section = 0
-		for idx in 0 ..< kNumberOfImages {
-			let name = String(format: "image_%d.jpg", idx)
-			_sections[section].append(UIImage(named: name)!)
-			if ((idx + 1) % 5 == 0 && idx < kNumberOfImages - 1) {
-				section += 1
-				_sections.append([])
-			}
-		}
-		
 		_collectionNode.dataSource = self;
 		_collectionNode.delegate = self;
 		_collectionNode.view.layoutInspector = _layoutInspector
 		_collectionNode.backgroundColor = UIColor.white
 		_collectionNode.view.isScrollEnabled = true
 		_collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
-
+		
+		populateUsers();
+	}
+	
+	private func populateUsers(){
+		usersRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
+			if let snapshotDictionary = snapshot.value as? NSDictionary{
+				// sets a new section
+				self._sections.append([]);
+				for (_, value) in snapshotDictionary{
+					if let userDictionary = value as? NSDictionary{
+						let user = User(fromNSDictionary: userDictionary);
+						self._sections[0].append(user);
+					}
+				}
+			}
+			
+			self._collectionNode.reloadData();
+		}
 	}
 	
 	required init(coder: NSCoder) {
@@ -74,10 +83,9 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
-		let image = _sections[indexPath.section][indexPath.item]
-		return BSWaterfallViewCell(with: image)
+		let user = _sections[indexPath.section][indexPath.item]
+		return BSWaterfallViewCell(with: user)
 	}
-	
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
 		let textAttributes : NSDictionary = [
@@ -100,7 +108,8 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 	}
 	
 	internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
-		return _sections[originalItemSizeAtIndexPath.section][originalItemSizeAtIndexPath.item].size
+		let node = collectionNode(self._collectionNode, nodeForItemAt: originalItemSizeAtIndexPath);
+		return (node as! BSWaterfallViewCell).ratio
 	}
 }
 
