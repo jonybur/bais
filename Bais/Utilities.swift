@@ -24,6 +24,14 @@ extension UIFont{
 	}
 }
 
+extension ClosedRange where Bound : FloatingPoint {
+	public func random() -> Bound {
+		let range = self.upperBound - self.lowerBound
+		let randomValue = (Bound(arc4random_uniform(UINT32_MAX)) / Bound(UINT32_MAX)) * range + self.lowerBound
+		return randomValue
+	}
+}
+
 extension NSAttributedString {
 	static func attributedString(string: String?, fontSize size: CGFloat, color: UIColor?) -> NSAttributedString? {
 		guard let string = string else { return nil }

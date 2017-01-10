@@ -29,6 +29,7 @@ class User{
 	var nationality : String = "";
 	var location : CLLocation = CLLocation();
 	var profilePicture : String = "";
+	let imageRatio: CGFloat = (1.2...1.5).random();
 	
 	func fullName()->String{
 		return firstName + " " + lastName;

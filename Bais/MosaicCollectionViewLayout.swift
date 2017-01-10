@@ -29,7 +29,7 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 	var numberOfColumns: Int
 	var columnSpacing: CGFloat
 	var _sectionInset: UIEdgeInsets
-	var interItemSpacing: UIEdgeInsets
+	var interItemSpacing: CGFloat
 	var headerHeight: CGFloat
 	var _columnHeights: [[CGFloat]]?
 	var _itemAttributes = [[UICollectionViewLayoutAttributes]]()
@@ -39,9 +39,9 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 	required override init() {
 		self.numberOfColumns = 2
 		self.columnSpacing = 10.0
-		self.headerHeight = 44.0 //viewcontroller
+		self.headerHeight = 44.0
 		self._sectionInset = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0)
-		self.interItemSpacing = UIEdgeInsetsMake(10.0, 0, 10.0, 0)
+		self.interItemSpacing = 0
 		super.init()
 		self.scrollDirection = .vertical
 	}
@@ -80,7 +80,7 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 				top = attributes.frame.maxY
 			}
 			
-			_columnHeights?.append([]) //Adding new Section
+			_columnHeights?.append([])
 			for _ in 0 ..< self.numberOfColumns {
 				self._columnHeights?[section].append(top)
 			}
@@ -96,17 +96,17 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 				let yOffset = _columnHeights![section][columnIndex]
 				
 				let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-				
 				attributes.frame = CGRect(x: xOffset, y: yOffset, width: itemSize.width, height: itemSize.height)
 				
-				_columnHeights?[section][columnIndex] = attributes.frame.maxY + interItemSpacing.bottom
+				interItemSpacing = 10
+				_columnHeights?[section][columnIndex] = attributes.frame.maxY + interItemSpacing
 				
 				_itemAttributes[section].append(attributes)
 				_allAttributes.append(attributes)
 			}
 			
 			let columnIndex: Int = self._tallestColumnIndexInSection(section: section)
-			top = (_columnHeights?[section][columnIndex])! - interItemSpacing.bottom + _sectionInset.bottom
+			top = (_columnHeights?[section][columnIndex])! - interItemSpacing + _sectionInset.bottom
 			
 			for idx in 0 ..< _columnHeights![section].count {
 				_columnHeights![section][idx] = top
@@ -160,7 +160,7 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 	{
 		return (self._widthForSection(section: section) - ((CGFloat(numberOfColumns - 1)) * columnSpacing)) / CGFloat(numberOfColumns)
 	}
-	
+
 	func _itemSizeAtIndexPath(indexPath: IndexPath) -> CGSize
 	{
 		var size = CGSize(width: self._columnWidthForSection(section: indexPath.section), height: 0)
@@ -219,7 +219,8 @@ class MosaicCollectionViewLayoutInspector: NSObject, ASCollectionViewLayoutInspe
 {
 	func collectionView(_ collectionView: ASCollectionView, constrainedSizeForNodeAt indexPath: IndexPath) -> ASSizeRange {
 		let layout = collectionView.collectionViewLayout as! MosaicCollectionViewLayout
-		return ASSizeRangeMake(CGSize.zero, layout._itemSizeAtIndexPath(indexPath: indexPath))
+		let sizeAtIndexPath = layout._itemSizeAtIndexPath(indexPath: indexPath)
+		return ASSizeRangeMake(CGSize(width: sizeAtIndexPath.width, height: 0), CGSize(width: sizeAtIndexPath.width, height: sizeAtIndexPath.height))
 	}
 	
 	func collectionView(_ collectionView: ASCollectionView, constrainedSizeForSupplementaryNodeOfKind: String, at atIndexPath: IndexPath) -> ASSizeRange

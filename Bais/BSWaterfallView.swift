@@ -22,6 +22,8 @@ import AsyncDisplayKit
 import FirebaseDatabase
 import FirebaseAuth
 
+var globalVar : CGFloat = 0;
+
 class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASCollectionDataSource, ASCollectionDelegate {
 
 	var _sections = [[User]]()
@@ -32,7 +34,7 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 	init (){
 		let layout = MosaicCollectionViewLayout()
 		layout.numberOfColumns = 2;
-		layout.headerHeight = 44;
+		layout.headerHeight = 80;
 		_collectionNode = ASCollectionNode(frame: CGRect.zero, collectionViewLayout: layout)
 		super.init(nibName: nil, bundle: nil);
 		layout.delegate = self
@@ -51,11 +53,15 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 		usersRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
 			if let snapshotDictionary = snapshot.value as? NSDictionary{
 				// sets a new section
+				
 				self._sections.append([]);
-				for (_, value) in snapshotDictionary{
-					if let userDictionary = value as? NSDictionary{
-						let user = User(fromNSDictionary: userDictionary);
-						self._sections[0].append(user);
+				
+				for _ in 0...200{
+					for (_, value) in snapshotDictionary{
+						if let userDictionary = value as? NSDictionary{
+							let user = User(fromNSDictionary: userDictionary);
+							self._sections[0].append(user);
+						}
 					}
 				}
 			}
@@ -97,7 +103,6 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 		textCellNode.text = String(format: "Section %zd", indexPath.section + 1)
 		return textCellNode;
 	}
-	
 	
 	func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
 		return _sections.count

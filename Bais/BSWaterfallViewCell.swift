@@ -23,13 +23,11 @@ import Foundation
 import FirebaseDatabase
 import Firebase
 
-class BSWaterfallViewCell: ASCellNode, ASNetworkImageNodeDelegate {
+class BSWaterfallViewCell: ASCellNode {
 	
 	let imageNode = ASNetworkImageNode();
 	var cardUser : User!;
-	var friendshipStatus : FriendshipStatus = .undefined;
 	var ratio : CGSize!;
-	weak var delegate : UserCardDelegate?;
 	
 	required init(with user : User) {
 		super.init()
@@ -38,34 +36,21 @@ class BSWaterfallViewCell: ASCellNode, ASNetworkImageNodeDelegate {
 		
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false);
 		imageNode.shouldRenderProgressImages = true;
-		imageNode.delegate = self;
-		ratio = CGSize(width:0,height:0);
+		
+		ratio = CGSize(width:1,height:user.imageRatio);
 		
 		self.addSubnode(self.imageNode)
 	}
 	
-	func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
-		
-		if imageNode.image != nil {
-			ratio = CGSize(width: (imageNode.image?.size.height)!, height: (imageNode.image?.size.width)!)
-		}
-		
-	}
-		
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-		let imageRatio: CGFloat = 1
+		let imagePlace = ASRatioLayoutSpec(ratio: self.ratio.height, child: imageNode)
 		
-		ratio = CGSize(width: imageRatio, height: imageRatio)
-		
-		let imagePlace = ASRatioLayoutSpec(ratio: imageRatio, child: imageNode)
-		let stackLayout = ASStackLayoutSpec.horizontal()
-		
+		let stackLayout = ASStackLayoutSpec.vertical()
 		stackLayout.justifyContent = .start
 		stackLayout.alignItems = .start
 		stackLayout.style.flexShrink = 1.0
 		stackLayout.children = [imagePlace]
 		
-		return  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
+		return ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
 	}
-	
 }
