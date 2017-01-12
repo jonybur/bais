@@ -22,14 +22,14 @@ class CurrentUser{
 }
 
 class User{
-	var id : String = "";
-	var facebookId : String = "";
-	var firstName : String = "";
-	var lastName : String = "";
-	var nationality : String = "";
-	var location : CLLocation = CLLocation();
-	var profilePicture : String = "";
-	let imageRatio: CGFloat = (1.2...1.5).random();
+	var id: String = ""
+	var facebookId: String = ""
+	var firstName: String = ""
+	var lastName: String = ""
+	var nationality: String = ""
+	var location: CLLocation = CLLocation()
+	var profilePicture: String = ""
+	let imageRatio: CGFloat = (1.2...1.5).random()
 	
 	func fullName()->String{
 		return firstName + " " + lastName;

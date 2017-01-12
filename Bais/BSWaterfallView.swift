@@ -56,14 +56,14 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 				
 				self._sections.append([]);
 				
-				for _ in 0...200{
+				//for _ in 0...1{
 					for (_, value) in snapshotDictionary{
 						if let userDictionary = value as? NSDictionary{
 							let user = User(fromNSDictionary: userDictionary);
 							self._sections[0].append(user);
 						}
 					}
-				}
+				//}
 			}
 			
 			self._collectionNode.reloadData();
