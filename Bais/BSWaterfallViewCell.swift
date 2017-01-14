@@ -28,6 +28,7 @@ class BSWaterfallViewCell: ASCellNode {
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
 	let testNode = ASImageNode()
+	let buttonNode = ASButtonNode()
 	var cardUser: User!
 	var ratio: CGSize!
 	
@@ -36,13 +37,14 @@ class BSWaterfallViewCell: ASCellNode {
 		
 		cardUser = user
 		
-		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false);
-		imageNode.shouldRenderProgressImages = true;
+		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
+		imageNode.shouldRenderProgressImages = true
+		imageNode.contentMode = .scaleAspectFill
 		
 		let shadow : NSShadow = NSShadow()
 		shadow.shadowColor = UIColor.black
 		shadow.shadowBlurRadius = 2
-		shadow.shadowOffset = CGSize(width: 0, height: 0);
+		shadow.shadowOffset = CGSize(width: 0, height: 0)
 		
 		let nameAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium),
@@ -53,18 +55,42 @@ class BSWaterfallViewCell: ASCellNode {
 		
 		ratio = CGSize(width:1,height:user.imageRatio)
 		
+		buttonNode.backgroundColor = ColorPalette.baisWhite
+		buttonNode.setTitle("Button", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.baisOrange, for: [])
+		
 		self.addSubnode(self.imageNode)
 		self.addSubnode(self.nameNode)
+		self.addSubnode(self.buttonNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 		
+		// imagen
 		let imagePlace = ASRatioLayoutSpec(ratio: self.ratio.height, child: imageNode)
+		imagePlace.style.minWidth = ASDimension(unit: .points, value: constrainedSize.max.width)
 		
-		// INFINITY is used to make the inset unbounded
-		let insets = UIEdgeInsets(top: CGFloat.infinity, left: 12, bottom: 12, right: 12)
+		// texto
+		let insets = UIEdgeInsets(top: CGFloat.infinity, left: 10, bottom: 10, right: 10)
 		let textInsetSpec = ASInsetLayoutSpec(insets: insets, child: nameNode)
 		
-		return ASOverlayLayoutSpec(child: imagePlace, overlay: textInsetSpec)
+		// overlay imagen + texto
+		let overlayLayout = ASOverlayLayoutSpec(child: imagePlace, overlay: textInsetSpec)
+		overlayLayout.style.flexBasis = ASDimension (unit: .fraction, value: 0.8)
+		overlayLayout.style.flexShrink = 1
+		
+		// bottom button
+		buttonNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: 45)
+		buttonNode.style.flexBasis = ASDimension (unit: .fraction, value: 0.2)
+		buttonNode.style.flexShrink = 1
+		buttonNode.contentVerticalAlignment = .alignmentCenter
+		buttonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		
+		// stack
+		let verticalStack = ASStackLayoutSpec()
+		verticalStack.direction = .vertical
+		verticalStack.alignItems = .center
+		verticalStack.children = [overlayLayout, buttonNode]
+		
+		return verticalStack
 	}
 }

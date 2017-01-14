@@ -34,7 +34,7 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 	init (){
 		let layout = MosaicCollectionViewLayout()
 		layout.numberOfColumns = 2;
-		layout.headerHeight = 80;
+		layout.headerHeight = 44;
 		_collectionNode = ASCollectionNode(frame: CGRect.zero, collectionViewLayout: layout)
 		super.init(nibName: nil, bundle: nil);
 		layout.delegate = self
@@ -42,7 +42,7 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 		_collectionNode.dataSource = self;
 		_collectionNode.delegate = self;
 		_collectionNode.view.layoutInspector = _layoutInspector
-		_collectionNode.backgroundColor = UIColor.white
+		_collectionNode.backgroundColor = ColorPalette.baisBeige
 		_collectionNode.view.isScrollEnabled = true
 		_collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
 		
