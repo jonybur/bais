@@ -32,7 +32,7 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 	let usersRef = FIRDatabase.database().reference().child("users")
 	
 	init (){
-		let layout = MosaicCollectionViewLayout()
+		let layout = MosaicCollectionViewLayout(startsAt: 65)
 		layout.numberOfColumns = 2;
 		layout.headerHeight = 44;
 		_collectionNode = ASCollectionNode(frame: CGRect.zero, collectionViewLayout: layout)
@@ -56,14 +56,14 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 				
 				self._sections.append([]);
 				
-				//for _ in 0...1{
+				for _ in 0...10{
 					for (_, value) in snapshotDictionary{
 						if let userDictionary = value as? NSDictionary{
 							let user = User(fromNSDictionary: userDictionary);
 							self._sections[0].append(user);
 						}
 					}
-				//}
+				}
 			}
 			
 			self._collectionNode.reloadData();
@@ -90,7 +90,10 @@ class BSWaterfallView: UIViewController, MosaicCollectionViewLayoutDelegate, ASC
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
 		let user = _sections[indexPath.section][indexPath.item]
-		return BSWaterfallViewCell(with: user)
+		let node = BSWaterfallViewCell(with: user)
+		node.shouldRasterizeDescendants = true
+		node.cornerRadius = 10
+		return node
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {

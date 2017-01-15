@@ -31,10 +31,16 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 	var _sectionInset: UIEdgeInsets
 	var interItemSpacing: CGFloat
 	var headerHeight: CGFloat
+	var top: CGFloat
 	var _columnHeights: [[CGFloat]]?
 	var _itemAttributes = [[UICollectionViewLayoutAttributes]]()
 	var _headerAttributes = [UICollectionViewLayoutAttributes]()
 	var _allAttributes = [UICollectionViewLayoutAttributes]()
+
+	convenience init(startsAt: CGFloat){
+		self.init()
+		self.top = startsAt
+	}
 	
 	required override init() {
 		self.numberOfColumns = 2
@@ -42,6 +48,7 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 		self.headerHeight = 44.0
 		self._sectionInset = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0)
 		self.interItemSpacing = 0
+		self.top = 0
 		super.init()
 		self.scrollDirection = .vertical
 	}
@@ -59,8 +66,6 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 		_allAttributes = []
 		_headerAttributes = []
 		_columnHeights = []
-		
-		var top: CGFloat = 0
 		
 		let numberOfSections: NSInteger = collectionView.numberOfSections
 		

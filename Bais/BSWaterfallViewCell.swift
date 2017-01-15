@@ -90,7 +90,7 @@ class BSWaterfallViewCell: ASCellNode {
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .center
 		verticalStack.children = [overlayLayout, buttonNode]
-		
+
 		return verticalStack
 	}
 }
