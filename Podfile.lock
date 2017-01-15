@@ -1,11 +1,11 @@
 PODS:
   - Alamofire (4.2.0)
-  - AsyncDisplayKit (2.0-rc.1):
-    - AsyncDisplayKit/PINRemoteImage (= 2.0-rc.1)
-  - AsyncDisplayKit/Core (2.0-rc.1)
-  - AsyncDisplayKit/PINRemoteImage (2.0-rc.1):
+  - AsyncDisplayKit (2.0.1):
+    - AsyncDisplayKit/PINRemoteImage (= 2.0.1)
+  - AsyncDisplayKit/Core (2.0.1)
+  - AsyncDisplayKit/PINRemoteImage (2.0.1):
     - AsyncDisplayKit/Core
-    - PINRemoteImage/iOS (= 3.0.0-beta.6)
+    - PINRemoteImage/iOS (= 3.0.0-beta.7)
     - PINRemoteImage/PINCache
   - AwaitKit (2.0.0):
     - PromiseKit (~> 4.0)
@@ -83,10 +83,10 @@ PODS:
   - PINCache/Arc-exception-safe (3.0.1-beta.2):
     - PINCache/Core
   - PINCache/Core (3.0.1-beta.2)
-  - PINRemoteImage/Core (3.0.0-beta.6)
-  - PINRemoteImage/iOS (3.0.0-beta.6):
+  - PINRemoteImage/Core (3.0.0-beta.7)
+  - PINRemoteImage/iOS (3.0.0-beta.7):
     - PINRemoteImage/Core
-  - PINRemoteImage/PINCache (3.0.0-beta.6):
+  - PINRemoteImage/PINCache (3.0.0-beta.7):
     - PINCache (= 3.0.1-beta.2)
     - PINRemoteImage/Core
   - pop (1.0.9)
@@ -101,11 +101,11 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.0.5):
     - PromiseKit/CorePromise
-  - SwiftyJSON (3.0.0)
+  - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Alamofire (>= 4.0.0)
-  - AsyncDisplayKit (>= 2.0-rc.1)
+  - AsyncDisplayKit (>= 2.0)
   - AwaitKit (>= 2.0.0)
   - DGActivityIndicatorView
   - ESTabBarController-swift (from `https://github.com/jonybur/ESTabBarController.git`)
@@ -120,7 +120,7 @@ DEPENDENCIES:
   - JSQMessagesViewController (from `https://github.com/jessesquires/JSQMessagesViewController.git`, branch `develop`)
   - JSQSystemSoundPlayer
   - pop
-  - SwiftyJSON (from `https://github.com/appsailor/SwiftyJSON.git`, branch `swift3`)
+  - SwiftyJSON (>= 3.1.4)
 
 EXTERNAL SOURCES:
   ESTabBarController-swift:
@@ -128,9 +128,6 @@ EXTERNAL SOURCES:
   JSQMessagesViewController:
     :branch: develop
     :git: https://github.com/jessesquires/JSQMessagesViewController.git
-  SwiftyJSON:
-    :branch: swift3
-    :git: https://github.com/appsailor/SwiftyJSON.git
 
 CHECKOUT OPTIONS:
   ESTabBarController-swift:
@@ -139,13 +136,10 @@ CHECKOUT OPTIONS:
   JSQMessagesViewController:
     :commit: 26124006945138245e89b8505e65a69d3f794609
     :git: https://github.com/jessesquires/JSQMessagesViewController.git
-  SwiftyJSON:
-    :commit: de73429b38b8994f614fb27c5ec094bb8a4833f2
-    :git: https://github.com/appsailor/SwiftyJSON.git
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  AsyncDisplayKit: bd1d54ec70644ab235bcca899644d2129d5d06df
+  AsyncDisplayKit: 6c5a21d9ab30f3f48e877a67d44e3e19c1724f91
   AwaitKit: 1645b708f13a15ac7fa9c1a39d6808f799e5a1ec
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
@@ -167,11 +161,11 @@ SPEC CHECKSUMS:
   JSQMessagesViewController: c11b9e77372ab72c45c67311f6da7342e32df1e8
   JSQSystemSoundPlayer: 126ccc4a08db8fc3036bd07d33b0f8eda1559476
   PINCache: 6d273a6e0754bd26e3f12a38a90dde73cc6a42b2
-  PINRemoteImage: 60156f185c9360ca4e93832cd490d6f6c7afbd9a
+  PINRemoteImage: ff63baf185088530db6cfa41cb665e2b5126b5c3
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   PromiseKit: 593b5e24ded6cbb1ebc708bc2c3428a8a5632d91
-  SwiftyJSON: f57b2b44bc166617372d1c70773591fe9f0f5fd4
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: f53401b2821f400027b79fb64fa897edd018f924
+PODFILE CHECKSUM: 208f0547452ae0fc256fa40180af932173fb884c
 
 COCOAPODS: 1.2.0.beta.1
