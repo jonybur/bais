@@ -11,8 +11,8 @@ import Firebase
 import CoreLocation
 
 class CurrentUser{
-	//open static var instance : User?;
-	open static var location : CLLocation?;
+	
+	open static var location: CLLocation?
 	
 	/*
 	thisUserRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
@@ -22,13 +22,14 @@ class CurrentUser{
 }
 
 class User{
+	
 	var id: String = ""
 	var facebookId: String = ""
 	var firstName: String = ""
 	var lastName: String = ""
 	var nationality: String = ""
-	var location: CLLocation = CLLocation()
 	var profilePicture: String = ""
+	var location: CLLocation = CLLocation()
 	let imageRatio: CGFloat = (1.3...1.5).random()
 	
 	func fullName()->String{

@@ -17,79 +17,76 @@ import Firebase
 
 open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	
-	let gradientBar : GradientBar = GradientBar();
-	let locationManager : CLLocationManager = CLLocationManager();
+	let locationManager : CLLocationManager = CLLocationManager()
 	
     open override func viewDidLoad() {
 		
-		super.viewDidLoad();
+		super.viewDidLoad()
 		
-		automaticallyAdjustsScrollViewInsets = false;
+		automaticallyAdjustsScrollViewInsets = false
 				
-		self.title = "";
-		self.tabBar.shadowImage = UIImage(named: "transparent");
-		self.tabBar.backgroundImage = UIImage(named: "background");
+		self.title = ""
+		self.tabBar.shadowImage = UIImage(named: "transparent")
+		self.tabBar.backgroundImage = UIImage(named: "background")
 		
-		self.navigationController?.setNavigationBarHidden(true, animated: false);
+		self.navigationController?.setNavigationBarHidden(true, animated: false)
 		
-		setBATabBarController();
+		setBATabBarController()
 		
-		locationManager.delegate = self;
-		let authorizationStatus = CLLocationManager.authorizationStatus();
+		locationManager.delegate = self
+		let authorizationStatus = CLLocationManager.authorizationStatus()
 		switch(authorizationStatus){
 		
 		case .authorizedWhenInUse:
-			locationManager.requestLocation();
-			break;
-		
+			locationManager.requestLocation()
+			break
+	
 		case .notDetermined:
-			locationManager.requestWhenInUseAuthorization();
-			break;
+			locationManager.requestWhenInUseAuthorization()
+			break
 			
 		case .denied:
-			print ("Location services are denied");
-			break;
+			print ("Location services are denied")
+			break
 			
 		case .restricted:
-			print ("Location services are restricted");
-			break;
+			print ("Location services are restricted")
+			break
 			
 		default:
-			break;
+			break
 		}
 	}
 	
 	private func setBATabBarController(){
-		let v1 = BAWallController();
-		let v2 = BACalendarController();
-		let v3 = BSWaterfallView();
-		let v4 = BAFriendsController();
-		let v5 = BASettingsController();
+	
+		let v1 = BAUsersController()
+		let v2 = BAFriendsController()
+		let v3 = BACalendarController()
+		let v4 = BASettingsController()
 		
-		v1.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
+		v1.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityStyleAnimator.init()))
 		v2.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
-		v3.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityStyleAnimator.init()))
+		v3.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
 		v4.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
-		v5.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
 		
-		v1.tabBarItem.image = UIImage.init(named: "wall-icon")
-		v2.tabBarItem.image = UIImage.init(named: "calendar-icon")
-		v3.tabBarItem.image = UIImage.init(named: "home-empty-icon")
-		v4.tabBarItem.image = UIImage.init(named: "friends-icon")
-		v5.tabBarItem.image = UIImage.init(named: "settings-icon")
+		v1.tabBarItem.image = UIImage.init(named: "home-empty-icon")
+		v2.tabBarItem.image = UIImage.init(named: "chat-icon")
+		v3.tabBarItem.image = UIImage.init(named: "calendar-icon")
+		v4.tabBarItem.image = UIImage.init(named: "settings-icon")
 		
-		let controllers = [v1, v2, v3, v4, v5]
+		let controllers = [v1, v2, v3, v4]
 		self.viewControllers = controllers
 		
-		self.selectedIndex = 2
-		
-		self.view.addSubview(gradientBar);
+		self.selectedIndex = 0
 	}
 	
 	open override func viewDidAppear(_ animated: Bool) {
-		self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false;
-		self.navigationController?.setNavigationBarHidden(true, animated: true);
-		UIApplication.shared.statusBarStyle = .lightContent;
+		self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+		self.navigationController?.setNavigationBarHidden(true, animated: true)
+		UIApplication.shared.statusBarStyle = .default
+		guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+		statusBar.backgroundColor = ColorPalette.baisBeige
 	}
 	
 	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -106,8 +103,8 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 			FirebaseAPI.updateUserLocation(location);
 		}
 	}
-	
-	func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError){
+		
+	public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
 		print("Location Manager failed with error");
 	}
 }

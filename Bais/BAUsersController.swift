@@ -1,138 +1,173 @@
 //
-//  BATabBarController.swift
-//  Claxon
+//  BSWaterfallView.swift
+//  Bais
 //
-//  Created by Jonathan Bursztyn on 18/7/16.
-//  Copyright © 2016 Claxon. All rights reserved.
+//  Created by Rajeev Gupta on 11/9/16.
+//
+//  Copyright (c) 2014-present, Facebook, Inc.  All rights reserved.
+//  This source code is licensed under the BSD-style license found in the
+//  LICENSE file in the root directory of this source tree. An additional grant
+//  of patent rights can be found in the PATENTS file in the same directory.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+//  FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+//  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+//  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
-import SwiftyJSON
-import AwaitKit
 import UIKit
 import AsyncDisplayKit
-import FirebaseAuth
-import Firebase
 import FirebaseDatabase
-import pop
+import FirebaseAuth
 import DGActivityIndicatorView
-import ESTabBarController
+import PromiseKit
 
-class BAUsersController : ASViewController<ASScrollNode>, UserCardDelegate{
-	
-	var animating : Bool = false
-	var scrollNode : ASScrollNode = ASScrollNode()
-	var yPosition : CGFloat = GradientBar.height + 10
+class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, ASCollectionDataSource, ASCollectionDelegate, BAUsersViewCellDelegate {
+
+	var _sections = [[User]]()
+	let _collectionNode: ASCollectionNode!
+	let _layoutInspector = MosaicCollectionViewLayoutInspector()
 	let usersRef = FIRDatabase.database().reference().child("users")
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
 	                                                    tintColor: ColorPalette.baisOrange,
 	                                                    size: 75)
 	
-	init() {
-		super.init(node: ASScrollNode());
+	init (){
+		let layout = MosaicCollectionViewLayout(startsAt: 10)
+		layout.numberOfColumns = 2;
+		layout.headerHeight = 44;
+		_collectionNode = ASCollectionNode(frame: CGRect.zero, collectionViewLayout: layout)
+		super.init(nibName: nil, bundle: nil);
+		layout.delegate = self
+		
+		_collectionNode.dataSource = self;
+		_collectionNode.delegate = self;
+		_collectionNode.view.layoutInspector = _layoutInspector
+		_collectionNode.backgroundColor = ColorPalette.baisBeige
+		_collectionNode.view.isScrollEnabled = true
+		_collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
 	}
 	
-	required init(coder: NSCoder){
-		super.init(node: ASScrollNode());
+	required init(coder: NSCoder) {
+		fatalError("NSCoding not supported")
 	}
 	
 	override func viewDidLoad() {
-		
-		super.viewDidLoad();
-		
-		automaticallyAdjustsScrollViewInsets = false;
-		
-		view.backgroundColor = ColorPalette.baisBeige;
-		
-		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - 75) / 2,
-		                                      y: (ez.screenHeight - 75) / 2,
-		                                      width: 75, height: 75);
-		
+		super.viewDidLoad()
+		self.view.addSubnode(_collectionNode!)
 		self.view.addSubview(activityIndicatorView!);
 		
-		activityIndicatorView?.startAnimating();
+		activityIndicatorView?.startAnimating()
 		
-		self.scrollNode.frame = CGRect(x:0, y:0, width: ez.screenWidth, height: ez.screenHeight);
-		self.scrollNode.view.contentSize = CGSize(width: ez.screenWidth, height: yPosition + 100);
-		self.view.addSubview(self.scrollNode.view);
-		
-		self.scrollNode.view.setContentOffset(CGPoint(x:0, y: 0), animated: false);
-		
-		observeLocation();
+		observeUserLocation().then { location -> Void in
+			CurrentUser.location = location
+			self.populateUsers()
+		}
+	}
+
+	deinit {
+		_collectionNode.dataSource = nil;
+		_collectionNode.delegate = nil;
 	}
 	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated);
+	private func observeUserLocation() -> Promise<CLLocation>{
+		return Promise{ fulfill, reject in
+			let locationRef = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("location");
+			locationRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
+				if let dict = snapshot.value as? NSDictionary{
+					let latitude = dict["lat"] as! Double
+					let longitude = dict["lon"] as! Double
+					fulfill(CLLocation(latitude: latitude, longitude: longitude))
+				}
+			});
+		}
 	}
 	
-	private func observeLocation(){
-		let locationRef = usersRef.child((FIRAuth.auth()?.currentUser?.uid)!).child("location");
-		locationRef.observe(.value, with: { (snapshot: FIRDataSnapshot!) in
-
-			if let dict = snapshot.value as? NSDictionary{
-
-				let latitude = dict["lat"] as! Double;
-				let longitude = dict["lon"] as! Double;
+	private func populateUsers(){
+		let activityIndicatorSize = (activityIndicatorView?.size)!
+		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - activityIndicatorSize) / 2,
+		                                      y: (ez.screenHeight - activityIndicatorSize) / 2,
+		                                      width: activityIndicatorSize, height: activityIndicatorSize);
+		
+		usersRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
+			if let snapshotDictionary = snapshot.value as? NSDictionary{
+				// sets a new section
 				
-				CurrentUser.location = CLLocation(latitude: latitude, longitude: longitude);
-			
-				//self.observeUsers();
+				var nationalityMap = [String: Int]()
 				
-				// remove observer
-				locationRef.removeAllObservers();
+				for _ in 0...0{
+					for (_, snapshotValue) in snapshotDictionary{
+
+						if let userDictionary = snapshotValue as? NSDictionary{
+							
+							let user = User(fromNSDictionary: userDictionary)
+							
+							if let nationalitySection = nationalityMap[user.nationality]{
+								// adds user to proper section
+								self._sections[nationalitySection].append(user)
+							} else {
+								// new nationality, add section
+								self._sections.append([])
+								self._sections[self._sections.count - 1].append(user)
+								// add nationality to map
+								nationalityMap.updateValue(self._sections.count - 1, forKey: user.nationality)
+							}
+						}
+					}
+				}
 			}
-		
-		});
-	}
-	
-	//MARK: - ASUserCard delegate methods
-	func userCardButtonDidClick(sender: BAUserCard) {
-		switch (sender.friendshipStatus){
-		
-		case .noRelationship:
-			FirebaseAPI.sendFriendRequestTo(friendId: sender.cardUser.id);
-			break;
-		case .invited:
-			break;
-		case .accepted:
-			self.navigationController?.pushViewController(BAChatController(withUser: sender.cardUser), animated: true);
-			break;
-		default:break;
 			
+			self.activityIndicatorView?.stopAnimating()
+			self._collectionNode.reloadData()
 		}
 	}
 	
-	func userCardDidClick(sender: BAUserCard) {
-		// animate card
-		if (animating){
-			return;
-		}
-		
-		animating = true;
-		
-		// animates the check
-		let spring = POPSpringAnimation(propertyNamed: kPOPViewScaleXY);
-		spring?.velocity = NSValue(cgPoint: CGPoint(x: -5, y: -5));
-		spring?.springBounciness = 5;
-		spring?.completionBlock = {(animation, finished) in
-			
-			let nextView = BAProfileController(user: sender.cardUser);
-			
-			UIView.animate(withDuration: 0.3, animations: { () -> Void in
-				UIView.setAnimationCurve(UIViewAnimationCurve.easeInOut)
-				
-				self.navigationController?.pushViewController(nextView, animated: false);
-				let animation = CATransition()
-				animation.duration = 0.3
-				animation.type = kCATransitionMoveIn
-				animation.subtype = kCATransitionFromRight
-				animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-				self.navigationController?.view.layer.add(animation, forKey: "")
-				
-				self.animating = false;
-			})
-			
-		}
-		sender.pop_add(spring, forKey: "sendAnimation");
+	override func viewWillLayoutSubviews() {
+		_collectionNode.frame = self.view.bounds;
+	}
+	
+	func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
+		let user = _sections[indexPath.section][indexPath.item]
+		let node = BAUsersViewCell(with: user)
+		node.delegate = self
+		node.shouldRasterizeDescendants = true
+		node.cornerRadius = 10
+		return node
+	}
+	
+	func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
+		let textAttributes : NSDictionary = [
+			NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline),
+			NSForegroundColorAttributeName: UIColor.gray
+		]
+		let textInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 0)
+		let textCellNode = ASTextCellNode(attributes: textAttributes as! [AnyHashable : Any], insets: textInsets)
+		textCellNode.text = String(format: _sections[indexPath.section][indexPath.item].nationality, indexPath.section + 1)
+		return textCellNode
+	}
+	
+	func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+		return _sections.count
+	}
+	
+	func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+		return _sections[section].count
+	}
+	
+	internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
+		let ratio = (_sections[originalItemSizeAtIndexPath.section][originalItemSizeAtIndexPath.item]).imageRatio
+		return CGSize(width: 1, height: ratio)
+	}
+	
+	//MARK: - BAUsersViewCell delegate methods
+	func userCardButtonDidClick(sender: BAUsersViewCell) {
+		print ("taps on button")
+	}
+	
+	func userCardDidClick(sender: BAUsersViewCell) {
+		print ("taps on card")
 	}
 }
+

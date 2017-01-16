@@ -23,14 +23,21 @@ import Foundation
 import FirebaseDatabase
 import Firebase
 
-class BSWaterfallViewCell: ASCellNode {
+protocol BAUsersViewCellDelegate: class {
+	func userCardButtonDidClick(sender: BAUsersViewCell);
+	func userCardDidClick(sender: BAUsersViewCell);
+}
+
+class BAUsersViewCell: ASCellNode {
 	
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
-	let testNode = ASImageNode()
+	let distanceNode = ASTextNode()
 	let buttonNode = ASButtonNode()
 	var cardUser: User!
 	var ratio: CGSize!
+	
+	weak var delegate : BAUsersViewCellDelegate?
 	
 	required init(with user : User) {
 		super.init()
@@ -51,15 +58,28 @@ class BSWaterfallViewCell: ASCellNode {
 			NSForegroundColorAttributeName: UIColor.white,
 			NSShadowAttributeName: shadow]
 		
+		let distanceAttributes = [
+			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightLight),
+			NSForegroundColorAttributeName: UIColor.white,
+			NSShadowAttributeName: shadow]
+		
 		nameNode.attributedText = NSAttributedString(string: cardUser.firstName, attributes: nameAttributes)
+		
+		let distanceString = self.cardUser.location.distance(from: CurrentUser.location!).redacted()
+		distanceNode.attributedText = NSAttributedString(string: distanceString, attributes: distanceAttributes)
+		distanceNode.maximumNumberOfLines = 1
 		
 		ratio = CGSize(width:1,height:user.imageRatio)
 		
 		buttonNode.backgroundColor = ColorPalette.baisWhite
-		buttonNode.setTitle("Button", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.baisOrange, for: [])
+		buttonNode.setTitle("Invite", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.baisOrange, for: [])
+		buttonNode.addTarget(self, action: #selector(buttonPressed(sender:)), forControlEvents: .touchUpInside)
+		
+		//self.addTarget(self, action: #selector(cardPressed(sender:)), forControlEvents: .touchUpInside)
 		
 		self.addSubnode(self.imageNode)
 		self.addSubnode(self.nameNode)
+		self.addSubnode(self.distanceNode)
 		self.addSubnode(self.buttonNode)
 	}
 	
@@ -69,9 +89,15 @@ class BSWaterfallViewCell: ASCellNode {
 		let imagePlace = ASRatioLayoutSpec(ratio: self.ratio.height, child: imageNode)
 		imagePlace.style.minWidth = ASDimension(unit: .points, value: constrainedSize.max.width)
 		
-		// texto
-		let insets = UIEdgeInsets(top: CGFloat.infinity, left: 10, bottom: 10, right: 10)
-		let textInsetSpec = ASInsetLayoutSpec(insets: insets, child: nameNode)
+		// stack
+		let textStack = ASStackLayoutSpec()
+		textStack.direction = .vertical
+		textStack.alignItems = .start
+		textStack.children = [nameNode, distanceNode]
+		
+		// text inset
+		let textInsets = UIEdgeInsets(top: CGFloat.infinity, left: 10, bottom: 10, right: 10)
+		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: textStack)
 		
 		// overlay imagen + texto
 		let overlayLayout = ASOverlayLayoutSpec(child: imagePlace, overlay: textInsetSpec)
@@ -92,5 +118,13 @@ class BSWaterfallViewCell: ASCellNode {
 		verticalStack.children = [overlayLayout, buttonNode]
 
 		return verticalStack
+	}
+	
+	func cardPressed(sender : UIButton){
+		delegate?.userCardDidClick(sender: self);
+	}
+	
+	func buttonPressed(sender : UIButton){
+		delegate?.userCardButtonDidClick(sender: self)
 	}
 }

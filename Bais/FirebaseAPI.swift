@@ -18,15 +18,16 @@ class FirebaseAPI{
 	
 	static func updateUserLocation(_ location : CLLocationCoordinate2D){
 		
-		let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!;
-		let locationRef = FIRDatabase.database().reference().child("users").child(currentUserId).child("location");
+		let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!
+		let locationRef = FIRDatabase.database().reference().child("users").child(currentUserId).child("location")
 		
 		let value = [
 			"lon": location.longitude,
 			"lat": location.latitude
 		];
 		
-		locationRef.updateChildValues(value);
+		locationRef.updateChildValues(value)
+		CurrentUser.location = CLLocation(latitude: location.latitude, longitude: location.longitude)
 	}
 	
 	static func endFriendRelationshipWith(friendId : String){
@@ -120,7 +121,7 @@ class FirebaseAPI{
 							"last_name": nsArray["last_name"] as! String,
 							"facebook_id": FBSDKAccessToken.current().userID!,
 							"profile_picture": datum["url"] as! String,
-							"nationality": "ARG"
+							"nationality": "Argentina"
 							// add location
 						]
 						itemRef.updateChildValues(userItem)

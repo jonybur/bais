@@ -28,9 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 		
-        FBSDKProfile.enableUpdates(onAccessTokenChange: true);
-        FBSDKSettings.setAppID(facebookAppId);
-        FBSDKSettings.displayName();
+        FBSDKProfile.enableUpdates(onAccessTokenChange: true)
+        FBSDKSettings.setAppID(facebookAppId)
+        FBSDKSettings.displayName()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
 
 		// [START register_for_notifications]
@@ -55,35 +55,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		// [END register_for_notifications]
 		
-		FIRApp.configure();
+		FIRApp.configure()
 		
-		FIRDatabase.database().persistenceEnabled = true;
+		FIRDatabase.database().persistenceEnabled = true
 		
-		let screen : UIViewController!;
+		let screen : UIViewController!
 		
 		if FIRAuth.auth()?.currentUser != nil && FBSDKProfile.current() != nil {
-			screen = BATabBarController();
+			screen = BATabBarController()
 		} else {
-			screen = BALoginController();
+			screen = BALoginController()
 		}
 		
 		navigationController.pushViewController(screen, animated: false)
-		navigationController.isNavigationBarHidden = true;
+		navigationController.isNavigationBarHidden = true
 
-		window = UIWindow(frame: UIScreen.main.bounds);
-        window!.rootViewController = navigationController;
-        window!.makeKeyAndVisible();
-		application.statusBarStyle = UIStatusBarStyle.lightContent;
+		window = UIWindow(frame: UIScreen.main.bounds)
+        window!.rootViewController = navigationController
+        window!.makeKeyAndVisible()
+		application.statusBarStyle = .default
 		
-        return true;
+        return true
     }
 	
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         
-        let handled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation);
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
         application.statusBarStyle = UIStatusBarStyle.lightContent
 
-        return handled;
+        return handled
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
