@@ -85,6 +85,9 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, A
 		}
 	}
 	
+	var stop: Bool = false
+	
+	// move this
 	private func populateUsers(){
 		let activityIndicatorSize = (activityIndicatorView?.size)!
 		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - activityIndicatorSize) / 2,
@@ -97,12 +100,14 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, A
 				
 				var nationalityMap = [String: Int]()
 				
+				var promises: [Promise<Bool>] = [Promise<Bool>]()
+				
 				for _ in 0...0{
 					for (_, snapshotValue) in snapshotDictionary{
-
 						if let userDictionary = snapshotValue as? NSDictionary{
 							
 							let user = User(fromNSDictionary: userDictionary)
+							promises.append(self.getFriendshipStatusFor(user: user))
 							
 							if let nationalitySection = nationalityMap[user.nationality]{
 								// adds user to proper section
@@ -114,15 +119,44 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, A
 								// add nationality to map
 								nationalityMap.updateValue(self._sections.count - 1, forKey: user.nationality)
 							}
+							
 						}
 					}
 				}
+				
+				when(resolved: promises).then(execute: { _ -> Void in
+					self._collectionNode.reloadData()
+					self.activityIndicatorView?.stopAnimating()
+				})
+				
+				
 			}
 			
-			self.activityIndicatorView?.stopAnimating()
-			self._collectionNode.reloadData()
 		}
 	}
+	
+	
+	private func getFriendshipStatusFor(user: User) -> Promise<Bool>{
+		
+		return Promise{ fulfill, reject in
+			// query to friend relationship
+			let relationshipQuery = FIRDatabase.database().reference().child("users")
+				.child((FIRAuth.auth()?.currentUser?.uid)!).child("friends").child(user.id)
+			
+			relationshipQuery.observe(.value) { (snapshot: FIRDataSnapshot!) in
+				
+				if let relationship = snapshot.value as? NSDictionary{
+					let status = relationship["status"] as! String
+					user.friendshipStatus = FriendshipStatus(rawValue: status)!
+				} else {
+					user.friendshipStatus = .noRelationship
+				}
+				
+				fulfill(true)
+			}
+		}
+	}
+
 	
 	override func viewWillLayoutSubviews() {
 		_collectionNode.frame = self.view.bounds;
@@ -132,7 +166,6 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, A
 		let user = _sections[indexPath.section][indexPath.item]
 		let node = BAUsersViewCell(with: user)
 		node.delegate = self
-		node.shouldRasterizeDescendants = true
 		node.cornerRadius = 10
 		return node
 	}
@@ -144,7 +177,8 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, A
 		]
 		let textInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 0)
 		let textCellNode = ASTextCellNode(attributes: textAttributes as! [AnyHashable : Any], insets: textInsets)
-		textCellNode.text = String(format: _sections[indexPath.section][indexPath.item].nationality, indexPath.section + 1)
+		let user = self.userForIndexPath(indexPath)
+		textCellNode.text = String(format: user.nationality, indexPath.section + 1)
 		return textCellNode
 	}
 	
@@ -156,17 +190,40 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, A
 		return _sections[section].count
 	}
 	
+	func userForIndexPath(_ indexPath: IndexPath) -> User{
+		return _sections[indexPath.section][indexPath.item]
+	}
+	
 	internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
-		let ratio = (_sections[originalItemSizeAtIndexPath.section][originalItemSizeAtIndexPath.item]).imageRatio
+		let user = self.userForIndexPath(originalItemSizeAtIndexPath)
+		let ratio = user.imageRatio
 		return CGSize(width: 1, height: ratio)
 	}
 	
 	//MARK: - BAUsersViewCell delegate methods
-	func userCardButtonDidClick(sender: BAUsersViewCell) {
-		print ("taps on button")
+	func usersViewCellDidClickButton(_ usersViewCell: BAUsersViewCell) {
+		let indexPath = self._collectionNode.indexPath(for: usersViewCell)!
+		let user = self.userForIndexPath(indexPath)
+		usersViewCell.setFriendshipAction()
+		
+		print (user.friendshipStatus)
+		switch (user.friendshipStatus){
+			case .noRelationship:
+				FirebaseAPI.sendFriendRequestTo(friendId: user.id)
+				break;
+			case .invited:
+				break;
+			case .accepted:
+				self.navigationController?.pushViewController(BAChatController(withUser: user), animated: true)
+				break;
+			default:
+				break;
+		}
+		
+		
 	}
 	
-	func userCardDidClick(sender: BAUsersViewCell) {
+	func usersViewCellDidClickView(_ usersViewCell: BAUsersViewCell) {
 		print ("taps on card")
 	}
 }

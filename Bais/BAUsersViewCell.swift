@@ -24,8 +24,8 @@ import FirebaseDatabase
 import Firebase
 
 protocol BAUsersViewCellDelegate: class {
-	func userCardButtonDidClick(sender: BAUsersViewCell);
-	func userCardDidClick(sender: BAUsersViewCell);
+	func usersViewCellDidClickView(_ usersViewCell: BAUsersViewCell);
+	func usersViewCellDidClickButton(_ usersViewCell: BAUsersViewCell);
 }
 
 class BAUsersViewCell: ASCellNode {
@@ -72,8 +72,11 @@ class BAUsersViewCell: ASCellNode {
 		ratio = CGSize(width:1,height:user.imageRatio)
 		
 		buttonNode.backgroundColor = ColorPalette.baisWhite
-		buttonNode.setTitle("Invite", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.baisOrange, for: [])
-		buttonNode.addTarget(self, action: #selector(buttonPressed(sender:)), forControlEvents: .touchUpInside)
+		//self.setButtonTitle("Invite")
+		//buttonNode.addTarget(self, action: #selector(buttonPressed(sender:)), forControlEvents: .touchUpInside)
+		buttonNode.addTarget(self, action: #selector(self.buttonPressed(_:)), forControlEvents: .touchUpInside)
+
+		self.setFriendshipAction()
 		
 		//self.addTarget(self, action: #selector(cardPressed(sender:)), forControlEvents: .touchUpInside)
 		
@@ -105,7 +108,7 @@ class BAUsersViewCell: ASCellNode {
 		overlayLayout.style.flexShrink = 1
 		
 		// bottom button
-		buttonNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: 45)
+		buttonNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: 50)
 		buttonNode.style.flexBasis = ASDimension (unit: .fraction, value: 0.2)
 		buttonNode.style.flexShrink = 1
 		buttonNode.contentVerticalAlignment = .alignmentCenter
@@ -120,11 +123,29 @@ class BAUsersViewCell: ASCellNode {
 		return verticalStack
 	}
 	
-	func cardPressed(sender : UIButton){
-		delegate?.userCardDidClick(sender: self);
+	func cardPressed(_ sender: UIButton){
+		delegate?.usersViewCellDidClickView(self);
 	}
 	
-	func buttonPressed(sender : UIButton){
-		delegate?.userCardButtonDidClick(sender: self)
+	func buttonPressed(_ sender: UIButton){
+		delegate?.usersViewCellDidClickButton(self)
+	}
+	
+	func setButtonTitle(_ title: String){
+		self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.baisOrange, for: [])
+	}
+	
+	func setFriendshipAction(){
+		switch (cardUser.friendshipStatus){
+			case .accepted:
+				self.setButtonTitle("Chat")
+				break;
+			case .invited:
+				self.setButtonTitle("Request Sent")
+				break;
+			default:
+				self.setButtonTitle("Invite")
+				break;
+		}
 	}
 }
