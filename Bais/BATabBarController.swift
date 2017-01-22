@@ -17,6 +17,7 @@ import Firebase
 
 open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	
+	//let gradientBar : GradientBar = GradientBar();
 	let locationManager : CLLocationManager = CLLocationManager()
 	
     open override func viewDidLoad() {
@@ -26,8 +27,11 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		automaticallyAdjustsScrollViewInsets = false
 				
 		self.title = ""
-		self.tabBar.shadowImage = UIImage(named: "transparent")
+		//self.tabBar.shadowImage = UIImage(named: "transparent")
 		self.tabBar.backgroundImage = UIImage(named: "background")
+		self.tabBar.isTranslucent = true
+		self.tabBar.alpha = 0.9
+		//self.tabBar.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 0.6)
 		
 		self.navigationController?.setNavigationBarHidden(true, animated: false)
 		
@@ -79,6 +83,8 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		self.viewControllers = controllers
 		
 		self.selectedIndex = 0
+		
+		//self.view.addSubview(gradientBar);
 	}
 	
 	open override func viewDidAppear(_ animated: Bool) {
@@ -86,7 +92,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		self.navigationController?.setNavigationBarHidden(true, animated: true)
 		UIApplication.shared.statusBarStyle = .default
 		guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
-		statusBar.backgroundColor = ColorPalette.baisBeige
+		statusBar.backgroundColor = ColorPalette.baisWhite
 	}
 	
 	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

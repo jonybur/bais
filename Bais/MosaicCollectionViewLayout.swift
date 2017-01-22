@@ -45,7 +45,7 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 	required override init() {
 		self.numberOfColumns = 2
 		self.columnSpacing = 10.0
-		self.headerHeight = 44.0
+		self.headerHeight = 90.0
 		self._sectionInset = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0)
 		self.interItemSpacing = 0
 		self.top = 0

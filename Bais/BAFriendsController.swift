@@ -1,105 +1,122 @@
 //
-//  LoginScreen.swift
-//  Claxon
+//  BATableController.swift
+//  Bais
 //
-//  Created by Jonathan Bursztyn on 18/7/16.
-//  Copyright © 2016 Claxon. All rights reserved.
+//  Created by Jonathan Bursztyn on 18/1/17.
+//  Copyright © 2017 Board Social, Inc. All rights reserved.
 //
-
 
 import UIKit
 import AsyncDisplayKit
 import Firebase
-import FirebaseDatabase
-import CoreGraphics
+import PromiseKit
 
-class BAFriendsController: UIViewController, ChatCardDelegate {
+final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate {
 	
-	var scrollNode : ASScrollNode = ASScrollNode();
-	var yPosition : CGFloat = GradientBar.height;
 	let usersRef = FIRDatabase.database().reference().child("users");
-	var chatCards : [String:BAChatCard] = [String:BAChatCard]();
+	var _sections = [User]()
 	
-	override func viewDidLoad() {
-		super.viewDidLoad();
-		
-		view.backgroundColor = ColorPalette.baisBeige;
-		self.automaticallyAdjustsScrollViewInsets = false;
-		
-		navigationController?.isNavigationBarHidden = true;
-		
-		self.scrollNode.frame = CGRect(x:0, y:0, width: ez.screenWidth, height: ez.screenHeight);
-		self.view.addSubview(self.scrollNode.view);
-		
-		observeFriends();
+	var tableNode: ASTableNode {
+		return node as! ASTableNode
 	}
 	
+	init() {
+		super.init(node: ASTableNode())
+		tableNode.delegate = self
+		tableNode.dataSource = self
+		tableNode.view.separatorStyle = .none
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("Storyboards are not supported")
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		self.observeFriends()
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+	}
+	
+	//MARK: - ASTableNode data source and delegate.
+	
+	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+		// Should read the row count directly from table view but
+		// https://github.com/facebook/AsyncDisplayKit/issues/1159
+		
+		let item = indexPath.item
+		
+		if (item == 0){
+			let headerNode = BAChatHeaderCellNode(with: _sections[0])
+			return headerNode
+		}
+		
+		let user = _sections[item - 1]
+		let chatNode = BAChatCellNode(with: user)
+		return chatNode
+	}
+	
+	func numberOfSections(in tableNode: ASTableNode) -> Int {
+		return 1
+	}
+	
+	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+		return self._sections.count > 0 ? self._sections.count + 1 : 0;
+	}
+	
+	//MARK: - Firebase
+	
+	// gets friends and reloads table after getting all information
 	private func observeFriends() {
-		let userId = (FIRAuth.auth()?.currentUser?.uid)!;
-		let userFriendsRef = usersRef.child(userId).child("friends");
-		
-		var currentCards : [String] = [String]();
-		
+		let userId = (FIRAuth.auth()?.currentUser?.uid)!
+		let userFriendsRef = FIRDatabase.database().reference().child("users").child(userId).child("friends")
+				
 		// grabs all my friends
 		userFriendsRef.observe(.value, with: { (snapshot: FIRDataSnapshot!) in
-			
-			if let relationshipsDictionary = snapshot.value as? NSDictionary{
+			if let relationshipsDictionary = snapshot.value as? NSDictionary {
+				
+				var promises = [Promise<Void>]()
 				
 				// for each user
 				for relationship in relationshipsDictionary{
 					
-					let friendId = String(describing : relationship.key);
-					if (currentCards.contains(friendId)){
-						continue;
-					}
+					let friendId = String(describing: relationship.key)
+					let relationshipAttributes = relationship.value as! NSDictionary
+					let statusString = relationshipAttributes["status"] as! String
+					let status = FriendshipStatus(rawValue: statusString)!
 					
-					let relationshipAttributes = relationship.value as! NSDictionary;
-					
-					let statusString = relationshipAttributes["status"] as! String;
-					let status = FriendshipStatus(rawValue : statusString)!;
-					let postedBy = relationshipAttributes["postedBy"] as! String;
-					
-					if (status == .accepted || (status == .invited && postedBy != userId)) {
+					if (status == .accepted) {
 						
 						// if it's a friend, or was invited by someone, create the chat card
-						self.makeChatCard(fromFriendId: friendId);
-						currentCards.append(friendId);
+						let promise = self.getUser(with: friendId).then(execute: { user -> Void in
+							// get user
+							user.friendshipStatus = .accepted
+							self._sections.append(user)
+						})
 						
+						promises.append(promise)
 					}
-				
 				}
 				
-				// TODO: fix this
-				self.scrollNode.view.contentSize = CGSize(width: ez.screenWidth, height: ez.screenHeight);
+				when(resolved: promises).then(execute: { _ -> Void in
+					self.tableNode.reloadData()
+				})
+				
 			}
-			
-		});		
-	}
-	
-	func makeChatCard (fromFriendId : String){
-		
-		let friendRef = FIRDatabase.database().reference().child("users").child(fromFriendId);
-		friendRef.observeSingleEvent(of: .value, with: { (singleSnapshot: FIRDataSnapshot!) in
-			
-			let user = User(fromSnapshot: singleSnapshot);
-			let chatCard = BAChatCard(user);
-			chatCard.position = CGPoint(ez.screenWidth / 2, self.yPosition + chatCard.frame.height / 2);
-			self.yPosition += chatCard.frame.height + 1;
-			chatCard.delegate = self;
-			self.view.addSubnode(chatCard);
-			
-			self.chatCards[user.id] = chatCard;
-			
 		});
 	}
 	
-	// ASChatCard delegate methods
-	func chatCardDidClick(sender: BAChatCard) {
-	
-		let userToChat = sender.cardUser;
-		self.navigationController?.pushViewController(BAChatController(withUser: userToChat!), animated: true);
-		
+	private func getUser(with id: String) -> Promise<User>{
+		return Promise{ fulfill, reject in
+			let userQuery = FIRDatabase.database().reference().child("users").child(id)
+			userQuery.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
+				if let userDictionary = snapshot.value as? NSDictionary{
+					let user = User(fromNSDictionary: userDictionary)
+					fulfill(user)
+				}
+			}
+		}
 	}
-
-	
 }

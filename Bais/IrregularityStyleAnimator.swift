@@ -15,11 +15,11 @@ open class IrregularityBasicStyleAnimator: BouncesStyleAnimator {
     public override init() {
         super.init()
         textColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        highlightTextColor = ColorPalette.baisOrange;
-        iconColor = UIColor.black;
-        highlightIconColor = ColorPalette.baisOrange;
-        backgroundColor = UIColor.white;
-        highlightBackgroundColor = UIColor.white;
+        highlightTextColor = ColorPalette.baisOrange
+        iconColor = ColorPalette.lightGrey
+        highlightIconColor = ColorPalette.baisOrange
+        backgroundColor = UIColor.white
+        highlightBackgroundColor = UIColor.white
     }
 }
 

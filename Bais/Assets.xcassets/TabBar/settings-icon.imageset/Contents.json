@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "pin.png",
+      "filename" : "map.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "pin-1.png",
+      "filename" : "map-1.png",
       "scale" : "2x"
     },
     {

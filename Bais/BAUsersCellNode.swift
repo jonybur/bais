@@ -23,23 +23,24 @@ import Foundation
 import FirebaseDatabase
 import Firebase
 
-protocol BAUsersViewCellDelegate: class {
-	func usersViewCellDidClickView(_ usersViewCell: BAUsersViewCell);
-	func usersViewCellDidClickButton(_ usersViewCell: BAUsersViewCell);
+protocol BAUsersCellNodeDelegate: class {
+	func usersCellNodeDidClickView(_ usersViewCell: BAUsersCellNode);
+	func usersCellNodeDidClickButton(_ usersViewCell: BAUsersCellNode);
 }
 
-class BAUsersViewCell: ASCellNode {
+class BAUsersCellNode: ASCellNode {
 	
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
 	let distanceNode = ASTextNode()
 	let buttonNode = ASButtonNode()
+	
 	var cardUser: User!
 	var ratio: CGSize!
 	
-	weak var delegate : BAUsersViewCellDelegate?
+	weak var delegate: BAUsersCellNodeDelegate?
 	
-	required init(with user : User) {
+	required init(with user: User) {
 		super.init()
 		
 		cardUser = user
@@ -47,8 +48,19 @@ class BAUsersViewCell: ASCellNode {
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill
+		imageNode.imageModificationBlock = { image in
+			var modifiedImage: UIImage!
+			let rect = CGRect(origin: CGPoint(0, 0), size: image.size)
+			UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)
+			let maskPath = UIBezierPath(roundedRect: rect, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: 10, height: 10))
+			maskPath.addClip()
+			image.draw(in: rect)
+			modifiedImage = UIGraphicsGetImageFromCurrentImageContext()
+			UIGraphicsEndImageContext()
+			return modifiedImage
+		}
 		
-		let shadow : NSShadow = NSShadow()
+		let shadow = NSShadow()
 		shadow.shadowColor = UIColor.black
 		shadow.shadowBlurRadius = 2
 		shadow.shadowOffset = CGSize(width: 0, height: 0)
@@ -72,13 +84,9 @@ class BAUsersViewCell: ASCellNode {
 		ratio = CGSize(width:1,height:user.imageRatio)
 		
 		buttonNode.backgroundColor = ColorPalette.baisWhite
-		//self.setButtonTitle("Invite")
-		//buttonNode.addTarget(self, action: #selector(buttonPressed(sender:)), forControlEvents: .touchUpInside)
 		buttonNode.addTarget(self, action: #selector(self.buttonPressed(_:)), forControlEvents: .touchUpInside)
 
 		self.setFriendshipAction()
-		
-		//self.addTarget(self, action: #selector(cardPressed(sender:)), forControlEvents: .touchUpInside)
 		
 		self.addSubnode(self.imageNode)
 		self.addSubnode(self.nameNode)
@@ -87,7 +95,6 @@ class BAUsersViewCell: ASCellNode {
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-		
 		// imagen
 		let imagePlace = ASRatioLayoutSpec(ratio: self.ratio.height, child: imageNode)
 		imagePlace.style.minWidth = ASDimension(unit: .points, value: constrainedSize.max.width)
@@ -123,16 +130,18 @@ class BAUsersViewCell: ASCellNode {
 		return verticalStack
 	}
 	
+	//MARK: - BAUsersCellNodeDelegate methods
+	
 	func cardPressed(_ sender: UIButton){
-		delegate?.usersViewCellDidClickView(self);
+		delegate?.usersCellNodeDidClickView(self);
 	}
 	
 	func buttonPressed(_ sender: UIButton){
-		delegate?.usersViewCellDidClickButton(self)
+		delegate?.usersCellNodeDidClickButton(self)
 	}
 	
 	func setButtonTitle(_ title: String){
-		self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.baisOrange, for: [])
+		self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
 	}
 	
 	func setFriendshipAction(){
