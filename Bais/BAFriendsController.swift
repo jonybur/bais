@@ -40,6 +40,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		super.viewDidAppear(animated)
 	}
 	
+	//MARK: - ASTableNode didSelectRowAt.
+	
+	func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+		let user = _sections[indexPath.item - 1]
+		self.navigationController?.pushViewController(BAChatController(with: user), animated: true)
+		self.tableNode.deselectRow(at: indexPath, animated: true)
+	}
+	
 	//MARK: - ASTableNode data source and delegate.
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {

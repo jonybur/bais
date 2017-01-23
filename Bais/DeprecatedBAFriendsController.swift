@@ -97,7 +97,7 @@ class DeprecatedBAFriendsController: UIViewController, ChatCardDelegate {
 	func chatCardDidClick(sender: BAChatCard) {
 	
 		let userToChat = sender.cardUser;
-		self.navigationController?.pushViewController(BAChatController(withUser: userToChat!), animated: true);
+		self.navigationController?.pushViewController(BAChatController(with: userToChat!), animated: true);
 		
 	}
 

@@ -1,20 +1,9 @@
 //
-//  ImageCellNode.swift
-//  Sample
+//  BAUsersCellNode.swift
+//  Bais
 //
-//  Created by Rajeev Gupta on 11/9/16.
-//
-//  Copyright (c) 2014-present, Facebook, Inc.  All rights reserved.
-//  This source code is licensed under the BSD-style license found in the
-//  LICENSE file in the root directory of this source tree. An additional grant
-//  of patent rights can be found in the PATENTS file in the same directory.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-//  FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-//  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-//  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  Created by Jonathan Bursztyn on 19/1/17.
+//  Copyright © 2017 Board Social, Inc. All rights reserved.
 //
 
 import UIKit
@@ -28,12 +17,41 @@ protocol BAUsersCellNodeDelegate: class {
 	func usersCellNodeDidClickButton(_ usersViewCell: BAUsersCellNode);
 }
 
+// TODO: move this inside imageModificationBlock, remove extension - avoid calling UIGraphicsBeginImageContextWithOptions again
+extension UIImage {
+	func tintedWithLinearGradientColors(colorsArr: [CGColor?]) -> UIImage {
+		UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale);
+		let context = UIGraphicsGetCurrentContext()
+		context!.translateBy(x: 0, y: self.size.height)
+		context!.scaleBy(x: 1.0, y: -1.0)
+		
+		context!.setBlendMode(CGBlendMode.normal)
+		let rect = CGRect(0, 0, self.size.width, self.size.height)
+		
+		// Create gradient
+		
+		let colors = colorsArr as CFArray
+		let space = CGColorSpaceCreateDeviceRGB()
+		let gradient = CGGradient(colorsSpace: space, colors: colors, locations: nil)
+		
+		// Apply gradient
+		
+		context!.clip(to: rect, mask: self.cgImage!)
+		context!.drawLinearGradient(gradient!, start: CGPoint(0, self.size.height / 2), end: CGPoint(0, self.size.height), options: CGGradientDrawingOptions(rawValue: 0))
+		let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		
+		return gradientImage!
+	}
+}
+
 class BAUsersCellNode: ASCellNode {
 	
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
 	let distanceNode = ASTextNode()
 	let buttonNode = ASButtonNode()
+	var gradientNode = ASDisplayNode()
 	
 	var cardUser: User!
 	var ratio: CGSize!
@@ -52,11 +70,18 @@ class BAUsersCellNode: ASCellNode {
 			var modifiedImage: UIImage!
 			let rect = CGRect(origin: CGPoint(0, 0), size: image.size)
 			UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)
+			
 			let maskPath = UIBezierPath(roundedRect: rect, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: 10, height: 10))
 			maskPath.addClip()
 			image.draw(in: rect)
+			
+			let gradientImage = image.tintedWithLinearGradientColors(colorsArr: [UIColor.init(white: 0, alpha: 0.75).cgColor, UIColor.clear.cgColor])
+			gradientImage.draw(in: CGRect(origin: CGPoint(0, gradientImage.size.height / 2), size: gradientImage.size))
+			
 			modifiedImage = UIGraphicsGetImageFromCurrentImageContext()
+			
 			UIGraphicsEndImageContext()
+			
 			return modifiedImage
 		}
 		
@@ -66,14 +91,12 @@ class BAUsersCellNode: ASCellNode {
 		shadow.shadowOffset = CGSize(width: 0, height: 0)
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium),
-			NSForegroundColorAttributeName: UIColor.white,
-			NSShadowAttributeName: shadow]
+			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+			NSForegroundColorAttributeName: UIColor.white]
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightLight),
-			NSForegroundColorAttributeName: UIColor.white,
-			NSShadowAttributeName: shadow]
+			NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightLight),
+			NSForegroundColorAttributeName: UIColor.white]
 		
 		nameNode.attributedText = NSAttributedString(string: cardUser.firstName, attributes: nameAttributes)
 		
@@ -87,6 +110,15 @@ class BAUsersCellNode: ASCellNode {
 		buttonNode.addTarget(self, action: #selector(self.buttonPressed(_:)), forControlEvents: .touchUpInside)
 
 		self.setFriendshipAction()
+
+		gradientNode = ASDisplayNode(layerBlock: { () -> CALayer in
+			let gradient = CAGradientLayer()
+			gradient.colors = [UIColor.clear.cgColor, UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor]
+			return gradient
+		})
+		
+		self.imageNode.clipsToBounds = true;
+		
 		
 		self.addSubnode(self.imageNode)
 		self.addSubnode(self.nameNode)
@@ -99,13 +131,13 @@ class BAUsersCellNode: ASCellNode {
 		let imagePlace = ASRatioLayoutSpec(ratio: self.ratio.height, child: imageNode)
 		imagePlace.style.minWidth = ASDimension(unit: .points, value: constrainedSize.max.width)
 		
-		// stack
+		// text stack
 		let textStack = ASStackLayoutSpec()
 		textStack.direction = .vertical
 		textStack.alignItems = .start
 		textStack.children = [nameNode, distanceNode]
 		
-		// text inset
+		// text stack inset
 		let textInsets = UIEdgeInsets(top: CGFloat.infinity, left: 10, bottom: 10, right: 10)
 		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: textStack)
 		

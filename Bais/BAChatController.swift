@@ -51,37 +51,37 @@ class BAChatController: JSQMessagesViewController {
 	
 	var userToChat : User!;
 	
-	convenience init (withUser : User){
+	convenience init (with user: User){
 		self.init();
-		self.userToChat = withUser;
+		self.userToChat = user;
 	}
 	
 	override func viewDidLoad() {
 		
 		// Navigation bar
-		self.navigationController?.isNavigationBarHidden = false;
-		self.navigationController?.navigationBar.barTintColor = UIColor.white;
-		self.navigationController?.navigationBar.tintColor = ColorPalette.baisArgentinaBlue;
-		self.navigationController?.navigationBar.frame.setNewFrameHeight(50);
-		self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true;
+		self.navigationController?.isNavigationBarHidden = false
+		self.navigationController?.navigationBar.barTintColor = UIColor.white
+		self.navigationController?.navigationBar.tintColor = ColorPalette.baisOrange
+		self.navigationController?.navigationBar.frame.setNewFrameHeight(55)
+		self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
 		
-		super.viewDidLoad();
+		super.viewDidLoad()
 		
-		setupBubbles();
+		setupBubbles()
 
 		// No avatars
-		collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.init(width: 10, height: 10);
-		collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero;
+		collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.init(width: 10, height: 10)
+		collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
 		
-		self.title = userToChat.fullNameConfidential();
+		self.title = userToChat.firstName
 		
-		UIApplication.shared.statusBarStyle = .default;
+		UIApplication.shared.statusBarStyle = .default
 		
 		self.additionalContentInset = UIEdgeInsetsMake(70, 0, 0, 0);
 		self.inputToolbar.contentView?.rightBarButtonItem?.setTitleColor(ColorPalette.baisOrange, for: .normal)
 		self.inputToolbar.contentView?.rightBarButtonItem?.setTitleColor(ColorPalette.baisOrangeDarker, for: .highlighted)
-		self.inputToolbar.contentView?.leftBarButtonItem = nil;
-		self.inputToolbar.contentView?.textView?.placeHolder = "";
+		self.inputToolbar.contentView?.leftBarButtonItem = nil
+		self.inputToolbar.contentView?.textView?.placeHolder = ""
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
