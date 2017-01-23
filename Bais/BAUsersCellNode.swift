@@ -75,7 +75,7 @@ class BAUsersCellNode: ASCellNode {
 			maskPath.addClip()
 			image.draw(in: rect)
 			
-			let gradientImage = image.tintedWithLinearGradientColors(colorsArr: [UIColor.init(white: 0, alpha: 0.75).cgColor, UIColor.clear.cgColor])
+			let gradientImage = image.tintedWithLinearGradientColors(colorsArr: [UIColor.init(white: 0, alpha: 0.6).cgColor, UIColor.clear.cgColor])
 			gradientImage.draw(in: CGRect(origin: CGPoint(0, gradientImage.size.height / 2), size: gradientImage.size))
 			
 			modifiedImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -118,7 +118,6 @@ class BAUsersCellNode: ASCellNode {
 		})
 		
 		self.imageNode.clipsToBounds = true;
-		
 		
 		self.addSubnode(self.imageNode)
 		self.addSubnode(self.nameNode)

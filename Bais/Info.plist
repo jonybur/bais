@@ -83,7 +83,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Bais would like to have access to the camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>BAIS wants to show you interesting people nearby</string>
+	<string>Bais wants to show you interesting people nearby</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bais would like to have access to your photo library</string>
 	<key>UIBackgroundModes</key>
