@@ -55,6 +55,7 @@ class BAChatCellNode: ASCellNode {
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+		
 		// imagen
 		let imagePlace = ASRatioLayoutSpec(ratio: 1, child: imageNode)
 		imagePlace.style.maxWidth = ASDimension(unit: .points, value: 60)

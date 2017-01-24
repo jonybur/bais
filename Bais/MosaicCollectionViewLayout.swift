@@ -114,7 +114,7 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 			top = (_columnHeights?[section][columnIndex])! - interItemSpacing + _sectionInset.bottom
 			
 			for idx in 0 ..< _columnHeights![section].count {
-				_columnHeights![section][idx] = top
+				_columnHeights![section][idx] = top + 100
 			}
 		}
 	}

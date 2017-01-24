@@ -25,6 +25,8 @@ class BAChatHeaderCellNode: ASCellNode {
 		nameNode.attributedText = NSAttributedString(string: "My Friends", attributes: nameAttributes)
 		buttonNode.setImage(UIImage(named:"country-button"), for: [])
 		
+		self.selectionStyle = .none
+
 		self.addSubnode(self.nameNode)
 		addSubnode(self.buttonNode)
 	}

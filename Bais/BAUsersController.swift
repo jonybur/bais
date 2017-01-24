@@ -24,7 +24,8 @@ import FirebaseAuth
 import DGActivityIndicatorView
 import PromiseKit
 
-class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, ASCollectionDataSource, ASCollectionDelegate, BAUsersCellNodeDelegate {
+class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
+	ASCollectionDataSource, ASCollectionDelegate, BAUsersCellNodeDelegate, BAUsersHeaderCellNodeDelegate {
 
 	var _sections = [[User]]()
 	let _collectionNode: ASCollectionNode!
@@ -80,7 +81,9 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, A
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-		return BAUsersHeaderCellNode()
+		let header = BAUsersHeaderCellNode()
+		header.delegate = self
+		return header
 	}
 	
 	func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
@@ -99,6 +102,11 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, A
 		let user = self.userForIndexPath(originalItemSizeAtIndexPath)
 		let ratio = user.imageRatio
 		return CGSize(width: 1, height: ratio)
+	}
+	
+	//MARK: - BAUsersHeaderViewCell delegate methods
+	func usersHeaderCellNodeDidClickButton(_ usersHeaderViewCell: BAUsersHeaderCellNode) {
+		print("stop!")
 	}
 	
 	//MARK: - BAUsersViewCell delegate methods
