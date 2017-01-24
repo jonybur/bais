@@ -51,6 +51,7 @@ class BAUsersCellNode: ASCellNode {
 	let nameNode = ASTextNode()
 	let distanceNode = ASTextNode()
 	let buttonNode = ASButtonNode()
+	let flagNode = ASImageNode()
 	var gradientNode = ASDisplayNode()
 	
 	var cardUser: User!
@@ -106,7 +107,6 @@ class BAUsersCellNode: ASCellNode {
 		
 		ratio = CGSize(width:1,height:user.imageRatio)
 		
-		buttonNode.backgroundColor = ColorPalette.baisWhite
 		buttonNode.addTarget(self, action: #selector(self.buttonPressed(_:)), forControlEvents: .touchUpInside)
 
 		self.setFriendshipAction()
@@ -117,31 +117,41 @@ class BAUsersCellNode: ASCellNode {
 			return gradient
 		})
 		
+		flagNode.image = UIImage(named: user.nationality)
+		
 		self.imageNode.clipsToBounds = true;
 		
 		self.addSubnode(self.imageNode)
 		self.addSubnode(self.nameNode)
+		self.addSubnode(self.flagNode)
 		self.addSubnode(self.distanceNode)
 		self.addSubnode(self.buttonNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+		
 		// imagen
-		let imagePlace = ASRatioLayoutSpec(ratio: self.ratio.height, child: imageNode)
-		imagePlace.style.minWidth = ASDimension(unit: .points, value: constrainedSize.max.width)
+		let imageLayout = ASRatioLayoutSpec(ratio: self.ratio.height, child: imageNode)
+		imageLayout.style.minWidth = ASDimension(unit: .points, value: constrainedSize.max.width)
+		
+		flagNode.style.preferredSize = CGSize(width: 20, height: 20)
+		
+		let spacerSpec = ASLayoutSpec()
+		spacerSpec.style.flexGrow = 1.0
+		spacerSpec.style.flexShrink = 1.0
 		
 		// text stack
 		let textStack = ASStackLayoutSpec()
 		textStack.direction = .vertical
 		textStack.alignItems = .start
-		textStack.children = [nameNode, distanceNode]
+		textStack.children = [flagNode, spacerSpec, nameNode, distanceNode]
 		
 		// text stack inset
-		let textInsets = UIEdgeInsets(top: CGFloat.infinity, left: 10, bottom: 10, right: 10)
+		let textInsets = UIEdgeInsets(top: 5, left: 10, bottom: 10, right: 10)
 		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: textStack)
 		
 		// overlay imagen + texto
-		let overlayLayout = ASOverlayLayoutSpec(child: imagePlace, overlay: textInsetSpec)
+		let overlayLayout = ASOverlayLayoutSpec(child: imageLayout, overlay: textInsetSpec)
 		overlayLayout.style.flexBasis = ASDimension (unit: .fraction, value: 0.8)
 		overlayLayout.style.flexShrink = 1
 		
@@ -151,13 +161,13 @@ class BAUsersCellNode: ASCellNode {
 		buttonNode.style.flexShrink = 1
 		buttonNode.contentVerticalAlignment = .alignmentCenter
 		buttonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
-		
+
 		// stack
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .center
 		verticalStack.children = [overlayLayout, buttonNode]
-
+		
 		return verticalStack
 	}
 	

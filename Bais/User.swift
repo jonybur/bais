@@ -53,6 +53,12 @@ class User{
 		}
 	}
 	
+	var distanceFromUser: Double{
+		get {
+			return location.distance(from: (CurrentUser.location!))
+		}
+	}
+	
 	private func setValuesFromDictionary(_ dictionary : NSDictionary){
 		self.id = dictionary["id"] as! String
 		self.facebookId = dictionary["facebook_id"] as! String

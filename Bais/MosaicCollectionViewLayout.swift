@@ -44,9 +44,9 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 	
 	required override init() {
 		self.numberOfColumns = 2
-		self.columnSpacing = 10.0
+		self.columnSpacing = 12.5
 		self.headerHeight = 90.0
-		self._sectionInset = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0)
+		self._sectionInset = UIEdgeInsetsMake(10, 12.5, 10, 12.5)
 		self.interItemSpacing = 0
 		self.top = 0
 		super.init()
@@ -56,7 +56,7 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	public var delegate : MosaicCollectionViewLayoutDelegate?
+	public var delegate: MosaicCollectionViewLayoutDelegate?
 	
 	override func prepare() {
 		super.prepare()
@@ -231,7 +231,8 @@ class MosaicCollectionViewLayoutInspector: NSObject, ASCollectionViewLayoutInspe
 	func collectionView(_ collectionView: ASCollectionView, constrainedSizeForSupplementaryNodeOfKind: String, at atIndexPath: IndexPath) -> ASSizeRange
 	{
 		let layout = collectionView.collectionViewLayout as! MosaicCollectionViewLayout
-		return ASSizeRange.init(min: CGSize.zero, max: layout._headerSizeForSection(section: atIndexPath.section))
+		let sizeForSection = layout._headerSizeForSection(section: atIndexPath.section)
+		return ASSizeRange.init(min: CGSize(width: sizeForSection.width, height: 0), max: sizeForSection)
 	}
 	
 	/**

@@ -170,9 +170,9 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, A
 				}
 			
 				when(resolved: promises).then(execute: { _ -> Void in
-					// sort by distance -> self._sections[0].sorted(by: $0.)
+					self._sections[0] = self._sections[0].sorted { $0.distanceFromUser < $1.distanceFromUser }
 					self._collectionNode.reloadData()
-					self._collectionNode.view.contentOffset = CGPoint(x: 0, y: 75)
+					//self._collectionNode.view.contentOffset = CGPoint(x: 0, y: 75)
 					self.activityIndicatorView?.stopAnimating()
 				})
 				

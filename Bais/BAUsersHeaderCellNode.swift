@@ -25,28 +25,32 @@ class BAUsersHeaderCellNode: ASCellNode {
 		nameNode.attributedText = NSAttributedString(string: "Sorted by Distance", attributes: nameAttributes)
 		buttonNode.setImage(UIImage(named:"country-button"), for: [])
 		
-		self.addSubnode(self.nameNode)
-		self.addSubnode(self.buttonNode)
+		addSubnode(self.nameNode)
+		addSubnode(self.buttonNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-		// text inset
-		let textInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
-		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: self.nameNode)
 		
-		// text inset
-		// TODO: corner-right 
 		buttonNode.style.preferredSize = CGSize(width: 50, height: 50)
-		let buttonInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-		let buttonInsetSpec = ASInsetLayoutSpec(insets: buttonInsets, child: self.buttonNode)
+		buttonNode.style.flexShrink = 1.0
+
+		let spacerSpec = ASLayoutSpec()
+		spacerSpec.style.flexGrow = 1.0
+		spacerSpec.style.flexShrink = 1.0
 		
 		// horizontal stack
-		let horizontalStack = ASStackLayoutSpec()
-		horizontalStack.direction = .horizontal
-		horizontalStack.justifyContent = .end
-		horizontalStack.alignItems = .stretch
-		horizontalStack.children = [textInsetSpec, buttonInsetSpec]
+		let horizontalStack = ASStackLayoutSpec.horizontal()
+		horizontalStack.alignItems = .center
+		horizontalStack.justifyContent = .start
+		horizontalStack.style.flexShrink = 1.0
+		horizontalStack.style.flexGrow = 1.0
+		horizontalStack.children = [nameNode, spacerSpec, buttonNode]
 		
-		return horizontalStack
+		// move down
+		let insetSpec = ASInsetLayoutSpec()
+		insetSpec.insets = UIEdgeInsets(top: 20, left: 2.5, bottom: 0, right: 2.5)
+		insetSpec.child = horizontalStack
+
+		return insetSpec
 	}
 }
