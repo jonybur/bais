@@ -86,11 +86,11 @@ class BAUsersHeaderCellNode: ASCellNode {
 		switch (currentMode) {
 		case .distance:
 			nameNode.attributedText = NSAttributedString(string: "Only Argentina", attributes: nameAttributes)
-			buttonNode.setImage(UIImage(named:"country-button"), for: [])
+			buttonNode.setImage(UIImage(named:"distance-button"), for: [])
 			break
 		case .country:
 			nameNode.attributedText = NSAttributedString(string: "Sorted by Distance", attributes: nameAttributes)
-			buttonNode.setImage(UIImage(named:"distance-button"), for: [])
+			buttonNode.setImage(UIImage(named:"country-button"), for: [])
 			break
 		}
 		
