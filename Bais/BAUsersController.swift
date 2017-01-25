@@ -27,7 +27,9 @@ import PromiseKit
 class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	ASCollectionDataSource, ASCollectionDelegate, BAUsersCellNodeDelegate, BAUsersHeaderCellNodeDelegate {
 
-	var _sections = [[User]]()
+	var _contentToDisplay = [User]()
+	var _allUsers = [User]()
+
 	let _collectionNode: ASCollectionNode!
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
 	let usersRef = FIRDatabase.database().reference().child("users")
@@ -74,7 +76,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
-		let user = _sections[indexPath.section][indexPath.item]
+		let user = _contentToDisplay[indexPath.item]
 		let node = BAUsersCellNode(with: user)
 		node.delegate = self
 		return node
@@ -87,17 +89,18 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	}
 	
 	func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-		return _sections.count
+		return 1
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-		return _sections[section].count
+		return _contentToDisplay.count
 	}
 	
 	func userForIndexPath(_ indexPath: IndexPath) -> User{
-		return _sections[indexPath.section][indexPath.item]
+		return _contentToDisplay[0]
 	}
 	
+	//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
 	internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
 		let user = self.userForIndexPath(originalItemSizeAtIndexPath)
 		let ratio = user.imageRatio
@@ -106,7 +109,14 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	
 	//MARK: - BAUsersHeaderViewCell delegate methods
 	func usersHeaderCellNodeDidClickButton(_ usersHeaderViewCell: BAUsersHeaderCellNode) {
-		print("stop!")
+		var countryToDisplay = [User]()
+		for user in _allUsers{
+			if (user.nationality == "Spain"){
+				countryToDisplay.append(user)
+			}
+		}
+		_contentToDisplay = countryToDisplay
+		_collectionNode.reloadSections(IndexSet(integer: 0))
 	}
 	
 	//MARK: - BAUsersViewCell delegate methods
@@ -130,11 +140,10 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	}
 	
 	func usersCellNodeDidClickView(_ usersViewCell: BAUsersCellNode) {
-		print ("taps on card")
+		
 	}
 	
 	//MARK: - Firebase
-	
 	// gets current user location
 	private func observeUserLocation() -> Promise<CLLocation>{
 		return Promise{ fulfill, reject in
@@ -149,7 +158,6 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		}
 	}
 	
-	
 	// gets all users (should filter by distance? paginate?)
 	private func populateUsers(){
 		let activityIndicatorSize = (activityIndicatorView?.size)!
@@ -162,9 +170,9 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 
 				// sets a new section				
 				var promises = [Promise<Void>]()
-				self._sections.append([])
+				self._allUsers = [User]()
 				
-				for _ in 0...2{
+				for _ in 0...0{
 					for (_, snapshotValue) in snapshotDictionary{
 						if let userDictionary = snapshotValue as? NSDictionary{
 							let user = User(fromNSDictionary: userDictionary)
@@ -172,19 +180,19 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 								continue;
 							}
 							promises.append(self.getFriendshipStatusFor(user: user))
-							self._sections[0].append(user)
+							self._allUsers.append(user)
 						}
 					}
 				}
 			
 				when(resolved: promises).then(execute: { _ -> Void in
-					self._sections[0] = self._sections[0].sorted { $0.distanceFromUser < $1.distanceFromUser }
-					self._collectionNode.reloadData()
+					self._contentToDisplay = self._allUsers.sorted { $0.distanceFromUser < $1.distanceFromUser }
+					
+					// change reload data to something else?
+					self._collectionNode.reloadSections(IndexSet(integer:0))
 					//self._collectionNode.view.contentOffset = CGPoint(x: 0, y: 75)
 					self.activityIndicatorView?.stopAnimating()
 				})
-				
-				
 			}
 			
 		}

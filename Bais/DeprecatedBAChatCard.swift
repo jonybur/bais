@@ -66,8 +66,6 @@ class BAChatCardButtons : ASDisplayNode{
 		
 		view.layer.add(impliesAnimation, forKey: nil)
 	}
-
-	
 }
 
 class BAChatCard : ASButtonNode, ChatCardButtonsDelegate{

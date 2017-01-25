@@ -54,7 +54,7 @@ class BAUsersCellNode: ASCellNode {
 	let flagNode = ASImageNode()
 	var gradientNode = ASDisplayNode()
 	
-	var cardUser: User!
+	var user: User!
 	var ratio: CGSize!
 	
 	weak var delegate: BAUsersCellNodeDelegate?
@@ -62,7 +62,7 @@ class BAUsersCellNode: ASCellNode {
 	required init(with user: User) {
 		super.init()
 		
-		cardUser = user
+		self.user = user
 		
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
 		imageNode.shouldRenderProgressImages = true
@@ -99,9 +99,9 @@ class BAUsersCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightLight),
 			NSForegroundColorAttributeName: UIColor.white]
 		
-		nameNode.attributedText = NSAttributedString(string: cardUser.firstName, attributes: nameAttributes)
+		nameNode.attributedText = NSAttributedString(string: self.user.firstName, attributes: nameAttributes)
 		
-		let distanceString = self.cardUser.location.distance(from: CurrentUser.location!).redacted()
+		let distanceString = self.user.location.distance(from: CurrentUser.location!).redacted()
 		distanceNode.attributedText = NSAttributedString(string: distanceString, attributes: distanceAttributes)
 		distanceNode.maximumNumberOfLines = 1
 		
@@ -186,7 +186,7 @@ class BAUsersCellNode: ASCellNode {
 	}
 	
 	func setFriendshipAction(){
-		switch (cardUser.friendshipStatus){
+		switch (user.friendshipStatus){
 			case .accepted:
 				self.setButtonTitle("Chat")
 				break;

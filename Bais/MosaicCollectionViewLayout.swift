@@ -48,10 +48,11 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 		self.headerHeight = 90.0
 		self._sectionInset = UIEdgeInsetsMake(10, 12.5, 10, 12.5)
 		self.interItemSpacing = 0
-		self.top = 0
+		self.top = 10
 		super.init()
 		self.scrollDirection = .vertical
 	}
+	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -61,6 +62,8 @@ class MosaicCollectionViewLayout: UICollectionViewFlowLayout {
 	override func prepare() {
 		super.prepare()
 		guard let collectionView = self.collectionView else { return }
+		
+		self.top = 10
 		
 		_itemAttributes = []
 		_allAttributes = []

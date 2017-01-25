@@ -8,6 +8,7 @@
 
 import Foundation
 import AsyncDisplayKit
+import pop
 
 protocol BAUsersHeaderCellNodeDelegate: class {
 	func usersHeaderCellNodeDidClickButton(_ usersViewCell: BAUsersHeaderCellNode);
@@ -20,6 +21,7 @@ class BAUsersHeaderCellNode: ASCellNode {
 	let buttonNode = ASButtonNode()
 	weak var delegate: BAUsersHeaderCellNodeDelegate?
 	var currentMode: UsersDisplayMode = .distance
+	var blockButton: Bool = false
 	
 	enum UsersDisplayMode : String{
 		case distance = "distance", country = "country"
@@ -41,7 +43,7 @@ class BAUsersHeaderCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		nameNode.attributedText = NSAttributedString(string: "Sorted by Distance", attributes: nameAttributes)
+		nameNode.attributedText = NSAttributedString(string: "All Countries", attributes: nameAttributes)
 		buttonNode.setImage(UIImage(named:"country-button"), for: [])
 		
 		self.selectionStyle = .none
@@ -79,6 +81,11 @@ class BAUsersHeaderCellNode: ASCellNode {
 	//MARK: - BAUsersHeaderCellNodeDelegate methods
 	func buttonPressed(_ sender: UIButton){
 		
+		if (blockButton){
+			return
+		}
+		blockButton = true
+		
 		let nameAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
 			NSForegroundColorAttributeName: ColorPalette.grey]
@@ -89,11 +96,20 @@ class BAUsersHeaderCellNode: ASCellNode {
 			buttonNode.setImage(UIImage(named:"distance-button"), for: [])
 			break
 		case .country:
-			nameNode.attributedText = NSAttributedString(string: "Sorted by Distance", attributes: nameAttributes)
+			nameNode.attributedText = NSAttributedString(string: "All Countries", attributes: nameAttributes)
 			buttonNode.setImage(UIImage(named:"country-button"), for: [])
 			break
 		}
 		
+		// animates the check
+		let spring = POPSpringAnimation(propertyNamed: kPOPViewScaleXY);
+		spring?.velocity = NSValue(cgPoint: CGPoint(x: -5, y: -5));
+		spring?.springBounciness = 5;
+		spring?.completionBlock =  {(animation, finished) in
+			self.blockButton = !self.blockButton
+		}
+		sender.pop_add(spring, forKey: "sendAnimation");
+
 		currentMode = currentMode.next()
 		
 		delegate?.usersHeaderCellNodeDidClickButton(self);
