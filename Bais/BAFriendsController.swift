@@ -11,7 +11,7 @@ import AsyncDisplayKit
 import Firebase
 import PromiseKit
 
-final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate {
+final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, BAChatHeaderCellNodeDelegate {
 	
 	let usersRef = FIRDatabase.database().reference().child("users");
 	var _sections = [User]()
@@ -43,6 +43,11 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	//MARK: - ASTableNode didSelectRowAt.
 	
 	func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+		
+		if (indexPath.item == 0){
+			return
+		}
+		
 		let user = _sections[indexPath.item - 1]
 		self.navigationController?.pushViewController(BAChatController(with: user), animated: true)
 		self.tableNode.deselectRow(at: indexPath, animated: true)
@@ -58,6 +63,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
 		if (item == 0){
 			let headerNode = BAChatHeaderCellNode(with: _sections[0])
+			headerNode.delegate = self
 			return headerNode
 		}
 		
@@ -72,6 +78,11 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
 		return self._sections.count > 0 ? self._sections.count + 1 : 0;
+	}
+	
+	//MARK: - BAChatHeaderCellNodeDelegate
+	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode) {
+		print("taps")
 	}
 	
 	//MARK: - Firebase

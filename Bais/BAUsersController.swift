@@ -29,6 +29,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 
 	var _contentToDisplay = [User]()
 	var _allUsers = [User]()
+	var showAllUsers: Bool = false
 
 	let _collectionNode: ASCollectionNode!
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
@@ -107,14 +108,12 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		return CGSize(width: 1, height: ratio)
 	}
 	
-	var show: Bool = false
-	
 	//MARK: - BAUsersHeaderViewCell delegate methods
 	func usersHeaderCellNodeDidClickButton(_ usersHeaderViewCell: BAUsersHeaderCellNode) {
 		
 		var idxToReload = [IndexPath]()
 		
-		if (!show){
+		if (!showAllUsers){
 			var countryToDisplay = [User]()
 			var idxToDelete = [IndexPath]()
 			
@@ -130,7 +129,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 				idxToDelete.append(idxPath)
 			}
 			
-			_contentToDisplay = countryToDisplay
+			_contentToDisplay = countryToDisplay.sorted { $0.distanceFromUser < $1.distanceFromUser }
 			_collectionNode.deleteItems(at: idxToDelete)
 		} else {
 			var idxToInsert = [IndexPath]()
@@ -143,12 +142,13 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 					idxToInsert.append(idxPath)
 				}
 			}
-			_contentToDisplay = _allUsers
+			
+			_contentToDisplay = _allUsers.sorted { $0.distanceFromUser < $1.distanceFromUser }
 			_collectionNode.insertItems(at: idxToInsert)
 		}
 		
 		_collectionNode.reloadItems(at: idxToReload)
-		show = !show
+		showAllUsers = !showAllUsers
 	}
 	
 	//MARK: - BAUsersViewCell delegate methods
@@ -204,7 +204,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 				var promises = [Promise<Void>]()
 				self._allUsers = [User]()
 				
-				for _ in 0...2{
+				for _ in 0...0{
 					for (_, snapshotValue) in snapshotDictionary{
 						if let userDictionary = snapshotValue as? NSDictionary{
 							let user = User(fromNSDictionary: userDictionary)

@@ -28,7 +28,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 				
 		self.title = ""
 		self.tabBar.shadowImage = UIImage(named: "transparent")
-		self.tabBar.backgroundImage = UIImage(named: "background")
+		self.tabBar.backgroundImage = UIImage(named: "transparent")
 		self.tabBar.isTranslucent = true
 		self.tabBar.alpha = 0.9
 		//self.tabBar.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 0.6)

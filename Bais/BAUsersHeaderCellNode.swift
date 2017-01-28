@@ -17,13 +17,13 @@ protocol BAUsersHeaderCellNodeDelegate: class {
 // add a delegate here to be able switch around
 class BAUsersHeaderCellNode: ASCellNode {
 	
+	weak var delegate: BAUsersHeaderCellNodeDelegate?
 	let nameNode = ASTextNode()
 	let buttonNode = ASButtonNode()
-	weak var delegate: BAUsersHeaderCellNodeDelegate?
 	var currentMode: UsersDisplayMode = .distance
 	var blockButton: Bool = false
 	
-	enum UsersDisplayMode : String{
+	enum UsersDisplayMode: String{
 		case distance = "distance", country = "country"
 		
 		func next() -> UsersDisplayMode {
