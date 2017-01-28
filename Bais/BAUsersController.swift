@@ -107,16 +107,48 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		return CGSize(width: 1, height: ratio)
 	}
 	
+	var show: Bool = false
+	
 	//MARK: - BAUsersHeaderViewCell delegate methods
 	func usersHeaderCellNodeDidClickButton(_ usersHeaderViewCell: BAUsersHeaderCellNode) {
-		var countryToDisplay = [User]()
-		for user in _allUsers{
-			if (user.nationality == "Spain"){
-				countryToDisplay.append(user)
+		
+		var idxToReload = [IndexPath]()
+		
+		if (!show){
+			var countryToDisplay = [User]()
+			var idxToDelete = [IndexPath]()
+			
+			for user in _allUsers {
+				if (user.nationality == "Spain"){
+					let idxPath = IndexPath(item: countryToDisplay.count, section: 0)
+					idxToReload.append(idxPath)
+					countryToDisplay.append(user)
+				}
 			}
+			for idx in idxToReload.count..._allUsers.count - 1{
+				let idxPath = IndexPath(item: idx, section: 0)
+				idxToDelete.append(idxPath)
+			}
+			
+			_contentToDisplay = countryToDisplay
+			_collectionNode.deleteItems(at: idxToDelete)
+		} else {
+			var idxToInsert = [IndexPath]()
+			
+			for idx in 0..._allUsers.count - 1 {
+				let idxPath = IndexPath(item: idx, section: 0)
+				idxToReload.append(idxPath)
+				
+				if (idx > _contentToDisplay.count - 1){
+					idxToInsert.append(idxPath)
+				}
+			}
+			_contentToDisplay = _allUsers
+			_collectionNode.insertItems(at: idxToInsert)
 		}
-		_contentToDisplay = countryToDisplay
-		_collectionNode.reloadSections(IndexSet(integer: 0))
+		
+		_collectionNode.reloadItems(at: idxToReload)
+		show = !show
 	}
 	
 	//MARK: - BAUsersViewCell delegate methods
@@ -172,7 +204,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 				var promises = [Promise<Void>]()
 				self._allUsers = [User]()
 				
-				for _ in 0...0{
+				for _ in 0...2{
 					for (_, snapshotValue) in snapshotDictionary{
 						if let userDictionary = snapshotValue as? NSDictionary{
 							let user = User(fromNSDictionary: userDictionary)

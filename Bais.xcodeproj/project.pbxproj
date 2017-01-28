@@ -409,6 +409,7 @@
 				ABF08B1D1D916E5400C6B832 /* Resources */,
 				364C886B1E63CEDF4FF96975 /* [CP] Embed Pods Frameworks */,
 				A4B65DAECF333D78044C203A /* [CP] Copy Pods Resources */,
+				ABA2A4CA1E387CEC00C24E0C /* Autoincrement build */,
 			);
 			buildRules = (
 			);
@@ -509,6 +510,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bais/Pods-Bais-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		ABA2A4CA1E387CEC00C24E0C /* Autoincrement build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Autoincrement build";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
 		DB3B19C619CAC66231A678AC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

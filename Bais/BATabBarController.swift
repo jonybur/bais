@@ -27,7 +27,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		automaticallyAdjustsScrollViewInsets = false
 				
 		self.title = ""
-		//self.tabBar.shadowImage = UIImage(named: "transparent")
+		self.tabBar.shadowImage = UIImage(named: "transparent")
 		self.tabBar.backgroundImage = UIImage(named: "background")
 		self.tabBar.isTranslucent = true
 		self.tabBar.alpha = 0.9
