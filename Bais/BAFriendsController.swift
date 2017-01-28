@@ -56,9 +56,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	//MARK: - ASTableNode data source and delegate.
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
-		// Should read the row count directly from table view but
-		// https://github.com/facebook/AsyncDisplayKit/issues/1159
-		
 		let item = indexPath.item
 		
 		if (item == 0){
@@ -68,7 +65,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		
 		let user = _sections[item - 1]
-		let chatNode = BAChatCellNode(with: user)
+		let chatNode = BAFriendRequestCellNode(with: user)
 		return chatNode
 	}
 	
@@ -78,6 +75,20 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
 		return self._sections.count > 0 ? self._sections.count + 1 : 0;
+	}
+	
+	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+		
+		if (indexPath.item == 0){
+			return nil
+		}
+		
+		let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
+			
+		}
+		removeAction.backgroundColor = ColorPalette.baisOrange
+		
+		return [removeAction]
 	}
 	
 	//MARK: - BAChatHeaderCellNodeDelegate

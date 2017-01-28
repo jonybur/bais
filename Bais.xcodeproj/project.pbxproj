@@ -12,8 +12,8 @@
 		AB4F5D751D98D204003586B2 /* FirebaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D741D98D204003586B2 /* FirebaseAPI.swift */; };
 		AB4F5D771D98EB4F003586B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D761D98EB4F003586B2 /* User.swift */; };
 		AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */; };
+		AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */; };
 		AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */; };
-		AB9B5BA81E3471AE001A9085 /* BAFriendsContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B5BA71E3471AE001A9085 /* BAFriendsContainerController.swift */; };
 		AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */; };
 		ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */; };
 		ABB9F2DD1D9170C600E01511 /* AppsCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B21D9170C600E01511 /* AppsCommunicator.swift */; };
@@ -56,7 +56,6 @@
 		ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF08B221D916E5400C6B832 /* AppDelegate.swift */; };
 		ABF50ACC1DEA7651004CB6E8 /* BAUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */; };
 		ABFA0B311D9A0CB000ED6C16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */; };
-		ABFA0B341D9A260100ED6C16 /* DeprecatedBAFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFA0B331D9A260100ED6C16 /* DeprecatedBAFriendsController.swift */; };
 		ABFC76E61E34995700B6498D /* BAUsersHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */; };
 		ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */; };
 /* End PBXBuildFile section */
@@ -69,8 +68,8 @@
 		AB4F5D741D98D204003586B2 /* FirebaseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAPI.swift; sourceTree = "<group>"; };
 		AB4F5D761D98EB4F003586B2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersCellNode.swift; sourceTree = "<group>"; };
+		AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendRequestCellNode.swift; sourceTree = "<group>"; };
 		AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
-		AB9B5BA71E3471AE001A9085 /* BAFriendsContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendsContainerController.swift; sourceTree = "<group>"; };
 		AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHeaderCellNode.swift; sourceTree = "<group>"; };
 		ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatCellNode.swift; sourceTree = "<group>"; };
 		ABB9F2B21D9170C600E01511 /* AppsCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsCommunicator.swift; sourceTree = "<group>"; };
@@ -116,7 +115,6 @@
 		ABF08B2E1D916E5400C6B832 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersController.swift; sourceTree = "<group>"; };
 		ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		ABFA0B331D9A260100ED6C16 /* DeprecatedBAFriendsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecatedBAFriendsController.swift; sourceTree = "<group>"; };
 		ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersHeaderCellNode.swift; sourceTree = "<group>"; };
 		ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,16 +148,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		AB9B5BA61E347180001A9085 /* FriendsController */ = {
-			isa = PBXGroup;
-			children = (
-				ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */,
-				AB9B5BA71E3471AE001A9085 /* BAFriendsContainerController.swift */,
-				ABFA0B331D9A260100ED6C16 /* DeprecatedBAFriendsController.swift */,
-			);
-			name = FriendsController;
-			sourceTree = "<group>";
-		};
 		ABA9C93B1DEBAF43006AB49E /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,7 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */,
-				AB9B5BA61E347180001A9085 /* FriendsController */,
+				ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */,
 				ABB9F2DB1D9170C600E01511 /* BAWallController.swift */,
 				ABB9F2BE1D9170C600E01511 /* BACalendarController.swift */,
 				ABB9F2D51D9170C600E01511 /* BASettingsController.swift */,
@@ -202,6 +190,7 @@
 			children = (
 				AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */,
 				ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */,
+				AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */,
 				ABE210D91D9B5968009C7165 /* DeprecatedBAChatCard.swift */,
 			);
 			name = Chat;
@@ -554,7 +543,6 @@
 				ABB9F2E91D9170C600E01511 /* BACalendarController.swift in Sources */,
 				ABB9F3021D9170C600E01511 /* UberProduct.swift in Sources */,
 				AB4F5D751D98D204003586B2 /* FirebaseAPI.swift in Sources */,
-				ABFA0B341D9A260100ED6C16 /* DeprecatedBAFriendsController.swift in Sources */,
 				ABB9F2F01D9170C600E01511 /* BAEventController.swift in Sources */,
 				ABE210DA1D9B5968009C7165 /* DeprecatedBAChatCard.swift in Sources */,
 				ABB9F3061D9170C600E01511 /* BAWallController.swift in Sources */,
@@ -572,7 +560,6 @@
 				AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */,
 				ABB9F2F21D9170C600E01511 /* FetchedContent.swift in Sources */,
 				ABB9F2DD1D9170C600E01511 /* AppsCommunicator.swift in Sources */,
-				AB9B5BA81E3471AE001A9085 /* BAFriendsContainerController.swift in Sources */,
 				ABFC76E61E34995700B6498D /* BAUsersHeaderCellNode.swift in Sources */,
 				ABB9F2F61D9170C600E01511 /* InstagramPicture.swift in Sources */,
 				ABB9F2EC1D9170C600E01511 /* ColorPalette.swift in Sources */,
@@ -587,6 +574,7 @@
 				ABB9F2EA1D9170C600E01511 /* BAChatController.swift in Sources */,
 				ABB9F2E11D9170C600E01511 /* BALikeButton.swift in Sources */,
 				ABB9F2F81D9170C600E01511 /* InstagramVideo.swift in Sources */,
+				AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */,
 				ABB9F2FF1D9170C600E01511 /* RSVPStatus.swift in Sources */,
 				ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */,
 				ABB9F2E81D9170C600E01511 /* BouncesStyleAnimator.swift in Sources */,
