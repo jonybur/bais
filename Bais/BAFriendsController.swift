@@ -13,8 +13,9 @@ import PromiseKit
 
 final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, BAChatHeaderCellNodeDelegate {
 	
-	let usersRef = FIRDatabase.database().reference().child("users");
+	let usersRef = FIRDatabase.database().reference().child("users")
 	var _sections = [User]()
+	var showMessages: Bool = false
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -59,7 +60,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		let item = indexPath.item
 		
 		if (item == 0){
-			let headerNode = BAChatHeaderCellNode(with: _sections[0])
+			let headerNode = BAChatHeaderCellNode()
 			headerNode.delegate = self
 			return headerNode
 		}
@@ -77,23 +78,23 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		return self._sections.count > 0 ? self._sections.count + 1 : 0;
 	}
 	
+	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		if (indexPath.item == 0 || showMessages){
+			return false
+		}
+		return true
+	}
+	
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-		
-		if (indexPath.item == 0){
-			return nil
-		}
-		
-		let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
-			
-		}
+		let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in }
 		removeAction.backgroundColor = ColorPalette.baisOrange
-		
 		return [removeAction]
 	}
 	
 	//MARK: - BAChatHeaderCellNodeDelegate
 	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode) {
-		print("taps")
+		tableNode.reloadRows(at: [IndexPath(item: 1, section: 0)], with: UITableViewRowAnimation.fade)
+		showMessages = !showMessages
 	}
 	
 	//MARK: - Firebase

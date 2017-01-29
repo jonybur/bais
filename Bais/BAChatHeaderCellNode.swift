@@ -36,7 +36,7 @@ class BAChatHeaderCellNode: ASCellNode {
 		}
 	}
 	
-	required init(with user: User) {
+	required override init() {
 		super.init()
 		
 		let nameAttributes = [
