@@ -15,6 +15,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	let usersRef = FIRDatabase.database().reference().child("users")
 	var _sections = [User]()
+	var _friends = [User]()
+	var _requests = [User]()
 	var showMessages: Bool = false
 	
 	var tableNode: ASTableNode {
@@ -93,7 +95,37 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	//MARK: - BAChatHeaderCellNodeDelegate
 	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode) {
-		tableNode.reloadRows(at: [IndexPath(item: 1, section: 0)], with: UITableViewRowAnimation.fade)
+		
+		if (showMessages){
+			_sections = _friends
+		} else {
+			_sections = _requests
+		}
+		
+		let tableRows = tableNode.numberOfRows(inSection: 0) - 1
+		if (tableRows < _sections.count){
+			var idxToInsert = [IndexPath]()
+			for idx in tableRows..._sections.count-1{
+				let idxPath = IndexPath(item:idx, section:0)
+				idxToInsert.append(idxPath)
+			}
+			tableNode.insertRows(at: idxToInsert, with: .fade)
+		} else {
+			var idxToRemove = [IndexPath]()
+			for idx in _sections.count+1...tableRows{
+				let idxPath = IndexPath(item:idx, section:0)
+				idxToRemove.append(idxPath)
+			}
+			tableNode.deleteRows(at: idxToRemove, with: .fade)
+		}
+		
+		var idxToReload = [IndexPath]()
+		for idx in 1..._sections.count{
+			let idxPath = IndexPath(row: idx, section: 0)
+			idxToReload.append(idxPath)
+		}
+		tableNode.reloadRows(at: idxToReload, with: .fade)
+	
 		showMessages = !showMessages
 	}
 	
@@ -118,20 +150,27 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 					let statusString = relationshipAttributes["status"] as! String
 					let status = FriendshipStatus(rawValue: statusString)!
 					
-					if (status == .accepted) {
+					if (status == .accepted || status == .invited) {
 						
 						// if it's a friend, or was invited by someone, create the chat card
 						let promise = self.getUser(with: friendId).then(execute: { user -> Void in
 							// get user
-							user.friendshipStatus = .accepted
-							self._sections.append(user)
+							user.friendshipStatus = status
+							
+							if (status == .accepted){
+								self._friends.append(user)
+							} else if (status == .invited){
+								self._requests.append(user)
+							}
+							
 						})
-						
 						promises.append(promise)
+						
 					}
 				}
 				
 				when(resolved: promises).then(execute: { _ -> Void in
+					self._sections = self._friends
 					self.tableNode.reloadData()
 				})
 				
