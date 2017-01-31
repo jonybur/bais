@@ -59,6 +59,8 @@ PODS:
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
     - GoogleToolboxForMac/Logger (~> 2.1)
+  - GeoFire (2.0.0):
+    - Firebase/Database (~> 3.2)
   - GoogleInterchangeUtilities (1.2.2):
     - GoogleSymbolUtilities (~> 1.1)
   - GoogleSymbolUtilities (1.1.2)
@@ -117,6 +119,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Messaging
+  - GeoFire (from `https://github.com/firebase/geofire-objc.git`)
   - JSQMessagesViewController (from `https://github.com/jessesquires/JSQMessagesViewController.git`, branch `develop`)
   - JSQSystemSoundPlayer
   - pop
@@ -125,6 +128,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   ESTabBarController-swift:
     :git: https://github.com/jonybur/ESTabBarController.git
+  GeoFire:
+    :git: https://github.com/firebase/geofire-objc.git
   JSQMessagesViewController:
     :branch: develop
     :git: https://github.com/jessesquires/JSQMessagesViewController.git
@@ -133,6 +138,9 @@ CHECKOUT OPTIONS:
   ESTabBarController-swift:
     :commit: 2ff46221a20d3b566d19feb485cf437612c368aa
     :git: https://github.com/jonybur/ESTabBarController.git
+  GeoFire:
+    :commit: dbb8d193f5ee1371837800d0502bd29cba779da4
+    :git: https://github.com/firebase/geofire-objc.git
   JSQMessagesViewController:
     :commit: 26124006945138245e89b8505e65a69d3f794609
     :git: https://github.com/jessesquires/JSQMessagesViewController.git
@@ -154,6 +162,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 6de92187481ff0e8e124064f21742e95ee883b02
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   FirebaseMessaging: acf66347e43c5637c697060c3001d25c809a4131
+  GeoFire: ef73103b88eb026c27212c40ea16757d6ad362ea
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
@@ -166,6 +175,6 @@ SPEC CHECKSUMS:
   PromiseKit: 593b5e24ded6cbb1ebc708bc2c3428a8a5632d91
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 208f0547452ae0fc256fa40180af932173fb884c
+PODFILE CHECKSUM: 02ded36f8ccbec27c641855275430a99ea2eb0e1
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.1.1
