@@ -68,14 +68,14 @@ class BAEventCard : ASButtonNode{
 		self.leftButton.frame = CGRect(x: 0, y: cardHeight - buttonHeight, width: cardWidth / 2 - 1, height: buttonHeight);
 		self.leftButton.addTarget(self, action: #selector(leftButtonPressed(sender:)), forControlEvents: .touchUpInside);
 		self.leftButton.setImage(UIImage(named: "interested-button"), for: ASControlState());
-		self.leftButton.setTitleInMiddleAlignment("Interested        ", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.baisOrange, state: ASControlState());
+		self.leftButton.setTitleInMiddleAlignment("Interested", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.baisOrange, state: ASControlState());
 		self.leftButton.backgroundColor = UIColor.white;
 		
 		// "Going" button
 		self.rightButton.frame = CGRect(x: self.leftButton.frame.maxX + 1, y: cardHeight - buttonHeight, width: cardWidth / 2, height: buttonHeight);
 		self.rightButton.addTarget(self, action: #selector(rightButtonPressed(sender:)), forControlEvents: .touchUpInside);
 		self.rightButton.setImage(UIImage(named: "plus-button"), for: ASControlState());
-		self.rightButton.setTitleInMiddleAlignment("Going       ", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.baisOrange, state: ASControlState());
+		self.rightButton.setTitleInMiddleAlignment("Going", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.baisOrange, state: ASControlState());
 		self.rightButton.backgroundColor = UIColor.white;
 		
 		self.singleButton.alpha = 0;
@@ -173,7 +173,7 @@ class BAEventCard : ASButtonNode{
 		case "Maybe":
 			currentStatus = .Maybe;
 			self.singleButton.setImage(UIImage(named: "checked-button"), for: ASControlState());
-			self.singleButton.setTitleInMiddleAlignment("Interested      ", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.baisOrange, state: ASControlState());
+			self.singleButton.setTitleInMiddleAlignment("Interested", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.baisOrange, state: ASControlState());
 			self.singleButton.alpha = 1;
 			
 			// animates the check
@@ -187,7 +187,7 @@ class BAEventCard : ASButtonNode{
 		case "Attending":
 			currentStatus = .Attending;
 			self.singleButton.setImage(UIImage(named: "checked-button"), for: ASControlState());
-			self.singleButton.setTitleInMiddleAlignment("Going      ", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.baisOrange, state: ASControlState());
+			self.singleButton.setTitleInMiddleAlignment("Going", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.baisOrange, state: ASControlState());
 			self.singleButton.alpha = 1;
 			
 			// animates the check

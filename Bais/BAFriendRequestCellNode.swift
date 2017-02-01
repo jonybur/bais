@@ -70,6 +70,6 @@ class BAFriendRequestCellNode: ASCellNode {
 		horizontalStack.alignItems = .center
 		horizontalStack.children = [imagePlace, textInsetSpec]
 		
-		return ASInsetLayoutSpec (insets: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10), child: horizontalStack)
+		return ASInsetLayoutSpec (insets: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 10), child: horizontalStack)
 	}
 }
