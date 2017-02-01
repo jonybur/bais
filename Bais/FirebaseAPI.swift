@@ -11,15 +11,19 @@ import Firebase
 import FirebaseAuth
 import FBSDKCoreKit
 import CoreLocation
+import GeoFire
 
 let registerUserKey = "com.baisapp.registerUser";
 
 class FirebaseAPI{
 	
-	static func updateUserLocation(_ location : CLLocationCoordinate2D){
+	static let rootReference = FIRDatabase.database().reference()
+	
+	static func updateUserLocation(_ location: CLLocationCoordinate2D){
 		
 		let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!
-		let locationRef = FIRDatabase.database().reference().child("users").child(currentUserId).child("location")
+		let geoFire = GeoFire(firebaseRef: rootReference)
+		let locationRef = rootReference.child("users").child(currentUserId).child("location")
 		
 		let value = [
 			"lon": location.longitude,
@@ -27,25 +31,24 @@ class FirebaseAPI{
 		];
 		
 		locationRef.updateChildValues(value)
+		geoFire?.setLocation(CLLocation(latitude: location.latitude, longitude: location.longitude), forKey: currentUserId)
 		CurrentUser.location = CLLocation(latitude: location.latitude, longitude: location.longitude)
 	}
 	
 	static func endFriendRelationshipWith(friendId : String){
 		let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!;
-		let rootRef = FIRDatabase.database().reference();
 		
-		let selfRef = rootRef.child("users").child(currentUserId).child("friends").child(friendId);
-		let friendRef = rootRef.child("users").child(friendId).child("friends").child(currentUserId);
+		let selfRef = rootReference.child("users").child(currentUserId).child("friends").child(friendId);
+		let friendRef = rootReference.child("users").child(friendId).child("friends").child(currentUserId);
 	
 		selfRef.removeValue();
 		friendRef.removeValue();
 	}
 	
 	static func denyFriendRequestFrom(friendId : String){
-		let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!;
-		let rootRef = FIRDatabase.database().reference();
+		let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!
 		
-		let selfRef = rootRef.child("users").child(currentUserId).child("friends").child(friendId);
+		let selfRef = rootReference.child("users").child(currentUserId).child("friends").child(friendId);
 		selfRef.removeValue();
 	}
 	
@@ -59,7 +62,6 @@ class FirebaseAPI{
 	
 	private static func setFriendStatusWith(_ friendId : String, to status : FriendshipStatus){
 		let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!;
-		let rootRef = FIRDatabase.database().reference();
 		
 		var value = [String:String]();
 		
@@ -82,10 +84,10 @@ class FirebaseAPI{
 		
 		}
 		
-		let selfRef = rootRef.child("users").child(currentUserId).child("friends").child(friendId)
+		let selfRef = rootReference.child("users").child(currentUserId).child("friends").child(friendId)
 		selfRef.updateChildValues(value);
 		
-		let friendRef = rootRef.child("users").child(friendId).child("friends").child(currentUserId)
+		let friendRef = rootReference.child("users").child(friendId).child("friends").child(currentUserId)
 		friendRef.updateChildValues(value);
 	}
 	
@@ -112,8 +114,7 @@ class FirebaseAPI{
 					
 					if let datum = events["data"] as? NSDictionary{
 					
-						let rootRef = FIRDatabase.database().reference();
-						let messageRef = rootRef.child("users");
+						let messageRef = rootReference.child("users");
 						let itemRef = messageRef.child(user.uid);
 						let userItem = [
 							"id": user.uid,

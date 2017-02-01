@@ -23,6 +23,7 @@ import FirebaseDatabase
 import FirebaseAuth
 import DGActivityIndicatorView
 import PromiseKit
+import GeoFire
 
 class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	ASCollectionDataSource, ASCollectionDelegate, BAUsersCellNodeDelegate, BAUsersHeaderCellNodeDelegate {
@@ -197,6 +198,21 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		                                      y: (ez.screenHeight - activityIndicatorSize) / 2,
 		                                      width: activityIndicatorSize, height: activityIndicatorSize);
 		
+		let geoFire = GeoFire(firebaseRef: FirebaseAPI.rootReference)
+		let locationRef = FirebaseAPI.rootReference.child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("location")
+		
+		observeUserLocation().then { userLocation -> Void in
+
+			let kilometerRadius: Double = 10
+			let query = geoFire?.query(at: userLocation, withRadius: kilometerRadius)
+			
+			query?.observe(.keyEntered, with: { (key: String?, location: CLLocation?) in
+				print("got user")
+			})
+			
+		}
+		
+		// TODO: move this inside geoFire query
 		usersRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
 			if let snapshotDictionary = snapshot.value as? NSDictionary{
 
