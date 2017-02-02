@@ -169,14 +169,3 @@ extension Double {
 extension CGFloat {
 	var f: Float { return Float(self) }
 }
-
-extension ASButtonNode{
-	func setTitleInMiddleAlignment(_ string: String, withFont: UIFont, withColor: UIColor, state: ASControlState) {
-		self.setTitle(string, with: withFont, with: withColor, for: state);
-		
-		let fontSize : CGSize = withFont.sizeOfString(string);
-		
-		self.contentEdgeInsets = UIEdgeInsets(top: (self.frame.size.height - fontSize.height) / 2, left: (self.frame.size.width - fontSize.width) / 2, bottom: 0, right: 0)
-		self.measure(self.frame.size);
-	}
-}

@@ -179,14 +179,14 @@ class BAEventController : UIViewController, UIScrollViewDelegate{
 		self.leftButton.frame = CGRect(10, yPosition, (ez.screenWidth - 20) / 2 - 1, buttonHeight);
 		self.leftButton.addTarget(self, action: #selector(leftButtonPressed(sender:)), forControlEvents: .touchUpInside);
 		self.leftButton.setImage(UIImage(named: "interested-button"), for: ASControlState());
-		self.leftButton.setTitleInMiddleAlignment("Interested        ", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.orange, state: ASControlState());
+		self.leftButton.setTitle("Interested        ", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.orange, for: ASControlState());
 		self.leftButton.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0);
 		
 		// "Going" button
 		self.rightButton.frame = CGRect(x: self.leftButton.frame.maxX + 1, y: yPosition, width: CGFloat((ez.screenWidth - 20) / 2), height: buttonHeight);
 		self.rightButton.addTarget(self, action: #selector(rightButtonPressed(sender:)), forControlEvents: .touchUpInside);
 		self.rightButton.setImage(UIImage(named: "plus-button"), for: ASControlState());
-		self.rightButton.setTitleInMiddleAlignment("Going       ", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.orange, state: ASControlState());
+		self.rightButton.setTitle("Going       ", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.orange, for: ASControlState());
 		self.rightButton.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0);
 		
 		self.singleButton.alpha = 0;
@@ -261,7 +261,7 @@ class BAEventController : UIViewController, UIScrollViewDelegate{
 		case "Maybe":
 			currentStatus = .Maybe;
 			self.singleButton.setImage(UIImage(named: "checked-button"), for: ASControlState());
-			self.singleButton.setTitleInMiddleAlignment("Interested      ", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.orange, state: ASControlState());
+			self.singleButton.setTitle("Interested      ", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.orange, for: ASControlState());
 			self.singleButton.alpha = 1;
 			
 			// animates the check
@@ -275,7 +275,7 @@ class BAEventController : UIViewController, UIScrollViewDelegate{
 		case "Attending":
 			currentStatus = .Attending;
 			self.singleButton.setImage(UIImage(named: "checked-button"), for: ASControlState());
-			self.singleButton.setTitleInMiddleAlignment("Going      ", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), withColor: ColorPalette.orange, state: ASControlState());
+			self.singleButton.setTitle("Going      ", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: ColorPalette.orange, for: ASControlState());
 			self.singleButton.alpha = 1;
 			
 			// animates the check

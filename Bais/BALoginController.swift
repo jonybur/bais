@@ -16,7 +16,7 @@ import CoreGraphics
 
 class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 	
-	let repeatVideo : UIRepeatingVideo = UIRepeatingVideo();
+	let repeatVideo = UIRepeatingVideo()
 	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -24,17 +24,17 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 	}
 	
 	override func viewDidLoad() {
-		super.viewDidLoad();
+		super.viewDidLoad()
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.userRegistered(_:)),
 		                                       name: NSNotification.Name(registerUserKey), object: nil)
 		
-		view.backgroundColor = ColorPalette.white;
-		self.automaticallyAdjustsScrollViewInsets = false;
+		view.backgroundColor = ColorPalette.white
+		self.automaticallyAdjustsScrollViewInsets = false
 		
-		navigationController?.isNavigationBarHidden = true;
+		navigationController?.isNavigationBarHidden = true
 		
-		initializeInterface();
+		initializeInterface()
 	}
 	
 	func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Swift.Error!) {
@@ -52,7 +52,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 					print("Sign in failed:", error.localizedDescription)
 				} else {
 					// should wait until this finishes
-					FirebaseService.registerUser(user!);
+					FirebaseService.registerUser(user!)
 				}
 			}
 			
@@ -61,46 +61,46 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 	
 	func initializeInterface(){
 		
-		view.addSubview(repeatVideo.playerViewController.view);
+		view.addSubview(repeatVideo.playerViewController.view)
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(rewindVideo(_:)),
 		                                       name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
 		                                       object: repeatVideo.playerViewController.player?.currentItem)
 		
 		// ios status bar height is 20px
-		let logoView : UIImageView = UIImageView(frame: CGRect(x: 0, y: 20, width: 300, height: 300));
+		let logoView : UIImageView = UIImageView(frame: CGRect(x: 0, y: 20, width: 300, height: 300))
 		
 		logoView.center = CGPoint(x: ez.screenWidth / 2, y: ez.screenHeight / 2 - 40)
-		logoView.contentMode = .scaleAspectFit;
-		logoView.image = UIImage(named: "splash_logo");
-		view.addSubview(logoView);
+		logoView.contentMode = .scaleAspectFit
+		logoView.image = UIImage(named: "splash_logo")
+		view.addSubview(logoView)
 		
-		let fbbutton = FBSDKLoginButton();
-		fbbutton.frame = CGRect(x: 40, y: logoView.frame.maxY - 30, width: ez.screenWidth - 80, height: 50);
-		fbbutton.readPermissions = ["public_profile", "user_friends"];
-		fbbutton.publishPermissions = ["rsvp_event"];
-		fbbutton.delegate = self;
+		let fbbutton = FBSDKLoginButton()
+		fbbutton.frame = CGRect(x: 40, y: logoView.frame.maxY - 30, width: ez.screenWidth - 80, height: 50)
+		fbbutton.readPermissions = ["public_profile", "user_friends"]
+		fbbutton.publishPermissions = ["rsvp_event"]
+		fbbutton.delegate = self
 		
-		let warningView = UITextView();
-		warningView.frame = CGRect(x: 5, y: (fbbutton.frame).maxY + 5, width: ez.screenWidth - 10, height: 0);
-		warningView.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight);
-		warningView.textColor = ColorPalette.white;
-		warningView.text = "By continuing, you agree to our Terms of Service\nand Privacy Policy";
-		warningView.textAlignment = .center;
-		warningView.isScrollEnabled = false;
-		warningView.isEditable = false;
-		warningView.isSelectable = false;
-		warningView.backgroundColor = UIColor.clear;
+		let warningView = UITextView()
+		warningView.frame = CGRect(x: 5, y: (fbbutton.frame).maxY + 5, width: ez.screenWidth - 10, height: 0)
+		warningView.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
+		warningView.textColor = ColorPalette.white
+		warningView.text = "By continuing, you agree to our Terms of Service\nand Privacy Policy"
+		warningView.textAlignment = .center
+		warningView.isScrollEnabled = false
+		warningView.isEditable = false
+		warningView.isSelectable = false
+		warningView.backgroundColor = UIColor.clear
 		
-		let size = warningView.sizeThatFits(warningView.frame.size);
-		warningView.frame.setNewFrameHeight(size.height);
+		let size = warningView.sizeThatFits(warningView.frame.size)
+		warningView.frame.setNewFrameHeight(size.height)
 		
-		view.addSubview(fbbutton);
-		view.addSubview(warningView);
+		view.addSubview(fbbutton)
+		view.addSubview(warningView)
 	}
 
 	func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
-		return true;
+		return true
 	}
 	
 	func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
@@ -108,12 +108,12 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 	}
 	
 	@objc func rewindVideo(_ notification: Notification) {
-		let zeroCM : CMTime = CMTime(seconds: 0, preferredTimescale: 1000000000);
-		repeatVideo.playerLayer.player?.seek(to: zeroCM);
+		let zeroCM = CMTime(seconds: 0, preferredTimescale: 1000000000)
+		repeatVideo.playerLayer.player?.seek(to: zeroCM)
 	}
 	
 	@objc func userRegistered(_ notification: Notification) {
 		// pushes
-		self.navigationController?.pushViewController(BATabBarController(), animated: true);
+		self.navigationController?.pushViewController(BATabBarController(), animated: true)
 	}
 }

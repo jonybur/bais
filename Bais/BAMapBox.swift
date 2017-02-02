@@ -61,13 +61,13 @@ class BAMapBox : UIView, MKMapViewDelegate{
 		// "Interested" button
 		uberButton.frame = CGRect(x: 0, y: self.frame.height - buttonHeight, width: (self.frame.width) / 2 - 1, height: buttonHeight);
 		uberButton.addTarget(self, action: #selector(uberButtonPressed(sender:)), forControlEvents: .touchUpInside);
-		uberButton.setTitleInMiddleAlignment("Uber", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular), withColor: UIColor.white, state: ASControlState());
+		uberButton.setTitle("Uber", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular), with: UIColor.white, for: ASControlState());
 		uberButton.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.9);
 		
 		// "Going" button
 		directionsButton.frame = CGRect(x: uberButton.frame.maxX + 1, y: self.frame.height - buttonHeight, width: (self.frame.width) / 2, height: buttonHeight);
 		directionsButton.addTarget(self, action: #selector(directionsButtonPressed(sender:)), forControlEvents: .touchUpInside);
-		directionsButton.setTitleInMiddleAlignment("Directions", withFont: UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular), withColor: UIColor.white, state: ASControlState());
+		directionsButton.setTitle("Directions", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular), with: UIColor.white, for: ASControlState());
 		directionsButton.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.9);
 		
 		self.addSubnode(uberButton);

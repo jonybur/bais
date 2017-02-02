@@ -202,15 +202,13 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		let locationRef = FirebaseService.usersReference.child(FirebaseService.currentUserId).child("location")
 		
 		observeUserLocation().then { userLocation -> Void in
-
 			let kilometerRadius: Double = 10
 			let query = geoFire?.query(at: userLocation, withRadius: kilometerRadius)
 			
 			query?.observe(.keyEntered, with: { (key: String?, location: CLLocation?) in
 				// TODO implement user fetching from here
 			})
-			
-		}
+		}.catch { _ in }
 		
 		// TODO: move this inside geoFire query
 		usersRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
@@ -240,7 +238,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 					self._collectionNode.reloadSections(IndexSet(integer:0))
 					//self._collectionNode.view.contentOffset = CGPoint(x: 0, y: 75)
 					self.activityIndicatorView?.stopAnimating()
-				})
+				}).catch(execute: { _ in })
 			}
 			
 		}
