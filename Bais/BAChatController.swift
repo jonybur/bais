@@ -61,7 +61,7 @@ class BAChatController: JSQMessagesViewController {
 		// Navigation bar
 		self.navigationController?.isNavigationBarHidden = false
 		self.navigationController?.navigationBar.barTintColor = UIColor.white
-		self.navigationController?.navigationBar.tintColor = ColorPalette.baisOrange
+		self.navigationController?.navigationBar.tintColor = ColorPalette.orange
 		self.navigationController?.navigationBar.frame.setNewFrameHeight(55)
 		self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
 		
@@ -78,8 +78,8 @@ class BAChatController: JSQMessagesViewController {
 		UIApplication.shared.statusBarStyle = .default
 		
 		self.additionalContentInset = UIEdgeInsetsMake(70, 0, 0, 0);
-		self.inputToolbar.contentView?.rightBarButtonItem?.setTitleColor(ColorPalette.baisOrange, for: .normal)
-		self.inputToolbar.contentView?.rightBarButtonItem?.setTitleColor(ColorPalette.baisOrangeDarker, for: .highlighted)
+		self.inputToolbar.contentView?.rightBarButtonItem?.setTitleColor(ColorPalette.orange, for: .normal)
+		self.inputToolbar.contentView?.rightBarButtonItem?.setTitleColor(ColorPalette.orangeDarker, for: .highlighted)
 		self.inputToolbar.contentView?.leftBarButtonItem = nil
 		self.inputToolbar.contentView?.textView?.placeHolder = ""
 	}
@@ -150,7 +150,7 @@ class BAChatController: JSQMessagesViewController {
 	
 	private func setupBubbles() {
 		let bubbleImageFactory = JSQMessagesBubbleImageFactory()
-		outgoingBubbleImageView = bubbleImageFactory.outgoingMessagesBubbleImage(with: ColorPalette.baisArgentinaBlue);
+		outgoingBubbleImageView = bubbleImageFactory.outgoingMessagesBubbleImage(with: ColorPalette.argentinaBlue);
 		incomingBubbleImageView = bubbleImageFactory.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
 	}
 	

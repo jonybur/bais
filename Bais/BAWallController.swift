@@ -19,30 +19,30 @@ class BAWallController : UIViewController{
     var scrollNode : ASScrollNode = ASScrollNode();
 	
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
-	                                                    tintColor: ColorPalette.baisOrange,
+	                                                    tintColor: ColorPalette.orange,
 	                                                    size: 75);
 	
     override func viewDidLoad() {
         
-        super.viewDidLoad();
+        super.viewDidLoad()
         
-        automaticallyAdjustsScrollViewInsets = false;
+        automaticallyAdjustsScrollViewInsets = false
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.initializeInterface(_:)), name: NSNotification.Name(rawValue: instagramDownloadedKey), object: nil)
         
-        view.backgroundColor = ColorPalette.baisBeige;
+        view.backgroundColor = ColorPalette.white
         
-        self.scrollNode.frame = CGRect(x:0, y:0, width: ez.screenWidth, height: ez.screenHeight);
+        self.scrollNode.frame = CGRect(x: 0, y: 0, width: ez.screenWidth, height: ez.screenHeight)
 		
 		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - 75) / 2,
 		                                      y: (ez.screenHeight - 75) / 2,
-		                                      width: 75, height: 75);
+		                                      width: 75, height: 75)
 		
-		self.view.addSubview(activityIndicatorView!);
-		activityIndicatorView?.startAnimating();
+		self.view.addSubview(activityIndicatorView!)
+		activityIndicatorView?.startAnimating()
 		
 		async{
-			CloudController.getInstagramPage();
+			CloudController.getInstagramPage()
 		}
     }
     
@@ -50,7 +50,7 @@ class BAWallController : UIViewController{
 	@objc func initializeInterface(_ notification: Notification) {
 		
 		// TODO: check what can be derived in a secondary thread, there's a reason we're using ASDK here.
-		var wallCards : [BAWallPost] = [BAWallPost]();
+		var wallCards = [BAWallPost]();
 		var yPosition : CGFloat = GradientBar.height + 10;
 
 		DispatchQueue.main.async(execute: { () -> Void in

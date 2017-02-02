@@ -18,7 +18,7 @@ class BASettingsController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad();
 		
-		view.backgroundColor = ColorPalette.baisWhite;
+		view.backgroundColor = ColorPalette.white;
 		self.automaticallyAdjustsScrollViewInsets = false;
 		
 		navigationController?.isNavigationBarHidden = true;

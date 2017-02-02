@@ -103,7 +103,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
 			// kill request
 		}
-		removeAction.backgroundColor = ColorPalette.baisOrange
+		removeAction.backgroundColor = ColorPalette.orange
 		return [removeAction]
 	}
 	

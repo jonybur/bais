@@ -22,7 +22,7 @@ class BACalendarController : UIViewController, EventCardDelegate{
     var scrollNode : ASScrollNode = ASScrollNode();
 	
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
-	                                                    tintColor: ColorPalette.baisOrange,
+	                                                    tintColor: ColorPalette.orange,
 	                                                    size: 75);
 	
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ class BACalendarController : UIViewController, EventCardDelegate{
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.initializeInterface(_:)), name: NSNotification.Name(rawValue: eventsDownloadedKey), object: nil);
         
-        view.backgroundColor = ColorPalette.baisBeige;
+        view.backgroundColor = ColorPalette.white;
 		
 		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - 75) / 2,
 		                                      y: (ez.screenHeight - 75) / 2,

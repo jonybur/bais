@@ -13,8 +13,8 @@ class GradientBar : UIView, CAAnimationDelegate{
     
     let gradient: CAGradientLayer = CAGradientLayer();
 
-    let firstColor : UIColor = ColorPalette.baisArgentinaBlueDarker;
-    let secondColor : UIColor = ColorPalette.baisArgentinaBlue;
+    let firstColor : UIColor = ColorPalette.argentinaBlueDarker;
+    let secondColor : UIColor = ColorPalette.argentinaBlue;
 	
 	open static let height : CGFloat = 70;
 	

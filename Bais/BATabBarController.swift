@@ -92,7 +92,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		self.navigationController?.setNavigationBarHidden(true, animated: true)
 		UIApplication.shared.statusBarStyle = .default
 		guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
-		statusBar.backgroundColor = ColorPalette.baisWhite
+		statusBar.backgroundColor = ColorPalette.white
 	}
 	
 	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

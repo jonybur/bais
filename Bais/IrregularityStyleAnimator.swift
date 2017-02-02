@@ -15,9 +15,9 @@ open class IrregularityBasicStyleAnimator: BouncesStyleAnimator {
     public override init() {
         super.init()
         textColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
-        highlightTextColor = ColorPalette.baisOrange
+        highlightTextColor = ColorPalette.orange
         iconColor = ColorPalette.lightGrey
-        highlightIconColor = ColorPalette.baisOrange
+        highlightIconColor = ColorPalette.orange
         backgroundColor = UIColor.white
         highlightBackgroundColor = UIColor.white
     }
@@ -30,7 +30,7 @@ open class IrregularityStyleAnimator: BackgroundStyleAnimator {
         textColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
         highlightTextColor = UIColor.init(white: 255.0 / 255.0, alpha: 1.0)
         iconColor = UIColor.black
-        highlightIconColor = ColorPalette.baisOrange
+        highlightIconColor = ColorPalette.orange
         backgroundColor = UIColor.white
         highlightBackgroundColor = UIColor.white
     }

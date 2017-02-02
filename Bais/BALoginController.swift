@@ -29,7 +29,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		NotificationCenter.default.addObserver(self, selector: #selector(self.userRegistered(_:)),
 		                                       name: NSNotification.Name(registerUserKey), object: nil)
 		
-		view.backgroundColor = ColorPalette.baisWhite;
+		view.backgroundColor = ColorPalette.white;
 		self.automaticallyAdjustsScrollViewInsets = false;
 		
 		navigationController?.isNavigationBarHidden = true;
@@ -84,7 +84,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		let warningView = UITextView();
 		warningView.frame = CGRect(x: 5, y: (fbbutton.frame).maxY + 5, width: ez.screenWidth - 10, height: 0);
 		warningView.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight);
-		warningView.textColor = ColorPalette.baisWhite;
+		warningView.textColor = ColorPalette.white;
 		warningView.text = "By continuing, you agree to our Terms of Service\nand Privacy Policy";
 		warningView.textAlignment = .center;
 		warningView.isScrollEnabled = false;

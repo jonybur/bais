@@ -36,7 +36,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
 	let usersRef = FirebaseService.usersReference
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
-	                                                    tintColor: ColorPalette.baisOrange,
+	                                                    tintColor: ColorPalette.orange,
 	                                                    size: 75)
 	
 	init (){
@@ -51,7 +51,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		_collectionNode.dataSource = self;
 		_collectionNode.delegate = self;
 		_collectionNode.view.layoutInspector = _layoutInspector
-		_collectionNode.backgroundColor = ColorPalette.baisWhite
+		_collectionNode.backgroundColor = ColorPalette.white
 		_collectionNode.view.isScrollEnabled = true
 		_collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
 	}
@@ -70,7 +70,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		observeUserLocation().then { location -> Void in
 			CurrentUser.location = location
 			self.populateUsers()
-		}
+		} .catch { _ in }
 	}
 	
 	override func viewWillLayoutSubviews() {

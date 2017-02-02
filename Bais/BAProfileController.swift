@@ -37,7 +37,7 @@ class BAProfileController : UIViewController, UIScrollViewDelegate{
 		self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true;
 		self.navigationController?.interactivePopGestureRecognizer?.delegate = nil;
 		
-		view.backgroundColor = ColorPalette.baisBeige;
+		view.backgroundColor = ColorPalette.white;
 		
 		initalizeInterface();
 	}

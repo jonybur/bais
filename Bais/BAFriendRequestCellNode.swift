@@ -16,6 +16,7 @@ class BAFriendRequestCellNode: ASCellNode {
 	var cardUser: User!
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
+	let acceptButtonNode = ASButtonNode()
 	
 	required init(with user: User) {
 		super.init()
@@ -44,8 +45,11 @@ class BAFriendRequestCellNode: ASCellNode {
 		
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAttributes)
 		
+		acceptButtonNode.setTitle("ACCEPT", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: .black, for: [])
+		
 		self.addSubnode(self.imageNode)
 		self.addSubnode(self.nameNode)
+		self.addSubnode(self.acceptButtonNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -64,12 +68,22 @@ class BAFriendRequestCellNode: ASCellNode {
 		let textInsets = UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 0)
 		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: verticalStack)
 		
-		// horizontal stack
-		let horizontalStack = ASStackLayoutSpec()
-		horizontalStack.direction = .horizontal
-		horizontalStack.alignItems = .center
-		horizontalStack.children = [imagePlace, textInsetSpec]
+		// horizontal spacer
+		let spacerSpec = ASLayoutSpec()
+		spacerSpec.style.flexGrow = 1.0
+		spacerSpec.style.flexShrink = 1.0
 		
-		return ASInsetLayoutSpec (insets: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 10), child: horizontalStack)
+		// accept button
+		acceptButtonNode.style.preferredSize = CGSize(width: 100, height: 50)
+		
+		// horizontal stack
+		let horizontalStack = ASStackLayoutSpec.horizontal()
+		horizontalStack.alignItems = .center // center items vertically in horiz stack
+		horizontalStack.justifyContent = .start // justify content to left
+		horizontalStack.style.flexShrink = 1.0
+		horizontalStack.style.flexGrow = 1.0
+		horizontalStack.children = [imagePlace, textInsetSpec, spacerSpec, acceptButtonNode]
+		
+		return ASInsetLayoutSpec (insets: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 0), child: horizontalStack)
 	}
 }
