@@ -109,7 +109,6 @@ class BAChatCard : ASButtonNode, ChatCardButtonsDelegate{
 		
 		lastMessageNode.frame = CGRect(x: imageNode.frame.maxX + 10, y: nameNode.frame.maxY + 3, width: 200, height: 20);
 		
-		observeLastMessage();
 		observeFriendshipStatus();
 		
 		// self.view isn't a node, so we can only use it on the main thread
@@ -120,28 +119,9 @@ class BAChatCard : ASButtonNode, ChatCardButtonsDelegate{
 		self.view.addSubnode(lastMessageNode);
 	}
 	
-	func observeLastMessage(){
-		let distanceAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightLight),
-			NSForegroundColorAttributeName: UIColor.black]
-		
-		// query to last message
-		let messageQuery = FIRDatabase.database().reference().child("messages")
-			.child((FIRAuth.auth()?.currentUser?.uid)!).child(cardUser.id).queryLimited(toLast: 1);
-		
-		messageQuery.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
-			
-			if let message = snapshot.value as? NSDictionary{
-				let messageString = message["text"] as! String;
-				self.lastMessageNode.attributedText = NSAttributedString(string: messageString, attributes: distanceAttributes)
-			}
-			
-		}
-	}
-	
 	func observeFriendshipStatus(){
 		// query to friendship status
-		let thisUserId = (FIRAuth.auth()?.currentUser?.uid)!;
+		let thisUserId = FirebaseService.currentUserId
 		let userFriendsRef = FirebaseService.usersReference
 			.child(thisUserId).child("friends").child(cardUser.id);
 		

@@ -251,7 +251,7 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		ABB9F30B1D9171D300E01511 /* Schema */ = {
+		ABB9F30B1D9171D300E01511 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				ABB9F3121D9172ED00E01511 /* Instagram */,
@@ -260,7 +260,7 @@
 				ABB9F2D21D9170C600E01511 /* Place.swift */,
 				AB4F5D761D98EB4F003586B2 /* User.swift */,
 			);
-			name = Schema;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		ABB9F30C1D9171D800E01511 /* Config */ = {
@@ -361,7 +361,7 @@
 				ABB9F3081D9171A600E01511 /* Enums */,
 				ABB9F3091D9171B200E01511 /* Extensions */,
 				ABB9F30D1D9171E100E01511 /* Infrastructure */,
-				ABB9F30B1D9171D300E01511 /* Schema */,
+				ABB9F30B1D9171D300E01511 /* Model */,
 				ABB9F30C1D9171D800E01511 /* Config */,
 				ABB9F30E1D9171EB00E01511 /* Controllers */,
 				ABA9C93B1DEBAF43006AB49E /* Layouts */,

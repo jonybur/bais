@@ -47,7 +47,7 @@ class BAChatCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular),
 			NSForegroundColorAttributeName: UIColor.black]
 		
-		lastMessageNode.attributedText = NSAttributedString(string: "Te amo Jonathan", attributes: lastMessageAttributes)
+		lastMessageNode.attributedText = NSAttributedString(string: user.lastMessage, attributes: lastMessageAttributes)
 		
 		self.addSubnode(self.imageNode)
 		self.addSubnode(self.nameNode)

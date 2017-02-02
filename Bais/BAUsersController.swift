@@ -180,7 +180,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	// gets current user location
 	private func observeUserLocation() -> Promise<CLLocation>{
 		return Promise{ fulfill, reject in
-			let locationRef = FirebaseService.usersReference.child((FIRAuth.auth()?.currentUser?.uid)!).child("location");
+			let locationRef = FirebaseService.usersReference.child(FirebaseService.currentUserId).child("location");
 			locationRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
 				if let dict = snapshot.value as? NSDictionary{
 					let latitude = dict["lat"] as! Double
@@ -199,7 +199,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		                                      width: activityIndicatorSize, height: activityIndicatorSize);
 		
 		let geoFire = GeoFire(firebaseRef: FirebaseService.rootReference)
-		let locationRef = FirebaseService.usersReference.child((FIRAuth.auth()?.currentUser?.uid)!).child("location")
+		let locationRef = FirebaseService.usersReference.child(FirebaseService.currentUserId).child("location")
 		
 		observeUserLocation().then { userLocation -> Void in
 
@@ -207,7 +207,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 			let query = geoFire?.query(at: userLocation, withRadius: kilometerRadius)
 			
 			query?.observe(.keyEntered, with: { (key: String?, location: CLLocation?) in
-				print("got user")
+				// TODO implement user fetching from here
 			})
 			
 		}
@@ -224,7 +224,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 					for (_, snapshotValue) in snapshotDictionary{
 						if let userDictionary = snapshotValue as? NSDictionary{
 							let user = User(fromNSDictionary: userDictionary)
-							if (user.id == FIRAuth.auth()?.currentUser?.uid){
+							if (user.id == FirebaseService.currentUserId){
 								continue;
 							}
 							promises.append(self.getFriendshipStatusFor(user: user))
@@ -252,7 +252,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		return Promise{ fulfill, reject in
 			// query to friend relationship
 			let relationshipQuery = FirebaseService.usersReference
-				.child((FIRAuth.auth()?.currentUser?.uid)!).child("friends").child(user.id)
+				.child(FirebaseService.currentUserId).child("friends").child(user.id)
 			
 			relationshipQuery.observe(.value) { (snapshot: FIRDataSnapshot!) in
 				

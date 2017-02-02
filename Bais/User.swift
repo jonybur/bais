@@ -28,6 +28,7 @@ class User{
 	var firstName: String = ""
 	var lastName: String = ""
 	var nationality: String = ""
+	var lastMessage: String = ""
 	var profilePicture: String = ""
 	var location: CLLocation = CLLocation()
 	let imageRatio: CGFloat = (1.3...1.5).random()
