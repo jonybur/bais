@@ -52,7 +52,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 					print("Sign in failed:", error.localizedDescription)
 				} else {
 					// should wait until this finishes
-					FirebaseAPI.registerUser(user!);
+					FirebaseService.registerUser(user!);
 				}
 			}
 			

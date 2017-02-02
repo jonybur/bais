@@ -142,7 +142,7 @@ class BAChatCard : ASButtonNode, ChatCardButtonsDelegate{
 	func observeFriendshipStatus(){
 		// query to friendship status
 		let thisUserId = (FIRAuth.auth()?.currentUser?.uid)!;
-		let userFriendsRef = FIRDatabase.database().reference().child("users")
+		let userFriendsRef = FirebaseService.usersReference
 			.child(thisUserId).child("friends").child(cardUser.id);
 		
 		userFriendsRef.observe(.value, with: { (snapshot: FIRDataSnapshot!) in
@@ -202,11 +202,11 @@ class BAChatCard : ASButtonNode, ChatCardButtonsDelegate{
 	
 	// ChatCardButtonsDelegate Methods
 	internal func acceptButtonPress(sender: ASImageNode) {
-		FirebaseAPI.acceptFriendRequestFrom(friendId: cardUser.id);
+		FirebaseService.acceptFriendRequestFrom(friendId: cardUser.id);
 	}
 
 	internal func cancelButtonPress(sender: ASImageNode) {
-		FirebaseAPI.denyFriendRequestFrom(friendId: cardUser.id);
+		FirebaseService.denyFriendRequestFrom(friendId: cardUser.id);
 	}
 	
 }

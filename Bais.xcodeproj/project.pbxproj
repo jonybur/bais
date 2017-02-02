@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		817A5728FB15CD651FEC45FF /* Pods_Bais.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF6B2B119653D993B14B315 /* Pods_Bais.framework */; };
 		AB0E468B1DF3E628003CA68C /* MosaicCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */; };
-		AB4F5D751D98D204003586B2 /* FirebaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D741D98D204003586B2 /* FirebaseAPI.swift */; };
+		AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D741D98D204003586B2 /* FirebaseService.swift */; };
 		AB4F5D771D98EB4F003586B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D761D98EB4F003586B2 /* User.swift */; };
 		AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */; };
 		AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */; };
@@ -65,7 +65,7 @@
 		40BDC291BD8D1F55A1BC5F42 /* Pods-Bais.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bais.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bais/Pods-Bais.release.xcconfig"; sourceTree = "<group>"; };
 		82318B2C04D00B6FB970C108 /* Pods-Bais.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bais.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bais/Pods-Bais.debug.xcconfig"; sourceTree = "<group>"; };
 		AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicCollectionViewLayout.swift; sourceTree = "<group>"; };
-		AB4F5D741D98D204003586B2 /* FirebaseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAPI.swift; sourceTree = "<group>"; };
+		AB4F5D741D98D204003586B2 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		AB4F5D761D98EB4F003586B2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersCellNode.swift; sourceTree = "<group>"; };
 		AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendRequestCellNode.swift; sourceTree = "<group>"; };
@@ -278,7 +278,7 @@
 				ABB9F2C71D9170C600E01511 /* FetchedContent.swift */,
 				ABB9F2C01D9170C600E01511 /* CloudController.swift */,
 				ABB9F2DC1D9170C600E01511 /* WebAPI.swift */,
-				AB4F5D741D98D204003586B2 /* FirebaseAPI.swift */,
+				AB4F5D741D98D204003586B2 /* FirebaseService.swift */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -542,7 +542,7 @@
 				ABB9F2FA1D9170C600E01511 /* BALoginController.swift in Sources */,
 				ABB9F2E91D9170C600E01511 /* BACalendarController.swift in Sources */,
 				ABB9F3021D9170C600E01511 /* UberProduct.swift in Sources */,
-				AB4F5D751D98D204003586B2 /* FirebaseAPI.swift in Sources */,
+				AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */,
 				ABB9F2F01D9170C600E01511 /* BAEventController.swift in Sources */,
 				ABE210DA1D9B5968009C7165 /* DeprecatedBAChatCard.swift in Sources */,
 				ABB9F3061D9170C600E01511 /* BAWallController.swift in Sources */,

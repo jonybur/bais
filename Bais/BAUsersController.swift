@@ -34,7 +34,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 
 	let _collectionNode: ASCollectionNode!
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
-	let usersRef = FIRDatabase.database().reference().child("users")
+	let usersRef = FirebaseService.usersReference
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
 	                                                    tintColor: ColorPalette.baisOrange,
 	                                                    size: 75)
@@ -160,7 +160,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		
 		switch (user.friendshipStatus){
 			case .noRelationship:
-				FirebaseAPI.sendFriendRequestTo(friendId: user.id)
+				FirebaseService.sendFriendRequestTo(friendId: user.id)
 				break;
 			case .invited:
 				break;
@@ -180,7 +180,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	// gets current user location
 	private func observeUserLocation() -> Promise<CLLocation>{
 		return Promise{ fulfill, reject in
-			let locationRef = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("location");
+			let locationRef = FirebaseService.usersReference.child((FIRAuth.auth()?.currentUser?.uid)!).child("location");
 			locationRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
 				if let dict = snapshot.value as? NSDictionary{
 					let latitude = dict["lat"] as! Double
@@ -198,8 +198,8 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		                                      y: (ez.screenHeight - activityIndicatorSize) / 2,
 		                                      width: activityIndicatorSize, height: activityIndicatorSize);
 		
-		let geoFire = GeoFire(firebaseRef: FirebaseAPI.rootReference)
-		let locationRef = FirebaseAPI.rootReference.child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("location")
+		let geoFire = GeoFire(firebaseRef: FirebaseService.rootReference)
+		let locationRef = FirebaseService.usersReference.child((FIRAuth.auth()?.currentUser?.uid)!).child("location")
 		
 		observeUserLocation().then { userLocation -> Void in
 
@@ -251,7 +251,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		
 		return Promise{ fulfill, reject in
 			// query to friend relationship
-			let relationshipQuery = FIRDatabase.database().reference().child("users")
+			let relationshipQuery = FirebaseService.usersReference
 				.child((FIRAuth.auth()?.currentUser?.uid)!).child("friends").child(user.id)
 			
 			relationshipQuery.observe(.value) { (snapshot: FIRDataSnapshot!) in

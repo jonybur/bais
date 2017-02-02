@@ -106,7 +106,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
 		// with this if we make sure that location has coordinates
 		if let location = locationManager.location?.coordinate {
-			FirebaseAPI.updateUserLocation(location);
+			FirebaseService.updateUserLocation(location);
 		}
 	}
 		

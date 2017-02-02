@@ -13,11 +13,10 @@ import PromiseKit
 
 final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, BAChatHeaderCellNodeDelegate {
 	
-	let usersRef = FIRDatabase.database().reference().child("users")
 	var _sections = [User]()
 	var _friends = [User]()
 	var _requests = [User]()
-	var showMessages: Bool = false
+	var showRequests: Bool = false
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -68,7 +67,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		
 		let user = _sections[item - 1]
-		let chatNode = BAFriendRequestCellNode(with: user)
+		
+		
+		if (showRequests){
+			let chatNode = BAFriendRequestCellNode(with: user)
+			return chatNode
+		}
+		
+		let chatNode = BAChatCellNode(with: user)
 		return chatNode
 	}
 	
@@ -81,7 +87,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 	
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		if (indexPath.item == 0 || showMessages){
+		if (indexPath.item == 0 || showRequests){
 			return false
 		}
 		return true
@@ -96,7 +102,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	//MARK: - BAChatHeaderCellNodeDelegate
 	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode) {
 		
-		if (showMessages){
+		if (showRequests){
 			_sections = _friends
 		} else {
 			_sections = _requests
@@ -124,9 +130,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			let idxPath = IndexPath(row: idx, section: 0)
 			idxToReload.append(idxPath)
 		}
+		
+		showRequests = !showRequests
 		tableNode.reloadRows(at: idxToReload, with: .fade)
 	
-		showMessages = !showMessages
 	}
 	
 	//MARK: - Firebase
@@ -134,38 +141,31 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	// gets friends and reloads table after getting all information
 	private func observeFriends() {
 		let userId = (FIRAuth.auth()?.currentUser?.uid)!
-		let userFriendsRef = FIRDatabase.database().reference().child("users").child(userId).child("friends")
+		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")
 				
 		// grabs all my friends
+		// TODO: should suscribe to a childAdded
 		userFriendsRef.observe(.value, with: { (snapshot: FIRDataSnapshot!) in
 			if let relationshipsDictionary = snapshot.value as? NSDictionary {
-				
 				var promises = [Promise<Void>]()
-				
 				// for each user
 				for relationship in relationshipsDictionary{
-					
 					let friendId = String(describing: relationship.key)
 					let relationshipAttributes = relationship.value as! NSDictionary
 					let statusString = relationshipAttributes["status"] as! String
 					let status = FriendshipStatus(rawValue: statusString)!
-					
 					if (status == .accepted || status == .invited) {
-						
 						// if it's a friend, or was invited by someone, create the chat card
 						let promise = self.getUser(with: friendId).then(execute: { user -> Void in
 							// get user
 							user.friendshipStatus = status
-							
 							if (status == .accepted){
 								self._friends.append(user)
 							} else if (status == .invited){
 								self._requests.append(user)
 							}
-							
 						})
 						promises.append(promise)
-						
 					}
 				}
 				
@@ -173,14 +173,13 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 					self._sections = self._friends
 					self.tableNode.reloadData()
 				})
-				
 			}
 		});
 	}
 	
 	private func getUser(with id: String) -> Promise<User>{
 		return Promise{ fulfill, reject in
-			let userQuery = FIRDatabase.database().reference().child("users").child(id)
+			let userQuery = FirebaseService.usersReference.child(id)
 			userQuery.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
 				if let userDictionary = snapshot.value as? NSDictionary{
 					let user = User(fromNSDictionary: userDictionary)
