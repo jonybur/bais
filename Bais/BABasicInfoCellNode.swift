@@ -14,7 +14,7 @@ class BABasicInfoCellNode: ASCellNode {
 	
 	let nameAndAgeNode = ASTextNode()
 	let distanceNode = ASTextNode()
-	let flagNode = ASImageNode()
+	let nationalityNode = ASTextNode()
 	
 	required init(with user: User) {
 		super.init()
@@ -26,16 +26,19 @@ class BABasicInfoCellNode: ASCellNode {
 		nameAndAgeNode.attributedText = NSAttributedString(string: user.firstName + ", " + String(user.age), attributes: nameAndAgeAttributes)
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightMedium),
+			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		let distanceString = user.location.distance(from: CurrentUser.location!).redacted()
 		distanceNode.attributedText = NSAttributedString(string: distanceString, attributes: distanceAttributes)
 		distanceNode.maximumNumberOfLines = 1
 		
+		nationalityNode.attributedText = NSAttributedString(string: user.nationality, attributes: distanceAttributes)
+		nationalityNode.maximumNumberOfLines = 1
+			
 		self.addSubnode(nameAndAgeNode)
 		self.addSubnode(distanceNode)
-		self.addSubnode(flagNode)
+		self.addSubnode(nationalityNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -45,8 +48,8 @@ class BABasicInfoCellNode: ASCellNode {
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .start
 		verticalStack.justifyContent = .spaceBetween
-		verticalStack.spacing = 10
-		verticalStack.children = [nameAndAgeNode, distanceNode]
+		verticalStack.spacing = 6
+		verticalStack.children = [nameAndAgeNode, nationalityNode, distanceNode]
 		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 17.5, left: 15, bottom: 17.5, right: 0)

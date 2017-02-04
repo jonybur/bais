@@ -1,26 +1,16 @@
 //
-//  BSWaterfallView.swift
+//  BAUsersController.swift
 //  Bais
 //
-//  Created by Rajeev Gupta on 11/9/16.
-//
-//  Copyright (c) 2014-present, Facebook, Inc.  All rights reserved.
-//  This source code is licensed under the BSD-style license found in the
-//  LICENSE file in the root directory of this source tree. An additional grant
-//  of patent rights can be found in the PATENTS file in the same directory.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-//  FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-//  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-//  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  Created by Jonathan Bursztyn on 18/1/17.
+//  Copyright © 2017 Board Social, Inc. All rights reserved.
 //
 
 import UIKit
 import AsyncDisplayKit
 import FirebaseDatabase
 import FirebaseAuth
+import Hero
 import DGActivityIndicatorView
 import PromiseKit
 import GeoFire
@@ -46,7 +36,8 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		super.init(nibName: nil, bundle: nil);
 		layout.delegate = self
 		
-		self.extendedLayoutIncludesOpaqueBars = true
+		extendedLayoutIncludesOpaqueBars = true
+		isHeroEnabled = true
 		
 		_collectionNode.dataSource = self;
 		_collectionNode.delegate = self;
@@ -175,7 +166,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	func usersCellNodeDidClickView(_ usersViewCell: BAUsersCellNode) {
 		let user = usersViewCell.user
 		let controller = BAProfileController(with: user!)
-		self.navigationController?.pushViewController(controller, animated: true)
+		self.navigationController?.pushViewController(controller, animated: false)
 	}
 	
 	//MARK: - Firebase

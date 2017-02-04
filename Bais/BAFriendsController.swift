@@ -73,7 +73,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
 		let user = _usersToDisplay[item - 1]
 		
-		
 		if (showRequests){
 			let chatNode = BAFriendRequestCellNode(with: user)
 			return chatNode

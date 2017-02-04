@@ -11,9 +11,10 @@ import Firebase
 import FirebaseAuth
 import FBSDKCoreKit
 import CoreLocation
+import PromiseKit
 import GeoFire
 
-let registerUserKey = "com.baisapp.registerUser";
+let registerUserKey = "com.baisapp.registerUser"
 
 class FirebaseService{
 	
@@ -21,6 +22,15 @@ class FirebaseService{
 	static let rootReference = FIRDatabase.database().reference()
 	static let usersReference = FIRDatabase.database().reference().child("users")
 	static let messagesReference = FIRDatabase.database().reference().child("messages")
+	
+	static func getUser(with userID: String) -> Promise<User>{
+		return Promise{ fulfill, reject in
+			usersReference.child(userID).observeSingleEvent(of: .value, with: { snapshot in
+				let user = User(fromSnapshot: snapshot)
+				fulfill(user)
+			})
+		}
+	}
 	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){
 		
@@ -30,7 +40,7 @@ class FirebaseService{
 		let value = [
 			"lon": location.longitude,
 			"lat": location.latitude
-		];
+		]
 		
 		locationRef.updateChildValues(value)
 		geoFire?.setLocation(CLLocation(latitude: location.latitude, longitude: location.longitude), forKey: currentUserId)
@@ -38,71 +48,71 @@ class FirebaseService{
 	}
 	
 	static func endFriendRelationshipWith(friendId : String){
-		let selfRef = usersReference.child(currentUserId).child("friends").child(friendId);
-		let friendRef = usersReference.child(friendId).child("friends").child(currentUserId);
+		let selfRef = usersReference.child(currentUserId).child("friends").child(friendId)
+		let friendRef = usersReference.child(friendId).child("friends").child(currentUserId)
 	
-		selfRef.removeValue();
-		friendRef.removeValue();
+		selfRef.removeValue()
+		friendRef.removeValue()
 	}
 	
 	static func denyFriendRequestFrom(friendId : String){
-		let selfRef = usersReference.child(currentUserId).child("friends").child(friendId);
-		selfRef.removeValue();
+		let selfRef = usersReference.child(currentUserId).child("friends").child(friendId)
+		selfRef.removeValue()
 	}
 	
 	static func acceptFriendRequestFrom(friendId : String){
-		setFriendStatusWith(friendId, to : .accepted);
+		setFriendStatusWith(friendId, to : .accepted)
 	}
 	
 	static func sendFriendRequestTo(friendId : String){
-		setFriendStatusWith(friendId, to : .invited);
+		setFriendStatusWith(friendId, to : .invited)
 	}
 	
 	private static func setFriendStatusWith(_ friendId : String, to status : FriendshipStatus){
 		
-		var value = [String:String]();
+		var value = [String:String]()
 		
 		switch (status){
 		
 		case .accepted:
 			value = [
 				"status": status.rawValue
-			];
-			break;
+			]
+			break
 			
 		case .invited:
 			value = [
 				"status": status.rawValue,
 				"postedBy": currentUserId
-			];
-			break;
+			]
+			break
 			
-		default: break;
+		default: break
 		
 		}
 		
 		let selfRef = usersReference.child(currentUserId).child("friends").child(friendId)
-		selfRef.updateChildValues(value);
+		selfRef.updateChildValues(value)
 		
 		let friendRef = usersReference.child(friendId).child("friends").child(currentUserId)
-		friendRef.updateChildValues(value);
+		friendRef.updateChildValues(value)
 	}
 	
 	// takes Firebase user, adds Facebook information, posts to database
 	static func registerUser(_ user : FIRUser){
 		
 		if FBSDKAccessToken.current() == nil {
-			return;
+			return
 		}
 		
 		let graphRequest = FBSDKGraphRequest(graphPath: "me",
 												parameters: ["fields": "picture.width(400),first_name,last_name"],
-		                                        httpMethod: "GET");
+		                                        httpMethod: "GET")
 		
 		graphRequest?.start { connection, result, error in
 			if error != nil {
 				print("ERROR: " + error.debugDescription)
-				return;
+				return
 			}
 			
 			if let nsArray = result as? NSDictionary {
@@ -111,8 +121,8 @@ class FirebaseService{
 					
 					if let datum = events["data"] as? NSDictionary{
 					
-						let messageRef = usersReference;
-						let itemRef = messageRef.child(user.uid);
+						let messageRef = usersReference
+						let itemRef = messageRef.child(user.uid)
 						let userItem = [
 							"id": user.uid,
 							"first_name": nsArray["first_name"] as! String,
@@ -130,7 +140,7 @@ class FirebaseService{
 					}
 				}
 			}
-		};
+		}.start()
 		
 	}
 

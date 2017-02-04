@@ -11,6 +11,7 @@ import AsyncDisplayKit
 import Foundation
 import FirebaseDatabase
 import Firebase
+import Hero
 
 protocol BAUsersCellNodeDelegate: class {
 	func usersCellNodeDidClickView(_ usersViewCell: BAUsersCellNode);
@@ -64,6 +65,7 @@ class BAUsersCellNode: ASCellNode {
 		
 		self.user = user
 		
+		imageNode.view.heroID = "foo"
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill

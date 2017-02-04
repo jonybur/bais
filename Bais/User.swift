@@ -13,7 +13,7 @@ import CoreLocation
 class CurrentUser{
 	
 	open static var location: CLLocation?
-	
+
 	/*
 	thisUserRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
 		CurrentUser.instance = User(fromSnapshot: snapshot);

@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		817A5728FB15CD651FEC45FF /* Pods_Bais.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF6B2B119653D993B14B315 /* Pods_Bais.framework */; };
 		AB0E468B1DF3E628003CA68C /* MosaicCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */; };
+		AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */; };
 		AB3D33A21E458C9E0058547A /* BAImageCarouselCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */; };
 		AB3D33A41E4598CE0058547A /* BABasicInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A31E4598CE0058547A /* BABasicInfoCellNode.swift */; };
+		AB3D33A61E45AA8D0058547A /* BADescriptionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */; };
 		AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D741D98D204003586B2 /* FirebaseService.swift */; };
 		AB4F5D771D98EB4F003586B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D761D98EB4F003586B2 /* User.swift */; };
 		AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */; };
@@ -66,8 +68,10 @@
 		40BDC291BD8D1F55A1BC5F42 /* Pods-Bais.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bais.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bais/Pods-Bais.release.xcconfig"; sourceTree = "<group>"; };
 		82318B2C04D00B6FB970C108 /* Pods-Bais.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bais.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bais/Pods-Bais.debug.xcconfig"; sourceTree = "<group>"; };
 		AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicCollectionViewLayout.swift; sourceTree = "<group>"; };
+		AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASpacerCellNode.swift; sourceTree = "<group>"; };
 		AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAImageCarouselCellNode.swift; sourceTree = "<group>"; };
 		AB3D33A31E4598CE0058547A /* BABasicInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BABasicInfoCellNode.swift; sourceTree = "<group>"; };
+		AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BADescriptionCellNode.swift; sourceTree = "<group>"; };
 		AB4F5D741D98D204003586B2 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		AB4F5D761D98EB4F003586B2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersCellNode.swift; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 			children = (
 				AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */,
 				AB3D33A31E4598CE0058547A /* BABasicInfoCellNode.swift */,
+				AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */,
+				AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -549,6 +555,7 @@
 			files = (
 				ABB9F3041D9170C600E01511 /* BAMapBox.swift in Sources */,
 				AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */,
+				AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */,
 				ABB9F2E61D9170C600E01511 /* BackgroundStyleAnimator.swift in Sources */,
 				ABB9F2FA1D9170C600E01511 /* BALoginController.swift in Sources */,
 				ABB9F2E91D9170C600E01511 /* BACalendarController.swift in Sources */,
@@ -570,6 +577,7 @@
 				ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */,
 				AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */,
 				ABB9F2F21D9170C600E01511 /* FetchedContent.swift in Sources */,
+				AB3D33A61E45AA8D0058547A /* BADescriptionCellNode.swift in Sources */,
 				ABB9F2DD1D9170C600E01511 /* AppsCommunicator.swift in Sources */,
 				ABFC76E61E34995700B6498D /* BAUsersHeaderCellNode.swift in Sources */,
 				ABB9F2F61D9170C600E01511 /* InstagramPicture.swift in Sources */,

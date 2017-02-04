@@ -10,6 +10,7 @@ import UIKit
 import AsyncDisplayKit
 import Firebase
 import PromiseKit
+import Hero
 
 final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate {
 	
@@ -20,11 +21,23 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 		return node as! ASTableNode
 	}
 	
-	init(with user: User) {
+	init(with userId: String){
 		super.init(node: ASTableNode())
 		
+		FirebaseService.getUser(with: userId).then { user -> Void in
+			self.user = user
+			self.commonInit()
+		}.catch { _ in }
+	}
+	
+	init(with user: User) {
+		super.init(node: ASTableNode())
 		self.user = user
-		
+		commonInit()
+	}
+	
+	func commonInit(){
+		isHeroEnabled = true
 		tableNode.delegate = self
 		tableNode.dataSource = self
 		tableNode.view.separatorStyle = .singleLine
@@ -61,6 +74,9 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 		} else if (item == 1){
 			let basicCellNode = BABasicInfoCellNode(with: user)
 			return basicCellNode
+		} else if (item == 2){
+			let descriptionCellNode = BADescriptionInfoCellNode(with: user)
+			return descriptionCellNode
 		}
 		
 		let chatNode = BAChatCellNode(with: user)
@@ -72,7 +88,7 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		return 2
+		return 4
 	}
 	
 }

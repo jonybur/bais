@@ -9,6 +9,7 @@
 import UIKit
 import AsyncDisplayKit
 import Foundation
+import Hero
 
 protocol BAImageCarouselCellNodeDelegate: class {
 	func imageCarouselCellNodeDidClickBackButton(_ usersViewCell: BAImageCarouselCellNode);
@@ -24,6 +25,7 @@ class BAImageCarouselCellNode: ASCellNode {
 	required init(with user: User) {
 		super.init()
 		
+		imageNode.view.heroID = "foo"
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill

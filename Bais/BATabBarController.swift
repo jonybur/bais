@@ -14,18 +14,19 @@ import FBSDKLoginKit
 import FirebaseDatabase
 import FirebaseAuth
 import Firebase
+import Hero
 
-open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
+open class BATabBarController: ESTabBarController, CLLocationManagerDelegate, HeroViewControllerDelegate {
 	
-	//let gradientBar : GradientBar = GradientBar();
-	let locationManager : CLLocationManager = CLLocationManager()
+	let locationManager = CLLocationManager()
 	
     open override func viewDidLoad() {
 		
 		super.viewDidLoad()
 		
 		automaticallyAdjustsScrollViewInsets = false
-				
+		
+		isHeroEnabled = true
 		self.title = ""
 		self.tabBar.shadowImage = UIImage(named: "transparent")
 		self.tabBar.backgroundImage = UIImage(named: "transparent")
@@ -63,11 +64,10 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	}
 	
 	private func setBATabBarController(){
-	
 		let v1 = BAUsersController()
 		let v2 = BAFriendsController()
 		let v3 = BACalendarController()
-		let v4 = BASettingsController()
+		let v4 = BAProfileController(with: FirebaseService.currentUserId)
 		
 		v1.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityStyleAnimator.init()))
 		v2.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
@@ -83,8 +83,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		self.viewControllers = controllers
 		
 		self.selectedIndex = 0
-		
-		//self.view.addSubview(gradientBar);
 	}
 	
 	open override func viewDidAppear(_ animated: Bool) {

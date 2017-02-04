@@ -25,7 +25,6 @@ import Firebase
 import FirebaseDatabase
 import FirebaseAuth
 import JSQMessagesViewController
-import JSQSystemSoundPlayer
 
 class BAChatController: JSQMessagesViewController {
 	
