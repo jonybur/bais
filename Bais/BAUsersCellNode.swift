@@ -11,7 +11,6 @@ import AsyncDisplayKit
 import Foundation
 import FirebaseDatabase
 import Firebase
-import Hero
 
 protocol BAUsersCellNodeDelegate: class {
 	func usersCellNodeDidClickView(_ usersViewCell: BAUsersCellNode);
@@ -65,7 +64,6 @@ class BAUsersCellNode: ASCellNode {
 		
 		self.user = user
 		
-		imageNode.view.heroID = "foo"
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill
@@ -185,7 +183,7 @@ class BAUsersCellNode: ASCellNode {
 	}
 	
 	func setButtonTitle(_ title: String){
-		self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.black, for: [])
+		self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
 	}
 	
 	func setFriendshipAction(){

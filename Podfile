@@ -13,7 +13,7 @@ target 'Bais' do
   pod 'GeoFire', :git => 'https://github.com/firebase/geofire-objc.git'
   
   # layout
-  pod 'Hero', '>= 0.1.3'
+  #pod 'Hero', '>= 0.1.3'
   pod 'pop'
   pod 'DGActivityIndicatorView'
 	pod 'AsyncDisplayKit', '>= 2.0'

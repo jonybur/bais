@@ -14,9 +14,8 @@ import FBSDKLoginKit
 import FirebaseDatabase
 import FirebaseAuth
 import Firebase
-import Hero
 
-open class BATabBarController: ESTabBarController, CLLocationManagerDelegate, HeroViewControllerDelegate {
+open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	
 	let locationManager = CLLocationManager()
 	
@@ -26,7 +25,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate, He
 		
 		automaticallyAdjustsScrollViewInsets = false
 		
-		isHeroEnabled = true
 		self.title = ""
 		self.tabBar.shadowImage = UIImage(named: "transparent")
 		self.tabBar.backgroundImage = UIImage(named: "transparent")

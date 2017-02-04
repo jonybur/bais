@@ -10,7 +10,6 @@ import UIKit
 import AsyncDisplayKit
 import FirebaseDatabase
 import FirebaseAuth
-import Hero
 import DGActivityIndicatorView
 import PromiseKit
 import GeoFire
@@ -37,7 +36,6 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		layout.delegate = self
 		
 		extendedLayoutIncludesOpaqueBars = true
-		isHeroEnabled = true
 		
 		_collectionNode.dataSource = self;
 		_collectionNode.delegate = self;

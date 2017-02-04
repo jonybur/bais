@@ -10,7 +10,6 @@ import UIKit
 import AsyncDisplayKit
 import Firebase
 import PromiseKit
-import Hero
 
 final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate {
 	
@@ -37,7 +36,6 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 	
 	func commonInit(){
-		isHeroEnabled = true
 		tableNode.delegate = self
 		tableNode.dataSource = self
 		tableNode.view.separatorStyle = .none

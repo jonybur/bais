@@ -19,7 +19,7 @@ class BASpacerCellNode: ASCellNode {
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
-		verticalStack.style.minHeight = ASDimension(unit: .points, value: 100)
+		verticalStack.style.minHeight = ASDimension(unit: .points, value: 150)
 		return verticalStack
 	}
 	
