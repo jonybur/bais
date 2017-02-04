@@ -40,7 +40,7 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 		isHeroEnabled = true
 		tableNode.delegate = self
 		tableNode.dataSource = self
-		tableNode.view.separatorStyle = .singleLine
+		tableNode.view.separatorStyle = .none
 		tableNode.allowsSelection = false
 	}
 	
@@ -79,8 +79,7 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 			return descriptionCellNode
 		}
 		
-		let chatNode = BAChatCellNode(with: user)
-		return chatNode
+		return BASpacerCellNode()
 	}
 	
 	func numberOfSections(in tableNode: ASTableNode) -> Int {

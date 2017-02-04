@@ -12,12 +12,15 @@ import AsyncDisplayKit
 
 class BASpacerCellNode: ASCellNode {
 	
-	required init() {
+	override init() {
 		super.init()
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-		return ASSpec()
+		let verticalStack = ASStackLayoutSpec()
+		verticalStack.direction = .vertical
+		verticalStack.style.minHeight = ASDimension(unit: .points, value: 100)
+		return verticalStack
 	}
 	
 }
