@@ -95,11 +95,11 @@ class FirebaseService{
 			return;
 		}
 		
-		let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me",
-		                                                        parameters: ["fields": "picture.width(400),first_name,last_name"],
-		                                                        httpMethod: "GET");
+		let graphRequest = FBSDKGraphRequest(graphPath: "me",
+												parameters: ["fields": "picture.width(400),first_name,last_name"],
+		                                        httpMethod: "GET");
 		
-		graphRequest.start { connection, result, error in
+		graphRequest?.start { connection, result, error in
 			if error != nil {
 				print("ERROR: " + error.debugDescription)
 				return;

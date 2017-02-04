@@ -46,7 +46,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 //MARK: - ASTableNode didSelectRowAt
 	
 	func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
-		
 		if (indexPath.item == 0){
 			return
 		}
@@ -101,7 +100,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
-			// kill request
+			// TODO kill request
 		}
 		removeAction.backgroundColor = ColorPalette.orange
 		return [removeAction]

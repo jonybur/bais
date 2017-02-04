@@ -78,7 +78,7 @@ class BAUsersHeaderCellNode: ASCellNode {
 		return insetSpec
 	}
 	
-	//MARK: - BAUsersHeaderCellNodeDelegate methods
+//MARK: - BAUsersHeaderCellNodeDelegate methods
 	func buttonPressed(_ sender: UIButton){
 		
 		if (blockButton){

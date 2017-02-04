@@ -173,7 +173,9 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	}
 	
 	func usersCellNodeDidClickView(_ usersViewCell: BAUsersCellNode) {
-		
+		let user = usersViewCell.user
+		let controller = BAProfileController(with: user!)
+		self.navigationController?.pushViewController(controller, animated: true)
 	}
 	
 	//MARK: - Firebase

@@ -24,6 +24,7 @@ class CurrentUser{
 class User{
 	
 	var id: String = ""
+	var age: Int = 23
 	var facebookId: String = ""
 	var firstName: String = ""
 	var lastName: String = ""

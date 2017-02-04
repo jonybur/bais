@@ -4,28 +4,31 @@ use_frameworks!
 target 'Bais' do
   swift_version = "3.0"
 
-  pod 'pop'
-  pod 'DGActivityIndicatorView'
-  pod 'JSQSystemSoundPlayer'
-  
+  # firebase pods
   pod 'Firebase'
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-
   pod 'GeoFire', :git => 'https://github.com/firebase/geofire-objc.git'
-
+  
+  # layout
+  pod 'Hero', '>= 0.1.3'
+  pod 'pop'
+  pod 'DGActivityIndicatorView'
 	pod 'AsyncDisplayKit', '>= 2.0'
+
+  # facebook
   pod 'FBSDKCoreKit', '>= 4.15.1'
   pod 'FBSDKLoginKit', '>= 4.15.1'
   pod 'FBSDKShareKit', '>= 4.15.1'
+
+  # web requests
   pod 'Alamofire', '>= 4.0.0'
   pod 'SwiftyJSON', '>= 3.1.4'
 
-  # take out AwaitKit, ESTabBarController
+  # to deprecate
   pod 'AwaitKit', '>= 2.0.0'
-  
   pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git',
     :branch => 'develop'
   pod 'ESTabBarController-swift',

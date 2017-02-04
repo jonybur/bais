@@ -53,7 +53,6 @@ class BAFriendRequestCellNode: ASCellNode {
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-		
 		// imagen
 		let imagePlace = ASRatioLayoutSpec(ratio: 1, child: imageNode)
 		imagePlace.style.maxWidth = ASDimension(unit: .points, value: 60)
@@ -65,7 +64,7 @@ class BAFriendRequestCellNode: ASCellNode {
 		verticalStack.children = [self.nameNode]
 		
 		// text inset
-		let textInsets = UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 0)
+		let textInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: verticalStack)
 		
 		// horizontal spacer

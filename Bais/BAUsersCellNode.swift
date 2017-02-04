@@ -50,10 +50,10 @@ class BAUsersCellNode: ASCellNode {
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
 	let distanceNode = ASTextNode()
-	let buttonNode = ASButtonNode()
 	let flagNode = ASImageNode()
-	var gradientNode = ASDisplayNode()
+	let buttonNode = ASButtonNode()
 	
+	var gradientNode = ASDisplayNode()
 	var user: User!
 	var ratio: CGSize!
 	
@@ -107,6 +107,7 @@ class BAUsersCellNode: ASCellNode {
 		
 		ratio = CGSize(width:1,height:user.imageRatio)
 		
+		imageNode.addTarget(self, action: #selector(self.cardPressed(_:)), forControlEvents: .touchUpInside)
 		buttonNode.addTarget(self, action: #selector(self.buttonPressed(_:)), forControlEvents: .touchUpInside)
 
 		self.setFriendshipAction()
@@ -154,7 +155,7 @@ class BAUsersCellNode: ASCellNode {
 		let overlayLayout = ASOverlayLayoutSpec(child: imageLayout, overlay: textInsetSpec)
 		overlayLayout.style.flexBasis = ASDimension (unit: .fraction, value: 0.8)
 		overlayLayout.style.flexShrink = 1
-		
+
 		// bottom button
 		buttonNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: 50)
 		buttonNode.style.flexBasis = ASDimension (unit: .fraction, value: 0.2)
@@ -182,7 +183,7 @@ class BAUsersCellNode: ASCellNode {
 	}
 	
 	func setButtonTitle(_ title: String){
-		self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+		self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.black, for: [])
 	}
 	
 	func setFriendshipAction(){

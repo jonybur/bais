@@ -27,6 +27,6 @@ struct ColorPalette{
 	static let white = UIColor.white
 	static let lightGrey = UIColor(red: 0.6766, green: 0.6772, blue: 0.6767, alpha: 1)
 	static let grey = UIColor(red: 0.333, green: 0.3333, blue: 0.3331, alpha: 1)
-	static let black = UIColor(red: 0.6766, green: 0.6772, blue: 0.6767, alpha: 1)
+	static let black = UIColor.black
 	
 }
