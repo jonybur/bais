@@ -12,6 +12,5 @@ class FetchedContent{
 
 	static var instagramMedia : [InstagramMedia] = [InstagramMedia]();
 	static var uberProducts : [UberProduct] = [UberProduct]();
-	static var facebookEvents : [Event] = [Event]();
 	
 }

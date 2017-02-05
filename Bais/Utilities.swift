@@ -169,3 +169,32 @@ extension Double {
 extension CGFloat {
 	var f: Float { return Float(self) }
 }
+
+// TODO: move this inside imageModificationBlock, remove extension - avoid calling UIGraphicsBeginImageContextWithOptions again
+extension UIImage {
+	func tintedWithLinearGradientColors(colorsArr: [CGColor?]) -> UIImage {
+		UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale);
+		let context = UIGraphicsGetCurrentContext()
+		context!.translateBy(x: 0, y: self.size.height)
+		context!.scaleBy(x: 1.0, y: -1.0)
+		
+		context!.setBlendMode(CGBlendMode.normal)
+		let rect = CGRect(0, 0, self.size.width, self.size.height)
+		
+		// Create gradient
+		
+		let colors = colorsArr as CFArray
+		let space = CGColorSpaceCreateDeviceRGB()
+		let gradient = CGGradient(colorsSpace: space, colors: colors, locations: nil)
+		
+		// Apply gradient
+		
+		context!.clip(to: rect, mask: self.cgImage!)
+		context!.drawLinearGradient(gradient!, start: CGPoint(0, self.size.height / 2), end: CGPoint(0, self.size.height), options: CGGradientDrawingOptions(rawValue: 0))
+		let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		
+		return gradientImage!
+	}
+}
+

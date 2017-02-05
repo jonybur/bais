@@ -16,12 +16,18 @@ import FBSDKCoreKit
 
 let instagramDownloadedKey = "com.baisapp.instagramDownloaded";
 let uberDownloadedKey = "com.baisapp.uberDownloaded";
-let eventsDownloadedKey = "com.baisapp.eventsDownloaded";
 let eventRSVPStatus = "com.baisapp.attendEvent";
 
+protocol WebServiceDelegate: class {
+	func eventsLoaded(_ events: [Event]);
+}
+
+// rename to WebService
 class CloudController{
 	
-	static let uberServerToken : String = "b_kEklxu3QSAD_ZigupALYGYzSWs-DDB132IrpcU";
+	weak var delegate: WebServiceDelegate?
+	
+	static let uberServerToken : String = "b_kEklxu3QSAD_ZigupALYGYzSWs-DDB132IrpcU"
 	
 	static func setNewRSVPStatus(_ eventId : String, rsvpStatus : RSVPStatus){
 		
@@ -75,7 +81,7 @@ class CloudController{
 	}
 		
 	// call from main thread
-	static func getFacebookEvents(){
+	func getFacebookEvents(){
 		
 		// gets events from facebook
 		let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "baisinternationalstudents",
@@ -90,36 +96,32 @@ class CloudController{
 				
 			} else {
 				
-				var eventsArray : [Event] = [Event]();
+				var eventsArray = [Event]();
 				
+				// change to guards
 				if let nsArray = result as? NSDictionary {
-					
 					if let events = nsArray.object(forKey: "events") as? NSDictionary{
-						
 						if let datum = events.object(forKey: "data") as? NSArray{
-							
 							for data in datum{
-								
 								if let event = data as? NSDictionary{
-									
 									let parsedEvent = Event();
-									parsedEvent.startTime = stringToNSDate(event["start_time"] as! String);
-									parsedEvent.endTime = stringToNSDate(event["end_time"] as! String);
+									parsedEvent.startTime = self.stringToNSDate(event["start_time"] as! String);
+									parsedEvent.endTime = self.stringToNSDate(event["end_time"] as! String);
 									parsedEvent.id = event["id"] as! String;
 									parsedEvent.description = event["description"] as! String;
 									parsedEvent.name = event["name"] as! String;
 									
 									// TODO: Also remove "I Bais Argentina"
-									if let separatorChar : Int = parsedEvent.name.indexOfCharacter("|") {
+									if let separatorChar = parsedEvent.name.indexOfCharacter("|") {
 										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: separatorChar-1);
 										parsedEvent.name = parsedEvent.name[range];
 									}
 									
+									// change to guards
 									if let place = event["place"] as? NSDictionary{
 										parsedEvent.place.name = place["name"] as! String;
 										
 										if let location = place["location"] as? NSDictionary{
-											
 											if let street = location["street"] as? String{
 												parsedEvent.place.street = street;
 											}
@@ -141,22 +143,20 @@ class CloudController{
 					}
 				}
 				
-				FetchedContent.facebookEvents = eventsArray;
-				
-				// make NSNotification, we have the events ready
-				NotificationCenter.default.post(name: Notification.Name(rawValue: eventsDownloadedKey), object: self)
+				eventsArray = eventsArray.sorted(by: {
+					$0.startTime.compare($1.startTime as Date) == ComparisonResult.orderedAscending
+				});
 
+				self.delegate?.eventsLoaded(eventsArray)
 			}
-		};
+		}
 	}
 	
-	static func stringToNSDate(_ value : String) -> Date{
-		
-		let dateFormatter = DateFormatter();
-		dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH:mm:ssZ";
-		let date = dateFormatter.date(from: value);
-		return date!;
-		
+	func stringToNSDate(_ value: String) -> Date {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH:mm:ssZ"
+		let date = dateFormatter.date(from: value)
+		return date!
 	}
 	
     static func getInstagramPage(){

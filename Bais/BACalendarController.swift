@@ -1,121 +1,120 @@
 //
-//  BATabBarController.swift
-//  Claxon
+//  BACalendarController.swift
+//  Bais
 //
-//  Created by Jonathan Bursztyn on 18/7/16.
-//  Copyright © 2016 Claxon. All rights reserved.
+//  Created by Jonathan Bursztyn on 4/2/17.
+//  Copyright © 2017 Board Social, Inc. All rights reserved.
 //
 
-import Foundation
-import SwiftyJSON
-import AwaitKit
 import UIKit
 import AsyncDisplayKit
+import FirebaseDatabase
 import FirebaseAuth
-import pop
 import DGActivityIndicatorView
-import ESTabBarController
+import PromiseKit
+import GeoFire
 
-class BACalendarController : UIViewController, EventCardDelegate{
-	
-	var animating : Bool = false;
-    var scrollNode : ASScrollNode = ASScrollNode();
-	
+class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate,
+	ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebServiceDelegate {
+
+	var _contentToDisplay = [Event]()
+	let _collectionNode: ASCollectionNode!
+	let _layoutInspector = MosaicCollectionViewLayoutInspector()
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
 	                                                    tintColor: ColorPalette.orange,
-	                                                    size: 75);
+	                                                    size: 75)
 	
-    override func viewDidLoad() {
-        
-        super.viewDidLoad();
+	init (){
+		let layout = MosaicCollectionViewLayout(startsAt: 10)
+		layout.numberOfColumns = 1;
+		_collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
+		super.init(nibName: nil, bundle: nil);
+		layout.delegate = self
 		
-		automaticallyAdjustsScrollViewInsets = false;
+		extendedLayoutIncludesOpaqueBars = true
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(self.initializeInterface(_:)), name: NSNotification.Name(rawValue: eventsDownloadedKey), object: nil);
-        
-        view.backgroundColor = ColorPalette.white;
-		
-		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - 75) / 2,
-		                                      y: (ez.screenHeight - 75) / 2,
-		                                      width: 75, height: 75);
-		
+		_collectionNode.dataSource = self;
+		_collectionNode.delegate = self;
+		_collectionNode.view.layoutInspector = _layoutInspector
+		_collectionNode.backgroundColor = ColorPalette.white
+		_collectionNode.view.isScrollEnabled = true
+		_collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
+	}
+	
+	required init(coder: NSCoder) {
+		fatalError("Storyboards are not supported")
+	}
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		self.view.addSubnode(_collectionNode!)
 		self.view.addSubview(activityIndicatorView!);
-		activityIndicatorView?.startAnimating();
 		
-		async {
-			CloudController.getFacebookEvents();
-		}
-    }
+		activityIndicatorView?.startAnimating()
+		
+		let webService = CloudController()
+		webService.delegate = self
+		webService.getFacebookEvents()
+	}
 	
-	// gets the notifications
-    @objc func initializeInterface(_ notification: Notification) {
-		
-		var yPosition : CGFloat = GradientBar.height + 10;
-		
-		FetchedContent.facebookEvents = FetchedContent.facebookEvents.sorted(by: {
-			$0.startTime.compare($1.startTime as Date) == ComparisonResult.orderedAscending
-		});
-		
-		for event in FetchedContent.facebookEvents{
-			
+	internal func eventsLoaded(_ events: [Event]) {
+		var idxToInsert = [IndexPath]()
+		for event in events {
 			if ((event.startTime as Date) < Date() &&
 				(event.endTime as Date) < Date()) {
 				continue;
 			}
 			
-			let userCard : BAEventCard = BAEventCard(event: event, yPosition: yPosition);
-			userCard.delegate = self;
-			self.scrollNode.addSubnode(userCard);
-			yPosition += userCard.frame.height + 10;
+			let idxPath = IndexPath(item: idxToInsert.count, section: 0)
+			idxToInsert.append(idxPath)
+			_contentToDisplay.append(event)
 		}
 		
-		self.scrollNode.frame = CGRect(x:0, y:0, width: ez.screenWidth, height: ez.screenHeight);
-		self.scrollNode.view.contentSize = CGSize(width: ez.screenWidth, height: yPosition + 100);
-		self.view.addSubview(self.scrollNode.view);
-		
-		self.scrollNode.view.setContentOffset(CGPoint(x:0, y: 0), animated: false);
-		
-		activityIndicatorView?.removeFromSuperview();
-	}
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated);
-    }
-	
-	// ASEventCard delegate methods
-	func eventCardDidClick(sender: BAEventCard) {
-		
-		if (animating){
-			return;
-		}
-		
-		animating = true;
-		
-		// animates the check
-		let spring = POPSpringAnimation(propertyNamed: kPOPViewScaleXY);
-		spring?.velocity = NSValue(cgPoint: CGPoint(x: -5, y: -5));
-		spring?.springBounciness = 5;
-		spring?.completionBlock = {(animation, finished) in
-			
-			let nextView = BAEventController(event: sender.facebookEvent);
-			
-			UIView.animate(withDuration: 0.3, animations: { () -> Void in
-				UIView.setAnimationCurve(UIViewAnimationCurve.easeInOut)
-				
-				self.navigationController?.pushViewController(nextView, animated: false);
-				let animation = CATransition()
-				animation.duration = 0.3
-				animation.type = kCATransitionMoveIn
-				animation.subtype = kCATransitionFromRight
-				animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-				self.navigationController?.view.layer.add(animation, forKey: "")
-				
-				self.animating = false;
-			})
-			
-		}
-		sender.pop_add(spring, forKey: "sendAnimation");
-
+		_collectionNode.insertItems(at: idxToInsert)
+		_collectionNode.reloadItems(at: idxToInsert)
 	}
 	
+	override func viewWillLayoutSubviews() {
+		_collectionNode.frame = self.view.bounds;
+	}
+	
+	func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
+		let event = _contentToDisplay[indexPath.item]
+		let node = BACalendarCellNode(with: event)
+		node.delegate = self
+		return node
+	}
+	
+	func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
+		return BACalendarHeaderCellNode()
+	}
+	
+	func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+		return 1
+	}
+	
+	func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+		return _contentToDisplay.count
+	}
+	
+	//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
+	internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
+		return CGSize(width: 1, height: 0.5)
+	}
+	
+	//MARK: - BACalendarCellNode delegate methods
+	internal func calendarCellNodeDidClickButton(_ calendarViewCell: BACalendarCellNode) {
+		
+	}
+	
+	internal func calendarCellNodeDidClickView(_ calendarViewCell: BACalendarCellNode) {
+		
+	}
+	
+	//MARK: - Dealloc
+	deinit {
+		_collectionNode.dataSource = nil;
+		_collectionNode.delegate = nil;
+	}
 }
+

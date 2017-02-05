@@ -16,6 +16,9 @@
 		AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D741D98D204003586B2 /* FirebaseService.swift */; };
 		AB4F5D771D98EB4F003586B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D761D98EB4F003586B2 /* User.swift */; };
 		AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */; };
+		AB6A25BF1E46A20100661BCF /* BACalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25BE1E46A20100661BCF /* BACalendarController.swift */; };
+		AB6A25C21E46A3DF00661BCF /* BACalendarHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25C11E46A3DF00661BCF /* BACalendarHeaderCellNode.swift */; };
+		AB6A25C41E46A3EB00661BCF /* BACalendarCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25C31E46A3EB00661BCF /* BACalendarCellNode.swift */; };
 		AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */; };
 		AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */; };
 		AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */; };
@@ -31,9 +34,9 @@
 		ABB9F2E51D9170C600E01511 /* BAWallPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BA1D9170C600E01511 /* BAWallPost.swift */; };
 		ABB9F2E61D9170C600E01511 /* BackgroundStyleAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BB1D9170C600E01511 /* BackgroundStyleAnimator.swift */; };
 		ABB9F2E81D9170C600E01511 /* BouncesStyleAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BD1D9170C600E01511 /* BouncesStyleAnimator.swift */; };
-		ABB9F2E91D9170C600E01511 /* BACalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BE1D9170C600E01511 /* BACalendarController.swift */; };
+		ABB9F2E91D9170C600E01511 /* BADeprecatedCalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BE1D9170C600E01511 /* BADeprecatedCalendarController.swift */; };
 		ABB9F2EA1D9170C600E01511 /* BAChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BF1D9170C600E01511 /* BAChatController.swift */; };
-		ABB9F2EB1D9170C600E01511 /* CloudController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C01D9170C600E01511 /* CloudController.swift */; };
+		ABB9F2EB1D9170C600E01511 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C01D9170C600E01511 /* WebService.swift */; };
 		ABB9F2EC1D9170C600E01511 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C11D9170C600E01511 /* ColorPalette.swift */; };
 		ABB9F2ED1D9170C600E01511 /* BATabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C21D9170C600E01511 /* BATabBarController.swift */; };
 		ABB9F2EF1D9170C600E01511 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C41D9170C600E01511 /* Event.swift */; };
@@ -75,6 +78,9 @@
 		AB4F5D741D98D204003586B2 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		AB4F5D761D98EB4F003586B2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersCellNode.swift; sourceTree = "<group>"; };
+		AB6A25BE1E46A20100661BCF /* BACalendarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACalendarController.swift; sourceTree = "<group>"; };
+		AB6A25C11E46A3DF00661BCF /* BACalendarHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACalendarHeaderCellNode.swift; sourceTree = "<group>"; };
+		AB6A25C31E46A3EB00661BCF /* BACalendarCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACalendarCellNode.swift; sourceTree = "<group>"; };
 		AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendRequestCellNode.swift; sourceTree = "<group>"; };
 		AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
 		AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHeaderCellNode.swift; sourceTree = "<group>"; };
@@ -90,9 +96,9 @@
 		ABB9F2BA1D9170C600E01511 /* BAWallPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAWallPost.swift; sourceTree = "<group>"; };
 		ABB9F2BB1D9170C600E01511 /* BackgroundStyleAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundStyleAnimator.swift; sourceTree = "<group>"; };
 		ABB9F2BD1D9170C600E01511 /* BouncesStyleAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BouncesStyleAnimator.swift; sourceTree = "<group>"; };
-		ABB9F2BE1D9170C600E01511 /* BACalendarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BACalendarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		ABB9F2BE1D9170C600E01511 /* BADeprecatedCalendarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BADeprecatedCalendarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ABB9F2BF1D9170C600E01511 /* BAChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatController.swift; sourceTree = "<group>"; };
-		ABB9F2C01D9170C600E01511 /* CloudController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudController.swift; sourceTree = "<group>"; };
+		ABB9F2C01D9170C600E01511 /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		ABB9F2C11D9170C600E01511 /* ColorPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		ABB9F2C21D9170C600E01511 /* BATabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BATabBarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ABB9F2C41D9170C600E01511 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -165,6 +171,15 @@
 			name = Profile;
 			sourceTree = "<group>";
 		};
+		AB6A25C01E46A3CE00661BCF /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				AB6A25C11E46A3DF00661BCF /* BACalendarHeaderCellNode.swift */,
+				AB6A25C31E46A3EB00661BCF /* BACalendarCellNode.swift */,
+			);
+			name = Calendar;
+			sourceTree = "<group>";
+		};
 		ABA9C93B1DEBAF43006AB49E /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,9 +193,9 @@
 			children = (
 				ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */,
 				ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */,
-				ABB9F2DB1D9170C600E01511 /* BAWallController.swift */,
-				ABB9F2BE1D9170C600E01511 /* BACalendarController.swift */,
-				ABB9F2D51D9170C600E01511 /* BASettingsController.swift */,
+				AB6A25BE1E46A20100661BCF /* BACalendarController.swift */,
+				ABB9F2BE1D9170C600E01511 /* BADeprecatedCalendarController.swift */,
+				ABCBDA451DA78B670001AC59 /* BAProfileController.swift */,
 			);
 			name = Level1;
 			sourceTree = "<group>";
@@ -202,14 +217,14 @@
 			name = Users;
 			sourceTree = "<group>";
 		};
-		ABAE861D1E1F250F005CAE77 /* Chat */ = {
+		ABAE861D1E1F250F005CAE77 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
 				AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */,
 				ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */,
 				AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */,
 			);
-			name = Chat;
+			name = Friends;
 			sourceTree = "<group>";
 		};
 		ABAE861E1E1F2670005CAE77 /* RepeatingVideo */ = {
@@ -257,7 +272,8 @@
 			isa = PBXGroup;
 			children = (
 				ABAE861C1E1F2498005CAE77 /* Users */,
-				ABAE861D1E1F250F005CAE77 /* Chat */,
+				ABAE861D1E1F250F005CAE77 /* Friends */,
+				AB6A25C01E46A3CE00661BCF /* Calendar */,
 				AB3D33A01E458C770058547A /* Profile */,
 				ABAE861B1E1F23A3005CAE77 /* Event */,
 				ABB9F3101D9172A500E01511 /* Wall */,
@@ -293,9 +309,9 @@
 			children = (
 				ABB9F2B21D9170C600E01511 /* AppsCommunicator.swift */,
 				ABB9F2C71D9170C600E01511 /* FetchedContent.swift */,
-				ABB9F2C01D9170C600E01511 /* CloudController.swift */,
 				ABB9F2DC1D9170C600E01511 /* WebAPI.swift */,
 				AB4F5D741D98D204003586B2 /* FirebaseService.swift */,
+				ABB9F2C01D9170C600E01511 /* WebService.swift */,
 			);
 			name = Infrastructure;
 			sourceTree = "<group>";
@@ -395,8 +411,9 @@
 		ABFA0B321D9A245600ED6C16 /* Level2 */ = {
 			isa = PBXGroup;
 			children = (
+				ABB9F2DB1D9170C600E01511 /* BAWallController.swift */,
 				ABB9F2C51D9170C600E01511 /* BAEventController.swift */,
-				ABCBDA451DA78B670001AC59 /* BAProfileController.swift */,
+				ABB9F2D51D9170C600E01511 /* BASettingsController.swift */,
 				ABB9F2BF1D9170C600E01511 /* BAChatController.swift */,
 			);
 			name = Level2;
@@ -557,8 +574,10 @@
 				AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */,
 				AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */,
 				ABB9F2E61D9170C600E01511 /* BackgroundStyleAnimator.swift in Sources */,
+				AB6A25C41E46A3EB00661BCF /* BACalendarCellNode.swift in Sources */,
+				AB6A25BF1E46A20100661BCF /* BACalendarController.swift in Sources */,
 				ABB9F2FA1D9170C600E01511 /* BALoginController.swift in Sources */,
-				ABB9F2E91D9170C600E01511 /* BACalendarController.swift in Sources */,
+				ABB9F2E91D9170C600E01511 /* BADeprecatedCalendarController.swift in Sources */,
 				ABB9F3021D9170C600E01511 /* UberProduct.swift in Sources */,
 				AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */,
 				ABB9F2F01D9170C600E01511 /* BAEventController.swift in Sources */,
@@ -581,6 +600,7 @@
 				ABB9F2DD1D9170C600E01511 /* AppsCommunicator.swift in Sources */,
 				ABFC76E61E34995700B6498D /* BAUsersHeaderCellNode.swift in Sources */,
 				ABB9F2F61D9170C600E01511 /* InstagramPicture.swift in Sources */,
+				AB6A25C21E46A3DF00661BCF /* BACalendarHeaderCellNode.swift in Sources */,
 				ABB9F2EC1D9170C600E01511 /* ColorPalette.swift in Sources */,
 				ABB9F2FD1D9170C600E01511 /* Place.swift in Sources */,
 				ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */,
@@ -597,7 +617,7 @@
 				ABB9F2FF1D9170C600E01511 /* RSVPStatus.swift in Sources */,
 				ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */,
 				ABB9F2E81D9170C600E01511 /* BouncesStyleAnimator.swift in Sources */,
-				ABB9F2EB1D9170C600E01511 /* CloudController.swift in Sources */,
+				ABB9F2EB1D9170C600E01511 /* WebService.swift in Sources */,
 				AB3D33A41E4598CE0058547A /* BABasicInfoCellNode.swift in Sources */,
 				ABB9F3051D9170C600E01511 /* UIRepeatingVideo.swift in Sources */,
 				ABB9F2DE1D9170C600E01511 /* BAAnnouncementPost.swift in Sources */,

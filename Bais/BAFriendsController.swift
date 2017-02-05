@@ -50,12 +50,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			return
 		}
 		
+		let user = _usersToDisplay[indexPath.item - 1]
+		
 		if (showRequests){
-			// should open user profile
+			self.navigationController?.pushViewController(BAProfileController(with: user), animated: true)
+			self.tableNode.deselectRow(at: indexPath, animated: true)
 			return
 		}
 		
-		let user = _usersToDisplay[indexPath.item - 1]
 		self.navigationController?.pushViewController(BAChatController(with: user), animated: true)
 		self.tableNode.deselectRow(at: indexPath, animated: true)
 	}
