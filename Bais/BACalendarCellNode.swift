@@ -82,6 +82,7 @@ class BACalendarCellNode: ASCellNode {
 			return gradient
 		})
 		
+		setButtonsFor(rsvpStatus: event.status)
 		
 		self.imageNode.clipsToBounds = true;
 		
@@ -142,7 +143,28 @@ class BACalendarCellNode: ASCellNode {
 	}
 	
 	func setButtonTitle(_ title: String){
-		self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+		buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
 	}
 
+	func setButtonsFor(rsvpStatus: RSVPStatus){
+	
+		switch(rsvpStatus){
+			
+		case .declined:
+			// 2 buttons, "interested" and "going"
+			setButtonTitle("TODO")
+			break
+		case .maybe:
+			// 1 button, "interested"
+			setButtonTitle("Interested")
+			break
+		case .attending:
+			// 1 button, "going"
+			setButtonTitle("Going")
+			break
+			
+		}
+	
+	}
+	
 }

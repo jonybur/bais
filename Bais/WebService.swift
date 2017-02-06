@@ -16,10 +16,10 @@ import FBSDKCoreKit
 
 let instagramDownloadedKey = "com.baisapp.instagramDownloaded";
 let uberDownloadedKey = "com.baisapp.uberDownloaded";
-let eventRSVPStatus = "com.baisapp.attendEvent";
 
 protocol WebServiceDelegate: class {
-	func eventsLoaded(_ events: [Event]);
+	func eventsLoaded(_ events: [Event])
+	func gotRSVPStatus(of eventId: String, status: RSVPStatus)
 }
 
 // rename to WebService
@@ -29,55 +29,53 @@ class CloudController{
 	
 	static let uberServerToken : String = "b_kEklxu3QSAD_ZigupALYGYzSWs-DDB132IrpcU"
 	
-	static func setNewRSVPStatus(_ eventId : String, rsvpStatus : RSVPStatus){
+	func setNewRSVPStatus(_ eventId: String, rsvpStatus: RSVPStatus){
 		
-		let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: eventId + "/" + String(describing: rsvpStatus),
+		let graphRequest = FBSDKGraphRequest(graphPath: eventId + "/" + String(describing: rsvpStatus),
 		                                                        parameters: nil, httpMethod: "POST");
 		
-		graphRequest.start { connection, result, error in
+		graphRequest?.start { connection, result, error in
 			// TODO: check if result is success = 1
-			NotificationCenter.default.post(name: Notification.Name(rawValue: eventRSVPStatus + eventId), object: self, userInfo: ["status": String(describing: rsvpStatus) as NSString])
-		};
+			//returns rsvpStatus
+		}.start()
 		
 	}
 	
-	static func getRSVPStatus(_ eventId : String, rsvpStatus : RSVPStatus) {
+	func getRSVPStatus(of event: Event){
+		getRSVPStatus(event.id, rsvpStatus: .attending)
+	}
 	
-		let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: eventId + "/" + String(describing: rsvpStatus) + "/" + FBSDKAccessToken.current().userID,
-		                                                        parameters: nil);
+	private func getRSVPStatus(_ eventId: String, rsvpStatus: RSVPStatus) {
+	
+		let graphPath = eventId + "/" + String(describing: rsvpStatus) + "/" + FBSDKAccessToken.current().userID
+		let graphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: nil);
 		
-		graphRequest.start { connection, result, error in
+		graphRequest?.start { connection, result, error in
 			
 			if error != nil {
-				
 				print("ERROR: " + error.debugDescription)
 				return
-				
 			} else {
-			
 				if let nsArray = result as? NSDictionary {
-					
 					if let datum = nsArray.object(forKey: "data") as? NSArray{
 						
 						if (datum.count > 0){
 							// accepted or maybe
 							// make NSNotification, we have the events ready
-							NotificationCenter.default.post(name: Notification.Name(rawValue: eventRSVPStatus + eventId), object: self, userInfo: ["status": String(describing: rsvpStatus) as NSString])
+							// returns rsvpStatus
+							self.delegate?.gotRSVPStatus(of: eventId, status: rsvpStatus)
 							
-						} else if (rsvpStatus != .Declined) {
+						} else if (rsvpStatus != .declined) {
 							self.getRSVPStatus(eventId, rsvpStatus: rsvpStatus.next());
 							
 						} else {
 							// declined
-							NotificationCenter.default.post(name: Notification.Name(rawValue: eventRSVPStatus + eventId), object: self, userInfo: ["status": String(describing: rsvpStatus) as NSString])
-							
+							self.delegate?.gotRSVPStatus(of: eventId, status: rsvpStatus)
 						}
-						
 					}
 				}
-				
 			}
-		}
+		}.start()
 	}
 		
 	// call from main thread

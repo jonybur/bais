@@ -10,14 +10,15 @@ import Foundation
 import CoreLocation
 
 class Event{
-	var startTime : Date = Date()
-	var endTime : Date = Date()
-	var id : String = ""
-	var description : String = ""
-	var name : String = ""
-	var place : Place = Place()
-	var imageUrl : String = ""
 	
+	var id = ""
+	var description = ""
+	var name = ""
+	var imageUrl = ""
+	var startTime = Date()
+	var endTime = Date()
+	var place = Place()
+	var status: RSVPStatus = .declined
 	
 	func redactedDate() -> String{
 	

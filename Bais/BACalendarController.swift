@@ -15,10 +15,11 @@ import PromiseKit
 import GeoFire
 
 class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate,
-	ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebServiceDelegate {
+ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebServiceDelegate {
 
 	var _contentToDisplay = [Event]()
 	let _collectionNode: ASCollectionNode!
+	let webService = CloudController()
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
 	                                                    tintColor: ColorPalette.orange,
@@ -52,28 +53,10 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 		
 		activityIndicatorView?.startAnimating()
 		
-		let webService = CloudController()
 		webService.delegate = self
 		webService.getFacebookEvents()
 	}
-	
-	internal func eventsLoaded(_ events: [Event]) {
-		var idxToInsert = [IndexPath]()
-		for event in events {
-			if ((event.startTime as Date) < Date() &&
-				(event.endTime as Date) < Date()) {
-				continue;
-			}
-			
-			let idxPath = IndexPath(item: idxToInsert.count, section: 0)
-			idxToInsert.append(idxPath)
-			_contentToDisplay.append(event)
-		}
-		
-		_collectionNode.insertItems(at: idxToInsert)
-		_collectionNode.reloadItems(at: idxToInsert)
-	}
-	
+
 	override func viewWillLayoutSubviews() {
 		_collectionNode.frame = self.view.bounds;
 	}
@@ -95,6 +78,39 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
 		return _contentToDisplay.count
+	}
+	
+	//MARK: - WebService delegate methods
+	
+	internal func eventsLoaded(_ events: [Event]) {
+		var idxToInsert = [IndexPath]()
+		for event in events {
+			if ((event.startTime as Date) < Date() &&
+				(event.endTime as Date) < Date()) {
+				continue;
+			}
+			
+			let idxPath = IndexPath(item: idxToInsert.count, section: 0)
+			idxToInsert.append(idxPath)
+			_contentToDisplay.append(event)
+			
+			webService.getRSVPStatus(of: event)
+		}
+		
+		_collectionNode.insertItems(at: idxToInsert)
+		_collectionNode.reloadItems(at: idxToInsert)
+	}
+	
+	internal func gotRSVPStatus(of eventId: String, status: RSVPStatus) {
+		print(status)
+		
+		for (idx, event) in _contentToDisplay.enumerated(){
+			if(event.id == eventId){
+				event.status = status
+				_collectionNode.reloadItems(at: [IndexPath(item: idx, section: 0)])
+				return
+			}
+		}
 	}
 	
 	//MARK: - MosaicCollectionViewLayoutDelegate delegate methods

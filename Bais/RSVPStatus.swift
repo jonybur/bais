@@ -8,17 +8,17 @@
 
 import Foundation
 
-enum RSVPStatus : String{
-	case Attending = "attending", Maybe = "maybe", Declined = "declined"
+enum RSVPStatus: String{
+	case attending = "attending", maybe = "maybe", declined = "declined"
 	
 	func next() -> RSVPStatus {
 		switch self {
-		case .Attending:
-			return .Maybe;
-		case .Maybe:
-			return .Declined;
+		case .attending:
+			return .maybe;
+		case .maybe:
+			return .declined;
 		default:
-			return .Declined;
+			return .declined;
 		}
 	}
 }

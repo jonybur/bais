@@ -26,7 +26,6 @@
 		ABB9F2DD1D9170C600E01511 /* AppsCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B21D9170C600E01511 /* AppsCommunicator.swift */; };
 		ABB9F2DE1D9170C600E01511 /* BAAnnouncementPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B31D9170C600E01511 /* BAAnnouncementPost.swift */; };
 		ABB9F2DF1D9170C600E01511 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B41D9170C600E01511 /* Utilities.swift */; };
-		ABB9F2E01D9170C600E01511 /* BAEventCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B51D9170C600E01511 /* BAEventCard.swift */; };
 		ABB9F2E11D9170C600E01511 /* BALikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B61D9170C600E01511 /* BALikeButton.swift */; };
 		ABB9F2E21D9170C600E01511 /* BAPicturePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B71D9170C600E01511 /* BAPicturePost.swift */; };
 		ABB9F2E31D9170C600E01511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABB9F2B81D9170C600E01511 /* Assets.xcassets */; };
@@ -34,13 +33,11 @@
 		ABB9F2E51D9170C600E01511 /* BAWallPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BA1D9170C600E01511 /* BAWallPost.swift */; };
 		ABB9F2E61D9170C600E01511 /* BackgroundStyleAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BB1D9170C600E01511 /* BackgroundStyleAnimator.swift */; };
 		ABB9F2E81D9170C600E01511 /* BouncesStyleAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BD1D9170C600E01511 /* BouncesStyleAnimator.swift */; };
-		ABB9F2E91D9170C600E01511 /* BADeprecatedCalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BE1D9170C600E01511 /* BADeprecatedCalendarController.swift */; };
 		ABB9F2EA1D9170C600E01511 /* BAChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BF1D9170C600E01511 /* BAChatController.swift */; };
 		ABB9F2EB1D9170C600E01511 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C01D9170C600E01511 /* WebService.swift */; };
 		ABB9F2EC1D9170C600E01511 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C11D9170C600E01511 /* ColorPalette.swift */; };
 		ABB9F2ED1D9170C600E01511 /* BATabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C21D9170C600E01511 /* BATabBarController.swift */; };
 		ABB9F2EF1D9170C600E01511 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C41D9170C600E01511 /* Event.swift */; };
-		ABB9F2F01D9170C600E01511 /* BAEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C51D9170C600E01511 /* BAEventController.swift */; };
 		ABB9F2F21D9170C600E01511 /* FetchedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C71D9170C600E01511 /* FetchedContent.swift */; };
 		ABB9F2F41D9170C600E01511 /* GradientBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C91D9170C600E01511 /* GradientBar.swift */; };
 		ABB9F2F51D9170C600E01511 /* InstagramMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CA1D9170C600E01511 /* InstagramMedia.swift */; };
@@ -88,7 +85,6 @@
 		ABB9F2B21D9170C600E01511 /* AppsCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsCommunicator.swift; sourceTree = "<group>"; };
 		ABB9F2B31D9170C600E01511 /* BAAnnouncementPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAAnnouncementPost.swift; sourceTree = "<group>"; };
 		ABB9F2B41D9170C600E01511 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		ABB9F2B51D9170C600E01511 /* BAEventCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEventCard.swift; sourceTree = "<group>"; };
 		ABB9F2B61D9170C600E01511 /* BALikeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALikeButton.swift; sourceTree = "<group>"; };
 		ABB9F2B71D9170C600E01511 /* BAPicturePost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAPicturePost.swift; sourceTree = "<group>"; };
 		ABB9F2B81D9170C600E01511 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,13 +92,11 @@
 		ABB9F2BA1D9170C600E01511 /* BAWallPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAWallPost.swift; sourceTree = "<group>"; };
 		ABB9F2BB1D9170C600E01511 /* BackgroundStyleAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundStyleAnimator.swift; sourceTree = "<group>"; };
 		ABB9F2BD1D9170C600E01511 /* BouncesStyleAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BouncesStyleAnimator.swift; sourceTree = "<group>"; };
-		ABB9F2BE1D9170C600E01511 /* BADeprecatedCalendarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BADeprecatedCalendarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ABB9F2BF1D9170C600E01511 /* BAChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatController.swift; sourceTree = "<group>"; };
 		ABB9F2C01D9170C600E01511 /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		ABB9F2C11D9170C600E01511 /* ColorPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 		ABB9F2C21D9170C600E01511 /* BATabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BATabBarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ABB9F2C41D9170C600E01511 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		ABB9F2C51D9170C600E01511 /* BAEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEventController.swift; sourceTree = "<group>"; };
 		ABB9F2C71D9170C600E01511 /* FetchedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedContent.swift; sourceTree = "<group>"; };
 		ABB9F2C91D9170C600E01511 /* GradientBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientBar.swift; sourceTree = "<group>"; };
 		ABB9F2CA1D9170C600E01511 /* InstagramMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramMedia.swift; sourceTree = "<group>"; };
@@ -194,7 +188,6 @@
 				ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */,
 				ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */,
 				AB6A25BE1E46A20100661BCF /* BACalendarController.swift */,
-				ABB9F2BE1D9170C600E01511 /* BADeprecatedCalendarController.swift */,
 				ABCBDA451DA78B670001AC59 /* BAProfileController.swift */,
 			);
 			name = Level1;
@@ -203,7 +196,6 @@
 		ABAE861B1E1F23A3005CAE77 /* Event */ = {
 			isa = PBXGroup;
 			children = (
-				ABB9F2B51D9170C600E01511 /* BAEventCard.swift */,
 			);
 			name = Event;
 			sourceTree = "<group>";
@@ -412,7 +404,6 @@
 			isa = PBXGroup;
 			children = (
 				ABB9F2DB1D9170C600E01511 /* BAWallController.swift */,
-				ABB9F2C51D9170C600E01511 /* BAEventController.swift */,
 				ABB9F2D51D9170C600E01511 /* BASettingsController.swift */,
 				ABB9F2BF1D9170C600E01511 /* BAChatController.swift */,
 			);
@@ -577,10 +568,8 @@
 				AB6A25C41E46A3EB00661BCF /* BACalendarCellNode.swift in Sources */,
 				AB6A25BF1E46A20100661BCF /* BACalendarController.swift in Sources */,
 				ABB9F2FA1D9170C600E01511 /* BALoginController.swift in Sources */,
-				ABB9F2E91D9170C600E01511 /* BADeprecatedCalendarController.swift in Sources */,
 				ABB9F3021D9170C600E01511 /* UberProduct.swift in Sources */,
 				AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */,
-				ABB9F2F01D9170C600E01511 /* BAEventController.swift in Sources */,
 				AB3D33A21E458C9E0058547A /* BAImageCarouselCellNode.swift in Sources */,
 				ABB9F3061D9170C600E01511 /* BAWallController.swift in Sources */,
 				ABB9F2F91D9170C600E01511 /* IrregularityStyleAnimator.swift in Sources */,
@@ -591,7 +580,6 @@
 				AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */,
 				AB0E468B1DF3E628003CA68C /* MosaicCollectionViewLayout.swift in Sources */,
 				ABB9F2ED1D9170C600E01511 /* BATabBarController.swift in Sources */,
-				ABB9F2E01D9170C600E01511 /* BAEventCard.swift in Sources */,
 				AB4F5D771D98EB4F003586B2 /* User.swift in Sources */,
 				ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */,
 				AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */,
