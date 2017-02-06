@@ -27,10 +27,11 @@ target 'Bais' do
   pod 'Alamofire', '>= 4.0.0'
   pod 'SwiftyJSON', '>= 3.1.4'
 
+  # chat
+  pod 'NMessenger'
+
   # to deprecate
   pod 'AwaitKit', '>= 2.0.0'
-  pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git',
-    :branch => 'develop'
   pod 'ESTabBarController-swift',
     :git => 'https://github.com/jonybur/ESTabBarController.git'
 

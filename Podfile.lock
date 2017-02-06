@@ -77,7 +77,6 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
   - GTMSessionFetcher/Core (1.1.7)
-  - Hero (0.1.3)
   - JSQMessagesViewController (7.3.4)
   - PINCache (3.0.1-beta.2):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.2)
@@ -120,7 +119,6 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Messaging
   - GeoFire (from `https://github.com/firebase/geofire-objc.git`)
-  - Hero (>= 0.1.3)
   - JSQMessagesViewController (from `https://github.com/jessesquires/JSQMessagesViewController.git`, branch `develop`)
   - pop
   - SwiftyJSON (>= 3.1.4)
@@ -167,7 +165,6 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
-  Hero: 898d486b4bef3509047e5b6489cfb70ff09aafb2
   JSQMessagesViewController: c11b9e77372ab72c45c67311f6da7342e32df1e8
   PINCache: 6d273a6e0754bd26e3f12a38a90dde73cc6a42b2
   PINRemoteImage: ff63baf185088530db6cfa41cb665e2b5126b5c3
@@ -175,6 +172,6 @@ SPEC CHECKSUMS:
   PromiseKit: 593b5e24ded6cbb1ebc708bc2c3428a8a5632d91
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 18c608dfca64f4fb1e984a088fef7c0c02ab7c06
+PODFILE CHECKSUM: fafee91a6a0bf3f711fc3f04d97d02c2219f933b
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.1.1
