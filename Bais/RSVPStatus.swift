@@ -9,7 +9,7 @@
 import Foundation
 
 enum RSVPStatus: String{
-	case attending = "attending", maybe = "maybe", declined = "declined"
+	case attending = "attending", maybe = "maybe", declined = "declined", undefined = "undefined"
 	
 	func next() -> RSVPStatus {
 		switch self {

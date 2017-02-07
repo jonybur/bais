@@ -14,9 +14,17 @@ class BADescriptionInfoCellNode: ASCellNode {
 	
 	let descriptionNode = ASTextNode()
 	
+	required init(with event: Event){
+		super.init()
+		commonInit(description: event.description)
+	}
+	
 	required init(with user: User) {
 		super.init()
-		
+		commonInit(description: user.description)
+	}
+	
+	func commonInit(description: String){
 		let paragraphAttributes = NSMutableParagraphStyle()
 		paragraphAttributes.lineSpacing = 5
 		
@@ -25,8 +33,7 @@ class BADescriptionInfoCellNode: ASCellNode {
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: paragraphAttributes]
 		
-		
-		descriptionNode.attributedText = NSAttributedString(string: "Soy poco, y de lo poco que soy, poco entiendo. Sabes de mí lo que te dejo ver. Miedo al fracaso, pánico al rechazo, terror al olvido.\nAmante de los animales, el deporte y del rock.\nAdicta a las golosinas🍬 y las uvas🍇.\nViajar por todo el mundo✈️.", attributes: descriptionAttributes)
+		descriptionNode.attributedText = NSAttributedString(string: description, attributes: descriptionAttributes)
 		
 		self.addSubnode(descriptionNode)
 	}

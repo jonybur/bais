@@ -10,41 +10,37 @@ import UIKit
 import AsyncDisplayKit
 import Foundation
 
-protocol BAImageCarouselCellNodeDelegate: class {
-	func imageCarouselCellNodeDidClickBackButton(_ usersViewCell: BAImageCarouselCellNode);
-}
-
 class BAImageCarouselCellNode: ASCellNode {
 	
-	let backButtonNode = ASButtonNode()
 	let imageNode = ASNetworkImageNode()
+	var imageRatio: CGFloat = 0
 	
-	weak var delegate: BAImageCarouselCellNodeDelegate?
+	required init(with event: Event){
+		super.init()
+		imageRatio = 0.5
+		imageNode.setURL(URL(string: event.imageUrl), resetToDefault: false)
+		commonInit()
+	}
 	
 	required init(with user: User) {
 		super.init()
-		
+		imageRatio = 1
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
+		commonInit()
+	}
+	
+	func commonInit(){
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill
-		
-		backButtonNode.addTarget(self, action: #selector(self.backButtonPressed(_:)), forControlEvents: .touchUpInside)
 		
 		self.addSubnode(self.imageNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 		// imagen
-		let imageLayout = ASRatioLayoutSpec(ratio: 1, child: imageNode)
+		let imageLayout = ASRatioLayoutSpec(ratio: imageRatio, child: imageNode)
 		imageLayout.style.minWidth = ASDimension(unit: .points, value: constrainedSize.max.width)
 		
 		return imageLayout
 	}
-	
-	//MARK: - BAUsersCellNodeDelegate methods
-	
-	func backButtonPressed(_ sender: UIButton){
-		delegate?.imageCarouselCellNodeDidClickBackButton(self)
-	}
-	
 }

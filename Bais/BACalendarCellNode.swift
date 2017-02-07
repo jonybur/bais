@@ -14,7 +14,14 @@ import Firebase
 
 protocol BACalendarCellNodeDelegate: class {
 	func calendarCellNodeDidClickView(_ calendarViewCell: BACalendarCellNode);
-	func calendarCellNodeDidClickButton(_ calendarViewCell: BACalendarCellNode);
+	
+	// sets the proper status for event
+	func calendarCellNodeDidClickInterestedButton(_ calendarViewCell: BACalendarCellNode);
+	func calendarCellNodeDidClickGoingButton(_ calendarViewCell: BACalendarCellNode);
+
+	// user is already interested or going
+	func calendarCellNodeDidClickIsInterestedButton(_ calendarViewCell: BACalendarCellNode);
+	func calendarCellNodeDidClickIsGoingButton(_ calendarViewCell: BACalendarCellNode);
 }
 
 class BACalendarCellNode: ASCellNode {
@@ -22,8 +29,11 @@ class BACalendarCellNode: ASCellNode {
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
 	let distanceNode = ASTextNode()
-	let buttonNode = ASButtonNode()
-	
+	let singleButtonNode = ASButtonNode()
+
+	let leftButtonNode = ASButtonNode()
+	let rightButtonNode = ASButtonNode()
+
 	var gradientNode = ASDisplayNode()
 	var event: Event!
 	
@@ -73,9 +83,11 @@ class BACalendarCellNode: ASCellNode {
 		distanceNode.attributedText = NSAttributedString(string: distanceString, attributes: distanceAttributes)
 		distanceNode.maximumNumberOfLines = 1
 		
-		imageNode.addTarget(self, action: #selector(self.cardPressed(_:)), forControlEvents: .touchUpInside)
-		buttonNode.addTarget(self, action: #selector(self.buttonPressed(_:)), forControlEvents: .touchUpInside)
-				
+		imageNode.addTarget(self, action: #selector(self.bannerPressed(_:)), forControlEvents: .touchUpInside)
+		singleButtonNode.addTarget(self, action: #selector(self.singleButtonPressed(_:)), forControlEvents: .touchUpInside)
+		leftButtonNode.addTarget(self, action: #selector(self.leftButtonPressed(_:)), forControlEvents: .touchUpInside)
+		rightButtonNode.addTarget(self, action: #selector(self.rightButtonPressed(_:)), forControlEvents: .touchUpInside)
+		
 		gradientNode = ASDisplayNode(layerBlock: { () -> CALayer in
 			let gradient = CAGradientLayer()
 			gradient.colors = [UIColor.clear.cgColor, UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor]
@@ -84,12 +96,14 @@ class BACalendarCellNode: ASCellNode {
 		
 		setButtonsFor(rsvpStatus: event.status)
 		
-		self.imageNode.clipsToBounds = true;
+		imageNode.clipsToBounds = true;
 		
-		self.addSubnode(self.imageNode)
-		self.addSubnode(self.nameNode)
-		self.addSubnode(self.distanceNode)
-		self.addSubnode(self.buttonNode)
+		addSubnode(imageNode)
+		addSubnode(nameNode)
+		addSubnode(distanceNode)
+		addSubnode(singleButtonNode)
+		addSubnode(leftButtonNode)
+		addSubnode(rightButtonNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -113,58 +127,89 @@ class BACalendarCellNode: ASCellNode {
 		
 		// overlay imagen + texto
 		let overlayLayout = ASOverlayLayoutSpec(child: imageLayout, overlay: textInsetSpec)
-		overlayLayout.style.flexBasis = ASDimension (unit: .fraction, value: 0.8)
+		overlayLayout.style.minHeight = ASDimension (unit: .fraction, value: 1)
 		overlayLayout.style.flexShrink = 1
 		
 		// bottom button
-		buttonNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: 50)
-		buttonNode.style.flexBasis = ASDimension (unit: .fraction, value: 0.2)
-		buttonNode.style.flexShrink = 1
-		buttonNode.contentVerticalAlignment = .alignmentCenter
-		buttonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		singleButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: 50)
+		singleButtonNode.contentVerticalAlignment = .alignmentCenter
+		singleButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		
+		// left button
+		leftButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width / 2, height: 50)
+		leftButtonNode.contentVerticalAlignment = .alignmentCenter
+		leftButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		
+		// right button
+		rightButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width / 2, height: 50)
+		rightButtonNode.contentVerticalAlignment = .alignmentCenter
+		rightButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		
+		// horizontal stack
+		let horizontalButtonStack = ASStackLayoutSpec()
+		horizontalButtonStack.direction = .horizontal
+		horizontalButtonStack.alignItems = .start
+		horizontalButtonStack.children = [leftButtonNode, rightButtonNode]
 		
 		// stack
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .center
-		verticalStack.children = [overlayLayout, buttonNode]
+		
+		if (event.status == .declined){
+			verticalStack.children = [overlayLayout, horizontalButtonStack]
+		}/* else if (event.status == .undefined){
+			verticalStack.children = [overlayLayout]
+		}*/ else {
+			verticalStack.children = [overlayLayout, singleButtonNode]
+		}
 		
 		return verticalStack
 	}
 	
 	//MARK: - BAUsersCellNodeDelegate methods
 	
-	func cardPressed(_ sender: UIButton){
+	func bannerPressed(_ sender: UIButton){
 		delegate?.calendarCellNodeDidClickView(self);
 	}
 	
-	func buttonPressed(_ sender: UIButton){
-		delegate?.calendarCellNodeDidClickButton(self)
+	func singleButtonPressed(_ sender: UIButton){
+		if (event.status == .undefined){
+			return
+		} else if (event.status == .maybe){
+			delegate?.calendarCellNodeDidClickIsInterestedButton(self)
+		} else if (event.status == .attending){
+			delegate?.calendarCellNodeDidClickIsGoingButton(self)
+		}
 	}
 	
-	func setButtonTitle(_ title: String){
-		buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+	func leftButtonPressed(_ sender: UIButton){
+		delegate?.calendarCellNodeDidClickInterestedButton(self)
+	}
+	
+	func rightButtonPressed(_ sender: UIButton){
+		delegate?.calendarCellNodeDidClickGoingButton(self)
 	}
 
 	func setButtonsFor(rsvpStatus: RSVPStatus){
-	
 		switch(rsvpStatus){
-			
 		case .declined:
 			// 2 buttons, "interested" and "going"
-			setButtonTitle("TODO")
+			leftButtonNode.setTitle("Interested", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+			rightButtonNode.setTitle("Going", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
 			break
 		case .maybe:
 			// 1 button, "interested"
-			setButtonTitle("Interested")
+			singleButtonNode.setTitle("Interested", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
 			break
 		case .attending:
 			// 1 button, "going"
-			setButtonTitle("Going")
+			singleButtonNode.setTitle("Going", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
 			break
-			
+		case .undefined:
+			singleButtonNode.setTitle("", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+			break
 		}
-	
 	}
 	
 }

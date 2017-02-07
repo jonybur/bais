@@ -27,15 +27,20 @@ ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebSer
 	
 	init (){
 		let layout = MosaicCollectionViewLayout(startsAt: 10)
-		layout.numberOfColumns = 1;
+		layout.numberOfColumns = 1
 		_collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
-		super.init(nibName: nil, bundle: nil);
+		super.init(nibName: nil, bundle: nil)
 		layout.delegate = self
+		
+		let activityIndicatorSize = (activityIndicatorView?.size)!
+		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - activityIndicatorSize) / 2,
+		                                      y: (ez.screenHeight - activityIndicatorSize) / 2,
+		                                      width: activityIndicatorSize, height: activityIndicatorSize);
 		
 		extendedLayoutIncludesOpaqueBars = true
 		
-		_collectionNode.dataSource = self;
-		_collectionNode.delegate = self;
+		_collectionNode.dataSource = self
+		_collectionNode.delegate = self
 		_collectionNode.view.layoutInspector = _layoutInspector
 		_collectionNode.backgroundColor = ColorPalette.white
 		_collectionNode.view.isScrollEnabled = true
@@ -49,7 +54,7 @@ ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebSer
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.addSubnode(_collectionNode!)
-		self.view.addSubview(activityIndicatorView!);
+		self.view.addSubview(activityIndicatorView!)
 		
 		activityIndicatorView?.startAnimating()
 		
@@ -58,7 +63,7 @@ ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebSer
 	}
 
 	override func viewWillLayoutSubviews() {
-		_collectionNode.frame = self.view.bounds;
+		_collectionNode.frame = self.view.bounds
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
@@ -87,7 +92,7 @@ ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebSer
 		for event in events {
 			if ((event.startTime as Date) < Date() &&
 				(event.endTime as Date) < Date()) {
-				continue;
+				continue
 			}
 			
 			let idxPath = IndexPath(item: idxToInsert.count, section: 0)
@@ -99,11 +104,10 @@ ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebSer
 		
 		_collectionNode.insertItems(at: idxToInsert)
 		_collectionNode.reloadItems(at: idxToInsert)
+		activityIndicatorView?.removeFromSuperview()
 	}
 	
 	internal func gotRSVPStatus(of eventId: String, status: RSVPStatus) {
-		print(status)
-		
 		for (idx, event) in _contentToDisplay.enumerated(){
 			if(event.id == eventId){
 				event.status = status
@@ -115,22 +119,69 @@ ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebSer
 	
 	//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
 	internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
-		return CGSize(width: 1, height: 0.5)
+		return CGSize(width: 1, height: 0.6)
 	}
 	
 	//MARK: - BACalendarCellNode delegate methods
-	internal func calendarCellNodeDidClickButton(_ calendarViewCell: BACalendarCellNode) {
-		
+	internal func calendarCellNodeDidClickInterestedButton(_ calendarViewCell: BACalendarCellNode) {
+		setStatusForEvent(with: calendarViewCell.event.id, status: .maybe)
+	}
+	
+	internal func calendarCellNodeDidClickGoingButton(_ calendarViewCell: BACalendarCellNode) {
+		setStatusForEvent(with: calendarViewCell.event.id, status: .attending)
+	}
+	
+	internal func calendarCellNodeDidClickIsInterestedButton(_ calendarViewCell: BACalendarCellNode) {
+		displayOptions(for: calendarViewCell.event)
+	}
+
+	internal func calendarCellNodeDidClickIsGoingButton(_ calendarViewCell: BACalendarCellNode) {
+		displayOptions(for: calendarViewCell.event)
 	}
 	
 	internal func calendarCellNodeDidClickView(_ calendarViewCell: BACalendarCellNode) {
+		let event = calendarViewCell.event
+		let controller = BAEventController(with: event!)
+		self.navigationController?.pushViewController(controller, animated: true)
+	}
+	
+	func displayOptions(for event: Event){
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		
+		if (event.status == .maybe){
+			alert.addAction(UIAlertAction(title: "Going", style: .default, handler: { action in
+				self.setStatusForEvent(with: event.id, status: .attending)
+			}))
+		} else if (event.status == .attending){
+			alert.addAction(UIAlertAction(title: "Interested", style: .default, handler: { action in
+				self.setStatusForEvent(with: event.id, status: .maybe)
+			}))
+		}
+		
+		alert.addAction(UIAlertAction(title: "Not Going", style: .default, handler: { action in
+			self.setStatusForEvent(with: event.id, status: .declined)
+		}))
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		
+		var topVC = UIApplication.shared.keyWindow?.rootViewController
+		while((topVC!.presentedViewController) != nil) {
+			topVC = topVC!.presentedViewController
+		}
+		
+		topVC?.present(alert, animated: true, completion: nil)
+	}
+
+	
+	func setStatusForEvent(with id: String, status: RSVPStatus){
+		webService.setNewRSVPStatus(id, rsvpStatus: status)
+		gotRSVPStatus(of: id, status: status)
 	}
 	
 	//MARK: - Dealloc
 	deinit {
-		_collectionNode.dataSource = nil;
-		_collectionNode.delegate = nil;
+		_collectionNode.dataSource = nil
+		_collectionNode.delegate = nil
 	}
 }
 

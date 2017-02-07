@@ -18,7 +18,7 @@ class Event{
 	var startTime = Date()
 	var endTime = Date()
 	var place = Place()
-	var status: RSVPStatus = .declined
+	var status: RSVPStatus = .undefined
 	
 	func redactedDate() -> String{
 	
