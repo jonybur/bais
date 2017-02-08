@@ -16,7 +16,7 @@ import GeoFire
 
 class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate,
 ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebServiceDelegate {
-
+	
 	var _contentToDisplay = [Event]()
 	let _collectionNode: ASCollectionNode!
 	let webService = CloudController()
@@ -172,6 +172,8 @@ ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebSer
 		topVC?.present(alert, animated: true, completion: nil)
 	}
 
+	// TODO: remove this, make optional
+	internal func uberProductsLoaded(_ uberProducts: [UberProduct]) { }
 	
 	func setStatusForEvent(with id: String, status: RSVPStatus){
 		webService.setNewRSVPStatus(id, rsvpStatus: status)

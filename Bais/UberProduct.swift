@@ -9,8 +9,6 @@
 import Foundation
 
 class UberProduct{
-
-	var productId : String = "";
-	var displayName : String = "";
-	
+	var productId = "";
+	var displayName = "";
 }

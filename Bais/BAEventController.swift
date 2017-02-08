@@ -23,6 +23,7 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var event = Event()
 	var backButtonNode = ASButtonNode()
+	let webService = CloudController()
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -82,13 +83,62 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 	}
 	
 	//MARK: - BAMapCellNode delegate methods
+	internal func uberProductsLoaded(_ uberProducts: [UberProduct]) {
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		
+		for product in uberProducts{
+			alert.addAction(UIAlertAction(title: product.displayName, style: .default, handler: { action in
+				AppsCommunicator.openUber(product.productId, dropoff: self.event.place.coordinates.coordinate)
+			}))
+		}
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		
+		present(alert, animated: true, completion: nil)
+	}
 	
 	internal func mapCellNodeDidClickUberButton(_ mapViewCell: BAMapCellNode) {
+		if (AppsCommunicator.canOpenUber()){
+			webService.getUberProducts(event.place.coordinates.coordinate)
+			return
+		}
 		
+		let alert = UIAlertController(title: "Uber Not Installed",
+		                              message: "To use this function please install Uber",
+		                              preferredStyle: .alert)
+		
+		alert.addAction(UIAlertAction(title: "OK",
+		                              style: .cancel,
+		                              handler: nil))
+		
+		present(alert, animated: true, completion: nil)
 	}
 	
 	internal func mapCellNodeDidClickDirectionsButton(_ mapViewCell: BAMapCellNode) {
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		let canOpenWaze = AppsCommunicator.canOpenWaze()
+		let canOpenGoogleMaps = AppsCommunicator.canOpenGoogleMaps()
+		let locationCoordinate = event.place.coordinates.coordinate
 		
+		if (canOpenWaze || canOpenGoogleMaps){
+			if (canOpenGoogleMaps){
+				alert.addAction(UIAlertAction(title: "Google Maps", style: .default, handler: { action in
+					AppsCommunicator.openGoogleMaps(locationCoordinate)
+				}))
+			}
+			alert.addAction(UIAlertAction(title: "Apple Maps", style: .default, handler: { action in
+				AppsCommunicator.openAppleMaps(locationCoordinate)
+			}))
+			if (canOpenWaze){
+				alert.addAction(UIAlertAction(title: "Waze Maps", style: .default, handler: { action in
+					AppsCommunicator.openWaze(locationCoordinate)
+				}))
+			}
+			alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+			present(alert, animated: true, completion: nil)
+		} else {
+			AppsCommunicator.openAppleMaps(locationCoordinate)
+		}
 	}
 	
 	//MARK: - ASTableNode data source and delegate.

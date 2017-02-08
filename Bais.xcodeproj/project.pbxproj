@@ -54,7 +54,6 @@
 		ABB9F2FF1D9170C600E01511 /* RSVPStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D41D9170C600E01511 /* RSVPStatus.swift */; };
 		ABB9F3001D9170C600E01511 /* BASettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D51D9170C600E01511 /* BASettingsController.swift */; };
 		ABB9F3021D9170C600E01511 /* UberProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D71D9170C600E01511 /* UberProduct.swift */; };
-		ABB9F3041D9170C600E01511 /* BAMapBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D91D9170C600E01511 /* BAMapBox.swift */; };
 		ABB9F3051D9170C600E01511 /* UIRepeatingVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DA1D9170C600E01511 /* UIRepeatingVideo.swift */; };
 		ABB9F3061D9170C600E01511 /* BAWallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DB1D9170C600E01511 /* BAWallController.swift */; };
 		ABB9F3071D9170C600E01511 /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DC1D9170C600E01511 /* WebAPI.swift */; };
@@ -116,7 +115,6 @@
 		ABB9F2D41D9170C600E01511 /* RSVPStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSVPStatus.swift; sourceTree = "<group>"; };
 		ABB9F2D51D9170C600E01511 /* BASettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASettingsController.swift; sourceTree = "<group>"; };
 		ABB9F2D71D9170C600E01511 /* UberProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UberProduct.swift; sourceTree = "<group>"; };
-		ABB9F2D91D9170C600E01511 /* BAMapBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAMapBox.swift; sourceTree = "<group>"; };
 		ABB9F2DA1D9170C600E01511 /* UIRepeatingVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIRepeatingVideo.swift; sourceTree = "<group>"; };
 		ABB9F2DB1D9170C600E01511 /* BAWallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAWallController.swift; sourceTree = "<group>"; };
 		ABB9F2DC1D9170C600E01511 /* WebAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
@@ -253,14 +251,6 @@
 			name = NavigationBar;
 			sourceTree = "<group>";
 		};
-		ABAE86201E1F26A1005CAE77 /* MapBox */ = {
-			isa = PBXGroup;
-			children = (
-				ABB9F2D91D9170C600E01511 /* BAMapBox.swift */,
-			);
-			name = MapBox;
-			sourceTree = "<group>";
-		};
 		ABB9F3081D9171A600E01511 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,7 +278,6 @@
 				ABB9F3101D9172A500E01511 /* Wall */,
 				ABAE861E1E1F2670005CAE77 /* RepeatingVideo */,
 				ABAE861F1E1F2683005CAE77 /* NavigationBar */,
-				ABAE86201E1F26A1005CAE77 /* MapBox */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -403,11 +392,11 @@
 				ABB9F3081D9171A600E01511 /* Enums */,
 				ABB9F3091D9171B200E01511 /* Extensions */,
 				ABB9F30D1D9171E100E01511 /* Infrastructure */,
-				ABB9F30B1D9171D300E01511 /* Model */,
 				ABB9F30C1D9171D800E01511 /* Config */,
-				ABB9F30E1D9171EB00E01511 /* Controllers */,
 				ABA9C93B1DEBAF43006AB49E /* Layouts */,
+				ABB9F30B1D9171D300E01511 /* Model */,
 				ABB9F30A1D9171CA00E01511 /* Views */,
+				ABB9F30E1D9171EB00E01511 /* Controllers */,
 				ABB9F2B81D9170C600E01511 /* Assets.xcassets */,
 				ABB9F2D31D9170C600E01511 /* rollercoaster_comp.mp4 */,
 				ABF08B221D916E5400C6B832 /* AppDelegate.swift */,
@@ -578,7 +567,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABB9F3041D9170C600E01511 /* BAMapBox.swift in Sources */,
 				AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */,
 				AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */,
 				ABB9F2E61D9170C600E01511 /* BackgroundStyleAnimator.swift in Sources */,

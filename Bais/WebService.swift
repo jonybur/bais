@@ -15,10 +15,10 @@ import CoreLocation
 import FBSDKCoreKit
 
 let instagramDownloadedKey = "com.baisapp.instagramDownloaded";
-let uberDownloadedKey = "com.baisapp.uberDownloaded";
 
 protocol WebServiceDelegate: class {
 	func eventsLoaded(_ events: [Event])
+	func uberProductsLoaded(_ uberProducts: [UberProduct])
 	func gotRSVPStatus(of eventId: String, status: RSVPStatus)
 }
 
@@ -26,8 +26,8 @@ protocol WebServiceDelegate: class {
 class CloudController{
 	
 	weak var delegate: WebServiceDelegate?
-	
-	static let uberServerToken : String = "b_kEklxu3QSAD_ZigupALYGYzSWs-DDB132IrpcU"
+	let uberServerToken = "b_kEklxu3QSAD_ZigupALYGYzSWs-DDB132IrpcU"
+	var uberProducts = [UberProduct]()
 	
 	func setNewRSVPStatus(_ eventId: String, rsvpStatus: RSVPStatus){
 		
@@ -196,33 +196,29 @@ class CloudController{
 		NotificationCenter.default.post(name: Notification.Name(rawValue: instagramDownloadedKey), object: self)
     }
 	
-	static func getUberProducts(_ location : CLLocationCoordinate2D){
-	
-		if (FetchedContent.uberProducts.count > 0){
-			NotificationCenter.default.post(name: Notification.Name(rawValue: uberDownloadedKey), object: self)
-			return;
+	func getUberProducts(_ location: CLLocationCoordinate2D){
+		if (self.uberProducts.count > 0){
+			delegate?.uberProductsLoaded(self.uberProducts)
+			return
 		}
 		
-		let urlString : String = "https://api.uber.com/v1/products?latitude=" + String(location.latitude) +
-								"&longitude=" + String(location.longitude) + "&server_token=" + self.uberServerToken;
+		let urlString = "https://api.uber.com/v1/products?latitude=" + String(location.latitude) +
+								"&longitude=" + String(location.longitude) + "&server_token=" + uberServerToken
 		
 		// gets uber products
-		let jsonNSData = try! await(WebAPI.request(url: urlString));
-		let json = JSON(data: jsonNSData as Data);
-		var uberProducts : [UberProduct] = [UberProduct]();
+		let api = WebAPI()
+		let jsonNSData = try! await(api.request2(url: urlString))
+		let json = JSON(data: jsonNSData as Data)
+		var uberProducts = [UberProduct]()
 		
 		for (_, subjson):(String, JSON) in json["products"]{
-			
-			let product = UberProduct();
-			product.displayName = subjson["display_name"].stringValue;
-			product.productId = subjson["product_id"].stringValue;
-			uberProducts.append(product);
-			
+			let product = UberProduct()
+			product.displayName = subjson["display_name"].stringValue
+			product.productId = subjson["product_id"].stringValue
+			uberProducts.append(product)
 		}
 		
-		FetchedContent.uberProducts = uberProducts;
-		
-		// make NSNotification, we have the events ready
-		NotificationCenter.default.post(name: Notification.Name(rawValue: uberDownloadedKey), object: self)
+		self.uberProducts = uberProducts
+		delegate?.uberProductsLoaded(self.uberProducts)
 	}
 }

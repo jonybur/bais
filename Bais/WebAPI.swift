@@ -16,13 +16,24 @@ class WebAPI{
     
     static func request(url: String) -> Promise<Data> {
         return Promise{ resolve, reject in
-			
 			Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default)
 				.responseJSON { response in
-					resolve(response.data!);
+					print(response.data!)
+					resolve(response.data!)
 			}
 			
         }
     }
-    
+	
+	func request2(url: String) -> Promise<Data> {
+		return Promise{ resolve, reject in
+			Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default)
+				.responseJSON { response in
+					print(response.data!)
+					resolve(response.data!)
+			}
+			
+		}
+	}
+	
 }

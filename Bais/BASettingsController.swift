@@ -36,8 +36,6 @@ class BASettingsController: UIViewController {
 		setAddress(baisLogo.frame.maxY + 20);
 		
 		let location = CLLocationCoordinate2D(latitude:-34.591248, longitude:-58.393159);
-		let map : BAMapBox = BAMapBox(coordinate: location, yPosition: baisLogo.frame.maxY + 50);
-		map.center = CGPoint(x: ez.screenWidth / 2, y: baisLogo.frame.maxY + 50 + BAMapBox.mapHeight / 2);
 		
 		let descriptionAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular),
 		                             NSForegroundColorAttributeName: UIColor.black]
@@ -58,7 +56,6 @@ class BASettingsController: UIViewController {
 
 		self.scrollNode.addSubnode(baisLogo);
 		self.scrollNode.addSubnode(boardLogo);
-		self.scrollNode.view.addSubview(map);
 		self.scrollNode.view.addSubview(descriptionView);
 		self.scrollNode.frame = CGRect(x: 0, y: 0, width: ez.screenWidth, height: ez.screenHeight);
 		self.scrollNode.view.contentSize = CGSize(width: ez.screenWidth, height: boardLogo.frame.maxY + 95);

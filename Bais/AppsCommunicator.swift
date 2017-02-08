@@ -36,12 +36,12 @@ class AppsCommunicator{
 		return canOpenGeneric ("fb-messenger://")
 	}
 	
-	fileprivate static func canOpenGeneric(_ link : String) ->Bool{
+	fileprivate static func canOpenGeneric(_ link: String) ->Bool{
 		let url = URL (string: link)!
 		return UIApplication.shared.canOpenURL(url)
 	}
 	
-	static func openFacebookMessenger(_ recieverId : String){
+	static func openFacebookMessenger(_ recieverId: String){
 		let url = URL (string: "fb-messenger://user-thread/"+recieverId)!
 		UIApplication.shared.openURL (url)
 		
@@ -49,9 +49,8 @@ class AppsCommunicator{
 		// UIApplication.shared.open(url, options: ["": ""], completionHandler: nil)
 	}
 	
-	static func openUber(_ productId : String, dropoff : CLLocationCoordinate2D){
-		
-		let requestString : String = "uber://?client_id=7-UVBjdHfUrKKeZU9nDlP_HktFs3iWVT&product_id=" + productId + "&action=setPickup&pickup=my_location&dropoff[latitude]=" + String(dropoff.latitude) +
+	static func openUber(_ productId: String, dropoff: CLLocationCoordinate2D){
+		let requestString = "uber://?client_id=7-UVBjdHfUrKKeZU9nDlP_HktFs3iWVT&product_id=" + productId + "&action=setPickup&pickup=my_location&dropoff[latitude]=" + String(dropoff.latitude) +
 			"&dropoff[longitude]=" + String(dropoff.longitude)
 		
 		let uberRequest = URL(string: requestString)!
@@ -64,7 +63,7 @@ class AppsCommunicator{
 		UIApplication.shared.openURL(wazeRequest)
 	}
 	
-	static func openFacebook(_ facebookId : String, opensInApp : Bool){
+	static func openFacebook(_ facebookId: String, opensInApp: Bool){
 		var url: URL
 		
 		if (opensInApp) {
@@ -78,27 +77,27 @@ class AppsCommunicator{
 		UIApplication.shared.openURL(url)
 	}
 	
-	static func openInstagram(_ userName : String){
+	static func openInstagram(_ userName: String){
 		let url = URL(string: "instagram://user?username="+userName)!
 		UIApplication.shared.openURL(url)
 	}
 	
-	static func openGoogleMaps(_ destination : CLLocationCoordinate2D){
+	static func openGoogleMaps(_ destination: CLLocationCoordinate2D){
 		let url = URL(string:"comgooglemaps://?&daddr="+String(destination.latitude)+","+String(destination.longitude)+"&directionsmode=driving")!
 		UIApplication.shared.openURL(url)
 	}
 
-	static func openAppleMaps(_ destination : CLLocationCoordinate2D){
+	static func openAppleMaps(_ destination: CLLocationCoordinate2D){
 		let url = URL (string: "http://maps.apple.com/?daddr="+String(destination.latitude)+","+String(destination.longitude)+"&dirflg=d&t=m")!
 		UIApplication.shared.openURL(url)
 	}
 	
-	static func openPhone(_ phoneNumber : String){
+	static func openPhone(_ phoneNumber: String){
 		let url = URL (string: "telprompt://" + String(phoneNumber))!
 		UIApplication.shared.openURL(url)
 	}
 
-	static func openWebsite(_ websiteUrl : String){
+	static func openWebsite(_ websiteUrl: String){
 		let url = URL (string: websiteUrl)!
 		UIApplication.shared.openURL(url)
 	}
