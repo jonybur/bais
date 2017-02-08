@@ -28,8 +28,9 @@ target 'Bais' do
   pod 'SwiftyJSON', '>= 3.1.4'
 
   # chat
-  pod 'NMessenger'
-
+  #pod 'NMessenger'
+  pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
+  
   # to deprecate
   pod 'AwaitKit', '>= 2.0.0'
   pod 'ESTabBarController-swift',
