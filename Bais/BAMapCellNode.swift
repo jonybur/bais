@@ -10,11 +10,18 @@ import AsyncDisplayKit
 import Foundation
 import MapKit
 
+protocol BAMapCellNodeDelegate: class {
+	// sets the proper status for event
+	func mapCellNodeDidClickUberButton(_ mapViewCell: BAMapCellNode);
+	func mapCellNodeDidClickDirectionsButton(_ mapViewCell: BAMapCellNode);
+}
+
 class BAMapCellNode: ASCellNode{
 	
 	var mapView: MKMapView!
 	let uberButtonNode = ASButtonNode()
 	let directionsButtonNode = ASButtonNode()
+	weak var delegate: BAMapCellNodeDelegate?
 	
 	required init(with place: Place) {
 		super.init()
@@ -26,13 +33,24 @@ class BAMapCellNode: ASCellNode{
 		uberButtonNode.setTitle("Uber",
 		                        with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
 		                        with: ColorPalette.grey, for: [])
+		uberButtonNode.addTarget(self, action: #selector(self.uberButtonPressed(_:)), forControlEvents: .touchUpInside)
 		
 		directionsButtonNode.setTitle("Directions",
 		                              with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
 		                              with: ColorPalette.grey, for: [])
+		directionsButtonNode.addTarget(self, action: #selector(self.directionsButtonPressed(_:)), forControlEvents: .touchUpInside)
+		
 		
 		addSubnode(uberButtonNode)
 		addSubnode(directionsButtonNode)
+	}
+	
+	func uberButtonPressed(_ sender: UIButton){
+		delegate?.mapCellNodeDidClickUberButton(self);
+	}
+	
+	func directionsButtonPressed(_ sender: UIButton){
+		delegate?.mapCellNodeDidClickDirectionsButton(self);
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -44,7 +62,6 @@ class BAMapCellNode: ASCellNode{
 		// right button
 		directionsButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width / 2 - 15, height: 50)
 		directionsButtonNode.contentVerticalAlignment = .alignmentCenter
-		directionsButtonNode.backgroundColor = .blue
 		directionsButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
 		
 		// vertical stack

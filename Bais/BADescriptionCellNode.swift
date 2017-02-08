@@ -39,7 +39,6 @@ class BADescriptionInfoCellNode: ASCellNode {
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 17.5, left: 15, bottom: 17.5, right: 20)
 		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: descriptionNode)

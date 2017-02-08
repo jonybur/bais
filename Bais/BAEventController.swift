@@ -18,7 +18,7 @@ import AsyncDisplayKit
 import Firebase
 import PromiseKit
 
-final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate {
+final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate, BAMapCellNodeDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var event = Event()
@@ -81,6 +81,16 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		return true
 	}
 	
+	//MARK: - BAMapCellNode delegate methods
+	
+	internal func mapCellNodeDidClickUberButton(_ mapViewCell: BAMapCellNode) {
+		
+	}
+	
+	internal func mapCellNodeDidClickDirectionsButton(_ mapViewCell: BAMapCellNode) {
+		
+	}
+	
 	//MARK: - ASTableNode data source and delegate.
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
@@ -92,8 +102,9 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		} else if (item == 1){
 			let basicCellNode = BABasicEventInfoCellNode(with: event)
 			return basicCellNode
-		} else if (item == 2){
+		} else if (item == 2 && event.place.isValid()){
 			let mapCellNode = BAMapCellNode(with: event.place)
+			mapCellNode.delegate = self
 			return mapCellNode
 		} else if (item == 3){
 			let descriptionCellNode = BADescriptionInfoCellNode(with: event)
