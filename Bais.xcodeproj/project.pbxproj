@@ -11,8 +11,10 @@
 		AB0E468B1DF3E628003CA68C /* MosaicCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */; };
 		AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */; };
 		AB3D33A21E458C9E0058547A /* BAImageCarouselCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */; };
-		AB3D33A41E4598CE0058547A /* BABasicInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A31E4598CE0058547A /* BABasicInfoCellNode.swift */; };
+		AB3D33A41E4598CE0058547A /* BABasicUserInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A31E4598CE0058547A /* BABasicUserInfoCellNode.swift */; };
 		AB3D33A61E45AA8D0058547A /* BADescriptionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */; };
+		AB3DDB0F1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DDB0E1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift */; };
+		AB3DDB121E4ABEA000D005A6 /* BAMapCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DDB111E4ABEA000D005A6 /* BAMapCellNode.swift */; };
 		AB3F76A41E4975C800AF5C45 /* BAEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3F76A31E4975C800AF5C45 /* BAEventController.swift */; };
 		AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D741D98D204003586B2 /* FirebaseService.swift */; };
 		AB4F5D771D98EB4F003586B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D761D98EB4F003586B2 /* User.swift */; };
@@ -71,8 +73,10 @@
 		AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicCollectionViewLayout.swift; sourceTree = "<group>"; };
 		AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASpacerCellNode.swift; sourceTree = "<group>"; };
 		AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAImageCarouselCellNode.swift; sourceTree = "<group>"; };
-		AB3D33A31E4598CE0058547A /* BABasicInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BABasicInfoCellNode.swift; sourceTree = "<group>"; };
+		AB3D33A31E4598CE0058547A /* BABasicUserInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BABasicUserInfoCellNode.swift; sourceTree = "<group>"; };
 		AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BADescriptionCellNode.swift; sourceTree = "<group>"; };
+		AB3DDB0E1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BABasicEventInfoCellNode.swift; sourceTree = "<group>"; };
+		AB3DDB111E4ABEA000D005A6 /* BAMapCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAMapCellNode.swift; sourceTree = "<group>"; };
 		AB3F76A31E4975C800AF5C45 /* BAEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEventController.swift; sourceTree = "<group>"; };
 		AB4F5D741D98D204003586B2 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		AB4F5D761D98EB4F003586B2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -159,12 +163,21 @@
 		AB3D33A01E458C770058547A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */,
-				AB3D33A31E4598CE0058547A /* BABasicInfoCellNode.swift */,
-				AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */,
-				AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */,
+				AB3D33A31E4598CE0058547A /* BABasicUserInfoCellNode.swift */,
 			);
 			name = Profile;
+			sourceTree = "<group>";
+		};
+		AB3DDB101E4ABE0300D005A6 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */,
+				AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */,
+				AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */,
+				AB3D33A01E458C770058547A /* Profile */,
+				ABAE861B1E1F23A3005CAE77 /* Event */,
+			);
+			name = Details;
 			sourceTree = "<group>";
 		};
 		AB6A25C01E46A3CE00661BCF /* Calendar */ = {
@@ -191,6 +204,7 @@
 				ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */,
 				AB6A25BE1E46A20100661BCF /* BACalendarController.swift */,
 				ABCBDA451DA78B670001AC59 /* BAProfileController.swift */,
+				AB3F76A31E4975C800AF5C45 /* BAEventController.swift */,
 			);
 			name = Level1;
 			sourceTree = "<group>";
@@ -198,6 +212,8 @@
 		ABAE861B1E1F23A3005CAE77 /* Event */ = {
 			isa = PBXGroup;
 			children = (
+				AB3DDB0E1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift */,
+				AB3DDB111E4ABEA000D005A6 /* BAMapCellNode.swift */,
 			);
 			name = Event;
 			sourceTree = "<group>";
@@ -268,8 +284,7 @@
 				ABAE861C1E1F2498005CAE77 /* Users */,
 				ABAE861D1E1F250F005CAE77 /* Friends */,
 				AB6A25C01E46A3CE00661BCF /* Calendar */,
-				AB3D33A01E458C770058547A /* Profile */,
-				ABAE861B1E1F23A3005CAE77 /* Event */,
+				AB3DDB101E4ABE0300D005A6 /* Details */,
 				ABB9F3101D9172A500E01511 /* Wall */,
 				ABAE861E1E1F2670005CAE77 /* RepeatingVideo */,
 				ABAE861F1E1F2683005CAE77 /* NavigationBar */,
@@ -405,7 +420,6 @@
 		ABFA0B321D9A245600ED6C16 /* Level2 */ = {
 			isa = PBXGroup;
 			children = (
-				AB3F76A31E4975C800AF5C45 /* BAEventController.swift */,
 				ABB9F2DB1D9170C600E01511 /* BAWallController.swift */,
 				ABB9F2D51D9170C600E01511 /* BASettingsController.swift */,
 				ABB9F2BF1D9170C600E01511 /* BAChatController.swift */,
@@ -606,11 +620,13 @@
 				ABB9F2E11D9170C600E01511 /* BALikeButton.swift in Sources */,
 				ABB9F2F81D9170C600E01511 /* InstagramVideo.swift in Sources */,
 				AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */,
+				AB3DDB121E4ABEA000D005A6 /* BAMapCellNode.swift in Sources */,
 				ABB9F2FF1D9170C600E01511 /* RSVPStatus.swift in Sources */,
 				ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */,
 				ABB9F2E81D9170C600E01511 /* BouncesStyleAnimator.swift in Sources */,
 				ABB9F2EB1D9170C600E01511 /* WebService.swift in Sources */,
-				AB3D33A41E4598CE0058547A /* BABasicInfoCellNode.swift in Sources */,
+				AB3DDB0F1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift in Sources */,
+				AB3D33A41E4598CE0058547A /* BABasicUserInfoCellNode.swift in Sources */,
 				ABB9F3051D9170C600E01511 /* UIRepeatingVideo.swift in Sources */,
 				ABB9F2DE1D9170C600E01511 /* BAAnnouncementPost.swift in Sources */,
 				ABB9F2E51D9170C600E01511 /* BAWallPost.swift in Sources */,

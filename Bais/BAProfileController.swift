@@ -106,7 +106,7 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 			let headerCellNode = BAImageCarouselCellNode(with: user)
 			return headerCellNode
 		} else if (item == 1){
-			let basicCellNode = BABasicInfoCellNode(with: user)
+			let basicCellNode = BABasicUserInfoCellNode(with: user)
 			return basicCellNode
 		} else if (item == 2){
 			let descriptionCellNode = BADescriptionInfoCellNode(with: user)

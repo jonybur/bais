@@ -82,10 +82,10 @@ class CloudController{
 	func getFacebookEvents(){
 		
 		// gets events from facebook
-		let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "baisinternationalstudents",
-		                                                        parameters: ["fields": "events{description,end_time,name,place,id,start_time,cover}"])
+		let graphRequest = FBSDKGraphRequest(graphPath: "baisinternationalstudents",
+		                                     parameters: ["fields": "events{description,end_time,name,place,id,start_time,cover}"])
 		
-		graphRequest.start { connection, result, error in
+		graphRequest?.start { connection, result, error in
 			
 			if error != nil {
 				

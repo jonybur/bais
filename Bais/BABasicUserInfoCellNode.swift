@@ -1,5 +1,5 @@
 //
-//  BABasicInfoCellNode.swift
+//  BABasicUserInfoCellNode.swift
 //  Bais
 //
 //  Created by Jonathan Bursztyn on 4/2/17.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import AsyncDisplayKit
 
-class BABasicInfoCellNode: ASCellNode {
+class BABasicUserInfoCellNode: ASCellNode {
 	
 	let nameAndAgeNode = ASTextNode()
 	let distanceNode = ASTextNode()

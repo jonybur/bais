@@ -10,15 +10,15 @@ import Foundation
 import CoreLocation
 
 class Place{
-	var name : String = "";
-	var street : String = "";
-	var coordinates : CLLocation = CLLocation();
+	var name = ""
+	var street = ""
+	var coordinates = CLLocation()
 	
 	func isValid()->Bool{
 		if (self.coordinates.coordinate.longitude == 0 &&
 			self.coordinates.coordinate.latitude == 0){
-			return false;
+			return false
 		}
-		return true;
+		return true
 	}
 }

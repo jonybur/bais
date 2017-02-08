@@ -12,7 +12,7 @@ import pop
 import AwaitKit
 import MapKit
 
-class BAMapBox : UIView, MKMapViewDelegate{
+class BAMapBox: UIView, MKMapViewDelegate{
 
 	static let mapHeight : CGFloat = 160;
 	static let mapWidth : CGFloat = ez.screenWidth - 40;

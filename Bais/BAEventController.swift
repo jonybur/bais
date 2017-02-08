@@ -67,9 +67,14 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		
 		if (scrollView.contentOffset.y < 0){
 			scrollView.contentOffset.y = 0
 		}
+		
+		backButtonNode.view.center = CGPoint(x: backButtonNode.view.center.x,
+		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2)
+		
 	}
 	
 	override var prefersStatusBarHidden: Bool {
@@ -84,10 +89,13 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		if (item == 0){
 			let headerCellNode = BAImageCarouselCellNode(with: event)
 			return headerCellNode
-		} /*else if (item == 1){
-			let basicCellNode = BABasicInfoCellNode(with: user)
+		} else if (item == 1){
+			let basicCellNode = BABasicEventInfoCellNode(with: event)
 			return basicCellNode
-		} */else if (item == 2){
+		} else if (item == 2){
+			let mapCellNode = BAMapCellNode(with: event.place)
+			return mapCellNode
+		} else if (item == 3){
 			let descriptionCellNode = BADescriptionInfoCellNode(with: event)
 			return descriptionCellNode
 		}
@@ -100,7 +108,7 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		return 4
+		return 5
 	}
 	
 }
