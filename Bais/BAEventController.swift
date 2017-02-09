@@ -48,7 +48,7 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		backButtonNode.frame = CGRect(x: 0, y: 0, width: 75, height: 75)
+		backButtonNode.frame = CGRect(x: 0, y: 10, width: 75, height: 75)
 		backButtonNode.setImage(UIImage(named: "back-button"), for: [])
 		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
 		super.node.addSubnode(backButtonNode)
@@ -76,7 +76,7 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		}
 		
 		backButtonNode.view.center = CGPoint(x: backButtonNode.view.center.x,
-		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2)
+		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2 + 10)
 		
 	}
 	

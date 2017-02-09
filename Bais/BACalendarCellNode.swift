@@ -158,9 +158,7 @@ class BACalendarCellNode: ASCellNode {
 		
 		if (event.status == .declined){
 			verticalStack.children = [overlayLayout, horizontalButtonStack]
-		}/* else if (event.status == .undefined){
-			verticalStack.children = [overlayLayout]
-		}*/ else {
+		} else {
 			verticalStack.children = [overlayLayout, singleButtonNode]
 		}
 		

@@ -142,7 +142,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	internal func calendarCellNodeDidClickView(_ calendarViewCell: BACalendarCellNode) {
 		let event = calendarViewCell.event
 		let controller = BAEventController(with: event!)
-		self.navigationController?.pushViewController(controller, animated: true)
+		navigationController?.pushViewController(controller, animated: true)
 	}
 	
 	func displayOptions(for event: Event){

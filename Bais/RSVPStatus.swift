@@ -14,11 +14,24 @@ import Foundation
 	func next() -> RSVPStatus {
 		switch self {
 		case .attending:
-			return .maybe;
+			return .maybe
 		case .maybe:
-			return .declined;
+			return .declined
 		default:
-			return .declined;
+			return .declined
+		}
+	}
+	
+	func getValue() -> String{
+		switch self {
+		case .attending:
+			return "attending"
+		case .maybe:
+			return "maybe"
+		case .declined:
+			return "declined"
+		case .undefined:
+			return "undefined"
 		}
 	}
 }

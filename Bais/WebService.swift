@@ -13,8 +13,6 @@ import PromiseKit
 import CoreLocation
 import FBSDKCoreKit
 
-let instagramDownloadedKey = "com.baisapp.instagramDownloaded";
-
 @objc protocol WebServiceDelegate: class {
 	@objc optional func eventsLoaded(_ events: [Event])
 	@objc optional func uberProductsLoaded(_ uberProducts: [UberProduct])
@@ -46,7 +44,7 @@ class WebService{
 	
 	private func getRSVPStatus(_ eventId: String, rsvpStatus: RSVPStatus) {
 	
-		let graphPath = eventId + "/" + String(describing: rsvpStatus) + "/" + FBSDKAccessToken.current().userID
+		let graphPath = eventId + "/" + rsvpStatus.getValue() + "/" + FBSDKAccessToken.current().userID
 		let graphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: nil);
 		
 		graphRequest?.start { connection, result, error in
