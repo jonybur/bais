@@ -63,10 +63,6 @@ final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSo
 		}
 	}
 	
-	override var prefersStatusBarHidden: Bool {
-		return true
-	}
-	
 	//MARK: - ASTableNode data source and delegate.
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {

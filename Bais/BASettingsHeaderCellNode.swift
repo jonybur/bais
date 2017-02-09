@@ -77,7 +77,7 @@ class BASettingsHeaderCellNode: ASCellNode{
 		verticalStack.children = [absoluteLayout, nameNode, nationalityNode]
 		
 		// text inset
-		let textInsets = UIEdgeInsets(top: 50, left: 0, bottom: 40, right: 0)
+		let textInsets = UIEdgeInsets(top: 55, left: 0, bottom: 35, right: 0)
 		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: verticalStack)
 		
 		return textInsetSpec
