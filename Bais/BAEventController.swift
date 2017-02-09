@@ -58,10 +58,6 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		_ = self.navigationController?.popViewController(animated: true)
 	}
 	
-	func editButtonPressed(_ sender: UIButton){
-		// TODO: implement edit screen
-	}
-	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		

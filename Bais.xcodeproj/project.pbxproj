@@ -12,6 +12,11 @@
 		AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */; };
 		AB18B3021E4C03BB001C294B /* BACalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25BE1E46A20100661BCF /* BACalendarController.swift */; };
 		AB18B3051E4C0D44001C294B /* BASettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B3041E4C0D44001C294B /* BASettingsController.swift */; };
+		AB18B3091E4C11DF001C294B /* BASettingsHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B3081E4C11DF001C294B /* BASettingsHeaderCellNode.swift */; };
+		AB18B30B1E4C1812001C294B /* BASettingsOptionsCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B30A1E4C1812001C294B /* BASettingsOptionsCellNode.swift */; };
+		AB18B30D1E4C1917001C294B /* BASettingsHeaderElementCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B30C1E4C1917001C294B /* BASettingsHeaderElementCellNode.swift */; };
+		AB18B30F1E4C1B05001C294B /* BASettingsButtonElementCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B30E1E4C1B05001C294B /* BASettingsButtonElementCellNode.swift */; };
+		AB18B3111E4C1D54001C294B /* BASettingsSpacerElementCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B3101E4C1D54001C294B /* BASettingsSpacerElementCellNode.swift */; };
 		AB3D33A21E458C9E0058547A /* BAImageCarouselCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */; };
 		AB3D33A41E4598CE0058547A /* BABasicUserInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A31E4598CE0058547A /* BABasicUserInfoCellNode.swift */; };
 		AB3D33A61E45AA8D0058547A /* BADescriptionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */; };
@@ -38,7 +43,6 @@
 		ABB9F2ED1D9170C600E01511 /* BATabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C21D9170C600E01511 /* BATabBarController.swift */; };
 		ABB9F2EF1D9170C600E01511 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C41D9170C600E01511 /* Event.swift */; };
 		ABB9F2F21D9170C600E01511 /* FetchedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C71D9170C600E01511 /* FetchedContent.swift */; };
-		ABB9F2F41D9170C600E01511 /* GradientBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C91D9170C600E01511 /* GradientBar.swift */; };
 		ABB9F2F51D9170C600E01511 /* InstagramMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CA1D9170C600E01511 /* InstagramMedia.swift */; };
 		ABB9F2F61D9170C600E01511 /* InstagramPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CB1D9170C600E01511 /* InstagramPicture.swift */; };
 		ABB9F2F71D9170C600E01511 /* InstagramUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CC1D9170C600E01511 /* InstagramUser.swift */; };
@@ -66,6 +70,11 @@
 		AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicCollectionViewLayout.swift; sourceTree = "<group>"; };
 		AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASpacerCellNode.swift; sourceTree = "<group>"; };
 		AB18B3041E4C0D44001C294B /* BASettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASettingsController.swift; sourceTree = "<group>"; };
+		AB18B3081E4C11DF001C294B /* BASettingsHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASettingsHeaderCellNode.swift; sourceTree = "<group>"; };
+		AB18B30A1E4C1812001C294B /* BASettingsOptionsCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASettingsOptionsCellNode.swift; sourceTree = "<group>"; };
+		AB18B30C1E4C1917001C294B /* BASettingsHeaderElementCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASettingsHeaderElementCellNode.swift; sourceTree = "<group>"; };
+		AB18B30E1E4C1B05001C294B /* BASettingsButtonElementCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASettingsButtonElementCellNode.swift; sourceTree = "<group>"; };
+		AB18B3101E4C1D54001C294B /* BASettingsSpacerElementCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASettingsSpacerElementCellNode.swift; sourceTree = "<group>"; };
 		AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAImageCarouselCellNode.swift; sourceTree = "<group>"; };
 		AB3D33A31E4598CE0058547A /* BABasicUserInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BABasicUserInfoCellNode.swift; sourceTree = "<group>"; };
 		AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BADescriptionCellNode.swift; sourceTree = "<group>"; };
@@ -93,7 +102,6 @@
 		ABB9F2C21D9170C600E01511 /* BATabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BATabBarController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ABB9F2C41D9170C600E01511 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		ABB9F2C71D9170C600E01511 /* FetchedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedContent.swift; sourceTree = "<group>"; };
-		ABB9F2C91D9170C600E01511 /* GradientBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientBar.swift; sourceTree = "<group>"; };
 		ABB9F2CA1D9170C600E01511 /* InstagramMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramMedia.swift; sourceTree = "<group>"; };
 		ABB9F2CB1D9170C600E01511 /* InstagramPicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramPicture.swift; sourceTree = "<group>"; };
 		ABB9F2CC1D9170C600E01511 /* InstagramUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramUser.swift; sourceTree = "<group>"; };
@@ -155,6 +163,29 @@
 			name = Detail;
 			sourceTree = "<group>";
 		};
+		AB18B3061E4C1103001C294B /* Tabbed */ = {
+			isa = PBXGroup;
+			children = (
+				ABAE861C1E1F2498005CAE77 /* Users */,
+				ABAE861D1E1F250F005CAE77 /* Friends */,
+				AB6A25C01E46A3CE00661BCF /* Calendar */,
+				AB18B3071E4C1130001C294B /* Settings */,
+			);
+			name = Tabbed;
+			sourceTree = "<group>";
+		};
+		AB18B3071E4C1130001C294B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				AB18B3081E4C11DF001C294B /* BASettingsHeaderCellNode.swift */,
+				AB18B30A1E4C1812001C294B /* BASettingsOptionsCellNode.swift */,
+				AB18B30C1E4C1917001C294B /* BASettingsHeaderElementCellNode.swift */,
+				AB18B30E1E4C1B05001C294B /* BASettingsButtonElementCellNode.swift */,
+				AB18B3101E4C1D54001C294B /* BASettingsSpacerElementCellNode.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		AB3D33A01E458C770058547A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +194,7 @@
 			name = Profile;
 			sourceTree = "<group>";
 		};
-		AB3DDB101E4ABE0300D005A6 /* Details */ = {
+		AB3DDB101E4ABE0300D005A6 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
 				AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */,
@@ -172,7 +203,7 @@
 				AB3D33A01E458C770058547A /* Profile */,
 				ABAE861B1E1F23A3005CAE77 /* Event */,
 			);
-			name = Details;
+			name = Detail;
 			sourceTree = "<group>";
 		};
 		AB6A25C01E46A3CE00661BCF /* Calendar */ = {
@@ -239,14 +270,6 @@
 			name = RepeatingVideo;
 			sourceTree = "<group>";
 		};
-		ABAE861F1E1F2683005CAE77 /* NavigationBar */ = {
-			isa = PBXGroup;
-			children = (
-				ABB9F2C91D9170C600E01511 /* GradientBar.swift */,
-			);
-			name = NavigationBar;
-			sourceTree = "<group>";
-		};
 		ABB9F3081D9171A600E01511 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,12 +290,9 @@
 		ABB9F30A1D9171CA00E01511 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				ABAE861C1E1F2498005CAE77 /* Users */,
-				ABAE861D1E1F250F005CAE77 /* Friends */,
-				AB6A25C01E46A3CE00661BCF /* Calendar */,
-				AB3DDB101E4ABE0300D005A6 /* Details */,
+				AB18B3061E4C1103001C294B /* Tabbed */,
+				AB3DDB101E4ABE0300D005A6 /* Detail */,
 				ABAE861E1E1F2670005CAE77 /* RepeatingVideo */,
-				ABAE861F1E1F2683005CAE77 /* NavigationBar */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -578,11 +598,12 @@
 				ABB9F2FD1D9170C600E01511 /* Place.swift in Sources */,
 				ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */,
 				ABB9F2DF1D9170C600E01511 /* Utilities.swift in Sources */,
+				AB18B30D1E4C1917001C294B /* BASettingsHeaderElementCellNode.swift in Sources */,
 				AB3F76A41E4975C800AF5C45 /* BAEventController.swift in Sources */,
 				ABCBDA461DA78B670001AC59 /* BAProfileController.swift in Sources */,
+				AB18B30B1E4C1812001C294B /* BASettingsOptionsCellNode.swift in Sources */,
 				ABF50ACC1DEA7651004CB6E8 /* BAUsersController.swift in Sources */,
 				ABB9F2EF1D9170C600E01511 /* Event.swift in Sources */,
-				ABB9F2F41D9170C600E01511 /* GradientBar.swift in Sources */,
 				ABB9F2EA1D9170C600E01511 /* BAChatController.swift in Sources */,
 				ABB9F2F81D9170C600E01511 /* InstagramVideo.swift in Sources */,
 				AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */,
@@ -590,9 +611,12 @@
 				ABB9F2FF1D9170C600E01511 /* RSVPStatus.swift in Sources */,
 				ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */,
 				ABB9F2E81D9170C600E01511 /* BouncesStyleAnimator.swift in Sources */,
+				AB18B3091E4C11DF001C294B /* BASettingsHeaderCellNode.swift in Sources */,
 				ABB9F2EB1D9170C600E01511 /* WebService.swift in Sources */,
+				AB18B3111E4C1D54001C294B /* BASettingsSpacerElementCellNode.swift in Sources */,
 				AB3DDB0F1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift in Sources */,
 				AB3D33A41E4598CE0058547A /* BABasicUserInfoCellNode.swift in Sources */,
+				AB18B30F1E4C1B05001C294B /* BASettingsButtonElementCellNode.swift in Sources */,
 				ABB9F3051D9170C600E01511 /* UIRepeatingVideo.swift in Sources */,
 				ABB9F2F71D9170C600E01511 /* InstagramUser.swift in Sources */,
 			);

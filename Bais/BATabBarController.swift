@@ -65,7 +65,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		let v1 = BAUsersController()
 		let v2 = BAFriendsController()
 		let v3 = BACalendarController()
-		let v4 = BAProfileController(with: FirebaseService.currentUserId)
+		let v4 = BASettingsController(with: FirebaseService.currentUserId)
 		
 		v1.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityStyleAnimator.init()))
 		v2.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))

@@ -6,12 +6,11 @@
 //  Copyright © 2017 Board Social, Inc. All rights reserved.
 //
 
-
 import Foundation
 import AsyncDisplayKit
 import pop
 
-// add a delegate here to be able switch around
+// add a delegate here to be able switch modes
 class BACalendarHeaderCellNode: ASCellNode {
 	let nameNode = ASTextNode()
 	var blockButton: Bool = false

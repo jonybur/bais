@@ -15,7 +15,6 @@ final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSo
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var user = User()
-	var backButtonNode = ASButtonNode()
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -49,20 +48,6 @@ final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSo
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		backButtonNode.frame = CGRect(x: 0, y: 10, width: 75, height: 75)
-		backButtonNode.setImage(UIImage(named: "back-button"), for: [])
-		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
-		
-		super.node.addSubnode(backButtonNode)
-	}
-	
-	func backButtonPressed(_ sender: UIButton){
-		_ = self.navigationController?.popViewController(animated: true)
-	}
-	
-	func editButtonPressed(_ sender: UIButton){
-		// TODO: implement edit screen
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -73,13 +58,9 @@ final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSo
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		
 		if (scrollView.contentOffset.y < 0){
 			scrollView.contentOffset.y = 0
 		}
-		
-		backButtonNode.view.center = CGPoint(x: backButtonNode.view.center.x,
-		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2 + 10)
 	}
 	
 	override var prefersStatusBarHidden: Bool {
@@ -92,14 +73,11 @@ final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSo
 		let item = indexPath.item
 		
 		if (item == 0){
-			let headerCellNode = BAImageCarouselCellNode(with: user)
+			let headerCellNode = BASettingsHeaderCellNode(with: user)
 			return headerCellNode
 		} else if (item == 1){
-			let basicCellNode = BABasicUserInfoCellNode(with: user)
-			return basicCellNode
-		} else if (item == 2){
-			let descriptionCellNode = BADescriptionInfoCellNode(with: user)
-			return descriptionCellNode
+			let settingsCellNode = BASettingsOptionsCellNode()
+			return settingsCellNode
 		}
 		
 		return BASpacerCellNode()
@@ -110,7 +88,7 @@ final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSo
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		return 4
+		return 3
 	}
 	
 }

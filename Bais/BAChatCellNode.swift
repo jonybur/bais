@@ -63,7 +63,7 @@ class BAChatCellNode: ASCellNode {
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .start
-		verticalStack.children = [self.nameNode, self.lastMessageNode]
+		verticalStack.children = [nameNode, lastMessageNode]
 		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
