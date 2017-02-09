@@ -13,7 +13,8 @@ class BASettingsOptionsCellNode: ASCellNode{
 	
 	let contactUsNode = BASettingsHeaderElementCellNode(title: "Contact Us")
 	let helpAndSupportNode = BASettingsButtonElementCellNode(title: "Help & Support")
-	
+	let aboutBaisNode = BASettingsButtonElementCellNode(title: "About the NGO")
+
 	let spacerNode = BASettingsSpacerElementCellNode()
 	let shareBaisNode = BASettingsButtonElementCellNode(title: "Share Bais")
 	let spacerNode2 = BASettingsSpacerElementCellNode()
@@ -34,6 +35,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 		super.init()
 		addSubnode(contactUsNode)
 		addSubnode(helpAndSupportNode)
+		addSubnode(aboutBaisNode)
 		addSubnode(shareBaisNode)
 		addSubnode(legalNode)
 		addSubnode(privacyPolicyNode)
@@ -48,7 +50,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .start
-		verticalStack.children = [contactUsNode, helpAndSupportNode, spacerNode, shareBaisNode, spacerNode2,
+		verticalStack.children = [contactUsNode, helpAndSupportNode, aboutBaisNode, spacerNode, shareBaisNode, spacerNode2,
 		                          legalNode, privacyPolicyNode, termsServiceNode, licensesNode, spacerNode3,
 		                          logoutNode, spacerNode4, deleteAccountNode, spacerNode5]
 		return verticalStack

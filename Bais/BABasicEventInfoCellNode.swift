@@ -20,8 +20,8 @@ class BABasicEventInfoCellNode: ASCellNode {
 		super.init()
 		
 		let nameAndAgeAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 22, weight: UIFontWeightMedium),
-			NSForegroundColorAttributeName: ColorPalette.black]
+			NSFontAttributeName: UIFont.systemFont(ofSize: 24, weight: UIFontWeightBold),
+			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		nameNode.attributedText = NSAttributedString(string: event.name, attributes: nameAndAgeAttributes)
 		

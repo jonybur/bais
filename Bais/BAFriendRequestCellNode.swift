@@ -45,7 +45,7 @@ class BAFriendRequestCellNode: ASCellNode {
 		
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAttributes)
 		
-		acceptButtonNode.setTitle("ACCEPT", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium), with: .black, for: [])
+		acceptButtonNode.setTitle("ACCEPT", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold), with: ColorPalette.grey, for: [])
 		
 		self.addSubnode(self.imageNode)
 		self.addSubnode(self.nameNode)
