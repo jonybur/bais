@@ -1,78 +1,116 @@
 //
-//  LoginScreen.swift
-//  Claxon
+//  BASettingsController.swift
+//  Bais
 //
-//  Created by Jonathan Bursztyn on 18/7/16.
-//  Copyright © 2016 Claxon. All rights reserved.
+//  Created by Jonathan Bursztyn on 8/2/17.
+//  Copyright © 2017 Board Social, Inc. All rights reserved.
 //
-
 
 import UIKit
 import AsyncDisplayKit
-import CoreGraphics
+import Firebase
+import PromiseKit
 
-class BASettingsController: UIViewController {
+final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate {
 	
-	var scrollNode : ASScrollNode = ASScrollNode();
+	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
+	var user = User()
+	var backButtonNode = ASButtonNode()
+	
+	var tableNode: ASTableNode {
+		return node as! ASTableNode
+	}
+	
+	init(with userId: String){
+		super.init(node: ASTableNode())
+		
+		FirebaseService.getUser(with: userId).then { user -> Void in
+			self.user = user
+			self.commonInit()
+			}.catch { _ in }
+	}
+	
+	init(with user: User) {
+		super.init(node: ASTableNode())
+		self.user = user
+		commonInit()
+	}
+	
+	func commonInit(){
+		tableNode.delegate = self
+		tableNode.dataSource = self
+		tableNode.view.separatorStyle = .none
+		tableNode.allowsSelection = false
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("Storyboards are not supported")
+	}
 	
 	override func viewDidLoad() {
-		super.viewDidLoad();
+		super.viewDidLoad()
 		
-		view.backgroundColor = ColorPalette.white;
-		self.automaticallyAdjustsScrollViewInsets = false;
+		backButtonNode.frame = CGRect(x: 0, y: 10, width: 75, height: 75)
+		backButtonNode.setImage(UIImage(named: "back-button"), for: [])
+		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
 		
-		navigationController?.isNavigationBarHidden = true;
-		
-		initializeInterface();
+		super.node.addSubnode(backButtonNode)
 	}
 	
-	func initializeInterface(){
-		
-		let baisLogo : ASImageNode = ASImageNode();
-		baisLogo.frame = CGRect(0, 0, 200, 200);
-		baisLogo.image = UIImage(named: "BaisLogo");
-		baisLogo.position = CGPoint(x: ez.screenWidth / 2, y: 190)
-		
-		setAddress(baisLogo.frame.maxY + 20);
-		
-		let location = CLLocationCoordinate2D(latitude:-34.591248, longitude:-58.393159);
-		
-		let descriptionAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular),
-		                             NSForegroundColorAttributeName: UIColor.black]
-		
-		let descriptionView : UITextView = UITextView();
-		descriptionView.frame = CGRect(20, baisLogo.frame.maxY + 230, ez.screenWidth - 40, 10);
-		descriptionView.attributedText = NSAttributedString(string: "La primera organización de estudiantes de intercambio en Argentina\n\nBAIS Argentina es la primera organización no gubernamental (ONG) que tiene como objetivo la integración social de jóvenes extranjeros mediante la elaboración de actividades semanales, logrando ampliar la visión del país y su cultura, haciendo que la estadía sea más fácil y enriquecedora.\n\nNuestro objetivo es ofrecer a los estudiantes de intercambio la oportunidad de conocerse y conocer el país de manera distinta. Hacerles sentir apoyados durante su estadía a través de un asesoramiento que les permita abrirse a una nueva cultura.\n\n+54 11 5263 - 2247\nLunes a viernes de 11 a 18 hs.\ninfo@baisargentina.com", attributes: descriptionAttributes);
-		descriptionView.dataDetectorTypes = .phoneNumber;
-		descriptionView.isScrollEnabled = false;
-		descriptionView.isEditable = false;
-		let newSize = descriptionView.sizeThatFits(descriptionView.frame.size);
-		descriptionView.frame.size = newSize;
-		
-		let boardLogo : ASImageNode = ASImageNode();
-		boardLogo.frame = CGRect(0, 0, 100, 23.25);
-		boardLogo.image = UIImage(named: "BoardLogo");
-		boardLogo.position = CGPoint(x: ez.screenWidth / 2, y: descriptionView.frame.maxY + 45)
-
-		self.scrollNode.addSubnode(baisLogo);
-		self.scrollNode.addSubnode(boardLogo);
-		self.scrollNode.view.addSubview(descriptionView);
-		self.scrollNode.frame = CGRect(x: 0, y: 0, width: ez.screenWidth, height: ez.screenHeight);
-		self.scrollNode.view.contentSize = CGSize(width: ez.screenWidth, height: boardLogo.frame.maxY + 95);
-		
-		self.view.addSubnode(scrollNode);
+	func backButtonPressed(_ sender: UIButton){
+		_ = self.navigationController?.popViewController(animated: true)
 	}
 	
-	func setAddress(_ yPosition : CGFloat){
-		let addressAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular),
-		                         NSForegroundColorAttributeName: UIColor.black]
+	func editButtonPressed(_ sender: UIButton){
+		// TODO: implement edit screen
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 		
-		let addressLabel : UILabel = UILabel();
-		addressLabel.frame = CGRect(x: 20, y: yPosition, width: ez.screenWidth - 40, height: 20);
-		addressLabel.adjustsFontSizeToFitWidth = true;
-		addressLabel.attributedText = NSAttributedString(string: "Ayacucho 1571 - PB", attributes: addressAttributes);
+		self.navigationController!.interactivePopGestureRecognizer!.isEnabled = true
+		self.navigationController!.interactivePopGestureRecognizer!.delegate =  self
+	}
+	
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		
-		self.scrollNode.view.addSubview(addressLabel);
+		if (scrollView.contentOffset.y < 0){
+			scrollView.contentOffset.y = 0
+		}
+		
+		backButtonNode.view.center = CGPoint(x: backButtonNode.view.center.x,
+		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2 + 10)
+	}
+	
+	override var prefersStatusBarHidden: Bool {
+		return true
+	}
+	
+	//MARK: - ASTableNode data source and delegate.
+	
+	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+		let item = indexPath.item
+		
+		if (item == 0){
+			let headerCellNode = BAImageCarouselCellNode(with: user)
+			return headerCellNode
+		} else if (item == 1){
+			let basicCellNode = BABasicUserInfoCellNode(with: user)
+			return basicCellNode
+		} else if (item == 2){
+			let descriptionCellNode = BADescriptionInfoCellNode(with: user)
+			return descriptionCellNode
+		}
+		
+		return BASpacerCellNode()
+	}
+	
+	func numberOfSections(in tableNode: ASTableNode) -> Int {
+		return 1
+	}
+	
+	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+		return 4
 	}
 	
 }

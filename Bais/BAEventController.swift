@@ -18,12 +18,12 @@ import AsyncDisplayKit
 import Firebase
 import PromiseKit
 
-final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate, BAMapCellNodeDelegate {
+final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate, BAMapCellNodeDelegate, WebServiceDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var event = Event()
 	var backButtonNode = ASButtonNode()
-	let webService = CloudController()
+	let webService = WebService()
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -37,6 +37,8 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		tableNode.dataSource = self
 		tableNode.view.separatorStyle = .none
 		tableNode.allowsSelection = false
+		
+		webService.delegate = self
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -82,7 +84,8 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		return true
 	}
 	
-	//MARK: - BAMapCellNode delegate methods
+	//MARK: - WebService delegate methods
+	
 	internal func uberProductsLoaded(_ uberProducts: [UberProduct]) {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		
@@ -97,6 +100,9 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		present(alert, animated: true, completion: nil)
 	}
 	
+	
+	//MARK: - BAMapCellNode delegate methods
+
 	internal func mapCellNodeDidClickUberButton(_ mapViewCell: BAMapCellNode) {
 		if (AppsCommunicator.canOpenUber()){
 			webService.getUberProducts(event.place.coordinates.coordinate)
@@ -141,7 +147,7 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		}
 	}
 	
-	//MARK: - ASTableNode data source and delegate.
+	//MARK: - ASTableNode data source and delegate
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
 		let item = indexPath.item

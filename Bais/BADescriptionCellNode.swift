@@ -16,7 +16,7 @@ class BADescriptionInfoCellNode: ASCellNode {
 	
 	required init(with event: Event){
 		super.init()
-		commonInit(description: event.description)
+		commonInit(description: event.eventDescription)
 	}
 	
 	required init(with user: User) {

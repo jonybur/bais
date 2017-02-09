@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum RSVPStatus: String{
-	case attending = "attending", maybe = "maybe", declined = "declined", undefined = "undefined"
+@objc enum RSVPStatus: Int{
+	case attending = 0, maybe = 1, declined = 2, undefined = 3
 	
 	func next() -> RSVPStatus {
 		switch self {

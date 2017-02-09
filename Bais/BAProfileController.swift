@@ -16,7 +16,6 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var user = User()
 	var backButtonNode = ASButtonNode()
-	var editButtonNode = ASButtonNode()
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -51,19 +50,11 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		backButtonNode.frame = CGRect(x: 0, y: 0, width: 75, height: 75)
+		backButtonNode.frame = CGRect(x: 0, y: 10, width: 75, height: 75)
 		backButtonNode.setImage(UIImage(named: "back-button"), for: [])
 		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
-
-		editButtonNode.frame = CGRect(x: ez.screenWidth - 75, y: 0, width: 75, height: 75)
-		editButtonNode.setImage(UIImage(named: "edit-button"), for: [])
-		editButtonNode.addTarget(self, action: #selector(editButtonPressed(_:)), forControlEvents: .touchUpInside)
 		
-		if (user.id == FirebaseService.currentUserId){
-			super.node.addSubnode(editButtonNode)
-		}else{
-			super.node.addSubnode(backButtonNode)
-		}
+		super.node.addSubnode(backButtonNode)
 	}
 	
 	func backButtonPressed(_ sender: UIButton){
@@ -88,9 +79,7 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		
 		backButtonNode.view.center = CGPoint(x: backButtonNode.view.center.x,
-		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2)
-		editButtonNode.view.center = CGPoint(x: editButtonNode.view.center.x,
-		                                     y: scrollView.contentOffset.y + editButtonNode.view.frame.height / 2)
+		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2 + 10)
 	}
 	
 	override var prefersStatusBarHidden: Bool {

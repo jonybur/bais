@@ -9,10 +9,10 @@
 import Foundation
 import CoreLocation
 
-class Event{
+class Event: NSObject{
 	
 	var id = ""
-	var description = ""
+	var eventDescription = ""
 	var name = ""
 	var imageUrl = ""
 	var startTime = Date()

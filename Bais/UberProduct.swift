@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UberProduct{
+class UberProduct: NSObject{
 	var productId = "";
 	var displayName = "";
 }

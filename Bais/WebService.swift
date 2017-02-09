@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AwaitKit
 import SwiftyJSON
 import Alamofire
 import PromiseKit
@@ -16,14 +15,14 @@ import FBSDKCoreKit
 
 let instagramDownloadedKey = "com.baisapp.instagramDownloaded";
 
-protocol WebServiceDelegate: class {
-	func eventsLoaded(_ events: [Event])
-	func uberProductsLoaded(_ uberProducts: [UberProduct])
-	func gotRSVPStatus(of eventId: String, status: RSVPStatus)
+@objc protocol WebServiceDelegate: class {
+	@objc optional func eventsLoaded(_ events: [Event])
+	@objc optional func uberProductsLoaded(_ uberProducts: [UberProduct])
+	@objc optional func gotRSVPStatus(of eventId: String, status: RSVPStatus)
 }
 
 // rename to WebService
-class CloudController{
+class WebService{
 	
 	weak var delegate: WebServiceDelegate?
 	let uberServerToken = "b_kEklxu3QSAD_ZigupALYGYzSWs-DDB132IrpcU"
@@ -63,14 +62,14 @@ class CloudController{
 							// accepted or maybe
 							// make NSNotification, we have the events ready
 							// returns rsvpStatus
-							self.delegate?.gotRSVPStatus(of: eventId, status: rsvpStatus)
+							self.delegate?.gotRSVPStatus!(of: eventId, status: rsvpStatus)
 							
 						} else if (rsvpStatus != .declined) {
 							self.getRSVPStatus(eventId, rsvpStatus: rsvpStatus.next());
 							
 						} else {
 							// declined
-							self.delegate?.gotRSVPStatus(of: eventId, status: rsvpStatus)
+							self.delegate?.gotRSVPStatus!(of: eventId, status: rsvpStatus)
 						}
 					}
 				}
@@ -86,17 +85,14 @@ class CloudController{
 		                                     parameters: ["fields": "events{description,end_time,name,place,id,start_time,cover}"])
 		
 		graphRequest?.start { connection, result, error in
-			
 			if error != nil {
-				
 				print("ERROR: " + error.debugDescription)
 				return
-				
 			} else {
 				
 				var eventsArray = [Event]();
 				
-				// change to guards
+				// TODO: change to guards
 				if let nsArray = result as? NSDictionary {
 					if let events = nsArray.object(forKey: "events") as? NSDictionary{
 						if let datum = events.object(forKey: "data") as? NSArray{
@@ -106,7 +102,7 @@ class CloudController{
 									parsedEvent.startTime = self.stringToNSDate(event["start_time"] as! String);
 									parsedEvent.endTime = self.stringToNSDate(event["end_time"] as! String);
 									parsedEvent.id = event["id"] as! String;
-									parsedEvent.description = event["description"] as! String;
+									parsedEvent.eventDescription = event["description"] as! String;
 									parsedEvent.name = event["name"] as! String;
 									
 									// TODO: Also remove "I Bais Argentina"
@@ -145,9 +141,9 @@ class CloudController{
 					$0.startTime.compare($1.startTime as Date) == ComparisonResult.orderedAscending
 				});
 
-				self.delegate?.eventsLoaded(eventsArray)
+				self.delegate?.eventsLoaded!(eventsArray)
 			}
-		}
+		}.start()
 	}
 	
 	func stringToNSDate(_ value: String) -> Date {
@@ -156,49 +152,10 @@ class CloudController{
 		let date = dateFormatter.date(from: value)
 		return date!
 	}
-	
-    static func getInstagramPage(){
-		
-		// gets pictures from instagram
-		let jsonNSData = try! await(WebAPI.request(url: "https://instagram.com/bais_argentina/media"));
-		let json = JSON(data: jsonNSData as Data);
-		var instagramMedia : [InstagramMedia] = [InstagramMedia]();
-		
-		for (_, subjson):(String, JSON) in json["items"]{
-			
-			var media = InstagramMedia();
-			
-			let videoString = subjson["videos"]["standard_resolution"]["url"].stringValue;
-			if (videoString != "") {
-				media = InstagramVideo();
-				(media as! InstagramVideo).videoUrl = videoString;
-			} else {
-				media = InstagramPicture();
-			}
-			
-			media.imageUrl = subjson["images"]["standard_resolution"]["url"].stringValue;
-			media.thumbnailImageUrl = subjson["images"]["low_resolution"]["url"].stringValue;
-			media.likes = subjson["likes"]["count"].intValue;
-			media.id = subjson["id"].stringValue;
-			media.caption = subjson["caption"]["text"].stringValue;
-			media.creationDate = NSDate(timeIntervalSince1970: subjson["created_time"].doubleValue) as Date;
-			media.user.fullName = subjson["user"]["full_name"].stringValue;
-			media.user.userName = subjson["user"]["username"].stringValue;
-			media.user.id = subjson["user"]["id"].stringValue;
-			media.user.profilePicture = subjson["user"]["profile_picture"].stringValue;
-			
-			instagramMedia.append(media);
-		}
-		
-		FetchedContent.instagramMedia = instagramMedia;
-		
-		// make NSNotification, we have the events ready
-		NotificationCenter.default.post(name: Notification.Name(rawValue: instagramDownloadedKey), object: self)
-    }
-	
+
 	func getUberProducts(_ location: CLLocationCoordinate2D){
 		if (self.uberProducts.count > 0){
-			delegate?.uberProductsLoaded(self.uberProducts)
+			delegate?.uberProductsLoaded!(self.uberProducts)
 			return
 		}
 		
@@ -206,19 +163,21 @@ class CloudController{
 								"&longitude=" + String(location.longitude) + "&server_token=" + uberServerToken
 		
 		// gets uber products
-		let api = WebAPI()
-		let jsonNSData = try! await(api.request2(url: urlString))
-		let json = JSON(data: jsonNSData as Data)
-		var uberProducts = [UberProduct]()
+		WebAPI.request(url: urlString).then { a -> Void in
+			let jsonNSData = a
+			let json = JSON(data: jsonNSData as Data)
+			var uberProducts = [UberProduct]()
+			
+			for (_, subjson):(String, JSON) in json["products"]{
+				let product = UberProduct()
+				product.displayName = subjson["display_name"].stringValue
+				product.productId = subjson["product_id"].stringValue
+				uberProducts.append(product)
+			}
+			
+			self.uberProducts = uberProducts
+			self.delegate?.uberProductsLoaded!(self.uberProducts)
+		}.catch { _ in }
 		
-		for (_, subjson):(String, JSON) in json["products"]{
-			let product = UberProduct()
-			product.displayName = subjson["display_name"].stringValue
-			product.productId = subjson["product_id"].stringValue
-			uberProducts.append(product)
-		}
-		
-		self.uberProducts = uberProducts
-		delegate?.uberProductsLoaded(self.uberProducts)
 	}
 }
