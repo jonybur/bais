@@ -12,11 +12,14 @@ import AsyncDisplayKit
 class BASettingsHeaderCellNode: ASCellNode{
 
 	let photoNode = ASNetworkImageNode()
+	let iconNode = ASImageNode()
 	let nameNode = ASTextNode()
 	let nationalityNode = ASTextNode()
 	
 	required init(with user: User) {
 		super.init()
+		
+		iconNode.image = UIImage(named: "edit-button")
 		
 		photoNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
 		photoNode.shouldRenderProgressImages = true
@@ -47,9 +50,10 @@ class BASettingsHeaderCellNode: ASCellNode{
 		nationalityNode.attributedText = NSAttributedString(string: user.nationality, attributes: distanceAttributes)
 		nationalityNode.maximumNumberOfLines = 1
 		
-		self.addSubnode(photoNode)
-		self.addSubnode(nameNode)
-		self.addSubnode(nationalityNode)
+		addSubnode(photoNode)
+		addSubnode(iconNode)
+		addSubnode(nameNode)
+		addSubnode(nationalityNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -58,13 +62,19 @@ class BASettingsHeaderCellNode: ASCellNode{
 		let imagePlace = ASRatioLayoutSpec(ratio: 1, child: photoNode)
 		imagePlace.style.maxWidth = ASDimension(unit: .points, value: 160)
 		
+		// icono
+		iconNode.style.preferredSize = CGSize(width: 45, height: 45)
+		iconNode.style.layoutPosition = CGPoint(x: 112.5, y: 112.5)
+		
+		let absoluteLayout = ASAbsoluteLayoutSpec(sizing: .sizeToFit, children: [imagePlace, iconNode])
+		
 		// vertical stack
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .center
 		verticalStack.justifyContent = .spaceAround
 		verticalStack.spacing = 6
-		verticalStack.children = [imagePlace, nameNode, nationalityNode]
+		verticalStack.children = [absoluteLayout, nameNode, nationalityNode]
 		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 50, left: 0, bottom: 40, right: 0)
