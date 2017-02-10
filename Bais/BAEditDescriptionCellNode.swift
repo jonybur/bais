@@ -12,7 +12,7 @@ import AsyncDisplayKit
 
 class BAEditDescriptionCellNode: ASCellNode {
 	
-	let descriptionNode = ASTextNode()
+	let descriptionNode = ASEditableTextNode()
 	
 	required init(with user: User) {
 		super.init()
@@ -31,9 +31,9 @@ class BAEditDescriptionCellNode: ASCellNode {
 			NSParagraphStyleAttributeName: paragraphAttributes]
 		
 		if (user.about.characters.count == 0){
-			descriptionNode.attributedText = NSAttributedString(string: "Write about yourself", attributes: descriptionAttributes)
+			descriptionNode.attributedText = NSAttributedString(string: "Write about yourself", attributes: placeholderAttributes)
 		}else{
-			descriptionNode.attributedText = NSAttributedString(string: user.about, attributes: placeholderAttributes)
+			descriptionNode.attributedText = NSAttributedString(string: user.about, attributes: descriptionAttributes)
 		}
 		
 		addSubnode(descriptionNode)

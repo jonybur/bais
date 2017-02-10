@@ -26,6 +26,7 @@ struct ColorPalette{
 	// greyscale
 	static let white = UIColor.white
 	static let lighterGrey = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
+	//static let placeholderGrey = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
 	static let lightGrey = UIColor(red: 0.6766, green: 0.6772, blue: 0.6767, alpha: 1)
 	static let grey = UIColor(red: 0.333, green: 0.3333, blue: 0.3331, alpha: 1)
 	static let black = UIColor.black
