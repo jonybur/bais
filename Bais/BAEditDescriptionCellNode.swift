@@ -14,17 +14,9 @@ class BAEditDescriptionCellNode: ASCellNode {
 	
 	let descriptionNode = ASTextNode()
 	
-	required init(with event: Event){
-		super.init()
-		commonInit(description: event.eventDescription)
-	}
-	
 	required init(with user: User) {
 		super.init()
-		commonInit(description: user.description)
-	}
-	
-	func commonInit(description: String){
+
 		let paragraphAttributes = NSMutableParagraphStyle()
 		paragraphAttributes.lineSpacing = 5
 		
@@ -33,9 +25,18 @@ class BAEditDescriptionCellNode: ASCellNode {
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: paragraphAttributes]
 		
-		descriptionNode.attributedText = NSAttributedString(string: description, attributes: descriptionAttributes)
+		let placeholderAttributes = [
+			NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular),
+			NSForegroundColorAttributeName: ColorPalette.lightGrey,
+			NSParagraphStyleAttributeName: paragraphAttributes]
 		
-		self.addSubnode(descriptionNode)
+		if (user.about.characters.count == 0){
+			descriptionNode.attributedText = NSAttributedString(string: "Write about yourself", attributes: descriptionAttributes)
+		}else{
+			descriptionNode.attributedText = NSAttributedString(string: user.about, attributes: placeholderAttributes)
+		}
+		
+		addSubnode(descriptionNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

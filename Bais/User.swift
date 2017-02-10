@@ -30,7 +30,7 @@ class User{
 	var lastName: String = ""
 	var nationality: String = ""
 	var lastMessage: String = ""
-	var description: String = ""
+	var about: String = ""
 	var profilePicture: String = ""
 	var location: CLLocation = CLLocation()
 	let imageRatio: CGFloat = (1.3...1.5).random()
@@ -69,6 +69,10 @@ class User{
 		self.lastName = dictionary["last_name"] as! String
 		self.nationality = dictionary["nationality"] as! String
 		self.profilePicture = dictionary["profile_picture"] as! String
+		
+		if let about = dictionary["about"] as? String{
+			self.about = about
+		}
 		
 		if let locationDictionary = dictionary["location"] as? NSDictionary{
 			let latitude = locationDictionary["lat"] as! Double

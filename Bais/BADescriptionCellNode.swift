@@ -21,7 +21,7 @@ class BADescriptionInfoCellNode: ASCellNode {
 	
 	required init(with user: User) {
 		super.init()
-		commonInit(description: user.description)
+		commonInit(description: user.about)
 	}
 	
 	func commonInit(description: String){

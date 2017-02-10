@@ -40,8 +40,8 @@ class FirebaseService{
 	
 	static func storeImage(_ image: UIImage, as imagePurpose: ImagePurpose) -> Promise<URL>{
 		return Promise{ fulfill, reject in
-			let data = UIImagePNGRepresentation(image) as Data?
-			let imagesRef = rootStorageReference.child(currentUserId).child(imagePurpose.rawValue + ".png")
+			let data = UIImageJPEGRepresentation(image, 0.75) as Data?
+			let imagesRef = rootStorageReference.child(currentUserId).child(imagePurpose.rawValue + ".jpg")
 			
 			// Upload the file to the path "images/rivers.jpg"
 			imagesRef.put(data!, metadata: nil) { metadata, error in
@@ -54,8 +54,8 @@ class FirebaseService{
 		}
 	}
 	
-	static func updateUser(image: String){
-		usersReference.child(currentUserId).updateChildValues(["profile_picture": image])
+	static func updateUserImage(with url: String, imagePurpose: ImagePurpose){
+		usersReference.child(currentUserId).updateChildValues([imagePurpose.rawValue: url])
 	}
 	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){

@@ -39,19 +39,19 @@ class BAChatCellNode: ASCellNode {
 		
 		let nameAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium),
-			NSForegroundColorAttributeName: UIColor.black]
+			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAttributes)
 		
 		let lastMessageAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular),
-			NSForegroundColorAttributeName: UIColor.black]
+			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		lastMessageNode.attributedText = NSAttributedString(string: user.lastMessage, attributes: lastMessageAttributes)
 		
-		self.addSubnode(self.imageNode)
-		self.addSubnode(self.nameNode)
-		self.addSubnode(self.lastMessageNode)
+		addSubnode(imageNode)
+		addSubnode(nameNode)
+		addSubnode(lastMessageNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

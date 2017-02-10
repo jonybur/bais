@@ -144,7 +144,7 @@ BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerC
 			self.user.profilePicture = url.absoluteString
 			let indexPath = [IndexPath(item: 0, section: 0)]
 			self.tableNode.reloadRows(at: indexPath, with: .fade)
-			FirebaseService.updateUser(image: url.absoluteString)
+			FirebaseService.updateUserImage(with: url.absoluteString, imagePurpose: .profilePicture)
 		}.catch { _ in }
 	}
 	
