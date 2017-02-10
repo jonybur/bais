@@ -33,8 +33,6 @@ class BAImageCarouselCellNode: ASCellNode {
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill
 		
-		backgroundColor = .black
-		
 		addSubnode(imageNode)
 	}
 	

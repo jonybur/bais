@@ -164,12 +164,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		
-		var topVC = UIApplication.shared.keyWindow?.rootViewController
-		while((topVC!.presentedViewController) != nil) {
-			topVC = topVC!.presentedViewController
-		}
-		
-		topVC?.present(alert, animated: true, completion: nil)
+		present(alert, animated: true, completion: nil)
 	}
 	
 	func setStatusForEvent(with id: String, status: RSVPStatus){

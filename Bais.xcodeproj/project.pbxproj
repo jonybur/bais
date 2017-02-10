@@ -31,11 +31,11 @@
 		AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */; };
 		AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */; };
 		AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */; };
-		ABA2344F1E4D713200CBAF53 /* BAEditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2344E1E4D713200CBAF53 /* BAEditProfileController.swift */; };
 		ABA234521E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA234511E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift */; };
 		ABA234541E4D883600CBAF53 /* BAEditDescriptionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA234531E4D883600CBAF53 /* BAEditDescriptionCellNode.swift */; };
 		ABA234561E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA234551E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift */; };
 		ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */; };
+		ABB617C31E4D986B00C1C43C /* BAEditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2344E1E4D713200CBAF53 /* BAEditProfileController.swift */; };
 		ABB9F2DD1D9170C600E01511 /* AppsCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B21D9170C600E01511 /* AppsCommunicator.swift */; };
 		ABB9F2DF1D9170C600E01511 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B41D9170C600E01511 /* Utilities.swift */; };
 		ABB9F2E31D9170C600E01511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABB9F2B81D9170C600E01511 /* Assets.xcassets */; };
@@ -591,6 +591,7 @@
 			files = (
 				AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */,
 				AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */,
+				ABB617C31E4D986B00C1C43C /* BAEditProfileController.swift in Sources */,
 				ABB9F2E61D9170C600E01511 /* BackgroundStyleAnimator.swift in Sources */,
 				AB18B3051E4C0D44001C294B /* BASettingsController.swift in Sources */,
 				AB6A25C41E46A3EB00661BCF /* BACalendarCellNode.swift in Sources */,
@@ -616,7 +617,6 @@
 				ABB9F2F61D9170C600E01511 /* InstagramPicture.swift in Sources */,
 				AB6A25C21E46A3DF00661BCF /* BACalendarHeaderCellNode.swift in Sources */,
 				ABB9F2EC1D9170C600E01511 /* ColorPalette.swift in Sources */,
-				ABA2344F1E4D713200CBAF53 /* BAEditProfileController.swift in Sources */,
 				ABA234541E4D883600CBAF53 /* BAEditDescriptionCellNode.swift in Sources */,
 				ABB9F2FD1D9170C600E01511 /* Place.swift in Sources */,
 				ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */,

@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import FirebaseAuth
+import FirebaseStorage
 import FBSDKCoreKit
 import CoreLocation
 import PromiseKit
@@ -22,6 +23,7 @@ class FirebaseService{
 	static let rootReference = FIRDatabase.database().reference()
 	static let usersReference = FIRDatabase.database().reference().child("users")
 	static let messagesReference = FIRDatabase.database().reference().child("messages")
+	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-79d67.appspot.com")
 	
 	static func getUser(with userID: String) -> Promise<User>{
 		return Promise{ fulfill, reject in
@@ -32,8 +34,31 @@ class FirebaseService{
 		}
 	}
 	
+	enum ImagePurpose: String{
+		case profilePicture = "profile_picture"
+	}
+	
+	static func storeImage(_ image: UIImage, as imagePurpose: ImagePurpose) -> Promise<URL>{
+		return Promise{ fulfill, reject in
+			let data = UIImagePNGRepresentation(image) as Data?
+			let imagesRef = rootStorageReference.child(currentUserId).child(imagePurpose.rawValue + ".png")
+			
+			// Upload the file to the path "images/rivers.jpg"
+			imagesRef.put(data!, metadata: nil) { metadata, error in
+				if let error = error {
+					reject(error)
+				} else {
+					fulfill(metadata!.downloadURL()!)
+				}
+			}
+		}
+	}
+	
+	static func updateUser(image: String){
+		usersReference.child(currentUserId).updateChildValues(["profile_picture": image])
+	}
+	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){
-		
 		let geoFire = GeoFire(firebaseRef: rootReference)
 		let locationRef = usersReference.child(currentUserId).child("location")
 		
@@ -47,7 +72,7 @@ class FirebaseService{
 		CurrentUser.location = CLLocation(latitude: location.latitude, longitude: location.longitude)
 	}
 	
-	static func endFriendRelationshipWith(friendId : String){
+	static func endFriendRelationshipWith(friendId: String){
 		let selfRef = usersReference.child(currentUserId).child("friends").child(friendId)
 		let friendRef = usersReference.child(friendId).child("friends").child(currentUserId)
 	
@@ -55,40 +80,35 @@ class FirebaseService{
 		friendRef.removeValue()
 	}
 	
-	static func denyFriendRequestFrom(friendId : String){
+	static func denyFriendRequestFrom(friendId: String){
 		let selfRef = usersReference.child(currentUserId).child("friends").child(friendId)
 		selfRef.removeValue()
 	}
 	
-	static func acceptFriendRequestFrom(friendId : String){
-		setFriendStatusWith(friendId, to : .accepted)
+	static func acceptFriendRequestFrom(friendId: String){
+		setFriendStatusWith(friendId, to: .accepted)
 	}
 	
-	static func sendFriendRequestTo(friendId : String){
-		setFriendStatusWith(friendId, to : .invited)
+	static func sendFriendRequestTo(friendId: String){
+		setFriendStatusWith(friendId, to: .invited)
 	}
 	
-	private static func setFriendStatusWith(_ friendId : String, to status : FriendshipStatus){
-		
+	private static func setFriendStatusWith(_ friendId: String, to status: FriendshipStatus){
 		var value = [String:String]()
 		
 		switch (status){
-		
 		case .accepted:
 			value = [
 				"status": status.rawValue
 			]
 			break
-			
 		case .invited:
 			value = [
 				"status": status.rawValue,
 				"postedBy": currentUserId
 			]
 			break
-			
 		default: break
-		
 		}
 		
 		let selfRef = usersReference.child(currentUserId).child("friends").child(friendId)
@@ -99,8 +119,7 @@ class FirebaseService{
 	}
 	
 	// takes Firebase user, adds Facebook information, posts to database
-	static func registerUser(_ user : FIRUser){
-		
+	static func registerUser(_ user: FIRUser){
 		if FBSDKAccessToken.current() == nil {
 			return
 		}

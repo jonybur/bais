@@ -11,7 +11,8 @@ import AsyncDisplayKit
 import Firebase
 import PromiseKit
 
-final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate {
+final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
+BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var user = User()
@@ -82,13 +83,14 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		return true
 	}
 	
-	//MARK: - ASTableNode data source and delegate.
+	//MARK: - ASTableNode data source and delegate
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
 		let item = indexPath.item
 		
 		if (item == 0){
 			let headerCellNode = BAEditImageCarouselCellNode(with: user)
+			headerCellNode.delegate = self
 			return headerCellNode
 		} else if (item == 1){
 			let basicCellNode = BAEditBasicUserInfoCellNode(with: user)
@@ -107,6 +109,43 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
 		return 4
+	}
+	
+	//MARK: - BAEditImageCarouselCellNodeDelegate methods
+	
+	internal func editImageCarouselNodeDidClickEditImageButton() {
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		
+		alert.addAction(UIAlertAction(title: "Camera Roll", style: .default, handler: { action in
+			self.openImagePickerController()
+		}))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		
+		present(alert, animated: true, completion: nil)
+	}
+	
+	func openImagePickerController(){
+		if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+			let imagePicker = UIImagePickerController()
+			imagePicker.delegate = self
+			imagePicker.sourceType = .photoLibrary;
+			imagePicker.allowsEditing = true
+			present(imagePicker, animated: true, completion: nil)
+		}
+	}
+	
+	//MARK: - UIImagePickerControllerDelegate methods
+	
+	internal func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+		let image = info[UIImagePickerControllerEditedImage] as? UIImage
+		dismiss(animated: true, completion: nil)
+		
+		FirebaseService.storeImage(image!, as: .profilePicture).then { url -> Void in
+			self.user.profilePicture = url.absoluteString
+			let indexPath = [IndexPath(item: 0, section: 0)]
+			self.tableNode.reloadRows(at: indexPath, with: .fade)
+			FirebaseService.updateUser(image: url.absoluteString)
+		}.catch { _ in }
 	}
 	
 }

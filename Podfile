@@ -10,6 +10,7 @@ target 'Bais' do
   pod 'Firebase/Auth'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod 'Firebase/Storage'
   pod 'GeoFire', :git => 'https://github.com/firebase/geofire-objc.git'
   
   # layout
