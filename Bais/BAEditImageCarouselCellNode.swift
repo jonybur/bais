@@ -1,8 +1,8 @@
 //
-//  BAImageCarouselCellNode.swift
+//  BAEditImageCarouselCellNode.swift
 //  Bais
 //
-//  Created by Jonathan Bursztyn on 4/2/17.
+//  Created by Jonathan Bursztyn on 10/2/17.
 //  Copyright © 2017 Board Social, Inc. All rights reserved.
 //
 
@@ -10,38 +10,40 @@ import UIKit
 import AsyncDisplayKit
 import Foundation
 
-class BAImageCarouselCellNode: ASCellNode {
-	
+protocol BAEditImageCarouselCellNodeDelegate: class {
+	func editImageCarouselNodeDidClickEditImageButton()
+}
+
+class BAEditImageCarouselCellNode: ASCellNode {
 	let imageNode = ASNetworkImageNode()
+	let editImageButton = ASButtonNode()
 	var imageRatio: CGFloat = 0
-	
-	required init(with event: Event){
-		super.init()
-		imageRatio = 0.5
-		imageNode.setURL(URL(string: event.imageUrl), resetToDefault: false)
-		commonInit()
-	}
+	weak var delegate: BAEditImageCarouselCellNodeDelegate?
 	
 	required init(with user: User) {
 		super.init()
 		imageRatio = 1
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
-		commonInit()
-	}
-	
-	func commonInit(){
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill
 		
-		backgroundColor = .black
+		editImageButton.setImage(UIImage(named: "edit-button"), for: [])
+		editImageButton.addTarget(self, action: #selector(editImageButtonPressed(_:)), forControlEvents: [])
 		
 		addSubnode(imageNode)
+		addSubnode(editImageButton)
+	}
+	
+	func editImageButtonPressed(_ sender: UIButton){
+		delegate?.editImageCarouselNodeDidClickEditImageButton()
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 		// imagen
 		let imageLayout = ASRatioLayoutSpec(ratio: imageRatio, child: imageNode)
 		imageLayout.style.minWidth = ASDimension(unit: .points, value: constrainedSize.max.width)
+		
+		
 		
 		return imageLayout
 	}

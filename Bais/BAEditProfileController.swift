@@ -1,8 +1,8 @@
 //
-//  BASettingsController.swift
+//  BAEditProfileController.swift
 //  Bais
 //
-//  Created by Jonathan Bursztyn on 8/2/17.
+//  Created by Jonathan Bursztyn on 10/2/17.
 //  Copyright © 2017 Board Social, Inc. All rights reserved.
 //
 
@@ -11,11 +11,11 @@ import AsyncDisplayKit
 import Firebase
 import PromiseKit
 
-final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
-BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizerDelegate {
+final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var user = User()
+	var backButtonNode = ASButtonNode()
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -49,6 +49,16 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		backButtonNode.frame = CGRect(x: 0, y: 10, width: 75, height: 75)
+		backButtonNode.setImage(UIImage(named: "back-button"), for: [])
+		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
+		
+		super.node.addSubnode(backButtonNode)
+	}
+	
+	func backButtonPressed(_ sender: UIButton){
+		_ = self.navigationController?.popViewController(animated: true)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -59,9 +69,17 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		
 		if (scrollView.contentOffset.y < 0){
 			scrollView.contentOffset.y = 0
 		}
+		
+		backButtonNode.view.center = CGPoint(x: backButtonNode.view.center.x,
+		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2 + 10)
+	}
+	
+	override var prefersStatusBarHidden: Bool {
+		return true
 	}
 	
 	//MARK: - ASTableNode data source and delegate.
@@ -70,13 +88,14 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		let item = indexPath.item
 		
 		if (item == 0){
-			let headerCellNode = BASettingsHeaderCellNode(with: user)
-			headerCellNode.delegate = self
+			let headerCellNode = BAEditImageCarouselCellNode(with: user)
 			return headerCellNode
 		} else if (item == 1){
-			let settingsCellNode = BASettingsOptionsCellNode()
-			settingsCellNode.delegate = self
-			return settingsCellNode
+			let basicCellNode = BAEditBasicUserInfoCellNode(with: user)
+			return basicCellNode
+		} else if (item == 2){
+			let descriptionCellNode = BAEditDescriptionCellNode(with: user)
+			return descriptionCellNode
 		}
 		
 		return BASpacerCellNode()
@@ -87,35 +106,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		return 3
-	}
-	
-	//MARK: - BASettingsOptionsNodeDelegate methods
-	
-	func settingsOptionsNodeDidClickShareButton(){
-		print("stop")
-	}
-	func settingsOptionsNodeDidClickPrivacyPolicyButton(){
-		print("stop")
-	}
-	func settingsOptionsNodeDidClickTermsOfServiceButton(){
-		print("stop")
-	}
-	func settingsOptionsNodeDidClickLicensesButton(){
-		print("stop")
-	}
-	func settingsOptionsNodeDidClickLogoutButton(){
-		print("stop")
-	}
-	func settingsOptionsNodeDidClickDeleteAccountButton(){
-		print("stop")
-	}
-	
-	//MARK: - BASettingsHeaderNodeDelegate methods
-	
-	func settingsHeaderNodeDidClickEditButton(){
-		let editProfileController = BAEditProfileController(with: user)
-		navigationController?.pushViewController(editProfileController, animated: true)
+		return 4
 	}
 	
 }

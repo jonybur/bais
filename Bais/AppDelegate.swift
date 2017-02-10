@@ -20,10 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    let facebookAppId : String = "819066684896381";
-    let facebookDisplayName : String = "BAIS";
+    let facebookAppId = "819066684896381"
+    let facebookDisplayName = "BAIS"
     
-    var navigationController : UINavigationController = UINavigationController();
+    var navigationController = UINavigationController()
 	
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

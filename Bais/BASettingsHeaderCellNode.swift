@@ -9,17 +9,22 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol BASettingsHeaderNodeDelegate: class {
+	func settingsHeaderNodeDidClickEditButton()
+}
+
 class BASettingsHeaderCellNode: ASCellNode{
 
 	let photoNode = ASNetworkImageNode()
-	let iconNode = ASImageNode()
+	let editButtonNode = ASButtonNode()
 	let nameNode = ASTextNode()
 	let nationalityNode = ASTextNode()
+	weak var delegate: BASettingsHeaderNodeDelegate?
 	
 	required init(with user: User) {
 		super.init()
 		
-		iconNode.image = UIImage(named: "edit-button")
+		editButtonNode.setImage(UIImage(named: "edit-button"), for: [])
 		
 		photoNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
 		photoNode.shouldRenderProgressImages = true
@@ -50,10 +55,16 @@ class BASettingsHeaderCellNode: ASCellNode{
 		nationalityNode.attributedText = NSAttributedString(string: user.nationality, attributes: distanceAttributes)
 		nationalityNode.maximumNumberOfLines = 1
 		
+		editButtonNode.addTarget(self, action: #selector(editPressed(_:)), forControlEvents: .touchUpInside)
+		
 		addSubnode(photoNode)
-		addSubnode(iconNode)
+		addSubnode(editButtonNode)
 		addSubnode(nameNode)
 		addSubnode(nationalityNode)
+	}
+	
+	func editPressed(_ sender: UIButton){
+		delegate?.settingsHeaderNodeDidClickEditButton()
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -63,10 +74,9 @@ class BASettingsHeaderCellNode: ASCellNode{
 		imagePlace.style.maxWidth = ASDimension(unit: .points, value: 160)
 		
 		// icono
-		iconNode.style.preferredSize = CGSize(width: 45, height: 45)
-		iconNode.style.layoutPosition = CGPoint(x: 112.5, y: 112.5)
+		editButtonNode.style.layoutPosition = CGPoint(x: 112.5, y: 112.5)
 		
-		let absoluteLayout = ASAbsoluteLayoutSpec(sizing: .sizeToFit, children: [imagePlace, iconNode])
+		let absoluteLayout = ASAbsoluteLayoutSpec(sizing: .sizeToFit, children: [imagePlace, editButtonNode])
 		
 		// vertical stack
 		let verticalStack = ASStackLayoutSpec()

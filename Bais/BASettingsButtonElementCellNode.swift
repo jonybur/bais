@@ -9,9 +9,9 @@
 import Foundation
 import AsyncDisplayKit
 
-class BASettingsButtonElementCellNode: ASCellNode{
+class BASettingsButtonElementCellNode: ASButtonNode{
 	
-	let nameNode = ASTextNode()
+	let titleTextNode = ASTextNode()
 	
 	required init(title: String) {
 		super.init()
@@ -20,24 +20,20 @@ class BASettingsButtonElementCellNode: ASCellNode{
 			NSFontAttributeName: UIFont.systemFont(ofSize: 20, weight: UIFontWeightBold),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		nameNode.attributedText = NSAttributedString(string: title, attributes: nameAttributes)
-		
-		self.addSubnode(nameNode)
+		titleTextNode.attributedText = NSAttributedString(string: title, attributes: nameAttributes)
+				
+		self.addSubnode(titleNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-		
-		// vertical stack
-		let verticalStack = ASStackLayoutSpec()
-		verticalStack.direction = .vertical
-		verticalStack.alignItems = .center
-		verticalStack.children = [self.nameNode]
-		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 0)
-		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: verticalStack)
+		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: titleTextNode)
 		
-		return textInsetSpec
+		let centerSpec = ASStackLayoutSpec()
+		centerSpec.child = textInsetSpec
+		centerSpec.style.width = ASDimension(unit: .points, value: constrainedSize.max.width)
+		
+		return centerSpec
 	}
-	
 }

@@ -9,13 +9,25 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol BASettingsOptionsNodeDelegate: class {
+	func settingsOptionsNodeDidClickShareButton()
+	func settingsOptionsNodeDidClickPrivacyPolicyButton()
+	func settingsOptionsNodeDidClickTermsOfServiceButton()
+	func settingsOptionsNodeDidClickLicensesButton()
+	func settingsOptionsNodeDidClickLogoutButton()
+	func settingsOptionsNodeDidClickDeleteAccountButton()
+}
+
 class BASettingsOptionsCellNode: ASCellNode{
 	
+	/*
 	let contactUsNode = BASettingsHeaderElementCellNode(title: "Contact Us")
 	let helpAndSupportNode = BASettingsButtonElementCellNode(title: "Help & Support")
 	let aboutBaisNode = BASettingsButtonElementCellNode(title: "About the NGO")
 
 	let spacerNode = BASettingsSpacerElementCellNode()
+	*/
+	
 	let shareBaisNode = BASettingsButtonElementCellNode(title: "Share Bais")
 	let spacerNode2 = BASettingsSpacerElementCellNode()
 	
@@ -31,11 +43,24 @@ class BASettingsOptionsCellNode: ASCellNode{
 	let deleteAccountNode = BASettingsButtonElementCellNode(title: "Delete Account")
 	let spacerNode5 = BASettingsSpacerElementCellNode()
 	
+	weak var delegate: BASettingsOptionsNodeDelegate?
+	
 	required override init() {
 		super.init()
+		
+		shareBaisNode.addTarget(self, action: #selector(sharePressed(_:)), forControlEvents: .touchUpInside)
+		privacyPolicyNode.addTarget(self, action: #selector(privacyPolicyPressed(_:)), forControlEvents: .touchUpInside)
+		termsServiceNode.addTarget(self, action: #selector(termsOfServicePressed(_:)), forControlEvents: .touchUpInside)
+		licensesNode.addTarget(self, action: #selector(licensesPressed(_:)), forControlEvents: .touchUpInside)
+		logoutNode.addTarget(self, action: #selector(logoutPressed(_:)), forControlEvents: .touchUpInside)
+		deleteAccountNode.addTarget(self, action: #selector(deleteAccountPressed(_:)), forControlEvents: .touchUpInside)
+
+		/*
 		addSubnode(contactUsNode)
 		addSubnode(helpAndSupportNode)
 		addSubnode(aboutBaisNode)
+		*/
+		
 		addSubnode(shareBaisNode)
 		addSubnode(legalNode)
 		addSubnode(privacyPolicyNode)
@@ -45,12 +70,36 @@ class BASettingsOptionsCellNode: ASCellNode{
 		addSubnode(deleteAccountNode)
 	}
 	
+	func sharePressed(_ sender: UIButton){
+		delegate?.settingsOptionsNodeDidClickShareButton()
+	}
+	
+	func privacyPolicyPressed(_ sender: UIButton){
+		delegate?.settingsOptionsNodeDidClickPrivacyPolicyButton()
+	}
+	
+	func termsOfServicePressed(_ sender: UIButton){
+		delegate?.settingsOptionsNodeDidClickTermsOfServiceButton()
+	}
+	
+	func licensesPressed(_ sender: UIButton){
+		delegate?.settingsOptionsNodeDidClickLicensesButton()
+	}
+	
+	func logoutPressed(_ sender: UIButton){
+		delegate?.settingsOptionsNodeDidClickLogoutButton()
+	}
+	
+	func deleteAccountPressed(_ sender: UIButton){
+		delegate?.settingsOptionsNodeDidClickDeleteAccountButton()
+	}
+	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 		
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .start
-		verticalStack.children = [contactUsNode, helpAndSupportNode, aboutBaisNode, spacerNode, shareBaisNode, spacerNode2,
+		verticalStack.children = [/*contactUsNode, helpAndSupportNode, aboutBaisNode, spacerNode,*/ shareBaisNode, spacerNode2,
 		                          legalNode, privacyPolicyNode, termsServiceNode, licensesNode, spacerNode3,
 		                          logoutNode, spacerNode4, deleteAccountNode, spacerNode5]
 		return verticalStack

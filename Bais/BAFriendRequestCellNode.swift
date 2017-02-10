@@ -47,9 +47,9 @@ class BAFriendRequestCellNode: ASCellNode {
 		
 		acceptButtonNode.setTitle("ACCEPT", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold), with: ColorPalette.grey, for: [])
 		
-		self.addSubnode(self.imageNode)
-		self.addSubnode(self.nameNode)
-		self.addSubnode(self.acceptButtonNode)
+		addSubnode(imageNode)
+		addSubnode(nameNode)
+		addSubnode(acceptButtonNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -61,7 +61,7 @@ class BAFriendRequestCellNode: ASCellNode {
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .center
-		verticalStack.children = [self.nameNode]
+		verticalStack.children = [nameNode]
 		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)

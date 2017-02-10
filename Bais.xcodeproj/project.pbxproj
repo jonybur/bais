@@ -31,6 +31,10 @@
 		AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */; };
 		AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */; };
 		AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */; };
+		ABA2344F1E4D713200CBAF53 /* BAEditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2344E1E4D713200CBAF53 /* BAEditProfileController.swift */; };
+		ABA234521E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA234511E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift */; };
+		ABA234541E4D883600CBAF53 /* BAEditDescriptionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA234531E4D883600CBAF53 /* BAEditDescriptionCellNode.swift */; };
+		ABA234561E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA234551E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift */; };
 		ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */; };
 		ABB9F2DD1D9170C600E01511 /* AppsCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B21D9170C600E01511 /* AppsCommunicator.swift */; };
 		ABB9F2DF1D9170C600E01511 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B41D9170C600E01511 /* Utilities.swift */; };
@@ -90,6 +94,10 @@
 		AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendRequestCellNode.swift; sourceTree = "<group>"; };
 		AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
 		AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHeaderCellNode.swift; sourceTree = "<group>"; };
+		ABA2344E1E4D713200CBAF53 /* BAEditProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEditProfileController.swift; sourceTree = "<group>"; };
+		ABA234511E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEditImageCarouselCellNode.swift; sourceTree = "<group>"; };
+		ABA234531E4D883600CBAF53 /* BAEditDescriptionCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEditDescriptionCellNode.swift; sourceTree = "<group>"; };
+		ABA234551E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEditBasicUserInfoCellNode.swift; sourceTree = "<group>"; };
 		ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatCellNode.swift; sourceTree = "<group>"; };
 		ABB9F2B21D9170C600E01511 /* AppsCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsCommunicator.swift; sourceTree = "<group>"; };
 		ABB9F2B41D9170C600E01511 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -159,6 +167,7 @@
 			children = (
 				ABCBDA451DA78B670001AC59 /* BAProfileController.swift */,
 				AB3F76A31E4975C800AF5C45 /* BAEventController.swift */,
+				ABA2344E1E4D713200CBAF53 /* BAEditProfileController.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -202,6 +211,7 @@
 				AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */,
 				AB3D33A01E458C770058547A /* Profile */,
 				ABAE861B1E1F23A3005CAE77 /* Event */,
+				ABA234501E4D84E500CBAF53 /* EditProfile */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -213,6 +223,16 @@
 				AB6A25C31E46A3EB00661BCF /* BACalendarCellNode.swift */,
 			);
 			name = Calendar;
+			sourceTree = "<group>";
+		};
+		ABA234501E4D84E500CBAF53 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				ABA234511E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift */,
+				ABA234551E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift */,
+				ABA234531E4D883600CBAF53 /* BAEditDescriptionCellNode.swift */,
+			);
+			name = EditProfile;
 			sourceTree = "<group>";
 		};
 		ABA9C93B1DEBAF43006AB49E /* Layouts */ = {
@@ -585,6 +605,7 @@
 				AB0E468B1DF3E628003CA68C /* MosaicCollectionViewLayout.swift in Sources */,
 				ABB9F2ED1D9170C600E01511 /* BATabBarController.swift in Sources */,
 				AB4F5D771D98EB4F003586B2 /* User.swift in Sources */,
+				ABA234521E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift in Sources */,
 				ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */,
 				AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */,
 				ABB9F2F21D9170C600E01511 /* FetchedContent.swift in Sources */,
@@ -595,6 +616,8 @@
 				ABB9F2F61D9170C600E01511 /* InstagramPicture.swift in Sources */,
 				AB6A25C21E46A3DF00661BCF /* BACalendarHeaderCellNode.swift in Sources */,
 				ABB9F2EC1D9170C600E01511 /* ColorPalette.swift in Sources */,
+				ABA2344F1E4D713200CBAF53 /* BAEditProfileController.swift in Sources */,
+				ABA234541E4D883600CBAF53 /* BAEditDescriptionCellNode.swift in Sources */,
 				ABB9F2FD1D9170C600E01511 /* Place.swift in Sources */,
 				ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */,
 				ABB9F2DF1D9170C600E01511 /* Utilities.swift in Sources */,
@@ -614,6 +637,7 @@
 				AB18B3091E4C11DF001C294B /* BASettingsHeaderCellNode.swift in Sources */,
 				ABB9F2EB1D9170C600E01511 /* WebService.swift in Sources */,
 				AB18B3111E4C1D54001C294B /* BASettingsSpacerElementCellNode.swift in Sources */,
+				ABA234561E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift in Sources */,
 				AB3DDB0F1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift in Sources */,
 				AB3D33A41E4598CE0058547A /* BABasicUserInfoCellNode.swift in Sources */,
 				AB18B30F1E4C1B05001C294B /* BASettingsButtonElementCellNode.swift in Sources */,

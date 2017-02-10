@@ -126,7 +126,7 @@ extension CLLocationDistance{
 		
 		if (roundedDistance <= 0.3){
 			// less than 300 m away
-			return "Less than 300 m away";
+			return "Less than 300m away";
 		} else {
 			let finalDistance = String(format: roundedDistance == floor(roundedDistance) ? "%.0f" : "%.1f", roundedDistance);
 			

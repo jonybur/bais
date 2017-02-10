@@ -79,10 +79,10 @@ class BAUsersCellNode: ASCellNode {
 		
 		ratio = CGSize(width:1,height:user.imageRatio)
 		
-		imageNode.addTarget(self, action: #selector(self.cardPressed(_:)), forControlEvents: .touchUpInside)
-		buttonNode.addTarget(self, action: #selector(self.buttonPressed(_:)), forControlEvents: .touchUpInside)
+		imageNode.addTarget(self, action: #selector(cardPressed(_:)), forControlEvents: .touchUpInside)
+		buttonNode.addTarget(self, action: #selector(buttonPressed(_:)), forControlEvents: .touchUpInside)
 
-		self.setFriendshipAction()
+		setFriendshipAction()
 
 		gradientNode = ASDisplayNode(layerBlock: { () -> CALayer in
 			let gradient = CAGradientLayer()
@@ -92,13 +92,13 @@ class BAUsersCellNode: ASCellNode {
 		
 		flagNode.image = UIImage(named: user.nationality)
 		
-		self.imageNode.clipsToBounds = true;
+		imageNode.clipsToBounds = true;
 		
-		self.addSubnode(self.imageNode)
-		self.addSubnode(self.nameNode)
-		self.addSubnode(self.flagNode)
-		self.addSubnode(self.distanceNode)
-		self.addSubnode(self.buttonNode)
+		addSubnode(imageNode)
+		addSubnode(nameNode)
+		addSubnode(flagNode)
+		addSubnode(distanceNode)
+		addSubnode(buttonNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

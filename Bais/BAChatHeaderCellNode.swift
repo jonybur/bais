@@ -11,7 +11,7 @@ import AsyncDisplayKit
 import pop
 
 protocol BAChatHeaderCellNodeDelegate: class {
-	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode);
+	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode)
 }
 
 // add a delegate here to be able switch around
