@@ -56,6 +56,32 @@ BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerC
 		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
 		
 		super.node.addSubnode(backButtonNode)
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+		
+		let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+		view.addGestureRecognizer(tap)
+	}
+	
+	func closeKeyboard() {
+		view.endEditing(true)
+	}
+	
+	func keyboardWillShow(notification: NSNotification) {
+		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+			if self.view.frame.origin.y == 0{
+				self.view.frame.origin.y -= keyboardSize.height
+			}
+		}
+	}
+	
+	func keyboardWillHide(notification: NSNotification) {
+		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+			if self.view.frame.origin.y != 0{
+				self.view.frame.origin.y += keyboardSize.height
+			}
+		}
 	}
 	
 	func backButtonPressed(_ sender: UIButton){
