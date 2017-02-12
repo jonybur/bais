@@ -58,6 +58,10 @@ class FirebaseService{
 		usersReference.child(currentUserId).updateChildValues([imagePurpose.rawValue: url])
 	}
 	
+	static func updateUserAbout(with about: String){
+		usersReference.child(currentUserId).updateChildValues(["about": about])
+	}
+	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){
 		let geoFire = GeoFire(firebaseRef: rootReference)
 		let locationRef = usersReference.child(currentUserId).child("location")

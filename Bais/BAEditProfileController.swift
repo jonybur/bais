@@ -28,7 +28,7 @@ BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerC
 		FirebaseService.getUser(with: userId).then { user -> Void in
 			self.user = user
 			self.commonInit()
-			}.catch { _ in }
+		}.catch { _ in }
 	}
 	
 	init(with user: User) {

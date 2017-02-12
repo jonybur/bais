@@ -31,6 +31,8 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 																		NSForegroundColorAttributeName: ColorPalette.lightGrey,
 																		NSParagraphStyleAttributeName: paragraphAttributes])
 		
+		descriptionNode.attributedText = NSAttributedString(string: user.about, attributes: descriptionNode.typingAttributes)
+		
 		descriptionNode.delegate = self
 		
 		addSubnode(descriptionNode)
@@ -45,6 +47,15 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 			let range = NSRange(location: 0, length: 400)
 			descriptionNode.attributedText = attributedText.attributedSubstring(from: range)
 		}
+	}
+	
+	func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
+		guard let attributedText = editableTextNode.attributedText else {
+			FirebaseService.updateUserAbout(with: "")
+			return
+		}
+		
+		FirebaseService.updateUserAbout(with: attributedText.string)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

@@ -17,7 +17,7 @@ target 'Bais' do
   #pod 'Hero', '>= 0.1.3'
   pod 'pop'
   pod 'DGActivityIndicatorView'
-	pod 'AsyncDisplayKit', '>= 2.0'
+	pod 'AsyncDisplayKit', '>= 2.1'
 
   # facebook
   pod 'FBSDKCoreKit', '>= 4.15.1'

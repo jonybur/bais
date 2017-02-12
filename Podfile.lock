@@ -1,9 +1,9 @@
 PODS:
   - Alamofire (4.2.0)
-  - AsyncDisplayKit (2.0.1):
-    - AsyncDisplayKit/PINRemoteImage (= 2.0.1)
-  - AsyncDisplayKit/Core (2.0.1)
-  - AsyncDisplayKit/PINRemoteImage (2.0.1):
+  - AsyncDisplayKit (2.1):
+    - AsyncDisplayKit/PINRemoteImage (= 2.1)
+  - AsyncDisplayKit/Core (2.1)
+  - AsyncDisplayKit/PINRemoteImage (2.1):
     - AsyncDisplayKit/Core
     - PINRemoteImage/iOS (= 3.0.0-beta.7)
     - PINRemoteImage/PINCache
@@ -112,7 +112,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (>= 4.0.0)
-  - AsyncDisplayKit (>= 2.0)
+  - AsyncDisplayKit (>= 2.1)
   - AwaitKit (>= 2.0.0)
   - DGActivityIndicatorView
   - ESTabBarController-swift (from `https://github.com/jonybur/ESTabBarController.git`)
@@ -152,7 +152,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  AsyncDisplayKit: 6c5a21d9ab30f3f48e877a67d44e3e19c1724f91
+  AsyncDisplayKit: 28de788f9d6ec573be7662f0fe8931e656357e93
   AwaitKit: 1645b708f13a15ac7fa9c1a39d6808f799e5a1ec
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
@@ -180,6 +180,6 @@ SPEC CHECKSUMS:
   PromiseKit: 593b5e24ded6cbb1ebc708bc2c3428a8a5632d91
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 5be7cea2f0f287d31a83b6682cbb0c42d0d99ba1
+PODFILE CHECKSUM: ba724b47571aa6cc01320f7d288846e5d44b123b
 
 COCOAPODS: 1.2.0.beta.1

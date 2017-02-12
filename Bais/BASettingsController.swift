@@ -16,6 +16,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var user = User()
+	var userObserver: FIRDatabaseReference?
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -27,7 +28,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		FirebaseService.getUser(with: userId).then { user -> Void in
 			self.user = user
 			self.commonInit()
-			}.catch { _ in }
+		}.catch { _ in }
 	}
 	
 	init(with user: User) {
@@ -51,17 +52,23 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		super.viewDidLoad()
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		userObserver = FirebaseService.usersReference.child(user.id)
+		
+		userObserver?.observe(.value, with: { snapshot in
+			let user = User(fromSnapshot: snapshot)
+			self.user = user
+			self.tableNode.reloadRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
+		})
+	}
+	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		self.navigationController!.interactivePopGestureRecognizer!.isEnabled = true
-		self.navigationController!.interactivePopGestureRecognizer!.delegate =  self
-	}
-	
-	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if (scrollView.contentOffset.y < 0){
-			scrollView.contentOffset.y = 0
-		}
+		navigationController!.interactivePopGestureRecognizer!.isEnabled = true
+		navigationController!.interactivePopGestureRecognizer!.delegate =  self
 	}
 	
 	//MARK: - ASTableNode data source and delegate.
@@ -116,6 +123,12 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	func settingsHeaderNodeDidClickEditButton(){
 		let editProfileController = BAEditProfileController(with: user)
 		navigationController?.pushViewController(editProfileController, animated: true)
+	}
+	
+	//MARK: - Dealloc
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		userObserver?.removeAllObservers()
 	}
 	
 }
