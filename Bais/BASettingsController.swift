@@ -127,7 +127,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	
 	//MARK: - Dealloc
 	
-	override func viewDidDisappear(_ animated: Bool) {
+	override func viewWillDisappear(_ animated: Bool) {
 		userObserver?.removeAllObservers()
 	}
 	
