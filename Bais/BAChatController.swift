@@ -23,11 +23,14 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import AsyncDisplayKit
 import FirebaseAuth
 import NMessenger
 
 class BAChatController: NMessengerViewController {
 	
+    
+    
     override init(){
         super.init()
     }
@@ -43,5 +46,14 @@ class BAChatController: NMessengerViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
+    
+    override func createTextMessage(_ text: String, isIncomingMessage: Bool) -> GeneralMessengerCell {
+        let a = super.createTextMessage(text, isIncomingMessage: isIncomingMessage) as! MessageNode
+        let nAvatar = ASImageNode()
+        nAvatar.image = UIImage(named: "edit-button")
+        a.avatarNode = nAvatar
+        return a
+    }
+    
 
 }
