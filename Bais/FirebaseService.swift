@@ -32,6 +32,10 @@ class FirebaseService{
 		}
 	}
 	
+	static func getCurrentUser() -> Promise<User>{
+		return getUser(with: currentUserId)
+	}
+	
 	enum ImagePurpose: String{
 		case profilePicture = "profile_picture"
 	}
@@ -152,7 +156,7 @@ class FirebaseService{
 							// OK, we have all facebook information now,
 							// lets download the users profile picture from Facebook
 							let profilePictureUrl = datum["url"] as! String
-							WebAPI.download(url: profilePictureUrl).then(execute: { pictureData -> Void in
+							WebAPI.request(url: profilePictureUrl).then(execute: { pictureData -> Void in
 								// cool, now let's upload it to Firebase
 								FirebaseService.storeImage(pictureData, as: .profilePicture).then(execute: { url -> Void in
 									// we have the firebase-stored url!, lets finish pushing our user

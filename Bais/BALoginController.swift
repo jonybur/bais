@@ -113,7 +113,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 	
 	func moveToCreateUserScreen() {
 		// pushes screen
-		FirebaseService.getUser(with: FirebaseService.currentUserId).then { user -> Void in
+		FirebaseService.getCurrentUser().then { user -> Void in
 			let createUserScreen = BAEditProfileController(with: user, as: .create)
 			self.navigationController?.pushViewController(createUserScreen, animated: true)
 		}.catch { _ in }

@@ -39,7 +39,7 @@ class BAEditBasicUserInfoCellNode: ASCellNode {
 		var nationalityText = ""
 		if (user.nationality.characters.count > 0 && user.nationality != ""){
 			nationalityText = user.nationality
-		} else {
+		} else if (allowsCountryEditing) {
 			nationalityText = "Where are you from?"
 		}
 		nationalityNode.attributedText = NSAttributedString(string: nationalityText, attributes: distanceAttributes)

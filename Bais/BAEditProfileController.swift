@@ -28,23 +28,11 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		return node as! ASTableNode
 	}
 	
-	init(with userId: String, as mode: EditProfileMode){
-		super.init(node: ASTableNode())
-		self.mode = mode
-		FirebaseService.getUser(with: userId).then { user -> Void in
-			self.user = user
-			self.commonInit()
-		}.catch { _ in }
-	}
-	
 	init(with user: User, as mode: EditProfileMode) {
 		super.init(node: ASTableNode())
 		self.mode = mode
 		self.user = user
-		commonInit()
-	}
-	
-	func commonInit(){
+		
 		tableNode.delegate = self
 		tableNode.dataSource = self
 		tableNode.view.separatorStyle = .none

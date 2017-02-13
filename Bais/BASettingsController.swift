@@ -22,22 +22,9 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		return node as! ASTableNode
 	}
 	
-	init(with userId: String){
+	init() {
 		super.init(node: ASTableNode())
 		
-		FirebaseService.getUser(with: userId).then { user -> Void in
-			self.user = user
-			self.commonInit()
-		}.catch { _ in }
-	}
-	
-	init(with user: User) {
-		super.init(node: ASTableNode())
-		self.user = user
-		commonInit()
-	}
-	
-	func commonInit(){
 		tableNode.delegate = self
 		tableNode.dataSource = self
 		tableNode.view.separatorStyle = .none
@@ -50,6 +37,10 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		FirebaseService.getCurrentUser().then { user -> Void in
+			self.user = user
+		}.catch { _ in }
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
