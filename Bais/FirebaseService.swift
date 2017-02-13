@@ -36,6 +36,10 @@ class FirebaseService{
 		case profilePicture = "profile_picture"
 	}
 	
+	static func storeImage(_ data: Data, as imagePurpose: ImagePurpose) -> Promise<URL>{
+		return storeImage(UIImage(data:data)!, as: imagePurpose)
+	}
+	
 	static func storeImage(_ image: UIImage, as imagePurpose: ImagePurpose) -> Promise<URL>{
 		return Promise{ fulfill, reject in
 			let data = UIImageJPEGRepresentation(image, 0.75) as Data?
@@ -142,26 +146,33 @@ class FirebaseService{
 				}
 				
 				if let nsArray = result as? NSDictionary {
-					
 					if let events = nsArray.object(forKey: "picture") as? NSDictionary{
-						
 						if let datum = events["data"] as? NSDictionary{
 						
-							let messageRef = usersReference
-							let itemRef = messageRef.child(user.uid)
-							let userItem = [
-								"id": user.uid,
-								"first_name": nsArray["first_name"] as! String,
-								"last_name": nsArray["last_name"] as! String,
-								"facebook_id": FBSDKAccessToken.current().userID!,
-								"profile_picture": datum["url"] as! String,
-								"birthday": "16/06/1993",//nsArray["birthday"] as! String,
-								"nationality": "",
-								"about": ""
-							]
-							itemRef.updateChildValues(userItem)
+							// OK, we have all facebook information now,
+							// lets download the users profile picture from Facebook
+							let profilePictureUrl = datum["url"] as! String
+							WebAPI.download(url: profilePictureUrl).then(execute: { pictureData -> Void in
+								// cool, now let's upload it to Firebase
+								FirebaseService.storeImage(pictureData, as: .profilePicture).then(execute: { url -> Void in
+									// we have the firebase-stored url!, lets finish pushing our user
+									let messageRef = usersReference
+									let itemRef = messageRef.child(user.uid)
+									let userItem = [
+										"id": user.uid,
+										"first_name": nsArray["first_name"] as! String,
+										"last_name": nsArray["last_name"] as! String,
+										"facebook_id": FBSDKAccessToken.current().userID!,
+										"profile_picture": url.absoluteString,
+										"birthday": "16/06/1993",//nsArray["birthday"] as! String,
+										"nationality": "",
+										"about": ""
+									]
+									itemRef.updateChildValues(userItem)
+									fulfill()
+								}).catch(execute: { _ in })
+							}).catch(execute: { _ in })
 							
-							fulfill()
 						}
 					}
 				}

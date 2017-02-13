@@ -36,7 +36,14 @@ class BAEditBasicUserInfoCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		nationalityNode.attributedText = NSAttributedString(string: user.nationality, attributes: distanceAttributes)
+		var nationalityText = ""
+		if (user.nationality.characters.count > 0 && user.nationality != ""){
+			nationalityText = user.nationality
+		} else {
+			nationalityText = "Where are you from?"
+		}
+		nationalityNode.attributedText = NSAttributedString(string: nationalityText, attributes: distanceAttributes)
+		
 		nationalityNode.maximumNumberOfLines = 1
 		
 		openCountryPickerButtonNode.setImage(UIImage(named: "plus"), for: [])

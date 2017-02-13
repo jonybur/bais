@@ -13,14 +13,23 @@ import PromiseKit
 
 class WebAPI{
 	
-	static func request(url: String) -> Promise<Data> {
+	static func requestJSON(url: String) -> Promise<Data> {
 		return Promise{ resolve, reject in
 			Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default)
 				.responseJSON { response in
-					print(response.data!)
 					resolve(response.data!)
 			}
 			
+		}
+	}
+	
+	static func request(url: String) -> Promise<Data>{
+		return Promise{ fulfill, reject in
+			Alamofire.request(url).responseData { response in
+				if let data = response.result.value {
+					fulfill(data)
+				}
+			}
 		}
 	}
 	

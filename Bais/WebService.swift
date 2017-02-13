@@ -161,7 +161,7 @@ class WebService{
 								"&longitude=" + String(location.longitude) + "&server_token=" + uberServerToken
 		
 		// gets uber products
-		WebAPI.request(url: urlString).then { a -> Void in
+		WebAPI.requestJSON(url: urlString).then { a -> Void in
 			let jsonNSData = a
 			let json = JSON(data: jsonNSData as Data)
 			var uberProducts = [UberProduct]()

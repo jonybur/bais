@@ -67,7 +67,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		                                       object: repeatVideo.playerViewController.player?.currentItem)
 		
 		// ios status bar height is 20px
-		let logoView : UIImageView = UIImageView(frame: CGRect(x: 0, y: 20, width: 300, height: 300))
+		let logoView = UIImageView(frame: CGRect(x: 0, y: 20, width: 300, height: 300))
 		
 		logoView.center = CGPoint(x: ez.screenWidth / 2, y: ez.screenHeight / 2 - 40)
 		logoView.contentMode = .scaleAspectFit
@@ -112,8 +112,11 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 	}
 	
 	func moveToCreateUserScreen() {
-		// pushes
-		let createUserScreen = BAEditProfileController(with: FirebaseService.currentUserId, as: .create)
-		navigationController?.pushViewController(createUserScreen, animated: true)
+		// pushes screen
+		FirebaseService.getUser(with: FirebaseService.currentUserId).then { user -> Void in
+			let createUserScreen = BAEditProfileController(with: user, as: .create)
+			self.navigationController?.pushViewController(createUserScreen, animated: true)
+		}.catch { _ in }
+		
 	}
 }
