@@ -12,13 +12,12 @@ import Firebase
 import PromiseKit
 
 final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
-BAEditCountryPickerCellNodeDelegate, BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate,
-UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	BAEditBasicUserInfoCellNodeDelegate, BAEditCountryPickerCellNodeDelegate, BAEditImageCarouselCellNodeDelegate,
+	UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
-	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var user = User()
 	var backButtonNode = ASButtonNode()
-	var showCountryPicker: Bool = true
+	var showCountryPicker: Bool = false
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -121,6 +120,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 			return headerCellNode
 		} else if (item == 1) {
 			let basicCellNode = BAEditBasicUserInfoCellNode(with: user)
+			basicCellNode.delegate = self
 			return basicCellNode
 		}
 		
@@ -148,10 +148,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		if (showCountryPicker){
-			return 5
-		}
-		return 4
+		return showCountryPicker ? 5 : 4
 	}
 	
 	//MARK: - BAEditImageCarouselCellNodeDelegate methods
@@ -193,11 +190,26 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	//MARK: - BAEditCountryPickerCellNodeDelegate methods
 	
-	internal func editCountryPickerNodeDidSelectCountry() {
+	internal func editCountryPickerNodeDidClosePicker(country: String, code: String) {
 		showCountryPicker = false
+		user.nationality = country
 		let idxPath = [IndexPath(item: 2, section:0)]
 		tableNode.deleteRows(at: idxPath, with: .fade)
-		tableNode.reloadRows(at: idxPath, with: .fade)
+		let idxPathToReload = [IndexPath(item: 1, section:0), IndexPath(item: 2, section:0)]
+		tableNode.reloadRows(at: idxPathToReload, with: .fade)
+		FirebaseService.updateUserNationality(with: country)
 	}
 	
+	//MARK: - BAEditBasicUserInfoCellNodeDelegate methods
+
+	internal func editBasicUserInfoCellNodeDidPressOpenCountryPicker(){
+		if (showCountryPicker){
+			return
+		}
+		showCountryPicker = true
+		let idxPath = [IndexPath(item: 2, section:0)]
+		tableNode.insertRows(at: idxPath, with: .fade)
+		tableNode.reloadRows(at: idxPath, with: .fade)
+	}
+
 }

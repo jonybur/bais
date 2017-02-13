@@ -62,6 +62,10 @@ class FirebaseService{
 		usersReference.child(currentUserId).updateChildValues(["about": about])
 	}
 	
+	static func updateUserNationality(with country: String){
+		usersReference.child(currentUserId).updateChildValues(["nationality": country])
+	}
+	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){
 		let geoFire = GeoFire(firebaseRef: rootReference)
 		let locationRef = usersReference.child(currentUserId).child("location")

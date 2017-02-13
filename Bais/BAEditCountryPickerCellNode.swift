@@ -12,12 +12,14 @@ import AsyncDisplayKit
 import CountryPicker
 
 protocol BAEditCountryPickerCellNodeDelegate: class {
-	func editCountryPickerNodeDidSelectCountry()
+	func editCountryPickerNodeDidClosePicker(country: String, code: String)
 }
 
 class BAEditCountryPickerCellNode: ASCellNode, CountryPickerDelegate {
 	weak var delegate: BAEditCountryPickerCellNodeDelegate?
 	let doneButtonNode = ASButtonNode()
+	var countryName: String?
+	var countryCode: String?
 	
 	required override init() {
 		super.init()
@@ -39,12 +41,15 @@ class BAEditCountryPickerCellNode: ASCellNode, CountryPickerDelegate {
 	}
 	
 	internal func countryPicker(_ picker: CountryPicker!, didSelectCountryWithName name: String!, code: String!){
-		
+		countryName = name
+		countryCode = code
 	}
 	
 	func doneButtonPressed(_ sender: UIButton){
+		guard let name = countryName, let code = countryCode else { return }
+		
 		frame = CGRect(x: 0, y: 0, width: ez.screenWidth, height: 0)
-		delegate?.editCountryPickerNodeDidSelectCountry()
+		delegate?.editCountryPickerNodeDidClosePicker(country: name, code: code)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
