@@ -26,9 +26,6 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(self.userRegistered(_:)),
-		                                       name: NSNotification.Name(registerUserKey), object: nil)
-		
 		view.backgroundColor = ColorPalette.white
 		self.automaticallyAdjustsScrollViewInsets = false
 		
@@ -52,7 +49,9 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 					print("Sign in failed:", error.localizedDescription)
 				} else {
 					// should wait until this finishes
-					FirebaseService.registerUser(user!)
+					FirebaseService.registerUser(user!).then(execute: { _ -> Void in
+						self.moveToCreateUserScreen()
+					}).catch(execute: { _ in })
 				}
 			}
 			
@@ -77,7 +76,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		
 		let fbbutton = FBSDKLoginButton()
 		fbbutton.frame = CGRect(x: 40, y: logoView.frame.maxY - 30, width: ez.screenWidth - 80, height: 50)
-		fbbutton.readPermissions = ["public_profile", "user_friends"]
+		fbbutton.readPermissions = ["public_profile", "user_friends", "user_birthday"]
 		fbbutton.publishPermissions = ["rsvp_event"]
 		fbbutton.delegate = self
 		
@@ -112,8 +111,9 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		repeatVideo.playerLayer.player?.seek(to: zeroCM)
 	}
 	
-	@objc func userRegistered(_ notification: Notification) {
+	func moveToCreateUserScreen() {
 		// pushes
-		self.navigationController?.pushViewController(BATabBarController(), animated: true)
+		let createUserScreen = BAEditProfileController(with: FirebaseService.currentUserId, as: .create)
+		navigationController?.pushViewController(createUserScreen, animated: true)
 	}
 }

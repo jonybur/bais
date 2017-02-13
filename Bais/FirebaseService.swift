@@ -15,8 +15,6 @@ import CoreLocation
 import PromiseKit
 import GeoFire
 
-let registerUserKey = "com.baisapp.registerUser"
-
 class FirebaseService{
 	
 	static let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!
@@ -127,48 +125,49 @@ class FirebaseService{
 	}
 	
 	// takes Firebase user, adds Facebook information, posts to database
-	static func registerUser(_ user: FIRUser){
-		if FBSDKAccessToken.current() == nil {
-			return
-		}
+	static func registerUser(_ user: FIRUser) -> Promise<Void> {
 		
-		let graphRequest = FBSDKGraphRequest(graphPath: "me",
-												parameters: ["fields": "picture.width(400),first_name,last_name"],
-		                                        httpMethod: "GET")
-		
-		graphRequest?.start { connection, result, error in
-			if error != nil {
-				print("ERROR: " + error.debugDescription)
-				return
-			}
-			
-			if let nsArray = result as? NSDictionary {
-				
-				if let events = nsArray.object(forKey: "picture") as? NSDictionary{
-					
-					if let datum = events["data"] as? NSDictionary{
-					
-						let messageRef = usersReference
-						let itemRef = messageRef.child(user.uid)
-						let userItem = [
-							"id": user.uid,
-							"first_name": nsArray["first_name"] as! String,
-							"last_name": nsArray["last_name"] as! String,
-							"facebook_id": FBSDKAccessToken.current().userID!,
-							"profile_picture": datum["url"] as! String,
-							"nationality": "Argentina"
-							// add location
-						]
-						itemRef.updateChildValues(userItem)
-						
-						NotificationCenter.default.post(name: Notification.Name(rawValue: registerUserKey), object: self, userInfo: nil)
+		return Promise{ fulfill, reject in
 
+			if FBSDKAccessToken.current() == nil { return }
+			
+			let graphRequest = FBSDKGraphRequest(graphPath: "me",
+													parameters: ["fields": "picture.width(400),first_name,last_name,birthday"],
+													httpMethod: "GET")
+			
+			graphRequest?.start { connection, result, error in
+				if error != nil {
+					print("ERROR: " + error.debugDescription)
+					return
+				}
+				
+				if let nsArray = result as? NSDictionary {
+					
+					if let events = nsArray.object(forKey: "picture") as? NSDictionary{
 						
+						if let datum = events["data"] as? NSDictionary{
+						
+							let messageRef = usersReference
+							let itemRef = messageRef.child(user.uid)
+							let userItem = [
+								"id": user.uid,
+								"first_name": nsArray["first_name"] as! String,
+								"last_name": nsArray["last_name"] as! String,
+								"facebook_id": FBSDKAccessToken.current().userID!,
+								"profile_picture": datum["url"] as! String,
+								"birthday": "16/06/1993",//nsArray["birthday"] as! String,
+								"nationality": "",
+								"about": ""
+							]
+							itemRef.updateChildValues(userItem)
+							
+							fulfill()
+						}
 					}
 				}
-			}
-		}.start()
-		
+			}.start()
+			
+		}
 	}
 
 }
