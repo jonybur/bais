@@ -10,8 +10,12 @@ import Foundation
 import UIKit
 import AsyncDisplayKit
 
+protocol BAEditDescriptionCellNodeDelegate: class {
+	func editDescriptionCellNodeDidFinishEditing(about: String)
+}
+
 class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
-	
+	weak var delegate: BAEditDescriptionCellNodeDelegate?
 	let titleTextNode = ASTextNode()
 	let textCounterNode = ASTextNode()
 	let descriptionNode = ASEditableTextNode()
@@ -69,10 +73,10 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 	
 	func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
 		guard let attributedText = editableTextNode.attributedText else {
-			FirebaseService.updateUserAbout(with: "")
+			delegate?.editDescriptionCellNodeDidFinishEditing(about: "")
 			return
 		}
-		FirebaseService.updateUserAbout(with: attributedText.string)
+		delegate?.editDescriptionCellNodeDidFinishEditing(about: attributedText.string)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

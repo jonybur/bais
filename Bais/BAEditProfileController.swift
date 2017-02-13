@@ -13,7 +13,7 @@ import PromiseKit
 
 final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
 	BAEditBasicUserInfoCellNodeDelegate, BAEditCountryPickerCellNodeDelegate, BAEditImageCarouselCellNodeDelegate,
-	UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	BAEditDescriptionCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	var user = User()
 	var backButtonNode = ASButtonNode()
@@ -131,11 +131,13 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 				return countryPickerCellNode
 			} else if (item == 3){
 				let descriptionCellNode = BAEditDescriptionCellNode(with: user)
+				descriptionCellNode.delegate = self
 				return descriptionCellNode
 			}
 		} else {
 			if (item == 2){
 				let descriptionCellNode = BAEditDescriptionCellNode(with: user)
+				descriptionCellNode.delegate = self
 				return descriptionCellNode
 			}
 		}
@@ -210,6 +212,13 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		let idxPath = [IndexPath(item: 2, section:0)]
 		tableNode.insertRows(at: idxPath, with: .fade)
 		tableNode.reloadRows(at: idxPath, with: .fade)
+	}
+	
+	//MARK: - BAEditDescriptionCellNode methods
+	
+	internal func editDescriptionCellNodeDidFinishEditing(about: String) {
+		user.about = about
+		FirebaseService.updateUserAbout(with: about)
 	}
 
 }
