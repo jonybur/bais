@@ -32,10 +32,10 @@ class BADescriptionInfoCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular),
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: paragraphAttributes]
-		
+
 		descriptionNode.attributedText = NSAttributedString(string: description, attributes: descriptionAttributes)
 		
-		self.addSubnode(descriptionNode)
+		addSubnode(descriptionNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

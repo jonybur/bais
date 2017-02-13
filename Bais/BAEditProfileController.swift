@@ -62,7 +62,9 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		backButtonNode.setImage(UIImage(named: "back-button"), for: [])
 		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
 		
-		super.node.addSubnode(backButtonNode)
+		if (mode == .settings){
+			super.node.addSubnode(backButtonNode)
+		}
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -98,8 +100,10 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		self.navigationController!.interactivePopGestureRecognizer!.isEnabled = true
-		self.navigationController!.interactivePopGestureRecognizer!.delegate =  self
+		if (mode == .settings){
+			navigationController!.interactivePopGestureRecognizer!.isEnabled = true
+			navigationController!.interactivePopGestureRecognizer!.delegate =  self
+		}
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
