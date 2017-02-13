@@ -32,8 +32,7 @@ target 'Bais' do
   pod 'CountryPicker', '>= 1.3'
 
   # chat
-  #pod 'NMessenger'
-  pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
+  pod 'NMessenger', :git => 'https://github.com/jonybur/nmessenger.git', :branch => 'asdk-2.1'
   
   # to deprecate
   pod 'AwaitKit', '>= 2.0.0'

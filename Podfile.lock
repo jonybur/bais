@@ -84,7 +84,8 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
   - GTMSessionFetcher/Core (1.1.7)
-  - JSQMessagesViewController (7.3.4)
+  - NMessenger (1.0.80):
+    - AsyncDisplayKit (= 2.1)
   - PINCache (3.0.1-beta.2):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.2)
     - PINCache/Core (= 3.0.1-beta.2)
@@ -128,7 +129,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/Storage
   - GeoFire (from `https://github.com/firebase/geofire-objc.git`)
-  - JSQMessagesViewController (from `https://github.com/jessesquires/JSQMessagesViewController.git`, branch `develop`)
+  - NMessenger (from `https://github.com/jonybur/nmessenger.git`, branch `asdk-2.1`)
   - pop
   - SwiftyJSON (>= 3.1.4)
 
@@ -137,9 +138,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/jonybur/ESTabBarController.git
   GeoFire:
     :git: https://github.com/firebase/geofire-objc.git
-  JSQMessagesViewController:
-    :branch: develop
-    :git: https://github.com/jessesquires/JSQMessagesViewController.git
+  NMessenger:
+    :branch: asdk-2.1
+    :git: https://github.com/jonybur/nmessenger.git
 
 CHECKOUT OPTIONS:
   ESTabBarController-swift:
@@ -148,9 +149,9 @@ CHECKOUT OPTIONS:
   GeoFire:
     :commit: dbb8d193f5ee1371837800d0502bd29cba779da4
     :git: https://github.com/firebase/geofire-objc.git
-  JSQMessagesViewController:
-    :commit: 26124006945138245e89b8505e65a69d3f794609
-    :git: https://github.com/jessesquires/JSQMessagesViewController.git
+  NMessenger:
+    :commit: bf95b87fa4910472d69f2a8335353383330fdada
+    :git: https://github.com/jonybur/nmessenger.git
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
@@ -176,13 +177,13 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
-  JSQMessagesViewController: c11b9e77372ab72c45c67311f6da7342e32df1e8
+  NMessenger: 47d513e0bd16942e310c82d73f3ef78388cd0682
   PINCache: 6d273a6e0754bd26e3f12a38a90dde73cc6a42b2
   PINRemoteImage: ff63baf185088530db6cfa41cb665e2b5126b5c3
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   PromiseKit: 593b5e24ded6cbb1ebc708bc2c3428a8a5632d91
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 89c6cb4bb0c016963e8bd1db3ab1607705002172
+PODFILE CHECKSUM: eda239c0339899353d11b9dc1f224dbf556febff
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.2.0

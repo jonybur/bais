@@ -154,7 +154,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 			case .invited:
 				break;
 			case .accepted:
-				self.navigationController?.pushViewController(BAChatController(with: user), animated: true)
+				self.navigationController?.pushViewController(BAChatController(), animated: true)
 				break;
 			default:
 				break;

@@ -58,7 +58,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			return
 		}
 		
-		self.navigationController?.pushViewController(BAChatController(with: user), animated: true)
+		self.navigationController?.pushViewController(BAChatController(), animated: true)
 		self.tableNode.deselectRow(at: indexPath, animated: true)
 	}
 	
