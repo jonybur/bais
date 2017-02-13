@@ -154,13 +154,22 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 		} else if (item == 1){
 			let basicCellNode = BABasicEventInfoCellNode(with: event)
 			return basicCellNode
-		} else if (item == 2 && event.place.isValid()){
-			let mapCellNode = BAMapCellNode(with: event.place)
-			mapCellNode.delegate = self
-			return mapCellNode
-		} else if (item == 3){
-			let descriptionCellNode = BADescriptionInfoCellNode(with: event)
-			return descriptionCellNode
+		}
+		
+		if (event.place.isValid()){
+			if (item == 2){
+				let mapCellNode = BAMapCellNode(with: event.place)
+				mapCellNode.delegate = self
+				return mapCellNode
+			} else if (item == 3){
+				let descriptionCellNode = BADescriptionInfoCellNode(with: event)
+				return descriptionCellNode
+			}
+		} else{
+			if (item == 2){
+				let descriptionCellNode = BADescriptionInfoCellNode(with: event)
+				return descriptionCellNode
+			}
 		}
 		
 		return BASpacerCellNode()
@@ -171,7 +180,7 @@ final class BAEventController: ASViewController<ASDisplayNode>, ASTableDataSourc
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		return 5
+		return event.place.isValid() ? 5 : 4
 	}
 	
 }

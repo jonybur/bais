@@ -121,7 +121,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	//MARK: - BASettingsHeaderNodeDelegate methods
 	
 	func settingsHeaderNodeDidClickEditButton(){
-		let editProfileController = BAEditProfileController(with: user)
+		let editProfileController = BAEditProfileController(with: user, as: .settings)
 		navigationController?.pushViewController(editProfileController, animated: true)
 	}
 	

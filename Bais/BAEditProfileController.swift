@@ -18,22 +18,28 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	var user = User()
 	var backButtonNode = ASButtonNode()
 	var showCountryPicker: Bool = false
+	var mode: EditProfileMode?
+	
+	enum EditProfileMode: String{
+		case settings = "settings", create = "create"
+	}
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
 	}
 	
-	init(with userId: String){
+	init(with userId: String, as mode: EditProfileMode){
 		super.init(node: ASTableNode())
-		
+		self.mode = mode
 		FirebaseService.getUser(with: userId).then { user -> Void in
 			self.user = user
 			self.commonInit()
 		}.catch { _ in }
 	}
 	
-	init(with user: User) {
+	init(with user: User, as mode: EditProfileMode) {
 		super.init(node: ASTableNode())
+		self.mode = mode
 		self.user = user
 		commonInit()
 	}
@@ -119,7 +125,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 			headerCellNode.delegate = self
 			return headerCellNode
 		} else if (item == 1) {
-			let basicCellNode = BAEditBasicUserInfoCellNode(with: user)
+			let basicCellNode = BAEditBasicUserInfoCellNode(with: user, allowsCountryEditing: mode == .create)
 			basicCellNode.delegate = self
 			return basicCellNode
 		}

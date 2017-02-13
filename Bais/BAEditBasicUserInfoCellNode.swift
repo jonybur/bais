@@ -19,9 +19,12 @@ class BAEditBasicUserInfoCellNode: ASCellNode {
 	let nationalityNode = ASTextNode()
 	let openCountryPickerButtonNode = ASButtonNode()
 	weak var delegate: BAEditBasicUserInfoCellNodeDelegate?
+	var countryEditing = false
 	
-	required init(with user: User) {
+	required init(with user: User, allowsCountryEditing: Bool) {
 		super.init()
+		
+		countryEditing = allowsCountryEditing
 		
 		let nameAndAgeAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 24, weight: UIFontWeightBold),
@@ -52,20 +55,25 @@ class BAEditBasicUserInfoCellNode: ASCellNode {
 		// opencountrypicker button
 		openCountryPickerButtonNode.style.preferredSize = CGSize(width: 50, height: 50)
 		
-		// horizontal stack
-		let horizontalStack = ASStackLayoutSpec()
-		horizontalStack.direction = .horizontal
-		horizontalStack.spacing = 10
-		horizontalStack.alignItems = .center
-		horizontalStack.children = [nationalityNode, openCountryPickerButtonNode]
-		
 		// vertical stack
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .start
 		verticalStack.justifyContent = .spaceBetween
 		verticalStack.spacing = 6
-		verticalStack.children = [nameAndAgeNode, horizontalStack]
+		
+		if (countryEditing){
+			// horizontal stack
+			let horizontalStack = ASStackLayoutSpec()
+			horizontalStack.direction = .horizontal
+			horizontalStack.spacing = 10
+			horizontalStack.alignItems = .center
+			horizontalStack.children = [nationalityNode, openCountryPickerButtonNode]
+			
+			verticalStack.children = [nameAndAgeNode, horizontalStack]
+		} else {
+			verticalStack.children = [nameAndAgeNode, nationalityNode]
+		}
 		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 17.5, left: 15, bottom: 17.5, right: 0)
