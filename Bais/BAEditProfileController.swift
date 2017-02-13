@@ -12,11 +12,13 @@ import Firebase
 import PromiseKit
 
 final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
-BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+BAEditCountryPickerCellNodeDelegate, BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate,
+UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var user = User()
 	var backButtonNode = ASButtonNode()
+	var showCountryPicker: Bool = true
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -96,7 +98,6 @@ BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerC
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		
 		if (scrollView.contentOffset.y < 0){
 			scrollView.contentOffset.y = 0
 		}
@@ -118,12 +119,25 @@ BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerC
 			let headerCellNode = BAEditImageCarouselCellNode(with: user)
 			headerCellNode.delegate = self
 			return headerCellNode
-		} else if (item == 1){
+		} else if (item == 1) {
 			let basicCellNode = BAEditBasicUserInfoCellNode(with: user)
 			return basicCellNode
-		} else if (item == 2){
-			let descriptionCellNode = BAEditDescriptionCellNode(with: user)
-			return descriptionCellNode
+		}
+		
+		if (showCountryPicker){
+			if (item == 2){
+				let countryPickerCellNode = BAEditCountryPickerCellNode()
+				countryPickerCellNode.delegate = self
+				return countryPickerCellNode
+			} else if (item == 3){
+				let descriptionCellNode = BAEditDescriptionCellNode(with: user)
+				return descriptionCellNode
+			}
+		} else {
+			if (item == 2){
+				let descriptionCellNode = BAEditDescriptionCellNode(with: user)
+				return descriptionCellNode
+			}
 		}
 		
 		return BASpacerCellNode()
@@ -134,6 +148,9 @@ BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerC
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+		if (showCountryPicker){
+			return 5
+		}
 		return 4
 	}
 	
@@ -172,6 +189,15 @@ BAEditImageCarouselCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerC
 			self.tableNode.reloadRows(at: indexPath, with: .fade)
 			FirebaseService.updateUserImage(with: url.absoluteString, imagePurpose: .profilePicture)
 		}.catch { _ in }
+	}
+	
+	//MARK: - BAEditCountryPickerCellNodeDelegate methods
+	
+	internal func editCountryPickerNodeDidSelectCountry() {
+		showCountryPicker = false
+		let idxPath = [IndexPath(item: 2, section:0)]
+		tableNode.deleteRows(at: idxPath, with: .fade)
+		tableNode.reloadRows(at: idxPath, with: .fade)
 	}
 	
 }

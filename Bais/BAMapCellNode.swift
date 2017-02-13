@@ -26,7 +26,7 @@ class BAMapCellNode: ASCellNode{
 	required init(with place: Place) {
 		super.init()
 		
-		self.view.frame = CGRect(x: 15, y: 0, width: ez.screenWidth - 30, height: 200)
+		view.frame = CGRect(x: 15, y: 0, width: ez.screenWidth - 30, height: 200)
 
 		initializeOnMainThread(place)
 		
@@ -39,7 +39,6 @@ class BAMapCellNode: ASCellNode{
 		                              with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
 		                              with: ColorPalette.grey, for: [])
 		directionsButtonNode.addTarget(self, action: #selector(self.directionsButtonPressed(_:)), forControlEvents: .touchUpInside)
-		
 		
 		addSubnode(uberButtonNode)
 		addSubnode(directionsButtonNode)

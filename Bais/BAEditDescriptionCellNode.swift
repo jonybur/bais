@@ -12,7 +12,9 @@ import AsyncDisplayKit
 
 class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 	
+	let titleTextNode = ASTextNode()
 	let descriptionNode = ASEditableTextNode()
+	let buttonNode = ASButtonNode()
 	
 	required init(with user: User) {
 		super.init()
@@ -25,6 +27,10 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: paragraphAttributes]
 		
+		titleTextNode.attributedText = NSAttributedString(string: "About you", attributes: [
+			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+			NSForegroundColorAttributeName: ColorPalette.grey])
+
 		descriptionNode.attributedPlaceholderText = NSAttributedString(string: "Write about yourself",
 		                                                               attributes: [
 																		NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular),
@@ -35,7 +41,9 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 		
 		descriptionNode.delegate = self
 		
+		addSubnode(titleTextNode)
 		addSubnode(descriptionNode)
+		addSubnode(buttonNode)
 	}
 	
 	func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
@@ -54,16 +62,21 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 			FirebaseService.updateUserAbout(with: "")
 			return
 		}
-		
 		FirebaseService.updateUserAbout(with: attributedText.string)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 		descriptionNode.style.height = ASDimension(unit: .points, value: 240)
 		
+		// vertical stack
+		let verticalStack = ASStackLayoutSpec()
+		verticalStack.direction = .vertical
+		verticalStack.spacing = 10
+		verticalStack.children = [titleTextNode, descriptionNode]
+		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 17.5, left: 15, bottom: 17.5, right: 20)
-		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: descriptionNode)
+		let textInsetSpec = ASInsetLayoutSpec(insets: textInsets, child: verticalStack)
 		
 		return textInsetSpec
 	}

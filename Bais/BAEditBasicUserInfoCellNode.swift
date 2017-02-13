@@ -10,10 +10,15 @@ import Foundation
 import UIKit
 import AsyncDisplayKit
 
+protocol BAEditBasicUserInfoCellNodeDelegate: class {
+	func editBasicUserInfoCellNodeDidPressOpenCountryPicker()
+}
+
 class BAEditBasicUserInfoCellNode: ASCellNode {
-	
 	let nameAndAgeNode = ASTextNode()
 	let nationalityNode = ASTextNode()
+	let openCountryPickerButtonNode = ASButtonNode()
+	weak var delegate: BAEditBasicUserInfoCellNodeDelegate?
 	
 	required init(with user: User) {
 		super.init()
@@ -31,11 +36,28 @@ class BAEditBasicUserInfoCellNode: ASCellNode {
 		nationalityNode.attributedText = NSAttributedString(string: user.nationality, attributes: distanceAttributes)
 		nationalityNode.maximumNumberOfLines = 1
 		
-		self.addSubnode(nameAndAgeNode)
-		self.addSubnode(nationalityNode)
+		openCountryPickerButtonNode.setImage(UIImage(named: "plus"), for: [])
+		openCountryPickerButtonNode.addTarget(self, action: #selector(openCountryPickerButtonPressed(_:)), forControlEvents: .touchUpInside)
+		
+		addSubnode(openCountryPickerButtonNode)
+		addSubnode(nameAndAgeNode)
+		addSubnode(nationalityNode)
+	}
+	
+	func openCountryPickerButtonPressed(_ sender: UIButton){
+		delegate?.editBasicUserInfoCellNodeDidPressOpenCountryPicker()
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+		// opencountrypicker button
+		openCountryPickerButtonNode.style.preferredSize = CGSize(width: 50, height: 50)
+		
+		// horizontal stack
+		let horizontalStack = ASStackLayoutSpec()
+		horizontalStack.direction = .horizontal
+		horizontalStack.spacing = 10
+		horizontalStack.alignItems = .center
+		horizontalStack.children = [nationalityNode, openCountryPickerButtonNode]
 		
 		// vertical stack
 		let verticalStack = ASStackLayoutSpec()
@@ -43,7 +65,7 @@ class BAEditBasicUserInfoCellNode: ASCellNode {
 		verticalStack.alignItems = .start
 		verticalStack.justifyContent = .spaceBetween
 		verticalStack.spacing = 6
-		verticalStack.children = [nameAndAgeNode, nationalityNode]
+		verticalStack.children = [nameAndAgeNode, horizontalStack]
 		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 17.5, left: 15, bottom: 17.5, right: 0)

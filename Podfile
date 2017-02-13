@@ -28,6 +28,9 @@ target 'Bais' do
   pod 'Alamofire', '>= 4.0.0'
   pod 'SwiftyJSON', '>= 3.1.4'
 
+  # utilities
+  pod 'CountryPicker', '>= 1.3'
+
   # chat
   #pod 'NMessenger'
   pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'

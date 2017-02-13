@@ -60,6 +60,7 @@
 		ABB9F3051D9170C600E01511 /* UIRepeatingVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DA1D9170C600E01511 /* UIRepeatingVideo.swift */; };
 		ABB9F3071D9170C600E01511 /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DC1D9170C600E01511 /* WebAPI.swift */; };
 		ABCBDA461DA78B670001AC59 /* BAProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCBDA451DA78B670001AC59 /* BAProfileController.swift */; };
+		ABD158E11E511C68007C4163 /* BAEditCountryPickerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */; };
 		ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF08B221D916E5400C6B832 /* AppDelegate.swift */; };
 		ABF50ACC1DEA7651004CB6E8 /* BAUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */; };
 		ABFA0B311D9A0CB000ED6C16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */; };
@@ -123,6 +124,7 @@
 		ABB9F2DA1D9170C600E01511 /* UIRepeatingVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIRepeatingVideo.swift; sourceTree = "<group>"; };
 		ABB9F2DC1D9170C600E01511 /* WebAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
 		ABCBDA451DA78B670001AC59 /* BAProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAProfileController.swift; sourceTree = "<group>"; };
+		ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEditCountryPickerCellNode.swift; sourceTree = "<group>"; };
 		ABDEC2131DCFDD0800484759 /* Bais.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bais.entitlements; sourceTree = "<group>"; };
 		ABF08B1F1D916E5400C6B832 /* Bais.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bais.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF08B221D916E5400C6B832 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -230,6 +232,7 @@
 			children = (
 				ABA234511E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift */,
 				ABA234551E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift */,
+				ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */,
 				ABA234531E4D883600CBAF53 /* BAEditDescriptionCellNode.swift */,
 			);
 			name = EditProfile;
@@ -636,6 +639,7 @@
 				ABB9F2E81D9170C600E01511 /* BouncesStyleAnimator.swift in Sources */,
 				AB18B3091E4C11DF001C294B /* BASettingsHeaderCellNode.swift in Sources */,
 				ABB9F2EB1D9170C600E01511 /* WebService.swift in Sources */,
+				ABD158E11E511C68007C4163 /* BAEditCountryPickerCellNode.swift in Sources */,
 				AB18B3111E4C1D54001C294B /* BASettingsSpacerElementCellNode.swift in Sources */,
 				ABA234561E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift in Sources */,
 				AB3DDB0F1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift in Sources */,

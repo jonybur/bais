@@ -22,7 +22,7 @@ class BASettingsButtonElementCellNode: ASButtonNode{
 		
 		titleTextNode.attributedText = NSAttributedString(string: title, attributes: nameAttributes)
 				
-		self.addSubnode(titleNode)
+		addSubnode(titleTextNode)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
