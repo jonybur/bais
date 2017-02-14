@@ -67,7 +67,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		                                       object: repeatVideo.playerViewController.player?.currentItem)
 		
 		// ios status bar height is 20px
-		let logoView = UIImageView(frame: CGRect(x: 0, y: 20, width: 300, height: 300))
+		let logoView = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
 		
 		logoView.center = CGPoint(x: ez.screenWidth / 2, y: ez.screenHeight / 2 - 40)
 		logoView.contentMode = .scaleAspectFit
