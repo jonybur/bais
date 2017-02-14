@@ -61,6 +61,8 @@
 		ABB9F3071D9170C600E01511 /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DC1D9170C600E01511 /* WebAPI.swift */; };
 		ABCBDA461DA78B670001AC59 /* BAProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCBDA451DA78B670001AC59 /* BAProfileController.swift */; };
 		ABD158E11E511C68007C4163 /* BAEditCountryPickerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */; };
+		ABEB8DA61E5301510089000C /* BADetailActionButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB8DA51E5301510089000C /* BADetailActionButtonNode.swift */; };
+		ABEB8DA81E5302560089000C /* BADetailBackButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */; };
 		ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF08B221D916E5400C6B832 /* AppDelegate.swift */; };
 		ABF50ACC1DEA7651004CB6E8 /* BAUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */; };
 		ABFA0B311D9A0CB000ED6C16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */; };
@@ -126,6 +128,8 @@
 		ABCBDA451DA78B670001AC59 /* BAProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAProfileController.swift; sourceTree = "<group>"; };
 		ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEditCountryPickerCellNode.swift; sourceTree = "<group>"; };
 		ABDEC2131DCFDD0800484759 /* Bais.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bais.entitlements; sourceTree = "<group>"; };
+		ABEB8DA51E5301510089000C /* BADetailActionButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BADetailActionButtonNode.swift; sourceTree = "<group>"; };
+		ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BADetailBackButtonNode.swift; sourceTree = "<group>"; };
 		ABF08B1F1D916E5400C6B832 /* Bais.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bais.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF08B221D916E5400C6B832 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ABF08B2E1D916E5400C6B832 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 				AB3D33A01E458C770058547A /* Profile */,
 				ABAE861B1E1F23A3005CAE77 /* Event */,
 				ABA234501E4D84E500CBAF53 /* EditProfile */,
+				ABEB8DA51E5301510089000C /* BADetailActionButtonNode.swift */,
+				ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -359,7 +365,7 @@
 				ABB9F2C21D9170C600E01511 /* BATabBarController.swift */,
 				ABAE861A1E1F2001005CAE77 /* Tabbed */,
 				AB18B3031E4C0D2B001C294B /* Detail */,
-				ABFA0B321D9A245600ED6C16 /* ToFix */,
+				ABFA0B321D9A245600ED6C16 /* Chat */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -433,12 +439,12 @@
 			path = Bais;
 			sourceTree = "<group>";
 		};
-		ABFA0B321D9A245600ED6C16 /* ToFix */ = {
+		ABFA0B321D9A245600ED6C16 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
 				ABB9F2BF1D9170C600E01511 /* BAChatController.swift */,
 			);
-			name = ToFix;
+			name = Chat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -603,6 +609,7 @@
 				AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */,
 				AB3D33A21E458C9E0058547A /* BAImageCarouselCellNode.swift in Sources */,
 				ABB9F2F91D9170C600E01511 /* IrregularityStyleAnimator.swift in Sources */,
+				ABEB8DA81E5302560089000C /* BADetailBackButtonNode.swift in Sources */,
 				ABB9F2F51D9170C600E01511 /* InstagramMedia.swift in Sources */,
 				ABB9F3071D9170C600E01511 /* WebAPI.swift in Sources */,
 				AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */,
@@ -647,6 +654,7 @@
 				AB18B30F1E4C1B05001C294B /* BASettingsButtonElementCellNode.swift in Sources */,
 				ABB9F3051D9170C600E01511 /* UIRepeatingVideo.swift in Sources */,
 				ABB9F2F71D9170C600E01511 /* InstagramUser.swift in Sources */,
+				ABEB8DA61E5301510089000C /* BADetailActionButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

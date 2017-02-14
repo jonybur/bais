@@ -1,0 +1,22 @@
+//
+//  BADetailBackButtonNode.swift
+//  Bais
+//
+//  Created by Jonathan Bursztyn on 14/2/17.
+//  Copyright © 2017 Board Social, Inc. All rights reserved.
+//
+
+import Foundation
+import UIKit
+import AsyncDisplayKit
+
+class BADetailBackButtonNode: ASButtonNode {
+	
+	override init() {
+		super.init()
+		
+		style.preferredSize = CGSize(width: 75, height: 75)
+		setImage(UIImage(named: "back-button"), for: [])
+	}
+	
+}

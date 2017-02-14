@@ -16,7 +16,8 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	BAEditDescriptionCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	var user = User()
-	var backButtonNode = ASButtonNode()
+	var backButtonNode = BADetailBackButtonNode()
+	var actionButtonNode = BADetailActionButtonNode()
 	var showCountryPicker: Bool = false
 	var mode: EditProfileMode?
 	
@@ -47,11 +48,17 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		super.viewDidLoad()
 		
 		backButtonNode.frame = CGRect(x: 0, y: 10, width: 75, height: 75)
-		backButtonNode.setImage(UIImage(named: "back-button"), for: [])
-		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
+		actionButtonNode.frame = CGRect(x: ez.screenWidth / 2 - ez.screenWidth / 4, y: ez.screenHeight - 60, width: ez.screenWidth / 2, height: 50)
 		
+		let yourCarefullyDrawnPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: actionButtonNode.frame.width, height: actionButtonNode.frame.height), cornerRadius: 20)
+		let maskForYourPath = CAShapeLayer()
+		maskForYourPath.path = yourCarefullyDrawnPath.cgPath
+		actionButtonNode.layer.mask = maskForYourPath
+
 		if (mode == .settings){
 			super.node.addSubnode(backButtonNode)
+		} else if (mode == .create) {
+			super.node.addSubnode(actionButtonNode)
 		}
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -59,6 +66,9 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		
 		let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
 		view.addGestureRecognizer(tap)
+		
+		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
+		actionButtonNode.addTarget(self, action: #selector(actionButtonPressed(_:)), forControlEvents: .touchUpInside)
 	}
 	
 	func closeKeyboard() {
@@ -82,7 +92,12 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	}
 	
 	func backButtonPressed(_ sender: UIButton){
-		_ = self.navigationController?.popViewController(animated: true)
+		_ = navigationController?.popViewController(animated: true)
+	}
+	
+	func actionButtonPressed(_ sender: UIButton){
+		let tabBarController = BATabBarController()
+		navigationController?.pushViewController(tabBarController, animated: true)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -101,6 +116,9 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		
 		backButtonNode.view.center = CGPoint(x: backButtonNode.view.center.x,
 		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2 + 10)
+		
+		actionButtonNode.view.center = CGPoint(x: actionButtonNode.view.center.x,
+		                                     y: scrollView.contentOffset.y + ez.screenHeight - actionButtonNode.view.frame.height + 15)
 	}
 	
 	override var prefersStatusBarHidden: Bool {
@@ -197,7 +215,8 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		tableNode.deleteRows(at: idxPath, with: .fade)
 		let idxPathToReload = [IndexPath(item: 1, section:0), IndexPath(item: 2, section:0)]
 		tableNode.reloadRows(at: idxPathToReload, with: .fade)
-		FirebaseService.updateUserNationality(with: country)
+		FirebaseService.updateUserNationality(with: code)
+		actionButtonNode.enable()
 	}
 	
 	//MARK: - BAEditBasicUserInfoCellNodeDelegate methods

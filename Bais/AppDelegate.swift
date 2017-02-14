@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		FIRDatabase.database().persistenceEnabled = true
 		
-		let screen : UIViewController!
+		let screen: UIViewController!
 		
 		if FIRAuth.auth()?.currentUser != nil && FBSDKProfile.current() != nil {
 			screen = BATabBarController()

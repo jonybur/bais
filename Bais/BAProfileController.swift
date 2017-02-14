@@ -58,14 +58,14 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 	
 	func backButtonPressed(_ sender: UIButton){
-		_ = self.navigationController?.popViewController(animated: true)
+		_ = navigationController?.popViewController(animated: true)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		self.navigationController!.interactivePopGestureRecognizer!.isEnabled = true
-		self.navigationController!.interactivePopGestureRecognizer!.delegate =  self
+		navigationController!.interactivePopGestureRecognizer!.isEnabled = true
+		navigationController!.interactivePopGestureRecognizer!.delegate =  self
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -106,6 +106,10 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		try! FIRAuth.auth()!.signOut()
 	}
 	
+	override var prefersStatusBarHidden: Bool {
+		return true
+	}
+	
 	@objc func rewindVideo(_ notification: Notification) {
 		let zeroCM = CMTime(seconds: 0, preferredTimescale: 1000000000)
 		repeatVideo.playerLayer.player?.seek(to: zeroCM)

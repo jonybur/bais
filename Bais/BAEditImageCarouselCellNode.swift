@@ -28,7 +28,7 @@ class BAEditImageCarouselCellNode: ASCellNode {
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill
 		
-		editImageButton.setImage(UIImage(named: "edit-button"), for: [])
+		editImageButton.setImage(UIImage(named: "gallery-button"), for: [])
 		editImageButton.addTarget(self, action: #selector(editImageButtonPressed(_:)), forControlEvents: .touchUpInside)
 		
 		addSubnode(imageNode)

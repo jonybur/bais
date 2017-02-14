@@ -42,22 +42,23 @@ class BAChatController: NMessengerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		self.messagePadding = UIEdgeInsets(top: 0, left: 10, bottom: 5, right: 10)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-		
-		self.navigationController!.interactivePopGestureRecognizer!.isEnabled = true
-		self.navigationController!.interactivePopGestureRecognizer!.delegate =  self
+		navigationController!.interactivePopGestureRecognizer!.isEnabled = true
+		navigationController!.interactivePopGestureRecognizer!.delegate =  self
     }
     
-    override func createTextMessage(_ text: String, isIncomingMessage: Bool) -> GeneralMessengerCell {
-        let a = super.createTextMessage(text, isIncomingMessage: isIncomingMessage) as! MessageNode
-        let nAvatar = ASImageNode()
-        nAvatar.image = UIImage(named: "edit-button")
-        a.avatarNode = nAvatar
-        return a
+	override func createTextMessage(_ text: String, isIncomingMessage: Bool) -> GeneralMessengerCell {
+		let textMessage = super.createTextMessage(text, isIncomingMessage: isIncomingMessage) as! MessageNode
+		if (!isIncomingMessage){
+			return textMessage
+		}
+		let avatarNode = ASNetworkImageNode()
+		avatarNode.setURL(URL(string: (user?.profilePicture)!), resetToDefault: false)
+        textMessage.avatarNode = avatarNode
+        return textMessage
     }
-    
-
 }
