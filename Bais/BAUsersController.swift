@@ -88,7 +88,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	}
 	
 	func userForIndexPath(_ indexPath: IndexPath) -> User{
-		return _contentToDisplay[0]
+		return _contentToDisplay[indexPath.item]
 	}
 	
 	//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
@@ -143,18 +143,19 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	
 	//MARK: - BAUsersViewCell delegate methods
 	func usersCellNodeDidClickButton(_ usersViewCell: BAUsersCellNode) {
-		let indexPath = self._collectionNode.indexPath(for: usersViewCell)!
-		let user = self.userForIndexPath(indexPath)
-		usersViewCell.setFriendshipAction()
+		guard let user = usersViewCell.user else { return }
 		
 		switch (user.friendshipStatus){
 			case .noRelationship:
 				FirebaseService.sendFriendRequestTo(friendId: user.id)
+				usersViewCell.user.friendshipStatus = .invited
+				_collectionNode.reloadItems(at: [usersViewCell.indexPath!])
 				break;
 			case .invited:
 				break;
 			case .accepted:
-				self.navigationController?.pushViewController(BAChatController(), animated: true)
+				let chatController = BAChatController(with: user)
+				navigationController?.pushViewController(chatController, animated: true)
 				break;
 			default:
 				break;
@@ -162,9 +163,10 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	}
 	
 	func usersCellNodeDidClickView(_ usersViewCell: BAUsersCellNode) {
-		let user = usersViewCell.user
-		let controller = BAProfileController(with: user!)
-		self.navigationController?.pushViewController(controller, animated: true)
+		guard let user = usersViewCell.user else { return }
+		
+		let controller = BAProfileController(with: user)
+		navigationController?.pushViewController(controller, animated: true)
 	}
 	
 	//MARK: - Firebase

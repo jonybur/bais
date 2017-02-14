@@ -161,13 +161,13 @@ class BAUsersCellNode: ASCellNode {
 	func setFriendshipAction(){
 		switch (user.friendshipStatus){
 			case .accepted:
-				self.setButtonTitle("Chat")
+				setButtonTitle("Chat")
 				break;
 			case .invited:
-				self.setButtonTitle("Request Sent")
+				setButtonTitle("Request Sent")
 				break;
 			default:
-				self.setButtonTitle("Invite")
+				setButtonTitle("Invite")
 				break;
 		}
 	}

@@ -29,10 +29,11 @@ import NMessenger
 
 class BAChatController: NMessengerViewController {
 	
-    
-    
-    override init(){
+	var user: User?
+	
+	init(with user: User){
         super.init()
+		self.user = user
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +46,9 @@ class BAChatController: NMessengerViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+		
+		self.navigationController!.interactivePopGestureRecognizer!.isEnabled = true
+		self.navigationController!.interactivePopGestureRecognizer!.delegate =  self
     }
     
     override func createTextMessage(_ text: String, isIncomingMessage: Bool) -> GeneralMessengerCell {
