@@ -9,5 +9,5 @@
 import Foundation
 
 enum FriendshipStatus : String{
-	case undefined = "undefined", noRelationship = "uninvited", invited = "invited", accepted = "accepted"
+	case undefined = "undefined", noRelationship = "uninvited", accepted = "accepted", invitationReceived = "invitationReceived", invitationSent = "invitationSent"
 }

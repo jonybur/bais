@@ -148,17 +148,19 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		switch (user.friendshipStatus){
 			case .noRelationship:
 				FirebaseService.sendFriendRequestTo(friendId: user.id)
-				usersViewCell.user.friendshipStatus = .invited
+				usersViewCell.user.friendshipStatus = .invitationSent
 				_collectionNode.reloadItems(at: [usersViewCell.indexPath!])
-				break;
-			case .invited:
-				break;
+				break
+			case .invitationSent:
+				break
+			case .invitationReceived:
+				break
 			case .accepted:
 				let chatController = BAChatController(with: user)
 				navigationController?.pushViewController(chatController, animated: true)
-				break;
+				break
 			default:
-				break;
+				break
 		}
 	}
 	
@@ -249,7 +251,17 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 				
 				if let relationship = snapshot.value as? NSDictionary{
 					let status = relationship["status"] as! String
-					user.friendshipStatus = FriendshipStatus(rawValue: status)!
+					
+					if (status == "invited"){
+						let postedBy = relationship["postedBy"] as! String
+						if (postedBy == FirebaseService.currentUserId){
+							user.friendshipStatus = FriendshipStatus(rawValue: "invitationSent")!
+						} else {
+							user.friendshipStatus = FriendshipStatus(rawValue: "invitationReceived")!
+						}
+					} else {
+						user.friendshipStatus = FriendshipStatus(rawValue: status)!
+					}
 				} else {
 					user.friendshipStatus = .noRelationship
 				}

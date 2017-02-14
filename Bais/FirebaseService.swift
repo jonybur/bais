@@ -104,7 +104,7 @@ class FirebaseService{
 	}
 	
 	static func sendFriendRequestTo(friendId: String){
-		setFriendStatusWith(friendId, to: .invited)
+		setFriendStatusWith(friendId, to: .invitationSent)
 	}
 	
 	private static func setFriendStatusWith(_ friendId: String, to status: FriendshipStatus){
@@ -116,9 +116,9 @@ class FirebaseService{
 				"status": status.rawValue
 			]
 			break
-		case .invited:
+		case .invitationSent:
 			value = [
-				"status": status.rawValue,
+				"status": "invited",
 				"postedBy": currentUserId
 			]
 			break
