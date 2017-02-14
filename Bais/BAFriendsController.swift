@@ -178,13 +178,20 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		for relationship in relationshipsDictionary{
 			let friendId = String(describing: relationship.key)
 			let relationshipAttributes = relationship.value as! NSDictionary
-			let statusString = relationshipAttributes["status"] as! String
-			let status = FriendshipStatus(rawValue: statusString)!
+			
+			var status: FriendshipStatus?
+			
+			if (relationshipAttributes["status"] as! String == "invited"){
+				status = .invitationReceived
+			} else {
+				status = .accepted
+			}
+			
 			if (status == .accepted || status == .invitationReceived) {
 				// if it's a friend, or was invited by someone, create the chat card
 				let promise = self.getUser(with: friendId).then(execute: { user -> Void in
 					// get user
-					user.friendshipStatus = status
+					user.friendshipStatus = status!
 					if (status == .accepted){
 						self._friends.append(user)
 					} else if (status == .invitationReceived){

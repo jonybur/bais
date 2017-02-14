@@ -255,12 +255,12 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 					if (status == "invited"){
 						let postedBy = relationship["postedBy"] as! String
 						if (postedBy == FirebaseService.currentUserId){
-							user.friendshipStatus = FriendshipStatus(rawValue: "invitationSent")!
+							user.friendshipStatus = .invitationSent
 						} else {
-							user.friendshipStatus = FriendshipStatus(rawValue: "invitationReceived")!
+							user.friendshipStatus = .invitationReceived
 						}
 					} else {
-						user.friendshipStatus = FriendshipStatus(rawValue: status)!
+						user.friendshipStatus = .accepted
 					}
 				} else {
 					user.friendshipStatus = .noRelationship
