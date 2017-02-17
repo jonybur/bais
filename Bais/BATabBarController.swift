@@ -77,6 +77,12 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		v3.tabBarItem.image = UIImage.init(named: "calendar-icon")
 		v4.tabBarItem.image = UIImage.init(named: "settings-icon")
 		
+		if #available(iOS 10.0, *) {
+			v2.tabBarItem.badgeColor = ColorPalette.orange
+		}
+		(v2.tabBarItem as? ESTabBarItem)?.showBadge(badgeValue: "2")
+		
+		
 		let controllers = [v1, v2, v3, v4]
 		self.viewControllers = controllers
 		

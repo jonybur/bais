@@ -164,10 +164,10 @@ class BAUsersCellNode: ASCellNode {
 				setButtonTitle("Chat")
 				break;
 			case .invitationSent:
-				setButtonTitle("Invitation Sent")
+				setButtonTitle("Invite Sent")
 				break;
 			case .invitationReceived:
-				setButtonTitle("Invitation Received")
+				setButtonTitle("Invited you")
 				break;
 			default:
 				setButtonTitle("Invite")

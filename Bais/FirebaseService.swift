@@ -19,6 +19,7 @@ class FirebaseService{
 	
 	static let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!
 	static let rootReference = FIRDatabase.database().reference()
+	static let locationsReference = FIRDatabase.database().reference().child("locations")
 	static let usersReference = FIRDatabase.database().reference().child("users")
 	static let messagesReference = FIRDatabase.database().reference().child("messages")
 	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-79d67.appspot.com")
@@ -73,7 +74,7 @@ class FirebaseService{
 	}
 	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){
-		let geoFire = GeoFire(firebaseRef: rootReference)
+		let geoFire = GeoFire(firebaseRef: locationsReference)
 		let locationRef = usersReference.child(currentUserId).child("location")
 		
 		let value = [

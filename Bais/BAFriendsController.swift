@@ -116,7 +116,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			_usersToDisplay = _requests
 		}
 		
-		let tableRows = tableNode.numberOfRows(inSection: 0) - 1
+		let tableRows = tableNode.numberOfRows(inSection: 0)-1
 		if (tableRows < _usersToDisplay.count){
 			var idxToInsert = [IndexPath]()
 			for idx in tableRows..._usersToDisplay.count-1{
@@ -124,7 +124,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				idxToInsert.append(idxPath)
 			}
 			tableNode.insertRows(at: idxToInsert, with: .fade)
-		} else {
+		} else if (_usersToDisplay.count < tableRows){
 			var idxToRemove = [IndexPath]()
 			for idx in _usersToDisplay.count+1...tableRows{
 				let idxPath = IndexPath(item:idx, section:0)
@@ -178,12 +178,18 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		for relationship in relationshipsDictionary{
 			let friendId = String(describing: relationship.key)
 			let relationshipAttributes = relationship.value as! NSDictionary
+			let relationshipStatus = relationshipAttributes["status"] as! String
+			let relationshipPostedBy = relationshipAttributes["postedBy"] as! String
 			
 			var status: FriendshipStatus?
 			
-			if (relationshipAttributes["status"] as! String == "invited"){
-				status = .invitationReceived
-			} else {
+			if (relationshipStatus == "invited"){
+				if (relationshipPostedBy == FirebaseService.currentUserId){
+					status = .invitationReceived
+				} else {
+					status = .invitationSent
+				}
+			} else if (relationshipStatus == "accepted"){
 				status = .accepted
 			}
 			

@@ -186,6 +186,11 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		}
 	}
 	
+	private func resortElementsAndReloadView(){
+		self._contentToDisplay = self._allUsers.sorted { $0.distanceFromUser < $1.distanceFromUser }
+		self._collectionNode.reloadSections(IndexSet(integer:0))
+	}
+	
 	// gets all users (should filter by distance? paginate?)
 	private func populateUsers(){
 		let activityIndicatorSize = (activityIndicatorView?.size)!
@@ -193,54 +198,55 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		                                      y: (ez.screenHeight - activityIndicatorSize) / 2,
 		                                      width: activityIndicatorSize, height: activityIndicatorSize);
 		
-		let geoFire = GeoFire(firebaseRef: FirebaseService.rootReference)
-		let locationRef = FirebaseService.usersReference.child(FirebaseService.currentUserId).child("location")
+		let geoFire = GeoFire(firebaseRef: FirebaseService.locationsReference)
 		
 		observeUserLocation().then { userLocation -> Void in
 			let kilometerRadius: Double = 10
 			let query = geoFire?.query(at: userLocation, withRadius: kilometerRadius)
+			self._allUsers = [User]()
 			
+			// if a user enters the range, add to list
 			query?.observe(.keyEntered, with: { (key: String?, location: CLLocation?) in
-				// TODO implement user fetching from here
-			})
-		}.catch { _ in }
-		
-		// TODO: move this inside geoFire query
-		usersRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
-			if let snapshotDictionary = snapshot.value as? NSDictionary{
-
-				// sets a new section				
-				var promises = [Promise<Void>]()
-				self._allUsers = [User]()
-				
-				for _ in 0...0{
-					for (_, snapshotValue) in snapshotDictionary{
-						if let userDictionary = snapshotValue as? NSDictionary{
-							let user = User(fromNSDictionary: userDictionary)
-							if (user.id == FirebaseService.currentUserId){
-								continue;
-							}
-							promises.append(self.getFriendshipStatusFor(user: user))
-							self._allUsers.append(user)
-						}
-					}
+				if (key == FirebaseService.currentUserId){
+					//return
 				}
-			
-				when(resolved: promises).then(execute: { _ -> Void in
-					self._contentToDisplay = self._allUsers.sorted { $0.distanceFromUser < $1.distanceFromUser }
-					
-					// change reload data to something else?
-					self._collectionNode.reloadSections(IndexSet(integer:0))
-					//self._collectionNode.view.contentOffset = CGPoint(x: 0, y: 75)
+				
+				self.getUserByKey(key!).then(execute: { user -> Promise<User> in
+					return self.getFriendshipStatusFor(user: user)
+				}).then(execute: { user -> Void in
+					self._allUsers.append(user)
+					self.resortElementsAndReloadView()
 					self.activityIndicatorView?.stopAnimating()
 				}).catch(execute: { _ in })
-			}
+			})
 			
+			// if a user leaves the range, remove from list
+			query?.observe(.keyExited, with: { (key: String?, location: CLLocation?) in
+				for (idx, user) in self._allUsers.enumerated(){
+					if (user.id == key){
+						self._allUsers.remove(at: idx)
+						self.resortElementsAndReloadView()
+						return
+					}
+				}
+			})
+		}.catch { _ in }
+	}
+	
+	// get user by userId
+	private func getUserByKey(_ userId: String) -> Promise<User>{
+		return Promise{ fulfill, reject in
+			usersRef.child(userId).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
+				if let userDictionary = snapshot.value as? NSDictionary{
+					let user = User(fromNSDictionary: userDictionary)
+					fulfill(user)
+				}
+			}
 		}
 	}
 	
 	// get friendship status of user
-	private func getFriendshipStatusFor(user: User) -> Promise<Void>{
+	private func getFriendshipStatusFor(user: User) -> Promise<User>{
 		
 		return Promise{ fulfill, reject in
 			// query to friend relationship
@@ -266,7 +272,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 					user.friendshipStatus = .noRelationship
 				}
 				
-				fulfill()
+				fulfill(user)
 			}
 		}
 	}
