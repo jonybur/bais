@@ -210,7 +210,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	
 	internal func editCountryPickerNodeDidClosePicker(country: String, code: String) {
 		showCountryPicker = false
-		user.nationality = country
+		user.countryCode = code
 		let idxPath = [IndexPath(item: 2, section:0)]
 		tableNode.deleteRows(at: idxPath, with: .fade)
 		let idxPathToReload = [IndexPath(item: 1, section:0), IndexPath(item: 2, section:0)]

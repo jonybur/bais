@@ -35,6 +35,11 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		super.init(nibName: nil, bundle: nil);
 		layout.delegate = self
 		
+		let activityIndicatorSize = (activityIndicatorView?.size)!
+		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - activityIndicatorSize) / 2,
+		                                      y: (ez.screenHeight - activityIndicatorSize) / 2,
+		                                      width: activityIndicatorSize, height: activityIndicatorSize);
+		
 		extendedLayoutIncludesOpaqueBars = true
 		
 		_collectionNode.dataSource = self;
@@ -74,7 +79,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-		let header = BAUsersHeaderCellNode()
+		let header = BAUsersHeaderCellNode(with: CurrentUser.user.country)
 		header.delegate = self
 		return header
 	}
@@ -108,7 +113,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 			var idxToDelete = [IndexPath]()
 			
 			for user in _allUsers {
-				if (user.nationality == "Spain"){
+				if (user.country == CurrentUser.user.country){
 					let idxPath = IndexPath(item: countryToDisplay.count, section: 0)
 					idxToReload.append(idxPath)
 					countryToDisplay.append(user)
@@ -193,11 +198,6 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	
 	// gets all users (should filter by distance? paginate?)
 	private func populateUsers(){
-		let activityIndicatorSize = (activityIndicatorView?.size)!
-		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - activityIndicatorSize) / 2,
-		                                      y: (ez.screenHeight - activityIndicatorSize) / 2,
-		                                      width: activityIndicatorSize, height: activityIndicatorSize);
-		
 		let geoFire = GeoFire(firebaseRef: FirebaseService.locationsReference)
 		
 		observeUserLocation().then { userLocation -> Void in
@@ -208,7 +208,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 			// if a user enters the range, add to list
 			query?.observe(.keyEntered, with: { (key: String?, location: CLLocation?) in
 				if (key == FirebaseService.currentUserId){
-					//return
+					return
 				}
 				
 				self.getUserByKey(key!).then(execute: { user -> Promise<User> in

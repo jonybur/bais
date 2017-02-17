@@ -15,7 +15,6 @@ final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSo
 BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizerDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
-	var user = User()
 	var userObserver: FIRDatabaseReference?
 	
 	var tableNode: ASTableNode {
@@ -37,20 +36,16 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		FirebaseService.getCurrentUser().then { user -> Void in
-			self.user = user
-		}.catch { _ in }
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		userObserver = FirebaseService.usersReference.child(user.id)
+		userObserver = FirebaseService.usersReference.child(CurrentUser.user.id)
 		
 		userObserver?.observe(.value, with: { snapshot in
 			let user = User(fromSnapshot: snapshot)
-			self.user = user
+			CurrentUser.user = user
 			self.tableNode.reloadRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
 		})
 	}
@@ -68,7 +63,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		let item = indexPath.item
 		
 		if (item == 0){
-			let headerCellNode = BASettingsHeaderCellNode(with: user)
+			let headerCellNode = BASettingsHeaderCellNode(with: CurrentUser.user)
 			headerCellNode.delegate = self
 			return headerCellNode
 		} else if (item == 1){
@@ -112,7 +107,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	//MARK: - BASettingsHeaderNodeDelegate methods
 	
 	func settingsHeaderNodeDidClickEditButton(){
-		let editProfileController = BAEditProfileController(with: user, as: .settings)
+		let editProfileController = BAEditProfileController(with: CurrentUser.user, as: .settings)
 		navigationController?.pushViewController(editProfileController, animated: true)
 	}
 	

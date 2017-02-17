@@ -10,29 +10,28 @@ import Foundation
 import Firebase
 import CoreLocation
 
-class CurrentUser{
-	
+class CurrentUser {
 	open static var location: CLLocation?
-
-	/*
-	thisUserRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
-		CurrentUser.instance = User(fromSnapshot: snapshot);
-	}
-	*/
+	open static var user: User!
 }
 
 class User{
 	
-	var id: String = ""
+	var id = ""
 	var age: Int = 23
-	var facebookId: String = ""
-	var firstName: String = ""
-	var lastName: String = ""
-	var nationality: String = ""
-	var lastMessage: String = ""
-	var about: String = ""
-	var profilePicture: String = ""
-	var location: CLLocation = CLLocation()
+	var facebookId = ""
+	var firstName = ""
+	var lastName = ""
+	var countryCode = ""
+	var lastMessage = ""
+	var about = ""
+	var profilePicture = ""
+	var location = CLLocation()
+	var country: String{
+		get{
+			return "Country"
+		}
+	}
 	let imageRatio: CGFloat = (1.3...1.5).random()
 	var friendshipStatus: FriendshipStatus = .undefined
 	
@@ -67,7 +66,7 @@ class User{
 		self.facebookId = dictionary["facebook_id"] as! String
 		self.firstName = dictionary["first_name"] as! String
 		self.lastName = dictionary["last_name"] as! String
-		self.nationality = dictionary["nationality"] as! String
+		self.countryCode = dictionary["country_code"] as! String
 		self.profilePicture = dictionary["profile_picture"] as! String
 		
 		if let about = dictionary["about"] as? String{

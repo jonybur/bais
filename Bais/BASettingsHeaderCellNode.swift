@@ -52,7 +52,7 @@ class BASettingsHeaderCellNode: ASCellNode{
 			NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		nationalityNode.attributedText = NSAttributedString(string: user.nationality, attributes: distanceAttributes)
+		nationalityNode.attributedText = NSAttributedString(string: user.country, attributes: distanceAttributes)
 		nationalityNode.maximumNumberOfLines = 1
 		
 		editButtonNode.addTarget(self, action: #selector(editPressed(_:)), forControlEvents: .touchUpInside)

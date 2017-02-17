@@ -25,17 +25,15 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		
 		automaticallyAdjustsScrollViewInsets = false
 		
-		self.title = ""
-		self.tabBar.shadowImage = UIImage(named: "transparent")
-		self.tabBar.backgroundImage = UIImage(named: "transparent")
-		self.tabBar.isTranslucent = true
-		self.tabBar.alpha = 0.9
-		//self.tabBar.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 0.6)
+		title = ""
+		tabBar.shadowImage = UIImage(named: "transparent")
+		tabBar.backgroundImage = UIImage(named: "transparent")
+		tabBar.isTranslucent = true
+		tabBar.alpha = 0.9
+		view.backgroundColor = ColorPalette.white
 		
-		self.navigationController?.setNavigationBarHidden(true, animated: false)
-		
-		setBATabBarController()
-		
+		navigationController?.setNavigationBarHidden(true, animated: false)
+
 		locationManager.delegate = self
 		let authorizationStatus = CLLocationManager.authorizationStatus()
 		switch(authorizationStatus){
@@ -59,6 +57,21 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		default:
 			break
 		}
+		
+		// maybe add a loading here?
+		FirebaseService.getCurrentUser().then { user -> Void in
+			
+			// load interface after getting user
+			// this allows us to check wether user has location, etc.
+			if (user.country != ""){
+				self.setBATabBarController()
+			} else {
+				// if user does not have nationality set up (this resolves closing the app before finishing registation bug)
+				let createUserScreen = BAEditProfileController(with: user, as: .create)
+				self.navigationController?.pushViewController(createUserScreen, animated: true)
+			}
+			
+		}.catch { _ in }
 	}
 	
 	private func setBATabBarController(){
@@ -84,14 +97,14 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		
 		
 		let controllers = [v1, v2, v3, v4]
-		self.viewControllers = controllers
+		viewControllers = controllers
 		
-		self.selectedIndex = 0
+		selectedIndex = 0
 	}
 	
 	open override func viewDidAppear(_ animated: Bool) {
-		self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-		self.navigationController?.setNavigationBarHidden(true, animated: true)
+		navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+		navigationController?.setNavigationBarHidden(true, animated: true)
 		UIApplication.shared.statusBarStyle = .default
 		guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
 		statusBar.backgroundColor = ColorPalette.white

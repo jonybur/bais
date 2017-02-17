@@ -22,6 +22,7 @@ class BAUsersHeaderCellNode: ASCellNode {
 	let buttonNode = ASButtonNode()
 	var currentMode: UsersDisplayMode = .distance
 	var blockButton: Bool = false
+	var location: String?
 	
 	enum UsersDisplayMode: String{
 		case distance = "distance", country = "country"
@@ -36,8 +37,10 @@ class BAUsersHeaderCellNode: ASCellNode {
 		}
 	}
 	
-	override init() {
+	init(with location: String) {
 		super.init()
+		
+		self.location = location
 		
 		let nameAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
@@ -80,7 +83,6 @@ class BAUsersHeaderCellNode: ASCellNode {
 	
 //MARK: - BAUsersHeaderCellNodeDelegate methods
 	func buttonPressed(_ sender: UIButton){
-		
 		if (blockButton){
 			return
 		}
@@ -92,7 +94,7 @@ class BAUsersHeaderCellNode: ASCellNode {
 		
 		switch (currentMode) {
 		case .distance:
-			nameNode.attributedText = NSAttributedString(string: "Only Argentina", attributes: nameAttributes)
+			nameNode.attributedText = NSAttributedString(string: "Only " + location!, attributes: nameAttributes)
 			buttonNode.setImage(UIImage(named:"distance-button"), for: [])
 			break
 		case .country:

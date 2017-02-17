@@ -28,6 +28,7 @@ class FirebaseService{
 		return Promise{ fulfill, reject in
 			usersReference.child(userID).observeSingleEvent(of: .value, with: { snapshot in
 				let user = User(fromSnapshot: snapshot)
+				CurrentUser.user = user
 				fulfill(user)
 			})
 		}
@@ -70,7 +71,7 @@ class FirebaseService{
 	}
 	
 	static func updateUserNationality(with country: String){
-		usersReference.child(currentUserId).updateChildValues(["nationality": country])
+		usersReference.child(currentUserId).updateChildValues(["country_code": country])
 	}
 	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){
@@ -170,7 +171,7 @@ class FirebaseService{
 										"facebook_id": FBSDKAccessToken.current().userID!,
 										"profile_picture": url.absoluteString,
 										"birthday": "16/06/1993",//nsArray["birthday"] as! String,
-										"nationality": "",
+										"country_code": "",
 										"about": ""
 									]
 									itemRef.updateChildValues(userItem)

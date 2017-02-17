@@ -33,7 +33,7 @@ class BABasicUserInfoCellNode: ASCellNode {
 		distanceNode.attributedText = NSAttributedString(string: distanceString, attributes: distanceAttributes)
 		distanceNode.maximumNumberOfLines = 1
 		
-		nationalityNode.attributedText = NSAttributedString(string: user.nationality, attributes: distanceAttributes)
+		nationalityNode.attributedText = NSAttributedString(string: user.country, attributes: distanceAttributes)
 		nationalityNode.maximumNumberOfLines = 1
 			
 		self.addSubnode(nameAndAgeNode)

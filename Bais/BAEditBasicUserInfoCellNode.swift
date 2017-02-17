@@ -37,8 +37,8 @@ class BAEditBasicUserInfoCellNode: ASCellNode {
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		var nationalityText = ""
-		if (user.nationality.characters.count > 0 && user.nationality != ""){
-			nationalityText = user.nationality
+		if (user.countryCode.characters.count > 0 && user.countryCode != ""){
+			nationalityText = user.country
 		} else if (allowsCountryEditing) {
 			nationalityText = "Where are you from?"
 		}

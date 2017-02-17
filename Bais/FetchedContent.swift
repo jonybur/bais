@@ -10,6 +10,6 @@ import Foundation
 
 class FetchedContent{
 
-	static var instagramMedia : [InstagramMedia] = [InstagramMedia]()
+	static var instagramMedia = [InstagramMedia]()
 	
 }
