@@ -119,9 +119,12 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 					countryToDisplay.append(user)
 				}
 			}
-			for idx in idxToReload.count..._allUsers.count - 1{
-				let idxPath = IndexPath(item: idx, section: 0)
-				idxToDelete.append(idxPath)
+			
+			if (idxToReload.count < _allUsers.count){
+				for idx in idxToReload.count..._allUsers.count - 1{
+					let idxPath = IndexPath(item: idx, section: 0)
+					idxToDelete.append(idxPath)
+				}
 			}
 			
 			_contentToDisplay = countryToDisplay.sorted { $0.distanceFromUser < $1.distanceFromUser }

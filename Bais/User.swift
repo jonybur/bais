@@ -29,7 +29,10 @@ class User{
 	var location = CLLocation()
 	var country: String{
 		get{
-			return "Country"
+			if let countryName = Locale.init(identifier: "en_US").localizedString(forRegionCode: countryCode) {
+				return countryName
+			}
+			return ""
 		}
 	}
 	let imageRatio: CGFloat = (1.3...1.5).random()
