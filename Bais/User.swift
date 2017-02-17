@@ -18,7 +18,7 @@ class CurrentUser {
 class User{
 	
 	var id = ""
-	var age: Int = 23
+	var age: Int = 0
 	var facebookId = ""
 	var firstName = ""
 	var lastName = ""
@@ -27,6 +27,9 @@ class User{
 	var about = ""
 	var profilePicture = ""
 	var location = CLLocation()
+	let imageRatio: CGFloat = (1.3...1.5).random()
+	var friendshipStatus: FriendshipStatus = .undefined
+	
 	var country: String{
 		get{
 			if let countryName = Locale.init(identifier: "en_US").localizedString(forRegionCode: countryCode) {
@@ -35,15 +38,21 @@ class User{
 			return ""
 		}
 	}
-	let imageRatio: CGFloat = (1.3...1.5).random()
-	var friendshipStatus: FriendshipStatus = .undefined
-	
-	func fullName()->String{
-		return firstName + " " + lastName;
+	var fullName: String{
+		get{
+			return firstName + " " + lastName;
+		}
+	}
+	var fullNameConfidential: String{
+		get{
+			return firstName + " " + String(lastName.characters.first!) + ".";
+		}
 	}
 	
-	func fullNameConfidential()->String{
-		return firstName + " " + String(lastName.characters.first!) + ".";
+	var distanceFromUser: Double{
+		get {
+			return location.distance(from: (CurrentUser.location!))
+		}
 	}
 	
 	convenience init (fromNSDictionary : NSDictionary){
@@ -55,12 +64,6 @@ class User{
 		self.init()
 		if let dictionary = fromSnapshot.value as? NSDictionary{
 			self.setValuesFromDictionary(dictionary)
-		}
-	}
-	
-	var distanceFromUser: Double{
-		get {
-			return location.distance(from: (CurrentUser.location!))
 		}
 	}
 	

@@ -90,7 +90,7 @@ class BAUsersCellNode: ASCellNode {
 			return gradient
 		})
 		
-		flagNode.image = UIImage(named: user.country)
+		flagNode.image = UIImage(named: user.countryCode)
 		
 		imageNode.clipsToBounds = true;
 		
