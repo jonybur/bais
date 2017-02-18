@@ -11,7 +11,7 @@ import AsyncDisplayKit
 import Firebase
 import PromiseKit
 
-final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, BAChatHeaderCellNodeDelegate {
+final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, BAChatHeaderCellNodeDelegate, BAFriendRequestCellNodeDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var _usersToDisplay = [User]()
@@ -77,6 +77,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
 		if (showRequests){
 			let chatNode = BAFriendRequestCellNode(with: user)
+			chatNode.delegate = self
 			return chatNode
 		}
 		
@@ -102,9 +103,16 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
 			// TODO kill request
+			FirebaseService.denyFriendRequestFrom(friendId: "")
 		}
 		removeAction.backgroundColor = ColorPalette.orange
 		return [removeAction]
+	}
+	
+//MARK: - BAFriendRequestCellNodeDelegate methods
+	
+	func friendRequestCellNodeAcceptedInvitation(_ friendRequestCellNode: BAFriendRequestCellNode) {
+		FirebaseService.acceptFriendRequestFrom(friendId: friendRequestCellNode.cardUser.id)
 	}
 	
 //MARK: - BAChatHeaderCellNodeDelegate

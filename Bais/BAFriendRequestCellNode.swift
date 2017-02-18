@@ -9,14 +9,18 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol BAFriendRequestCellNodeDelegate: class {
+	func friendRequestCellNodeAcceptedInvitation(_ friendRequestCellNode: BAFriendRequestCellNode)
+}
+
 class BAFriendRequestCellNode: ASCellNode {
 	
 	// add accept / reject
-	
 	var cardUser: User!
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
 	let acceptButtonNode = ASButtonNode()
+	weak var delegate: BAFriendRequestCellNodeDelegate?
 	
 	required init(with user: User) {
 		super.init()
@@ -46,10 +50,15 @@ class BAFriendRequestCellNode: ASCellNode {
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAttributes)
 		
 		acceptButtonNode.setTitle("ACCEPT", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold), with: ColorPalette.grey, for: [])
+		acceptButtonNode.addTarget(self, action: #selector(self.pressedAcceptButton(_:)), forControlEvents: .touchUpInside)
 		
 		addSubnode(imageNode)
 		addSubnode(nameNode)
 		addSubnode(acceptButtonNode)
+	}
+	
+	func pressedAcceptButton(_ sender: UIButton){
+		delegate?.friendRequestCellNodeAcceptedInvitation(self)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
