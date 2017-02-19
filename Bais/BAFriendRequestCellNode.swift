@@ -19,6 +19,7 @@ class BAFriendRequestCellNode: ASCellNode {
 	var cardUser: User!
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
+	var acceptButtonEnabled = true
 	let acceptButtonNode = ASButtonNode()
 	weak var delegate: BAFriendRequestCellNodeDelegate?
 	
@@ -50,7 +51,10 @@ class BAFriendRequestCellNode: ASCellNode {
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAttributes)
 		
 		acceptButtonNode.setTitle("ACCEPT", with: UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold), with: ColorPalette.grey, for: [])
-		acceptButtonNode.addTarget(self, action: #selector(self.pressedAcceptButton(_:)), forControlEvents: .touchUpInside)
+		acceptButtonNode.addTarget(self, action: #selector(pressedAcceptButton(_:)), forControlEvents: .touchUpInside)
+		acceptButtonNode.addTarget(self, action: #selector(buttonBlocker(_:)), forControlEvents: .touchDragInside)
+		acceptButtonNode.addTarget(self, action: #selector(buttonBlocker(_:)), forControlEvents: .touchDragOutside)
+		acceptButtonNode.addTarget(self, action: #selector(buttonUnlocker(_:)), forControlEvents: .touchUpOutside)
 		
 		addSubnode(imageNode)
 		addSubnode(nameNode)
@@ -58,7 +62,19 @@ class BAFriendRequestCellNode: ASCellNode {
 	}
 	
 	func pressedAcceptButton(_ sender: UIButton){
-		delegate?.friendRequestCellNodeAcceptedInvitation(self)
+		if (acceptButtonEnabled){
+			delegate?.friendRequestCellNodeAcceptedInvitation(self)
+		} else {
+			acceptButtonEnabled = true
+		}
+	}
+	
+	func buttonUnlocker(_ sender: UIButton){
+		acceptButtonEnabled = true
+	}
+	
+	func buttonBlocker(_ sender: UIButton){
+		acceptButtonEnabled = false
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

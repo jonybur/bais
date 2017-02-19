@@ -27,6 +27,7 @@ enum ChatDisplayMode: String{
 final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, BAChatHeaderCellNodeDelegate, BAFriendRequestCellNodeDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
+	// also, change this to dictionaries String:User
 	var _usersToDisplay = [User]()
 	var _friends = [User]()
 	var _requests = [User]()
@@ -185,7 +186,21 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")
 		
 		userFriendsRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
-			print("changed")
+			let userId = snapshot.key
+			let status = self.parseFriendStatus(from: snapshot)
+			
+			// if status is accepted, move to friends, remove from requests
+			if (status == .accepted){
+				for (idx, user) in self._requests.enumerated(){
+					if (user.id == userId){
+						self._friends.append(user)
+						self._requests.remove(at: idx)
+						self.selectDisplayMode()
+						return
+					}
+				}
+			}
+			
 		}
 		userFriendsRef.observe(.childMoved) { (snapshot: FIRDataSnapshot!) in
 			print("moved")
@@ -194,33 +209,17 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			print("removed")
 		}
 		userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
-			if let relationshipsDictionary = snapshot.value as? NSDictionary {
-			}
+			// promises get resolved when all users are complete
+			self.getSingleUser(from: snapshot).then(execute: { user -> Void in
+				// got user
+				if (user.friendshipStatus == .accepted){
+					self._friends.append(user)
+				} else if (user.friendshipStatus == .invitationReceived){
+					self._requests.append(user)
+				}
+				self.selectDisplayMode()
+			}).catch(execute: { _ in })
 		}
-		
-		// grabs all my friends
-		// TODO: should suscribe to a childAdded after the .value
-		userFriendsRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
-			if let relationshipsDictionary = snapshot.value as? NSDictionary {
-				
-				// promises get resolved when all users are complete
-				let promises = self.getAllUsers(from: relationshipsDictionary)
-				
-				// once all the users are downloaded...
-				when(resolved: promises).then(execute: { _ -> Void in
-					
-					// should pick how to display
-					for user in self._friends{
-						self.observeLastMessage(of: user.id)
-					}
-					
-					self.selectDisplayMode()
-					
-				}).catch(execute: { _ in
-					print("Error at observeFriends")
-				})
-			}
-		});
 	}
 	
 	private func selectDisplayMode(){
@@ -240,45 +239,43 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		tableNode.reloadData()
 	}
 	
-	private func getAllUsers(from relationshipsDictionary: NSDictionary) -> [Promise<Void>]{
-		var promises = [Promise<Void>]()
-		
-		for relationship in relationshipsDictionary{
-			let friendId = String(describing: relationship.key)
-			let relationshipAttributes = relationship.value as! NSDictionary
-			let relationshipStatus = relationshipAttributes["status"] as! String
-			let relationshipPostedBy = relationshipAttributes["postedBy"] as! String
-			
-			var status: FriendshipStatus?
-			
-			if (relationshipStatus == "invited"){
-				if (relationshipPostedBy == FirebaseService.currentUserId){
-					status = .invitationReceived
-				} else {
-					status = .invitationSent
-				}
-			} else if (relationshipStatus == "accepted"){
-				status = .accepted
-			}
+	// refactor this
+	private func getSingleUser(from relationshipSnapshot: FIRDataSnapshot) -> Promise<User>{
+		return Promise{ fulfill, reject in
+			let status = parseFriendStatus(from: relationshipSnapshot)
+			let friendId = String(describing: relationshipSnapshot.key)
 			
 			if (status == .accepted || status == .invitationReceived) {
 				// if it's a friend, or was invited by someone, create the chat card
-				let promise = self.getUser(with: friendId).then(execute: { user -> Void in
+				self.getUser(with: friendId).then(execute: { user -> Void in
 					// get user
-					user.friendshipStatus = status!
-					if (status == .accepted){
-						self._friends.append(user)
-					} else if (status == .invitationReceived){
-						self._requests.append(user)
-					}
-				})
-				promises.append(promise)
+					user.friendshipStatus = status
+					fulfill(user)
+				}).catch(execute: { _ in })
 			}
 		}
-		
-		return promises
 	}
 	
+	private func parseFriendStatus(from relationshipSnapshot: FIRDataSnapshot) -> FriendshipStatus{
+		guard let relationshipAttributes = relationshipSnapshot.value as? NSDictionary else { return .undefined }
+
+		let relationshipStatus = relationshipAttributes["status"] as! String
+		let relationshipPostedBy = relationshipAttributes["postedBy"] as! String
+		var status: FriendshipStatus = .undefined
+		
+		if (relationshipStatus == "invited"){
+			if (relationshipPostedBy == FirebaseService.currentUserId){
+				status = .invitationSent
+			} else {
+				status = .invitationReceived
+			}
+		} else if (relationshipStatus == "accepted"){
+			status = .accepted
+		}
+		
+		return status
+	}
+
 	private func getUser(with userId: String) -> Promise<User>{
 		return Promise{ fulfill, reject in
 			let userQuery = FirebaseService.usersReference.child(userId)
