@@ -20,38 +20,21 @@ class BAChatHeaderCellNode: ASCellNode {
 	weak var delegate: BAChatHeaderCellNodeDelegate?
 	let nameNode = ASTextNode()
 	let buttonNode = ASButtonNode()
-	var currentMode: ChatDisplayMode = .friends
-	var blockButton: Bool = false
+	var mode: ChatDisplayMode = .friends
+	var blockButton = false
 	
-	enum ChatDisplayMode: String{
-		case friends = "friends", requests = "requests"
-		
-		func next() -> ChatDisplayMode {
-			switch self {
-			case .friends:
-				return .requests;
-			default:
-				return .friends;
-			}
-		}
-	}
-	
-	required override init() {
+	init(with mode: ChatDisplayMode) {
 		super.init()
 		
-		let nameAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
-			NSForegroundColorAttributeName: ColorPalette.grey]
+		self.mode = mode
 		
-		nameNode.attributedText = NSAttributedString(string: "My Friends", attributes: nameAttributes)
-		buttonNode.setImage(UIImage(named:"empty-invites-button"), for: [])
-
+		setDisplayMode()
 		buttonNode.addTarget(self, action: #selector(self.buttonPressed(_:)), forControlEvents: .touchUpInside)
 		
-		self.selectionStyle = .none
+		selectionStyle = .none
 
-		self.addSubnode(self.nameNode)
-		addSubnode(self.buttonNode)
+		addSubnode(nameNode)
+		addSubnode(buttonNode)
 	}
 		
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -79,28 +62,32 @@ class BAChatHeaderCellNode: ASCellNode {
 		return insetSpec
 	}
 	
+	func setDisplayMode(){
+		let nameAttributes = [
+			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
+			NSForegroundColorAttributeName: ColorPalette.grey]
+		
+		switch (mode) {
+		case .friends:
+			nameNode.attributedText = NSAttributedString(string: "My Friends", attributes: nameAttributes)
+			buttonNode.setImage(UIImage(named:"empty-invites-button"), for: [])
+			break
+		case .requests:
+			nameNode.attributedText = NSAttributedString(string: "Friend Requests", attributes: nameAttributes)
+			buttonNode.setImage(UIImage(named:"messages-button"), for: [])
+			break
+		}
+	}
+	
 	//MARK: - BAChatHeaderCellNodeDelegate methods
 	func buttonPressed(_ sender: UIButton){
-		
 		if (blockButton){
 			return
 		}
 		blockButton = true
 		
-		let nameAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
-			NSForegroundColorAttributeName: ColorPalette.grey]
-		
-		switch (currentMode) {
-		case .requests:
-			nameNode.attributedText = NSAttributedString(string: "My Friends", attributes: nameAttributes)
-			buttonNode.setImage(UIImage(named:"empty-invites-button"), for: [])
-			break
-		case .friends:
-			nameNode.attributedText = NSAttributedString(string: "Friend Requests", attributes: nameAttributes)
-			buttonNode.setImage(UIImage(named:"messages-button"), for: [])
-			break
-		}
+		mode = mode.next()
+		setDisplayMode()
 		
 		// animates the check
 		let spring = POPSpringAnimation(propertyNamed: kPOPViewScaleXY);
@@ -110,8 +97,6 @@ class BAChatHeaderCellNode: ASCellNode {
 			self.blockButton = !self.blockButton
 		}
 		sender.pop_add(spring, forKey: "sendAnimation");
-		
-		currentMode = currentMode.next()
 		
 		delegate?.chatHeaderCellNodeDidClickButton(self);
 	}

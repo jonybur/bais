@@ -11,13 +11,26 @@ import AsyncDisplayKit
 import Firebase
 import PromiseKit
 
+enum ChatDisplayMode: String{
+	case friends = "friends", requests = "requests"
+	
+	func next() -> ChatDisplayMode {
+		switch self {
+		case .friends:
+			return .requests
+		case .requests:
+			return .friends
+		}
+	}
+}
+
 final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, BAChatHeaderCellNodeDelegate, BAFriendRequestCellNodeDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var _usersToDisplay = [User]()
 	var _friends = [User]()
 	var _requests = [User]()
-	var showRequests: Bool = false
+	var displayMode: ChatDisplayMode!
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -52,12 +65,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
 		let user = _usersToDisplay[indexPath.item - 1]
 		
-		if (showRequests){
+		if (displayMode == .requests){
+			// taps request
 			self.navigationController?.pushViewController(BAProfileController(with: user), animated: true)
 			self.tableNode.deselectRow(at: indexPath, animated: true)
 			return
 		}
 		
+		// taps friend (opens chat)
 		self.navigationController?.pushViewController(BAChatController(with: user), animated: true)
 		self.tableNode.deselectRow(at: indexPath, animated: true)
 	}
@@ -68,14 +83,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		let item = indexPath.item
 		
 		if (item == 0){
-			let headerNode = BAChatHeaderCellNode()
+			let headerNode = BAChatHeaderCellNode(with: displayMode)
 			headerNode.delegate = self
 			return headerNode
 		}
 		
 		let user = _usersToDisplay[item - 1]
 		
-		if (showRequests){
+		if (displayMode == .requests){
 			let chatNode = BAFriendRequestCellNode(with: user)
 			chatNode.delegate = self
 			return chatNode
@@ -90,11 +105,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		return self._usersToDisplay.count > 0 ? self._usersToDisplay.count + 1 : 0;
+		if (displayMode != nil){
+			return self._usersToDisplay.count > 0 ? self._usersToDisplay.count + 1 : 1
+		}
+		return 0
 	}
 	
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		if (indexPath.item == 0 || !showRequests){
+		if (indexPath.item == 0 || displayMode == .friends){
 			return false
 		}
 		return true
@@ -103,7 +121,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
 			// TODO kill request
-			FirebaseService.denyFriendRequestFrom(friendId: "")
+			FirebaseService.denyFriendRequestFrom(friendId: self._usersToDisplay[indexPath.item - 1].id)
 		}
 		removeAction.backgroundColor = ColorPalette.orange
 		return [removeAction]
@@ -118,23 +136,31 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 //MARK: - BAChatHeaderCellNodeDelegate
 	
 	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode) {
-		if (showRequests){
-			_usersToDisplay = _friends
-		} else {
+		displayMode = displayMode?.next()
+		
+		if (displayMode == .requests){
 			_usersToDisplay = _requests
+		} else if (displayMode == .friends){
+			_usersToDisplay = _friends
 		}
 		
-		let tableRows = tableNode.numberOfRows(inSection: 0)-1
-		if (tableRows < _usersToDisplay.count){
+		// adds the header to the final count
+		let elementsToDisplay = _usersToDisplay.count + 1
+		// current row count
+		let tableRows = tableNode.numberOfRows(inSection: 0)
+		
+		if (tableRows < elementsToDisplay){
+			// need to add more rows to make up for elementsToDisplay
 			var idxToInsert = [IndexPath]()
-			for idx in tableRows..._usersToDisplay.count-1{
+			for idx in tableRows...elementsToDisplay-1{
 				let idxPath = IndexPath(item:idx, section:0)
 				idxToInsert.append(idxPath)
 			}
 			tableNode.insertRows(at: idxToInsert, with: .fade)
-		} else if (_usersToDisplay.count < tableRows){
+		} else if (elementsToDisplay < tableRows){
+			// need to remove rows to make up for elementsToDisplay
 			var idxToRemove = [IndexPath]()
-			for idx in _usersToDisplay.count+1...tableRows{
+			for idx in elementsToDisplay...tableRows - 1{
 				let idxPath = IndexPath(item:idx, section:0)
 				idxToRemove.append(idxPath)
 			}
@@ -142,12 +168,12 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		
 		var idxToReload = [IndexPath]()
-		for idx in 1..._usersToDisplay.count{
-			let idxPath = IndexPath(row: idx, section: 0)
-			idxToReload.append(idxPath)
+		if (elementsToDisplay > 1){
+			for idx in 1...elementsToDisplay-1{
+				let idxPath = IndexPath(row: idx, section: 0)
+				idxToReload.append(idxPath)
+			}
 		}
-		
-		showRequests = !showRequests
 		tableNode.reloadRows(at: idxToReload, with: .fade)
 	}
 	
@@ -157,7 +183,21 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	private func observeFriends() {
 		let userId = FirebaseService.currentUserId
 		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")
-				
+		
+		userFriendsRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
+			print("changed")
+		}
+		userFriendsRef.observe(.childMoved) { (snapshot: FIRDataSnapshot!) in
+			print("moved")
+		}
+		userFriendsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
+			print("removed")
+		}
+		userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
+			if let relationshipsDictionary = snapshot.value as? NSDictionary {
+			}
+		}
+		
 		// grabs all my friends
 		// TODO: should suscribe to a childAdded after the .value
 		userFriendsRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
@@ -166,18 +206,38 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				// promises get resolved when all users are complete
 				let promises = self.getAllUsers(from: relationshipsDictionary)
 				
+				// once all the users are downloaded...
 				when(resolved: promises).then(execute: { _ -> Void in
-					self._usersToDisplay = self._friends
-					self.tableNode.reloadData()
 					
+					// should pick how to display
 					for user in self._friends{
 						self.observeLastMessage(of: user.id)
 					}
+					
+					self.selectDisplayMode()
+					
 				}).catch(execute: { _ in
 					print("Error at observeFriends")
 				})
 			}
 		});
+	}
+	
+	private func selectDisplayMode(){
+		
+		if (_friends.count == 0 && _requests.count == 0){
+			// show empty message
+		} else if (_friends.count == 0){
+			// show requests
+			_usersToDisplay = _requests
+			displayMode = .requests
+		} else if (_requests.count == 0){
+			// show friends
+			_usersToDisplay = _friends
+			displayMode = .friends
+		}
+		
+		tableNode.reloadData()
 	}
 	
 	private func getAllUsers(from relationshipsDictionary: NSDictionary) -> [Promise<Void>]{
@@ -240,7 +300,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				for (idx, user) in self._usersToDisplay.enumerated(){
 					if (user.id == userId){
 						user.lastMessage = messageString
-						print (self.tableNode.numberOfRows(inSection: 0))
 						self.tableNode.reloadRows(at: [IndexPath(item: idx + 1, section: 0)], with: .fade)
 						return
 					}
