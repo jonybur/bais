@@ -13,6 +13,7 @@ import CoreLocation
 
 class Session{
 	var id = ""
+	var lastMessage = ""
 	var participants = [User]()
 	var messages = [Message]()
 	
@@ -20,13 +21,15 @@ class Session{
 		self.init()
 		self.id = snapshot.key
 		
-		guard let dictionary = snapshot.value as? NSDictionary else { return }
-		self.setValuesFromDictionary(dictionary)
+		//guard let dictionary = snapshot.value as? NSDictionary else { return }
+		//self.setValuesFromDictionary(dictionary)
 	}
 	
+	/*
 	private func setValuesFromDictionary(_ dictionary: NSDictionary){
-		print("stop")
+		
 	}
+	*/
 	
 	func loadParticipants(from snapshot: FIRDataSnapshot) -> Promise<Void>{
 		return Promise{ fulfill, reject in

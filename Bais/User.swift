@@ -65,7 +65,7 @@ class User{
 		}
 	}
 	
-	private func setValuesFromDictionary(_ dictionary : NSDictionary){
+	private func setValuesFromDictionary(_ dictionary: NSDictionary){
 		self.id = dictionary["id"] as! String
 		self.facebookId = dictionary["facebook_id"] as! String
 		self.firstName = dictionary["first_name"] as! String

@@ -55,7 +55,7 @@ class BAChatCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		lastMessageNode.attributedText = NSAttributedString(string: "", attributes: lastMessageAttributes)
+		lastMessageNode.attributedText = NSAttributedString(string: session.lastMessage, attributes: lastMessageAttributes)
 		
 		addSubnode(imageNode)
 		addSubnode(nameNode)
@@ -66,6 +66,9 @@ class BAChatCellNode: ASCellNode {
 		// imagen
 		let imagePlace = ASRatioLayoutSpec(ratio: 1, child: imageNode)
 		imagePlace.style.maxWidth = ASDimension(unit: .points, value: 60)
+		
+		lastMessageNode.style.maxWidth = ASDimension(unit: .points, value: 275)
+		lastMessageNode.maximumNumberOfLines = 1
 		
 		// vertical stack
 		let verticalStack = ASStackLayoutSpec()

@@ -229,6 +229,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		let userSessionsRef = FirebaseService.usersReference.child(userId).child("sessions")
 		userSessionsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
 			FirebaseService.getSession(from: snapshot.key).then(execute: { session -> Void in
+				
+				self.observeLastMessage(of: session.id)
 				self._sessions.append(session)
 				self.selectDisplayMode()
 
@@ -251,22 +253,22 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 
 	
-	/*private func observeLastMessage(of userId: String){
+	private func observeLastMessage(of sessionId: String){
 		// queries to last message
-		let messageQuery = FirebaseService.messagesReference.child(FirebaseService.currentUserId).child(userId).queryLimited(toLast: 1)
+		let messageQuery = FirebaseService.sessionsReference.child(sessionId).child("messages").queryLimited(toLast: 1)
 		messageQuery.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
 			if let message = snapshot.value as? NSDictionary{
 				let messageString = message["text"] as! String
-				for (idx, user) in self._usersToDisplay.enumerated(){
-					if (user.id == userId){
-						user.lastMessage = messageString
+				for (idx, session) in self._sessions.enumerated(){
+					if (session.id == sessionId){
+						session.lastMessage = messageString
 						self.tableNode.reloadRows(at: [IndexPath(item: idx + 1, section: 0)], with: .fade)
 						return
 					}
 				}
 			}
 		}
-	}*/
+	}
 	
 	
 }
