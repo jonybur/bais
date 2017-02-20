@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 class BAChatCellNode: ASCellNode {
 	
-	var cardUser: User!
+	var user: User!
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
 	let lastMessageNode = ASTextNode()
@@ -19,7 +19,7 @@ class BAChatCellNode: ASCellNode {
 	required init(with user: User) {
 		super.init()
 		
-		cardUser = user
+		self.user = user
 		
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
 		imageNode.shouldRenderProgressImages = true

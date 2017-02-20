@@ -16,7 +16,6 @@ class CurrentUser {
 }
 
 class User{
-	
 	var id = ""
 	var age: Int = 0
 	var facebookId = ""
@@ -79,9 +78,9 @@ class User{
 			self.about = about
 		}
 		
-		if let locationDictionary = dictionary["location"] as? NSDictionary{
-			let latitude = locationDictionary["lat"] as! Double
-			let longitude = locationDictionary["lon"] as! Double
+		if let locationArray = dictionary["location"] as? NSArray{
+			let latitude = locationArray[0] as! Double
+			let longitude = locationArray[1] as! Double
 			self.location = CLLocation(latitude: latitude, longitude: longitude)
 		}
 	}

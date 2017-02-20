@@ -12,14 +12,14 @@ import Firebase
 import PromiseKit
 
 enum ChatDisplayMode: String{
-	case friends = "friends", requests = "requests"
+	case sessions = "sessions", requests = "requests"
 	
 	func next() -> ChatDisplayMode {
 		switch self {
-		case .friends:
+		case .sessions:
 			return .requests
 		case .requests:
-			return .friends
+			return .sessions
 		}
 	}
 }
@@ -29,7 +29,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	// also, change this to dictionaries String:User
 	var _usersToDisplay = [User]()
-	var _friends = [User]()
+	var _sessions = [User]()
 	var _requests = [User]()
 	var displayMode: ChatDisplayMode!
 	
@@ -113,7 +113,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 	
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		if (indexPath.item == 0 || displayMode == .friends){
+		if (indexPath.item == 0 || displayMode == .sessions){
 			return false
 		}
 		return true
@@ -141,8 +141,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
 		if (displayMode == .requests){
 			_usersToDisplay = _requests
-		} else if (displayMode == .friends){
-			_usersToDisplay = _friends
+		} else if (displayMode == .sessions){
+			_usersToDisplay = _sessions
 		}
 		
 		// adds the header to the final count
@@ -182,6 +182,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	// gets friends and reloads table after getting all information
 	private func observeFriends() {
+		
+		// user friends
 		let userId = FirebaseService.currentUserId
 		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")
 		
@@ -189,11 +191,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			let userId = snapshot.key
 			let status = self.parseFriendStatus(from: snapshot)
 			
-			// if status is accepted, move to friends, remove from requests
+			// if status is accepted, remove from requests
 			if (status == .accepted){
 				for (idx, user) in self._requests.enumerated(){
 					if (user.id == userId){
-						self._friends.append(user)
 						self._requests.remove(at: idx)
 						self.selectDisplayMode()
 						return
@@ -210,44 +211,55 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
 			// promises get resolved when all users are complete
-			self.getSingleUser(from: snapshot).then(execute: { user -> Void in
+			self.getUser(from: snapshot).then(execute: { user -> Void in
 				// got user
-				if (user.friendshipStatus == .accepted){
-					self._friends.append(user)
-				} else if (user.friendshipStatus == .invitationReceived){
+				if (user.friendshipStatus == .invitationReceived){
 					self._requests.append(user)
 				}
 				self.selectDisplayMode()
 			}).catch(execute: { _ in })
 		}
+		
+		// user sessions
+		let userSessionsRef = FirebaseService.usersReference.child(userId).child("sessions")
+		userSessionsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
+			print("KEY: " + snapshot.key)
+			
+			self.getSession(from: snapshot.key)
+		}
+	}
+	
+	private func getSession(from id: String){
+		FirebaseService.sessionsReference.child(id).observe(.value, with: { snapshot in
+			let session = Session(from: snapshot)
+			print("stop")
+		})
 	}
 	
 	private func selectDisplayMode(){
-		
-		if (_friends.count == 0 && _requests.count == 0){
+		if (_sessions.count == 0 && _requests.count == 0){
 			// show empty message
-		} else if (_friends.count == 0){
+		} else if (_sessions.count == 0){
 			// show requests
 			_usersToDisplay = _requests
 			displayMode = .requests
 		} else if (_requests.count == 0){
 			// show friends
-			_usersToDisplay = _friends
-			displayMode = .friends
+			_usersToDisplay = _sessions
+			displayMode = .sessions
 		}
 		
 		tableNode.reloadData()
 	}
 	
 	// refactor this
-	private func getSingleUser(from relationshipSnapshot: FIRDataSnapshot) -> Promise<User>{
+	private func getUser(from relationshipSnapshot: FIRDataSnapshot) -> Promise<User>{
+		let status = parseFriendStatus(from: relationshipSnapshot)
 		return Promise{ fulfill, reject in
-			let status = parseFriendStatus(from: relationshipSnapshot)
 			let friendId = String(describing: relationshipSnapshot.key)
-			
 			if (status == .accepted || status == .invitationReceived) {
 				// if it's a friend, or was invited by someone, create the chat card
-				self.getUser(with: friendId).then(execute: { user -> Void in
+				self.getUserAttributes(with: friendId).then(execute: { user -> Void in
 					// get user
 					user.friendshipStatus = status
 					fulfill(user)
@@ -260,7 +272,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		guard let relationshipAttributes = relationshipSnapshot.value as? NSDictionary else { return .undefined }
 
 		let relationshipStatus = relationshipAttributes["status"] as! String
-		let relationshipPostedBy = relationshipAttributes["postedBy"] as! String
+		let relationshipPostedBy = relationshipAttributes["posted_by"] as! String
 		var status: FriendshipStatus = .undefined
 		
 		if (relationshipStatus == "invited"){
@@ -276,7 +288,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		return status
 	}
 
-	private func getUser(with userId: String) -> Promise<User>{
+	private func getUserAttributes(with userId: String) -> Promise<User>{
 		return Promise{ fulfill, reject in
 			let userQuery = FirebaseService.usersReference.child(userId)
 			userQuery.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in

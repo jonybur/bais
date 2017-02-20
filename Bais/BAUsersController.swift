@@ -185,9 +185,9 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		return Promise{ fulfill, reject in
 			let locationRef = FirebaseService.usersReference.child(FirebaseService.currentUserId).child("location");
 			locationRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
-				if let dict = snapshot.value as? NSDictionary{
-					let latitude = dict["lat"] as! Double
-					let longitude = dict["lon"] as! Double
+				if let locationArray = snapshot.value as? NSArray{
+					let latitude = locationArray[0] as! Double
+					let longitude = locationArray[1] as! Double
 					fulfill(CLLocation(latitude: latitude, longitude: longitude))
 				}
 			});
@@ -262,7 +262,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 					let status = relationship["status"] as! String
 					
 					if (status == "invited"){
-						let postedBy = relationship["postedBy"] as! String
+						let postedBy = relationship["posted_by"] as! String
 						if (postedBy == FirebaseService.currentUserId){
 							user.friendshipStatus = .invitationReceived
 						} else {

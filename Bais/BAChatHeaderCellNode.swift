@@ -20,7 +20,7 @@ class BAChatHeaderCellNode: ASCellNode {
 	weak var delegate: BAChatHeaderCellNodeDelegate?
 	let nameNode = ASTextNode()
 	let buttonNode = ASButtonNode()
-	var mode: ChatDisplayMode = .friends
+	var mode: ChatDisplayMode = .sessions
 	var blockButton = false
 	
 	init(with mode: ChatDisplayMode) {
@@ -68,8 +68,8 @@ class BAChatHeaderCellNode: ASCellNode {
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		switch (mode) {
-		case .friends:
-			nameNode.attributedText = NSAttributedString(string: "My Friends", attributes: nameAttributes)
+		case .sessions:
+			nameNode.attributedText = NSAttributedString(string: "My Messages", attributes: nameAttributes)
 			buttonNode.setImage(UIImage(named:"empty-invites-button"), for: [])
 			break
 		case .requests:

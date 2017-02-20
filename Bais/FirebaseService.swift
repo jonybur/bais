@@ -21,6 +21,7 @@ class FirebaseService{
 	static let rootReference = FIRDatabase.database().reference()
 	static let locationsReference = FIRDatabase.database().reference().child("locations")
 	static let usersReference = FIRDatabase.database().reference().child("users")
+	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
 	static let messagesReference = FIRDatabase.database().reference().child("messages")
 	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-79d67.appspot.com")
 	
@@ -76,14 +77,12 @@ class FirebaseService{
 	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){
 		let geoFire = GeoFire(firebaseRef: locationsReference)
-		let locationRef = usersReference.child(currentUserId).child("location")
 		
-		let value = [
-			"lon": location.longitude,
-			"lat": location.latitude
-		]
+		let locationValue = [location.latitude, location.longitude]
+		let value = ["location": locationValue]
 		
-		locationRef.updateChildValues(value)
+		usersReference.child(currentUserId).updateChildValues(value)
+		
 		geoFire?.setLocation(CLLocation(latitude: location.latitude, longitude: location.longitude), forKey: currentUserId)
 		CurrentUser.location = CLLocation(latitude: location.latitude, longitude: location.longitude)
 	}
@@ -103,10 +102,29 @@ class FirebaseService{
 	
 	static func acceptFriendRequestFrom(friendId: String){
 		setFriendStatusWith(friendId, to: .accepted)
+		// create session
+		startSessionWith(friendId)
 	}
 	
 	static func sendFriendRequestTo(friendId: String){
 		setFriendStatusWith(friendId, to: .invitationSent)
+	}
+	
+	private static func startSessionWith(_ friendId: String){
+		// create session on /sessions
+		let users =
+			[currentUserId: true,
+			 friendId: true]
+		let value = [
+			"participants": users
+		] as [String : Any]
+		let selfRef = sessionsReference.childByAutoId()
+		selfRef.updateChildValues(value)
+		
+		let sessionValue = [
+			selfRef.key: true
+		]
+		usersReference.child(currentUserId).child("sessions").updateChildValues(sessionValue)
 	}
 	
 	private static func setFriendStatusWith(_ friendId: String, to status: FriendshipStatus){
@@ -121,7 +139,7 @@ class FirebaseService{
 		case .invitationSent:
 			value = [
 				"status": "invited",
-				"postedBy": currentUserId
+				"posted_by": currentUserId
 			]
 			break
 		default: break

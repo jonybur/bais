@@ -61,6 +61,8 @@
 		ABB9F3071D9170C600E01511 /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DC1D9170C600E01511 /* WebAPI.swift */; };
 		ABCBDA461DA78B670001AC59 /* BAProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCBDA451DA78B670001AC59 /* BAProfileController.swift */; };
 		ABD158E11E511C68007C4163 /* BAEditCountryPickerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */; };
+		ABDAB5291E5A7B9A0067FBB5 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDAB5281E5A7B9A0067FBB5 /* Session.swift */; };
+		ABDAB52B1E5A7C1E0067FBB5 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDAB52A1E5A7C1E0067FBB5 /* Message.swift */; };
 		ABEB8DA61E5301510089000C /* BADetailActionButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB8DA51E5301510089000C /* BADetailActionButtonNode.swift */; };
 		ABEB8DA81E5302560089000C /* BADetailBackButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */; };
 		ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF08B221D916E5400C6B832 /* AppDelegate.swift */; };
@@ -127,6 +129,8 @@
 		ABB9F2DC1D9170C600E01511 /* WebAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
 		ABCBDA451DA78B670001AC59 /* BAProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAProfileController.swift; sourceTree = "<group>"; };
 		ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEditCountryPickerCellNode.swift; sourceTree = "<group>"; };
+		ABDAB5281E5A7B9A0067FBB5 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		ABDAB52A1E5A7C1E0067FBB5 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		ABDEC2131DCFDD0800484759 /* Bais.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bais.entitlements; sourceTree = "<group>"; };
 		ABEB8DA51E5301510089000C /* BADetailActionButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BADetailActionButtonNode.swift; sourceTree = "<group>"; };
 		ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BADetailBackButtonNode.swift; sourceTree = "<group>"; };
@@ -334,6 +338,8 @@
 				ABB9F2C41D9170C600E01511 /* Event.swift */,
 				ABB9F2D21D9170C600E01511 /* Place.swift */,
 				AB4F5D761D98EB4F003586B2 /* User.swift */,
+				ABDAB5281E5A7B9A0067FBB5 /* Session.swift */,
+				ABDAB52A1E5A7C1E0067FBB5 /* Message.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -628,6 +634,7 @@
 				AB6A25C21E46A3DF00661BCF /* BACalendarHeaderCellNode.swift in Sources */,
 				ABB9F2EC1D9170C600E01511 /* ColorPalette.swift in Sources */,
 				ABA234541E4D883600CBAF53 /* BAEditDescriptionCellNode.swift in Sources */,
+				ABDAB5291E5A7B9A0067FBB5 /* Session.swift in Sources */,
 				ABB9F2FD1D9170C600E01511 /* Place.swift in Sources */,
 				ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */,
 				ABB9F2DF1D9170C600E01511 /* Utilities.swift in Sources */,
@@ -653,6 +660,7 @@
 				AB3D33A41E4598CE0058547A /* BABasicUserInfoCellNode.swift in Sources */,
 				AB18B30F1E4C1B05001C294B /* BASettingsButtonElementCellNode.swift in Sources */,
 				ABB9F3051D9170C600E01511 /* UIRepeatingVideo.swift in Sources */,
+				ABDAB52B1E5A7C1E0067FBB5 /* Message.swift in Sources */,
 				ABB9F2F71D9170C600E01511 /* InstagramUser.swift in Sources */,
 				ABEB8DA61E5301510089000C /* BADetailActionButtonNode.swift in Sources */,
 			);
