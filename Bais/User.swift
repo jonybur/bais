@@ -22,7 +22,6 @@ class User{
 	var firstName = ""
 	var lastName = ""
 	var countryCode = ""
-	var lastMessage = ""
 	var about = ""
 	var profilePicture = ""
 	var location = CLLocation()

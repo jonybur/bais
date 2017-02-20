@@ -22,11 +22,21 @@ class FirebaseService{
 	static let locationsReference = FIRDatabase.database().reference().child("locations")
 	static let usersReference = FIRDatabase.database().reference().child("users")
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
-	static let messagesReference = FIRDatabase.database().reference().child("messages")
 	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-79d67.appspot.com")
 	
 	enum ImagePurpose: String{
 		case profilePicture = "profile_picture"
+	}
+	
+	static func sendMessage(_ message: Message, to session: Session) -> String{
+		let value = [
+			"sender_id": message.senderId,
+			"text": message.text,
+			"timestamp": FIRServerValue.timestamp()
+		] as [String : Any]
+		let reference = sessionsReference.child(session.id).child("messages").childByAutoId()
+		reference.updateChildValues(value)
+		return reference.key
 	}
 	
 	static func getUserFromRelationship(from relationshipSnapshot: FIRDataSnapshot) -> Promise<User>{

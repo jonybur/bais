@@ -250,8 +250,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		tableNode.reloadData()
 	}
 
-	/*
-	private func observeLastMessage(of userId: String){
+	
+	/*private func observeLastMessage(of userId: String){
 		// queries to last message
 		let messageQuery = FirebaseService.messagesReference.child(FirebaseService.currentUserId).child(userId).queryLimited(toLast: 1)
 		messageQuery.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
@@ -266,8 +266,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				}
 			}
 		}
-	}
-	*/
+	}*/
 	
 	
 }

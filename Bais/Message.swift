@@ -7,8 +7,15 @@
 //
 
 import Foundation
+import CoreGraphics
 
 class Message{
-
-
+	var text = ""
+	var senderId = ""
+	var timestamp: CGFloat = 0
+	
+	init(text: String, senderId: String){
+		self.text = text
+		self.senderId = senderId
+	}
 }

@@ -29,7 +29,8 @@ import NMessenger
 
 class BAChatController: NMessengerViewController {
 	
-	var session: Session?
+	var session: Session!
+	var messagesSentByUser = [String:Message]()
 	
 	init(with session: Session){
         super.init()
@@ -49,6 +50,7 @@ class BAChatController: NMessengerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		self.messagePadding = UIEdgeInsets(top: 0, left: 10, bottom: 5, right: 10)
+		observeMessages()
     }
 	
     override func viewDidAppear(_ animated: Bool) {
@@ -56,15 +58,33 @@ class BAChatController: NMessengerViewController {
 		navigationController!.interactivePopGestureRecognizer!.isEnabled = true
 		navigationController!.interactivePopGestureRecognizer!.delegate =  self
     }
-    
-	override func createTextMessage(_ text: String, isIncomingMessage: Bool) -> GeneralMessengerCell {
-		let textMessage = super.createTextMessage(text, isIncomingMessage: isIncomingMessage) as! MessageNode
-		if (!isIncomingMessage){
-			return textMessage
-		}
-		let avatarNode = ASNetworkImageNode()
-		//avatarNode.setURL(URL(string: (user?.profilePicture)!), resetToDefault: false)
-        textMessage.avatarNode = avatarNode
-        return textMessage
-    }
+	
+	func observeMessages(){
+		FirebaseService.sessionsReference.child(session.id).child("messages").observe(.childAdded, with: { snapshot in
+			
+			guard let messageDictionary = snapshot.value as? NSDictionary else { return }
+			
+			if (self.messagesSentByUser[snapshot.key] != nil) {
+				return
+			}
+			
+			let text = messageDictionary["text"] as! String
+			let senderId = messageDictionary["sender_id"] as! String
+			
+			let message = Message(text: text, senderId: senderId)
+			message.timestamp = messageDictionary["timestamp"] as! CGFloat
+			
+			self.session.messages.append(message)
+			
+			_ = super.sendText(text, isIncomingMessage: (FirebaseService.currentUserId != senderId))
+		})
+	}
+	
+	override func sendText(_ text: String, isIncomingMessage: Bool) -> GeneralMessengerCell {
+		let message = Message(text: text, senderId: FirebaseService.currentUserId)
+		let messageKey = FirebaseService.sendMessage(message, to: session)
+		messagesSentByUser.updateValue(message, forKey: messageKey)
+		return super.sendText(text, isIncomingMessage: isIncomingMessage)
+	}
+
 }
