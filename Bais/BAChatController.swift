@@ -29,22 +29,28 @@ import NMessenger
 
 class BAChatController: NMessengerViewController {
 	
-	var user: User?
+	var session: Session?
 	
-	init(with user: User){
+	init(with session: Session){
         super.init()
-		self.user = user
+		self.session = session
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+	
+	override func getInputBar() -> InputBarView{
+		guard let inputBar = super.getInputBar() as? NMessengerBarView else { return InputBarView() }
+		inputBar.inputTextViewPlaceholder = ""
+		return inputBar
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 		self.messagePadding = UIEdgeInsets(top: 0, left: 10, bottom: 5, right: 10)
     }
-    
+	
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 		navigationController!.interactivePopGestureRecognizer!.isEnabled = true
@@ -57,7 +63,7 @@ class BAChatController: NMessengerViewController {
 			return textMessage
 		}
 		let avatarNode = ASNetworkImageNode()
-		avatarNode.setURL(URL(string: (user?.profilePicture)!), resetToDefault: false)
+		//avatarNode.setURL(URL(string: (user?.profilePicture)!), resetToDefault: false)
         textMessage.avatarNode = avatarNode
         return textMessage
     }

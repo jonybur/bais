@@ -25,22 +25,70 @@ class FirebaseService{
 	static let messagesReference = FIRDatabase.database().reference().child("messages")
 	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-79d67.appspot.com")
 	
+	enum ImagePurpose: String{
+		case profilePicture = "profile_picture"
+	}
+	
+	static func getUserFromRelationship(from relationshipSnapshot: FIRDataSnapshot) -> Promise<User>{
+		let status = parseFriendStatus(from: relationshipSnapshot)
+		return Promise{ fulfill, reject in
+			let friendId = String(describing: relationshipSnapshot.key)
+			FirebaseService.getUser(with: friendId).then(execute: { user -> Void in
+				// get user
+				user.friendshipStatus = status
+				fulfill(user)
+			}).catch(execute: { _ in })
+		}
+	}
+	
+	static func parseFriendStatus(from relationshipSnapshot: FIRDataSnapshot) -> FriendshipStatus{
+		guard let relationshipAttributes = relationshipSnapshot.value as? NSDictionary else { return .undefined }
+		
+		let relationshipStatus = relationshipAttributes["status"] as! String
+		let relationshipPostedBy = relationshipAttributes["posted_by"] as! String
+		var status: FriendshipStatus = .undefined
+		
+		if (relationshipStatus == "invited"){
+			if (relationshipPostedBy == FirebaseService.currentUserId){
+				status = .invitationSent
+			} else {
+				status = .invitationReceived
+			}
+		} else if (relationshipStatus == "accepted"){
+			status = .accepted
+		}
+		
+		return status
+	}
+	
+	static func getSession(from id: String) -> Promise<Session>{
+		return Promise{ fulfill, reject in
+			sessionsReference.child(id).observe(.value, with: { snapshot in
+				let session = Session(from: snapshot)
+				// fulfill after all users get fetched
+				session.loadParticipants(from: snapshot).then(execute: { void -> Void in
+					fulfill(session)
+				}).catch(execute: { _ in })
+			})
+		}
+	}
+
 	static func getUser(with userID: String) -> Promise<User>{
 		return Promise{ fulfill, reject in
 			usersReference.child(userID).observeSingleEvent(of: .value, with: { snapshot in
 				let user = User(fromSnapshot: snapshot)
-				CurrentUser.user = user
 				fulfill(user)
 			})
 		}
 	}
 	
 	static func getCurrentUser() -> Promise<User>{
-		return getUser(with: currentUserId)
-	}
-	
-	enum ImagePurpose: String{
-		case profilePicture = "profile_picture"
+		return Promise{ fulfill, reject in
+			getUser(with: currentUserId).then(execute: { user -> Void in
+				CurrentUser.user = user
+				fulfill(user)
+			}).catch(execute: { _ in })
+		}
 	}
 	
 	static func storeImage(_ data: Data, as imagePurpose: ImagePurpose) -> Promise<URL>{
@@ -125,6 +173,8 @@ class FirebaseService{
 			selfRef.key: true
 		]
 		usersReference.child(currentUserId).child("sessions").updateChildValues(sessionValue)
+		usersReference.child(friendId).child("sessions").updateChildValues(sessionValue)
+
 	}
 	
 	private static func setFriendStatusWith(_ friendId: String, to status: FriendshipStatus){

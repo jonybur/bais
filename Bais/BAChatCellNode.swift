@@ -11,17 +11,25 @@ import AsyncDisplayKit
 
 class BAChatCellNode: ASCellNode {
 	
-	var user: User!
+	var session: Session!
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
 	let lastMessageNode = ASTextNode()
 	
-	required init(with user: User) {
+	required init(with session: Session) {
 		super.init()
 		
-		self.user = user
+		self.session = session
 		
-		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
+		var otherUser: User!
+		for user in session.participants{
+			if (user.id != FirebaseService.currentUserId){
+				otherUser = user
+				break
+			}
+		}
+		
+		imageNode.setURL(URL(string: otherUser.profilePicture), resetToDefault: false)
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill
 		imageNode.imageModificationBlock = { image in
@@ -41,13 +49,13 @@ class BAChatCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAttributes)
+		nameNode.attributedText = NSAttributedString(string: otherUser.firstName, attributes: nameAttributes)
 		
 		let lastMessageAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		lastMessageNode.attributedText = NSAttributedString(string: user.lastMessage, attributes: lastMessageAttributes)
+		lastMessageNode.attributedText = NSAttributedString(string: otherUser.lastMessage, attributes: lastMessageAttributes)
 		
 		addSubnode(imageNode)
 		addSubnode(nameNode)

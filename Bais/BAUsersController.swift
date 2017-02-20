@@ -164,8 +164,8 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 			case .invitationReceived:
 				break
 			case .accepted:
-				let chatController = BAChatController(with: user)
-				navigationController?.pushViewController(chatController, animated: true)
+				//let chatController = BAChatController(with: user)
+				//navigationController?.pushViewController(chatController, animated: true)
 				break
 			default:
 				break

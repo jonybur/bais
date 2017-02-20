@@ -7,34 +7,43 @@
 //
 
 import Foundation
+import PromiseKit
 import Firebase
 import CoreLocation
 
 class Session{
 	var id = ""
-	var participants = [String]()
+	var participants = [User]()
 	var messages = [Message]()
 	
 	convenience init (from snapshot: FIRDataSnapshot){
 		self.init()
 		self.id = snapshot.key
-		if let dictionary = snapshot.value as? NSDictionary{
-			self.setValuesFromDictionary(dictionary)
-		}
+		
+		guard let dictionary = snapshot.value as? NSDictionary else { return }
+		self.setValuesFromDictionary(dictionary)
 	}
 	
-	private func setValuesFromDictionary(_ dictionary : NSDictionary){
-
-		guard let participants = dictionary["participants"] as? [String:Bool] else { return }
-		
-		for (id, status) in participants{
-			if (status){
-				self.participants.append(id)
+	private func setValuesFromDictionary(_ dictionary: NSDictionary){
+		print("stop")
+	}
+	
+	func loadParticipants(from snapshot: FIRDataSnapshot) -> Promise<Void>{
+		return Promise{ fulfill, reject in
+			guard let dictionary = snapshot.value as? NSDictionary else { return fulfill() }
+			guard let participants = dictionary["participants"] as? [String:Bool] else { return fulfill() }
+			
+			for (id, status) in participants{
+				if (status){
+					FirebaseService.getUser(with: id).then(execute: { user -> Void in
+						self.participants.append(user)
+						if (participants.count == self.participants.count){
+							fulfill()
+						}
+					}).catch(execute: { _ in })
+				}
 			}
 		}
-		
-		print("stop")
-		
 	}
 	
 }
