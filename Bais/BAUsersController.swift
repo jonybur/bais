@@ -240,10 +240,8 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	private func getUserByKey(_ userId: String) -> Promise<User>{
 		return Promise{ fulfill, reject in
 			usersRef.child(userId).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
-				if let userDictionary = snapshot.value as? NSDictionary{
-					let user = User(fromNSDictionary: userDictionary)
-					fulfill(user)
-				}
+				let user = User(from: snapshot)
+				fulfill(user)
 			}
 		}
 	}

@@ -44,7 +44,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		userObserver = FirebaseService.usersReference.child(CurrentUser.user.id)
 		
 		userObserver?.observe(.value, with: { snapshot in
-			let user = User(fromSnapshot: snapshot)
+			let user = User(from: snapshot)
 			CurrentUser.user = user
 			self.tableNode.reloadRows(at: [IndexPath(item: 0, section: 0)], with: .fade)
 		})

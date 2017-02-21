@@ -117,11 +117,11 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		
 		alert.addAction(UIAlertAction(title: "Unfriend " + user.firstName, style: .default, handler: { action in
-			
+			self.unmatchAction(user)
 		}))
 		
 		alert.addAction(UIAlertAction(title: "Report " + user.firstName, style: .default, handler: { action in
-			
+			self.reportAction(user)
 		}))
 		
 		alert.addAction(UIAlertAction(title: "Show " + user.firstName + "'s Profile", style: .default, handler: { action in
@@ -132,6 +132,32 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		
 		present(alert, animated: true, completion: nil)
+	}
+	
+	func unmatchAction(_ user: User){
+		let alert = UIAlertController(title: "Are you sure?", message: nil, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Unfriend", style: .default, handler: { action in
+			FirebaseService.endFriendRelationshipWith(friendId: user.id, sessionId: self.session.id)
+			_ = self.navigationController?.popViewController(animated: true)
+		}))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		present(alert, animated:true, completion:nil)
+	}
+	
+	func reportAction(_ user: User){
+		let alert = UIAlertController(title: "Report User", message: "Is this person bothering you?\nTell us what they did.", preferredStyle: .alert)
+		alert.addTextField { textField in
+			textField.placeholder = "Additional Info (Optional)"
+			textField.autocapitalizationType = .sentences
+		}
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { action in
+			let textField = alert.textFields![0] as UITextField
+			FirebaseService.sendReport(for: user, reason: textField.text!)
+		}))
+		present(alert, animated:true, completion:nil)
+
 	}
 
 }

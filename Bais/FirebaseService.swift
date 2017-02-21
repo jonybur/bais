@@ -22,10 +22,23 @@ class FirebaseService{
 	static let locationsReference = FIRDatabase.database().reference().child("locations")
 	static let usersReference = FIRDatabase.database().reference().child("users")
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
+	static let reportsReference = FIRDatabase.database().reference().child("reports")
 	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-79d67.appspot.com")
 	
 	enum ImagePurpose: String{
 		case profilePicture = "profile_picture"
+	}
+	
+	static func sendReport(for user: User, reason: String){
+		let value = [
+			"user_id": user.id,
+			"reported_by": currentUserId,
+			"reason": reason,
+			"timestamp": FIRServerValue.timestamp()
+			] as [String : Any]
+		
+		let reference = reportsReference.childByAutoId()
+		reference.updateChildValues(value)
 	}
 	
 	static func sendMessage(_ message: Message, to session: Session) -> String{
@@ -86,7 +99,7 @@ class FirebaseService{
 	static func getUser(with userID: String) -> Promise<User>{
 		return Promise{ fulfill, reject in
 			usersReference.child(userID).observeSingleEvent(of: .value, with: { snapshot in
-				let user = User(fromSnapshot: snapshot)
+				let user = User(from: snapshot)
 				fulfill(user)
 			})
 		}
@@ -145,12 +158,17 @@ class FirebaseService{
 		CurrentUser.location = CLLocation(latitude: location.latitude, longitude: location.longitude)
 	}
 	
-	static func endFriendRelationshipWith(friendId: String){
-		let selfRef = usersReference.child(currentUserId).child("friends").child(friendId)
-		let friendRef = usersReference.child(friendId).child("friends").child(currentUserId)
-	
-		selfRef.removeValue()
-		friendRef.removeValue()
+	static func endFriendRelationshipWith(friendId: String, sessionId: String){
+		let selfRef = usersReference.child(currentUserId)
+		let friendRef = usersReference.child(friendId)
+		
+		// kills relationship
+		selfRef.child("friends").child(friendId).removeValue()
+		friendRef.child("friends").child(currentUserId).removeValue()
+		
+		// kills chat session
+		selfRef.child("sessions").child(sessionId).removeValue()
+		friendRef.child("sessions").child(sessionId).removeValue()
 	}
 	
 	static func denyFriendRequestFrom(friendId: String){
@@ -243,7 +261,6 @@ class FirebaseService{
 									let messageRef = usersReference
 									let itemRef = messageRef.child(user.uid)
 									let userItem = [
-										"id": user.uid,
 										"first_name": nsArray["first_name"] as! String,
 										"last_name": nsArray["last_name"] as! String,
 										"facebook_id": FBSDKAccessToken.current().userID!,

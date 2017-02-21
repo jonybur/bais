@@ -53,20 +53,15 @@ class User{
 		}
 	}
 	
-	convenience init (fromNSDictionary : NSDictionary){
+	convenience init (from snapshot: FIRDataSnapshot){
 		self.init()
-		self.setValuesFromDictionary(fromNSDictionary)
-	}
-	
-	convenience init (fromSnapshot : FIRDataSnapshot){
-		self.init()
-		if let dictionary = fromSnapshot.value as? NSDictionary{
-			self.setValuesFromDictionary(dictionary)
+		if let dictionary = snapshot.value as? NSDictionary{
+			self.setValuesFromDictionary(dictionary, key: snapshot.key)
 		}
 	}
 	
-	private func setValuesFromDictionary(_ dictionary: NSDictionary){
-		self.id = dictionary["id"] as! String
+	private func setValuesFromDictionary(_ dictionary: NSDictionary, key id: String){
+		self.id = id
 		self.facebookId = dictionary["facebook_id"] as! String
 		self.firstName = dictionary["first_name"] as! String
 		self.lastName = dictionary["last_name"] as! String

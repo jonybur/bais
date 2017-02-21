@@ -212,7 +212,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			print("moved")
 		}
 		userFriendsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
-			print("removed")
+			print("removed friend")
+			
+			/*
+			Snap (wfirvSwVRyWhltK1i1gWsXEyuyR2) {
+				"posted_by" = wfirvSwVRyWhltK1i1gWsXEyuyR2;
+				status = accepted;
+			}
+			*/
 		}
 		userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
 			// promises get resolved when all users are complete
@@ -229,12 +236,16 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		let userSessionsRef = FirebaseService.usersReference.child(userId).child("sessions")
 		userSessionsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
 			FirebaseService.getSession(from: snapshot.key).then(execute: { session -> Void in
-				
 				self.observeLastMessage(of: session.id)
 				self._sessions.append(session)
 				self.selectDisplayMode()
-
 			}).catch(execute: { _ in })
+		}
+		
+		userSessionsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
+			print("removed session")
+			
+			//Snap (-KdXrYvc8mjdlIzktpNq) 1
 		}
 	}
 
