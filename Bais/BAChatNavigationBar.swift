@@ -23,10 +23,12 @@ class BAChatNavigationBar: ASCellNode {
 	let nameNode = ASTextNode()
 	let settingsButtonNode = ASButtonNode()
 	let profileButtonNode = ASButtonNode()
+	var user: User?
 	weak var delegate: BAChatNavigationBarDelegate?
 	
 	required init(with user: User){
 		super.init()
+		self.user = user
 		imageNode.setURL(URL(string: user.profilePicture), resetToDefault: false)
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill
@@ -59,8 +61,6 @@ class BAChatNavigationBar: ASCellNode {
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAttributes)
 		
 		profileButtonNode.addTarget(self, action: #selector(profileButtonPressed(_:)), forControlEvents: .touchUpInside)
-		profileButtonNode.backgroundColor = .red
-		profileButtonNode.alpha = 0.5
 		
 		addSubnode(backButtonNode)
 		addSubnode(imageNode)

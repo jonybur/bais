@@ -27,7 +27,7 @@ import AsyncDisplayKit
 import FirebaseAuth
 import NMessenger
 
-class BAChatController: NMessengerViewController {
+class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 	
 	var session: Session!
 	var messagesSentByUser = [String:Message]()
@@ -56,6 +56,7 @@ class BAChatController: NMessengerViewController {
 		for user in session.participants{
 			if (user.id != FirebaseService.currentUserId){
 				let navBar = BAChatNavigationBar(with: user)
+				navBar.delegate = self
 				navBar.frame = CGRect(x: 0, y: 0, width: ez.screenWidth, height: 70)
 				self.view.addSubnode(navBar)
 				break
@@ -95,6 +96,42 @@ class BAChatController: NMessengerViewController {
 		let messageKey = FirebaseService.sendMessage(message, to: session)
 		messagesSentByUser.updateValue(message, forKey: messageKey)
 		return super.sendText(text, isIncomingMessage: isIncomingMessage)
+	}
+	
+	// BAChatNavigationBarDelegate methods
+	
+	func chatNavigationBarTapBack(_ chatNavigationBar: BAChatNavigationBar) {
+		_ = self.navigationController?.popViewController(animated: true)
+	}
+	
+	func chatNavigationBarTapProfile(_ chatNavigationBar: BAChatNavigationBar) {
+		guard let user = chatNavigationBar.user else { return }
+		
+		let controller = BAProfileController(with: user)
+		navigationController?.pushViewController(controller, animated: true)
+	}
+	
+	func chatNavigationBarTapSettings(_ chatNavigationBar: BAChatNavigationBar) {
+		guard let user = chatNavigationBar.user else { return }
+
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		
+		alert.addAction(UIAlertAction(title: "Unfriend " + user.firstName, style: .default, handler: { action in
+			
+		}))
+		
+		alert.addAction(UIAlertAction(title: "Report " + user.firstName, style: .default, handler: { action in
+			
+		}))
+		
+		alert.addAction(UIAlertAction(title: "Show " + user.firstName + "'s Profile", style: .default, handler: { action in
+			let controller = BAProfileController(with: user)
+			self.navigationController?.pushViewController(controller, animated: true)
+		}))
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		
+		present(alert, animated: true, completion: nil)
 	}
 
 }
