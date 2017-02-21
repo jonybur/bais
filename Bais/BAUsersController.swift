@@ -255,24 +255,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 				.child(FirebaseService.currentUserId).child("friends").child(user.id)
 			
 			relationshipQuery.observe(.value) { (snapshot: FIRDataSnapshot!) in
-				
-				if let relationship = snapshot.value as? NSDictionary{
-					let status = relationship["status"] as! String
-					
-					if (status == "invited"){
-						let postedBy = relationship["posted_by"] as! String
-						if (postedBy == FirebaseService.currentUserId){
-							user.friendshipStatus = .invitationReceived
-						} else {
-							user.friendshipStatus = .invitationSent
-						}
-					} else {
-						user.friendshipStatus = .accepted
-					}
-				} else {
-					user.friendshipStatus = .noRelationship
-				}
-				
+				user.friendshipStatus = FirebaseService.parseFriendStatus(from: snapshot)
 				fulfill(user)
 			}
 		}

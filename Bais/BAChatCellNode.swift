@@ -28,7 +28,9 @@ class BAChatCellNode: ASCellNode {
 				break
 			}
 		}
-		
+		// FATAL BUG:
+		//	 otherUser == nil
+		//	 session.participants.count == 0
 		imageNode.setURL(URL(string: otherUser.profilePicture), resetToDefault: false)
 		imageNode.shouldRenderProgressImages = true
 		imageNode.contentMode = .scaleAspectFill
