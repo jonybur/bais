@@ -49,8 +49,18 @@ class BAChatController: NMessengerViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
 		self.messagePadding = UIEdgeInsets(top: 0, left: 10, bottom: 5, right: 10)
 		observeMessages()
+		
+		for user in session.participants{
+			if (user.id != FirebaseService.currentUserId){
+				let navBar = BAChatNavigationBar(with: user)
+				navBar.frame = CGRect(x: 0, y: 0, width: ez.screenWidth, height: 70)
+				self.view.addSubnode(navBar)
+				break
+			}
+		}
     }
 	
     override func viewDidAppear(_ animated: Bool) {
