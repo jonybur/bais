@@ -31,7 +31,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	//var _usersToDisplay = [User]()
 	var _sessions = [Session]()
 	var _requests = [User]()
-	var displayMode: ChatDisplayMode!
+	var displayMode: ChatDisplayMode = .sessions//: ChatDisplayMode!
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -141,7 +141,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 //MARK: - BAChatHeaderCellNodeDelegate
 	
 	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode) {
-		displayMode = displayMode?.next()
+		displayMode = displayMode.next()
 		
 		// adds the header to the final count
 		
@@ -201,7 +201,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				for (idx, user) in self._requests.enumerated(){
 					if (user.id == userId){
 						self._requests.remove(at: idx)
-						self.selectDisplayMode()
+						if (self.displayMode == .requests){
+							let idxPath = IndexPath(row: idx + 1, section: 0)
+							self.tableNode.deleteRows(at: [idxPath], with: .fade)
+						}
 						return
 					}
 				}
@@ -212,15 +215,17 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			print("moved")
 		}
 		userFriendsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
-			print("removed friend")
-			
-			
-			/*
-			Snap (wfirvSwVRyWhltK1i1gWsXEyuyR2) {
-				"posted_by" = wfirvSwVRyWhltK1i1gWsXEyuyR2;
-				status = accepted;
+			for (idx, request) in self._requests.enumerated(){
+				if (request.id == snapshot.key){
+					self._requests.remove(at: idx)
+					if(self.displayMode == .requests){
+						let idxPath = IndexPath(row: idx + 1, section: 0)
+						self.tableNode.deleteRows(at: [idxPath], with: .fade)
+					}
+					return
+				}
 			}
-			*/
+			
 		}
 		userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
 			// promises get resolved when all users are complete
@@ -228,9 +233,11 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				// got user
 				if (user.friendshipStatus == .invitationReceived){
 					self._requests.append(user)
-					self.selectDisplayMode()
-					
-					// add new row to section
+					if (self.displayMode == .requests){
+						// add new row to section
+						let idxPath = IndexPath(row: self._requests.count, section: 0)
+						self.tableNode.insertRows(at: [idxPath], with: .fade)
+					}
 				}
 			}).catch(execute: { _ in })
 		}
@@ -241,22 +248,20 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			FirebaseService.getSession(from: snapshot.key).then(execute: { session -> Void in
 				self.observeLastMessage(of: session.id)
 				self._sessions.append(session)
-				self.selectDisplayMode()
+				
 			}).catch(execute: { _ in })
 		}
 		
 		userSessionsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
-			print("removed session")
-			
 			//Snap (-KdXrYvc8mjdlIzktpNq) 1
-			
 			for (idx, session) in self._sessions.enumerated(){
 				if (session.id == snapshot.key){
 					self._sessions.remove(at: idx)
 					if(self.displayMode == .sessions){
-						let idxPath = IndexPath(row: idx, section: 0)
+						let idxPath = IndexPath(row: idx + 1, section: 0)
 						self.tableNode.deleteRows(at: [idxPath], with: .fade)
 					}
+					return
 				}
 			}
 			
