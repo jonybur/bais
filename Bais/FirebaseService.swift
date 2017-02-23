@@ -65,11 +65,11 @@ class FirebaseService{
 	}
 	
 	static func parseFriendStatus(from relationshipSnapshot: FIRDataSnapshot) -> FriendshipStatus{
-		guard let relationshipAttributes = relationshipSnapshot.value as? NSDictionary else { return .undefined }
+		guard let relationshipAttributes = relationshipSnapshot.value as? NSDictionary else { return .noRelationship }
 		
 		let relationshipStatus = relationshipAttributes["status"] as! String
 		let relationshipPostedBy = relationshipAttributes["posted_by"] as! String
-		var status: FriendshipStatus = .undefined
+		var status: FriendshipStatus = .noRelationship
 		
 		if (relationshipStatus == "invited"){
 			if (relationshipPostedBy == FirebaseService.currentUserId){

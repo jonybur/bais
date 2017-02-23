@@ -26,7 +26,7 @@ class User{
 	var profilePicture = ""
 	var location = CLLocation()
 	let imageRatio: CGFloat = (1.3...1.5).random()
-	var friendshipStatus: FriendshipStatus = .undefined
+	var friendshipStatus: FriendshipStatus = .noRelationship
 	
 	var country: String{
 		get{

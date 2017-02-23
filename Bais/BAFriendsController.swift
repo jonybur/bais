@@ -214,6 +214,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		userFriendsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
 			print("removed friend")
 			
+			
 			/*
 			Snap (wfirvSwVRyWhltK1i1gWsXEyuyR2) {
 				"posted_by" = wfirvSwVRyWhltK1i1gWsXEyuyR2;
@@ -227,8 +228,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				// got user
 				if (user.friendshipStatus == .invitationReceived){
 					self._requests.append(user)
+					self.selectDisplayMode()
+					
+					// add new row to section
 				}
-				self.selectDisplayMode()
 			}).catch(execute: { _ in })
 		}
 		
@@ -246,6 +249,17 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			print("removed session")
 			
 			//Snap (-KdXrYvc8mjdlIzktpNq) 1
+			
+			for (idx, session) in self._sessions.enumerated(){
+				if (session.id == snapshot.key){
+					self._sessions.remove(at: idx)
+					if(self.displayMode == .sessions){
+						let idxPath = IndexPath(row: idx, section: 0)
+						self.tableNode.deleteRows(at: [idxPath], with: .fade)
+					}
+				}
+			}
+			
 		}
 	}
 
@@ -260,7 +274,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			displayMode = .sessions
 		}
 		
-		tableNode.reloadData()
+		//tableNode.reloadData()
 	}
 
 	

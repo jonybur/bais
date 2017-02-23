@@ -28,6 +28,10 @@ class BAChatCellNode: ASCellNode {
 				break
 			}
 		}
+		
+		if (otherUser == nil){
+			return
+		}
 		// FATAL BUG:
 		//	 otherUser == nil
 		//	 session.participants.count == 0
