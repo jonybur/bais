@@ -243,11 +243,21 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		
 		userFriendsRef.observe(.childChanged, with: { snapshot in
 			guard let dictionary = snapshot.value as? NSDictionary else { return }
+			
+			// snapshot.key is friendKey
+			// snapshot.value["status"]
+			// snapshot.value["posted_by"]
+			
 			print("friend changed " + String(describing: dictionary))
 		})
 		
 		userFriendsRef.observe(.childAdded, with: { snapshot in
 			guard let dictionary = snapshot.value as? NSDictionary else { return }
+			
+			// snapshot.key is friendKey
+			// snapshot.value["status"]
+			// snapshot.value["posted_by"]
+			
 			print("friend added " + String(describing: dictionary))
 		})
 	}
