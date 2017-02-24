@@ -50,7 +50,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.observeFriends()
+		observeFriends()
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {

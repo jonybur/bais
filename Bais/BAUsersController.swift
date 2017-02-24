@@ -64,6 +64,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		observeUserLocation().then { location -> Void in
 			CurrentUser.location = location
 			self.populateUsers()
+			self.observeFriends()
 		} .catch { _ in }
 	}
 	
@@ -234,6 +235,21 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 				}
 			})
 		}.catch { _ in }
+	}
+	
+	private func observeFriends(){
+		let userId = FirebaseService.currentUserId
+		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")
+		
+		userFriendsRef.observe(.childChanged, with: { snapshot in
+			guard let dictionary = snapshot.value as? NSDictionary else { return }
+			print("friend changed " + String(describing: dictionary))
+		})
+		
+		userFriendsRef.observe(.childAdded, with: { snapshot in
+			guard let dictionary = snapshot.value as? NSDictionary else { return }
+			print("friend added " + String(describing: dictionary))
+		})
 	}
 	
 	// get user by userId
