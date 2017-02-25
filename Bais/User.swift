@@ -23,6 +23,7 @@ class User{
 	var lastName = ""
 	var countryCode = ""
 	var about = ""
+	var notificationToken = ""
 	var profilePicture = ""
 	var location = CLLocation()
 	let imageRatio: CGFloat = (1.3...1.5).random()

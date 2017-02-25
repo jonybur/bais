@@ -145,6 +145,13 @@ class FirebaseService{
 		usersReference.child(currentUserId).updateChildValues(["country_code": country])
 	}
 	
+	static func updateUserNotificationToken(){
+		guard let token = FIRInstanceID.instanceID().token() else { return }
+		print("New notification token: " + token)
+		let value = ["notification_token": token]
+		usersReference.child(currentUserId).updateChildValues(value)
+	}
+	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){
 		let geoFire = GeoFire(firebaseRef: locationsReference)
 		

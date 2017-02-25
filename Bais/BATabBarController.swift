@@ -59,6 +59,8 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 			break
 		}
 		
+		FirebaseService.updateUserNotificationToken()
+		
 		// maybe add a loading here?
 		FirebaseService.getCurrentUser().then { user -> Void in
 			// TODO: Use the current user's information
@@ -117,7 +119,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	
 	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		let authorizationStatus = CLLocationManager.authorizationStatus();
-
 		if (authorizationStatus == .authorizedWhenInUse){
 			locationManager.requestLocation();
 		}

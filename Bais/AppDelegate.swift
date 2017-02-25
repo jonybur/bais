@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     let facebookAppId = "819066684896381"
-    let facebookDisplayName = "BAIS"
+    let facebookDisplayName = "Bais"
     
     var navigationController = UINavigationController()
 	
@@ -86,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         
         let handled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
-        application.statusBarStyle = UIStatusBarStyle.lightContent
+        application.statusBarStyle = .lightContent
 
         return handled
     }
@@ -110,6 +110,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 	
+	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+		//Tricky line
+		FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.unknown)
+		FirebaseService.updateUserNotificationToken()
+	}
+		
 	// [START receive_message]
 	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
 	                 fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -127,7 +133,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func tokenRefreshNotification(_ notification: Notification) {
 		if let refreshedToken = FIRInstanceID.instanceID().token() {
 			print("InstanceID token: \(refreshedToken)")
-			print("stop!!");
 		}
 		// Connect to FCM since connection may have failed when attempted before having a token.
 		connectToFcm()

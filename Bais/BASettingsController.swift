@@ -41,7 +41,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		userObserver = FirebaseService.usersReference.child(CurrentUser.user.id)
+		userObserver = FirebaseService.usersReference.child(FirebaseService.currentUserId)
 		
 		userObserver?.observe(.value, with: { snapshot in
 			let user = User(from: snapshot)
