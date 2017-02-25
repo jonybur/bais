@@ -20,6 +20,7 @@ class BAFriendRequestCellNode: ASCellNode {
 	let imageNode = ASNetworkImageNode()
 	let nameNode = ASTextNode()
 	var acceptButtonEnabled = true
+	var acceptButtonLock = false
 	let acceptButtonNode = ASButtonNode()
 	weak var delegate: BAFriendRequestCellNodeDelegate?
 	
@@ -62,8 +63,9 @@ class BAFriendRequestCellNode: ASCellNode {
 	}
 	
 	func pressedAcceptButton(_ sender: UIButton){
-		if (acceptButtonEnabled){
+		if (acceptButtonEnabled && !acceptButtonLock){
 			delegate?.friendRequestCellNodeAcceptedInvitation(self)
+			acceptButtonLock = true
 		} else {
 			acceptButtonEnabled = true
 		}

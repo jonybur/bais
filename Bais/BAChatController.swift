@@ -51,6 +51,7 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
         super.viewDidLoad()
 		messagePadding = UIEdgeInsets(top: 0, left: 10, bottom: 5, right: 10)
 		observeMessages()
+		observeSessionStatus()
 		
 		for user in session.participants{
 			if (user.id != FirebaseService.currentUserId){
@@ -98,7 +99,7 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 		return super.sendText(text, isIncomingMessage: isIncomingMessage)
 	}
 	
-	// BAChatNavigationBarDelegate methods
+//MARK: - Options buttons
 	
 	func chatNavigationBarTapBack(_ chatNavigationBar: BAChatNavigationBar) {
 		_ = self.navigationController?.popViewController(animated: true)
@@ -138,7 +139,6 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 		let alert = UIAlertController(title: "Are you sure?", message: nil, preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Unfriend", style: .default, handler: { action in
 			FirebaseService.endFriendRelationshipWith(friendId: user.id, sessionId: self.session.id)
-			_ = self.navigationController?.popViewController(animated: true)
 		}))
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		present(alert, animated:true, completion:nil)
@@ -157,7 +157,17 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 			FirebaseService.sendReport(for: user, reason: textField.text!)
 		}))
 		present(alert, animated:true, completion:nil)
+	}
+	
+//MARK: - Firebase
 
+	private func observeSessionStatus(){
+		let userSessionsRef = FirebaseService.usersReference.child(FirebaseService.currentUserId).child("sessions")
+		userSessionsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
+			if (snapshot.key == self.session.id){
+				_ = self.navigationController?.popViewController(animated: true)
+			}
+		}
 	}
 
 }

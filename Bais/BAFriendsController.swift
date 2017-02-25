@@ -248,10 +248,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			FirebaseService.getSession(from: snapshot.key).then(execute: { session -> Void in
 				self.observeLastMessage(of: session.id)
 				self._sessions.append(session)
-				
+				if(self.displayMode == .sessions){
+					// add new row to section
+					let idxPath = IndexPath(row: self._sessions.count, section: 0)
+					self.tableNode.insertRows(at: [idxPath], with: .fade)
+				}
 			}).catch(execute: { _ in })
 		}
-		
+	
 		userSessionsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
 			//Snap (-KdXrYvc8mjdlIzktpNq) 1
 			for (idx, session) in self._sessions.enumerated(){
@@ -264,7 +268,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 					return
 				}
 			}
-			
 		}
 	}
 
