@@ -36,7 +36,6 @@ class FirebaseService{
 			"reason": reason,
 			"timestamp": FIRServerValue.timestamp()
 			] as [String : Any]
-		
 		let reference = reportsReference.childByAutoId()
 		reference.updateChildValues(value)
 	}
@@ -46,7 +45,7 @@ class FirebaseService{
 			"sender_id": message.senderId,
 			"text": message.text,
 			"timestamp": FIRServerValue.timestamp()
-		] as [String : Any]
+			] as [String : Any]
 		let reference = sessionsReference.child(session.id).child("messages").childByAutoId()
 		reference.updateChildValues(value)
 		return reference.key
@@ -66,9 +65,9 @@ class FirebaseService{
 	
 	static func parseFriendStatus(from relationshipSnapshot: FIRDataSnapshot) -> FriendshipStatus{
 		guard let relationshipAttributes = relationshipSnapshot.value as? NSDictionary else { return .noRelationship }
+		guard let relationshipStatus = relationshipAttributes["status"] as? String else { return .noRelationship }
+		guard let relationshipPostedBy = relationshipAttributes["posted_by"] as? String else { return .noRelationship }
 		
-		let relationshipStatus = relationshipAttributes["status"] as! String
-		let relationshipPostedBy = relationshipAttributes["posted_by"] as! String
 		var status: FriendshipStatus = .noRelationship
 		
 		if (relationshipStatus == "invited"){

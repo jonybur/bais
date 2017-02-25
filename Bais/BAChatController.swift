@@ -49,8 +49,7 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-		self.messagePadding = UIEdgeInsets(top: 0, left: 10, bottom: 5, right: 10)
+		messagePadding = UIEdgeInsets(top: 0, left: 10, bottom: 5, right: 10)
 		observeMessages()
 		
 		for user in session.participants{
@@ -62,7 +61,8 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 				break
 			}
 		}
-    }
+		
+	}
 	
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

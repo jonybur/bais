@@ -19,7 +19,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 
 	var _contentToDisplay = [User]()
 	var _allUsers = [User]()
-	var showAllUsers: Bool = false
+	var showAllUsers = false
 
 	let _collectionNode: ASCollectionNode!
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
@@ -242,24 +242,43 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")
 		
 		userFriendsRef.observe(.childChanged, with: { snapshot in
-			guard let dictionary = snapshot.value as? NSDictionary else { return }
-			
-			// snapshot.key is friendKey
-			// snapshot.value["status"]
-			// snapshot.value["posted_by"]
-			
-			print("friend changed " + String(describing: dictionary))
+			let friendStatus = FirebaseService.parseFriendStatus(from: snapshot)
+			let userId = snapshot.key
+			self.updateUserFriendshipStatusAndReloadCell(set: friendStatus, to: userId)
 		})
 		
 		userFriendsRef.observe(.childAdded, with: { snapshot in
-			guard let dictionary = snapshot.value as? NSDictionary else { return }
-			
-			// snapshot.key is friendKey
-			// snapshot.value["status"]
-			// snapshot.value["posted_by"]
-			
-			print("friend added " + String(describing: dictionary))
+			let friendStatus = FirebaseService.parseFriendStatus(from: snapshot)
+			let userId = snapshot.key
+			self.updateUserFriendshipStatusAndReloadCell(set: friendStatus, to: userId)
 		})
+		
+		userFriendsRef.observe(.childRemoved, with: { snapshot in
+			let friendStatus: FriendshipStatus = .noRelationship
+			let userId = snapshot.key
+			self.updateUserFriendshipStatusAndReloadCell(set: friendStatus, to: userId)
+		})
+	}
+	
+	private func updateUserFriendshipStatusAndReloadCell(set friendshipStatus: FriendshipStatus, to userId: String){
+		
+		// update on both arrays
+		for user in self._allUsers{
+			if (user.id == userId){
+				user.friendshipStatus = friendshipStatus
+				break
+			}
+		}
+		
+		for (idx, user) in self._contentToDisplay.enumerated(){
+			if (user.id == userId){
+				user.friendshipStatus = friendshipStatus
+				let idxPath = IndexPath(item: idx, section: 0)
+				self._collectionNode.reloadItems(at: [idxPath])
+				self._collectionNode.reloadData()
+				break
+			}
+		}
 	}
 	
 	// get user by userId

@@ -4,6 +4,10 @@ use_frameworks!
 target 'Bais' do
   swift_version = "3.0"
 
+  # developer tools
+  pod 'Fabric'
+  pod 'Crashlytics'
+
   # firebase pods
   pod 'Firebase'
   pod 'Firebase/Database'

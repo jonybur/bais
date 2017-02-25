@@ -478,6 +478,7 @@
 				364C886B1E63CEDF4FF96975 /* [CP] Embed Pods Frameworks */,
 				A4B65DAECF333D78044C203A /* [CP] Copy Pods Resources */,
 				ABA2A4CA1E387CEC00C24E0C /* Autoincrement build */,
+				AB45CDB01E6129DD0037869F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -578,6 +579,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bais/Pods-Bais-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		AB45CDB01E6129DD0037869F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" ***REMOVED*** c10fbfe139e048dcfb304ec935045bc2fb1f2a98d87e810003e5cf74c55417b8";
 		};
 		ABA2A4CA1E387CEC00C24E0C /* Autoincrement build */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -14,6 +14,7 @@ import FBSDKLoginKit
 import FirebaseDatabase
 import FirebaseAuth
 import Firebase
+import Crashlytics
 
 open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	
@@ -60,6 +61,10 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		
 		// maybe add a loading here?
 		FirebaseService.getCurrentUser().then { user -> Void in
+			// TODO: Use the current user's information
+			// You can call any combination of these three methods
+			Crashlytics.sharedInstance().setUserName(user.fullName)
+			Crashlytics.sharedInstance().setUserIdentifier(user.id)
 			
 			// load interface after getting user
 			// this allows us to check wether user has location, etc.
