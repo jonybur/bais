@@ -21,7 +21,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	let locationManager = CLLocationManager()
 	
     open override func viewDidLoad() {
-		
 		super.viewDidLoad()
 		
 		automaticallyAdjustsScrollViewInsets = false
@@ -80,6 +79,16 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 			}
 			
 		}.catch { _ in }
+		
+		NotificationCenter.default.addObserver(self,
+		                                       selector:#selector(applicationWillEnterForeground(_:)),
+		                                       name:NSNotification.Name.UIApplicationWillEnterForeground,
+		                                       object: nil)
+	}
+	
+	open override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	private func setBATabBarController(){
@@ -134,5 +143,9 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		
 	public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
 		print("Location Manager failed with error");
+	}
+	
+	func applicationWillEnterForeground(_ notification: NSNotification) {
+		FirebaseService.resetBadgeCount()
 	}
 }
