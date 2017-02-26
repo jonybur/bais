@@ -60,6 +60,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		}
 		
 		FirebaseService.updateUserNotificationToken()
+		FirebaseService.resetBadgeCount()
 		
 		// maybe add a loading here?
 		FirebaseService.getCurrentUser().then { user -> Void in

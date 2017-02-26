@@ -60,11 +60,13 @@ class FirebaseService{
 		return reference.key
 	}
 	
+	static func resetBadgeCount(){
+		usersReference.child(currentUserId).child("badge_count").setValue(0)
+	}
+	
 	static func postPushNotification(to user: User, message: String){
-		
 		let userBadgeCountRef = usersReference.child(user.id).child("badge_count")
 		userBadgeCountRef.observeSingleEvent(of: .value, with: { snapshot in
-			
 			// increments one to users badge count
 			var badgeCount = 1
 			if snapshot.value != nil{
