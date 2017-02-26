@@ -73,7 +73,6 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 	
 	func observeMessages(){
 		FirebaseService.sessionsReference.child(session.id).child("messages").observe(.childAdded, with: { snapshot in
-			
 			guard let messageDictionary = snapshot.value as? NSDictionary else { return }
 			
 			if (self.messagesSentByUser[snapshot.key] != nil) {

@@ -24,6 +24,7 @@ class FirebaseService{
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
 	static let reportsReference = FIRDatabase.database().reference().child("reports")
 	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-79d67.appspot.com")
+	static let serverKey = "***REMOVED***"
 	
 	enum ImagePurpose: String{
 		case profilePicture = "profile_picture"
@@ -48,7 +49,34 @@ class FirebaseService{
 			] as [String : Any]
 		let reference = sessionsReference.child(session.id).child("messages").childByAutoId()
 		reference.updateChildValues(value)
+		
+		let notificationMessage = CurrentUser.user.firstName + ": " + message.text
+		for user in session.participants{
+			if (user.id == currentUserId){
+				continue
+			}
+			postPushNotification(to: user.notificationToken, message: notificationMessage)
+		}
+		
 		return reference.key
+	}
+	
+	static func postPushNotification(to userNotificationToken: String, message: String){
+		let httpHeaders = [
+			"Content-Type": "application/json",
+			"Authorization": "key=" + FirebaseService.serverKey
+		]
+		
+		let notification = [
+			"body": message
+		]
+		
+		let body = [
+			"to": userNotificationToken,
+			"notification": notification
+			] as [String : Any]
+		
+		_ = WebAPI.postRequest(url: "https://fcm.googleapis.com/fcm/send", body: body, headers: httpHeaders)
 	}
 	
 	static func getUserFromRelationship(from relationshipSnapshot: FIRDataSnapshot) -> Promise<User>{

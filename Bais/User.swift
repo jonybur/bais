@@ -68,6 +68,7 @@ class User{
 		self.lastName = dictionary["last_name"] as! String
 		self.countryCode = dictionary["country_code"] as! String
 		self.profilePicture = dictionary["profile_picture"] as! String
+		self.notificationToken = dictionary["notification_token"] as! String
 		
 		if let about = dictionary["about"] as? String{
 			self.about = about
