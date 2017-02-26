@@ -49,35 +49,50 @@ class FirebaseService{
 			] as [String : Any]
 		let reference = sessionsReference.child(session.id).child("messages").childByAutoId()
 		reference.updateChildValues(value)
-		
-		let notificationMessage = CurrentUser.user.firstName + ": " + message.text
+	
 		for user in session.participants{
 			if (user.id == currentUserId){
 				continue
 			}
-			postPushNotification(to: user.notificationToken, message: notificationMessage)
+			postPushNotification(to: user, message: message.text)
 		}
 		
 		return reference.key
 	}
 	
-	static func postPushNotification(to userNotificationToken: String, message: String){
-		let httpHeaders = [
-			"Content-Type": "application/json",
-			"Authorization": "key=" + FirebaseService.serverKey
-		]
+	static func postPushNotification(to user: User, message: String){
 		
-		let notification = [
-			"body": message
-		]
-		
-		let body = [
-			"to": userNotificationToken,
-			"notification": notification
+		let userBadgeCountRef = usersReference.child(user.id).child("badge_count")
+		userBadgeCountRef.observeSingleEvent(of: .value, with: { snapshot in
+			
+			// increments one to users badge count
+			var badgeCount = 1
+			if snapshot.value != nil{
+				badgeCount += snapshot.value as! Int
+			}
+			userBadgeCountRef.setValue(badgeCount)
+			
+			// sends push notification
+			let httpHeaders = [
+				"Content-Type": "application/json",
+				"Authorization": "key=" + FirebaseService.serverKey
+			]
+			
+			let notification = [
+				"title": CurrentUser.user.firstName,
+				"body": message,
+				"badge": badgeCount
 			] as [String : Any]
-		
-		_ = WebAPI.postRequest(url: "https://fcm.googleapis.com/fcm/send", body: body, headers: httpHeaders)
+			
+			let body = [
+				"to": user.notificationToken,
+				"notification": notification
+				] as [String : Any]
+			
+			_ = WebAPI.postRequest(url: "https://fcm.googleapis.com/fcm/send", body: body, headers: httpHeaders)
+		})
 	}
+	
 	
 	static func getUserFromRelationship(from relationshipSnapshot: FIRDataSnapshot) -> Promise<User>{
 		let status = parseFriendStatus(from: relationshipSnapshot)
@@ -301,8 +316,9 @@ class FirebaseService{
 										"profile_picture": url.absoluteString,
 										"birthday": "16/06/1993",//nsArray["birthday"] as! String,
 										"country_code": "",
-										"about": ""
-									]
+										"about": "",
+										"badge_count": 0
+									] as [String : Any]
 									itemRef.updateChildValues(userItem)
 									fulfill()
 								}).catch(execute: { _ in })
