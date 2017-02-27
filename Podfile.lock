@@ -7,8 +7,6 @@ PODS:
     - AsyncDisplayKit/Core
     - PINRemoteImage/iOS (= 3.0.0-beta.7)
     - PINRemoteImage/PINCache
-  - AwaitKit (2.0.0):
-    - PromiseKit (~> 4.0)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -19,7 +17,7 @@ PODS:
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
   - DGActivityIndicatorView (2.1.1)
-  - ESTabBarController-swift (1.0.3)
+  - ESTabBarController-swift (2.0)
   - Fabric (1.6.11)
   - FBSDKCoreKit (4.18.0):
     - Bolts (~> 1.7)
@@ -102,27 +100,26 @@ PODS:
     - PINCache (= 3.0.1-beta.2)
     - PINRemoteImage/Core
   - pop (1.0.9)
-  - PromiseKit (4.0.5):
-    - PromiseKit/Foundation (= 4.0.5)
-    - PromiseKit/QuartzCore (= 4.0.5)
-    - PromiseKit/UIKit (= 4.0.5)
-  - PromiseKit/CorePromise (4.0.5)
-  - PromiseKit/Foundation (4.0.5):
+  - PromiseKit (4.1.7):
+    - PromiseKit/Foundation (= 4.1.7)
+    - PromiseKit/QuartzCore (= 4.1.7)
+    - PromiseKit/UIKit (= 4.1.7)
+  - PromiseKit/CorePromise (4.1.7)
+  - PromiseKit/Foundation (4.1.7):
     - PromiseKit/CorePromise
-  - PromiseKit/QuartzCore (4.0.5):
+  - PromiseKit/QuartzCore (4.1.7):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (4.0.5):
+  - PromiseKit/UIKit (4.1.7):
     - PromiseKit/CorePromise
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Alamofire (>= 4.0.0)
   - AsyncDisplayKit (>= 2.1)
-  - AwaitKit (>= 2.0.0)
   - CountryPicker (>= 1.3)
   - Crashlytics
   - DGActivityIndicatorView
-  - ESTabBarController-swift (from `https://github.com/jonybur/ESTabBarController.git`)
+  - ESTabBarController-swift
   - Fabric
   - FBSDKCoreKit (>= 4.15.1)
   - FBSDKLoginKit (>= 4.15.1)
@@ -136,11 +133,10 @@ DEPENDENCIES:
   - GeoFire (from `https://github.com/firebase/geofire-objc.git`)
   - NMessenger (from `https://github.com/jonybur/nmessenger.git`, branch `asdk-2.1`)
   - pop
+  - PromiseKit (~> 4.0)
   - SwiftyJSON (>= 3.1.4)
 
 EXTERNAL SOURCES:
-  ESTabBarController-swift:
-    :git: https://github.com/jonybur/ESTabBarController.git
   GeoFire:
     :git: https://github.com/firebase/geofire-objc.git
   NMessenger:
@@ -148,9 +144,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/jonybur/nmessenger.git
 
 CHECKOUT OPTIONS:
-  ESTabBarController-swift:
-    :commit: 2ff46221a20d3b566d19feb485cf437612c368aa
-    :git: https://github.com/jonybur/ESTabBarController.git
   GeoFire:
     :commit: dbb8d193f5ee1371837800d0502bd29cba779da4
     :git: https://github.com/firebase/geofire-objc.git
@@ -161,12 +154,11 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   AsyncDisplayKit: 28de788f9d6ec573be7662f0fe8931e656357e93
-  AwaitKit: 1645b708f13a15ac7fa9c1a39d6808f799e5a1ec
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   CountryPicker: 664c26411d833bb068c80beb15dc951eadde2911
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
-  ESTabBarController-swift: 791dd57a2f5c089733cb881778ae74926403e8da
+  ESTabBarController-swift: '096f473faaddd32081c006e4f34498757ff485b0'
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
   FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
@@ -188,9 +180,9 @@ SPEC CHECKSUMS:
   PINCache: 6d273a6e0754bd26e3f12a38a90dde73cc6a42b2
   PINRemoteImage: ff63baf185088530db6cfa41cb665e2b5126b5c3
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  PromiseKit: 593b5e24ded6cbb1ebc708bc2c3428a8a5632d91
+  PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: b9b78ade20192718cf065013895b3add4a551360
+PODFILE CHECKSUM: 9149198aaaf7919a2103151c1fcf25b15bd411d9
 
 COCOAPODS: 1.2.0.beta.1

@@ -22,6 +22,7 @@ target 'Bais' do
   pod 'pop'
   pod 'DGActivityIndicatorView'
 	pod 'AsyncDisplayKit', '>= 2.1'
+  pod 'ESTabBarController-swift'
 
   # facebook
   pod 'FBSDKCoreKit', '>= 4.15.1'
@@ -31,6 +32,7 @@ target 'Bais' do
   # web requests
   pod 'Alamofire', '>= 4.0.0'
   pod 'SwiftyJSON', '>= 3.1.4'
+  pod 'PromiseKit', '~> 4.0'
 
   # utilities
   pod 'CountryPicker', '>= 1.3'
@@ -39,9 +41,8 @@ target 'Bais' do
   pod 'NMessenger', :git => 'https://github.com/jonybur/nmessenger.git', :branch => 'asdk-2.1'
   
   # to deprecate
-  pod 'AwaitKit', '>= 2.0.0'
-  pod 'ESTabBarController-swift',
-    :git => 'https://github.com/jonybur/ESTabBarController.git'
+  #pod 'AwaitKit', '>= 2.0.0'
+  #pod 'ESTabBarController-swift', :git => 'https://github.com/jonybur/ESTabBarController.git'
 
 end
 

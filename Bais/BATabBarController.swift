@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import ESTabBarController
-import AwaitKit
+import ESTabBarController_swift
 import CoreLocation
 import FBSDKLoginKit
 import FirebaseDatabase
@@ -63,7 +62,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		
 		// maybe add a loading here?
 		FirebaseService.getCurrentUser().then { user -> Void in
-			// TODO: Use the current user's information
 			// You can call any combination of these three methods
 			Crashlytics.sharedInstance().setUserName(user.fullName)
 			Crashlytics.sharedInstance().setUserIdentifier(user.id)
@@ -97,21 +95,18 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		let v3 = BACalendarController()
 		let v4 = BASettingsController()
 		
-		v1.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityStyleAnimator.init()))
-		v2.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
-		v3.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
-		v4.tabBarItem   = ESTabBarItem.init(content: ESTabBarItemContent.init(animator: IrregularityBasicStyleAnimator.init()))
+		tabBar.backgroundColor = ColorPalette.white
 		
-		v1.tabBarItem.image = UIImage.init(named: "home-empty-icon")
-		v2.tabBarItem.image = UIImage.init(named: "chat-icon")
-		v3.tabBarItem.image = UIImage.init(named: "calendar-icon")
-		v4.tabBarItem.image = UIImage.init(named: "settings-icon")
+		v1.tabBarItem = ESTabBarItem.init(BAHomeContentView(), title: nil, image: UIImage(named: "home-empty-icon"), selectedImage: UIImage(named: "home-full-icon"))
+		v2.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "chat-icon"), selectedImage: UIImage(named: "chat-icon"))
+		v3.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "calendar-icon"), selectedImage: UIImage(named: "calendar-icon"))
+		v4.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "settings-icon"), selectedImage: UIImage(named: "settings-icon"))
 		
-		if #available(iOS 10.0, *) {
-			v2.tabBarItem.badgeColor = ColorPalette.orange
+		if let tabBarItem = v2.tabBarItem as? ESTabBarItem {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) {
+				tabBarItem.badgeValue = "1"
+			}
 		}
-		(v2.tabBarItem as? ESTabBarItem)?.showBadge(badgeValue: "2")
-		
 		
 		let controllers = [v1, v2, v3, v4]
 		viewControllers = controllers
