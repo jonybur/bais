@@ -80,6 +80,8 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	}
 	
 	open override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
 		navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 		navigationController?.setNavigationBarHidden(true, animated: true)
 		UIApplication.shared.statusBarStyle = .default
