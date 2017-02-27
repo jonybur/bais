@@ -60,6 +60,8 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		FirebaseService.updateUserNotificationToken()
 		FirebaseService.resetBadgeCount()
 		
+		self.setBATabBarController()
+		
 		// maybe add a loading here?
 		FirebaseService.getCurrentUser().then { user -> Void in
 			// You can call any combination of these three methods
@@ -69,7 +71,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 			// load interface after getting user
 			// this allows us to check wether user has location, etc.
 			if (user.country != ""){
-				self.setBATabBarController()
+				//self.setBATabBarController()
 			} else {
 				// if user does not have nationality set up (this resolves closing the app before finishing registation bug)
 				let createUserScreen = BAEditProfileController(with: user, as: .create)
