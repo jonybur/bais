@@ -218,9 +218,9 @@ class FirebaseService{
 		selfRef.child("friends").child(friendId).removeValue()
 		friendRef.child("friends").child(currentUserId).removeValue()
 		
-		// kills chat session
-		selfRef.child("sessions").child(sessionId).removeValue()
-		friendRef.child("sessions").child(sessionId).removeValue()
+		// deactivates chat session
+		selfRef.child("sessions").child(sessionId).child("active").setValue(false)
+		friendRef.child("sessions").child(sessionId).child("active").setValue(false)
 	}
 	
 	static func denyFriendRequestFrom(friendId: String){
@@ -249,9 +249,15 @@ class FirebaseService{
 		let selfRef = sessionsReference.childByAutoId()
 		selfRef.updateChildValues(value)
 		
+		let sessionAttributes = [
+			"active": true,
+			"unread_count": 0
+		] as [String : Any]
+		
 		let sessionValue = [
-			selfRef.key: true
-		]
+			selfRef.key: sessionAttributes
+		] as [String : Any]
+		
 		usersReference.child(currentUserId).child("sessions").updateChildValues(sessionValue)
 		usersReference.child(friendId).child("sessions").updateChildValues(sessionValue)
 

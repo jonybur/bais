@@ -162,9 +162,16 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 
 	private func observeSessionStatus(){
 		let userSessionsRef = FirebaseService.usersReference.child(FirebaseService.currentUserId).child("sessions")
-		userSessionsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
+		userSessionsRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
+			// checks if session activity was turned to false
+			guard let sessionValues = snapshot.value as? NSDictionary else { return }
+			guard let sessionIsActive = sessionValues["active"] as? Bool else { return }
+			if (sessionIsActive){
+				return
+			}
+			
+			// pops screen
 			if (snapshot.key == self.session.id){
-				
 				var tabBar: UIViewController!
 				let navigationControllersCount = (self.navigationController?.viewControllers.count)!
 				if (self.navigationController?.topViewController is BAProfileController){
@@ -173,7 +180,6 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 					tabBar = self.navigationController?.viewControllers[navigationControllersCount - 2]
 				}
 				_ = self.navigationController?.popToViewController(tabBar, animated: true)
-				
 			}
 		}
 	}

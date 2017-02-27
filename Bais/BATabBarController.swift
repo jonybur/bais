@@ -102,16 +102,46 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		v3.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "calendar-icon"), selectedImage: UIImage(named: "calendar-icon"))
 		v4.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "settings-icon"), selectedImage: UIImage(named: "settings-icon"))
 		
-		if let tabBarItem = v2.tabBarItem as? ESTabBarItem {
-			DispatchQueue.main.asyncAfter(deadline: .now() + 2 ) {
-				tabBarItem.badgeValue = "1"
-			}
-		}
-		
 		let controllers = [v1, v2, v3, v4]
 		viewControllers = controllers
 		
+		observeFriendBadge()
+		
 		selectedIndex = 0
+	}
+	
+	func observeFriendBadge(){
+		
+		/*
+		A = mensajes recibidos (sin leer)
+		B = friend requests (invites) recibidas
+		A + B = badge count
+		
+		A sumar users/user_id/sessions/session_id/unread_count de cada active session del usuario
+		B entrar a child "friends" y sumar todos los que son inviteRecieved
+		*/
+		
+		// this is A unread messages
+		FirebaseService.usersReference.child(FirebaseService.currentUserId).child("sessions").observe(.value, with: { snapshot in
+			guard let sessionsValue = snapshot.value as? NSDictionary else { return }
+			guard let tabBarItem = self.viewControllers?[1].tabBarItem as? ESTabBarItem else { return }
+			var unreadCount = 0
+
+			for (_, attributes) in sessionsValue{
+				guard let sessionAttributes = attributes as? NSDictionary else { continue }
+				guard let isSessionActive = sessionAttributes["active"] as? Bool else { continue }
+				guard let sessionUnreadCount = sessionAttributes["unread_count"] as? Int else { continue }
+				unreadCount += sessionUnreadCount
+				if (isSessionActive){
+					if (unreadCount <= 0){
+						tabBarItem.badgeValue = nil
+					} else {
+						tabBarItem.badgeValue = String(unreadCount)
+					}
+				}
+			}
+			
+		})
 	}
 	
 	open override func viewDidAppear(_ animated: Bool) {

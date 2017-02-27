@@ -20,6 +20,7 @@ class BABasicContentView: ESTabBarItemContentView {
 		highlightTextColor = ColorPalette.orange
 		iconColor = UIColor.init(white: 175.0 / 255.0, alpha: 1.0)
 		highlightIconColor = ColorPalette.orange
+		badgeColor = ColorPalette.orange
 	}
 	
 	public required init?(coder aDecoder: NSCoder) {

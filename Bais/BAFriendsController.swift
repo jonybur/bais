@@ -245,6 +245,15 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		// user sessions
 		let userSessionsRef = FirebaseService.usersReference.child(userId).child("sessions")
 		userSessionsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
+			
+			// this is optional, but it checks that the session being added "active" is set to true
+			guard let sessionValues = snapshot.value as? NSDictionary else { return }
+			guard let sessionIsActive = sessionValues["active"] as? Bool else { return }
+			if (!sessionIsActive){
+				return
+			}
+			
+			// adds to screen
 			FirebaseService.getSession(from: snapshot.key).then(execute: { session -> Void in
 				self.observeLastMessage(of: session.id)
 				self._sessions.append(session)
@@ -256,8 +265,16 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			}).catch(execute: { _ in })
 		}
 	
-		userSessionsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
-			//Snap (-KdXrYvc8mjdlIzktpNq) 1
+		userSessionsRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
+			
+			// checks if session activity was turned to false
+			guard let sessionValues = snapshot.value as? NSDictionary else { return }
+			guard let sessionIsActive = sessionValues["active"] as? Bool else { return }
+			if (sessionIsActive){
+				return
+			}
+			
+			// removes from screen
 			for (idx, session) in self._sessions.enumerated(){
 				if (session.id == snapshot.key){
 					self._sessions.remove(at: idx)
