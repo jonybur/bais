@@ -125,7 +125,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		return true
 	}
 	
-	//MARK: - ASTableNode data source and delegate
+//MARK: - ASTableNode data source and delegate
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
 		let item = indexPath.item
@@ -169,7 +169,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		return showCountryPicker ? 5 : 4
 	}
 	
-	//MARK: - BAEditImageCarouselCellNodeDelegate methods
+//MARK: - BAEditImageCarouselCellNodeDelegate methods
 	
 	internal func editImageCarouselNodeDidClickEditImageButton() {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -192,7 +192,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		}
 	}
 	
-	//MARK: - UIImagePickerControllerDelegate methods
+//MARK: - UIImagePickerControllerDelegate methods
 	
 	internal func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
 		let image = info[UIImagePickerControllerEditedImage] as? UIImage
@@ -206,7 +206,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		}.catch { _ in }
 	}
 	
-	//MARK: - BAEditCountryPickerCellNodeDelegate methods
+//MARK: - BAEditCountryPickerCellNodeDelegate methods
 	
 	internal func editCountryPickerNodeDidClosePicker(country: String, code: String) {
 		showCountryPicker = false
@@ -219,7 +219,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		actionButtonNode.enable()
 	}
 	
-	//MARK: - BAEditBasicUserInfoCellNodeDelegate methods
+//MARK: - BAEditBasicUserInfoCellNodeDelegate methods
 
 	internal func editBasicUserInfoCellNodeDidPressOpenCountryPicker(){
 		if (showCountryPicker){
@@ -231,7 +231,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		tableNode.reloadRows(at: idxPath, with: .fade)
 	}
 	
-	//MARK: - BAEditDescriptionCellNode methods
+//MARK: - BAEditDescriptionCellNode methods
 	
 	internal func editDescriptionCellNodeDidFinishEditing(about: String) {
 		user.about = about

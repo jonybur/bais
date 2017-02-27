@@ -62,14 +62,29 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 				break
 			}
 		}
-		
 	}
 	
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 		navigationController!.interactivePopGestureRecognizer!.isEnabled = true
-		navigationController!.interactivePopGestureRecognizer!.delegate =  self
+		navigationController!.interactivePopGestureRecognizer!.delegate = self
+		FirebaseService.resetUnreadCount(of: session)
+		NotificationCenter.default.addObserver(self,
+		                                       selector:#selector(applicationWillEnterForeground(_:)),
+		                                       name:NSNotification.Name.UIApplicationWillEnterForeground,
+		                                       object: nil)
+		
+		NotificationCenter.default.addObserver(self,
+		                                       selector:#selector(applicationWillEnterBackground(_:)),
+		                                       name:NSNotification.Name.UIApplicationDidEnterBackground,
+		                                       object: nil)
     }
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		FirebaseService.resetUnreadCount(of: session)
+		NotificationCenter.default.removeObserver(self)
+	}
 	
 	func observeMessages(){
 		FirebaseService.sessionsReference.child(session.id).child("messages").observe(.childAdded, with: { snapshot in
@@ -182,6 +197,18 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 				_ = self.navigationController?.popToViewController(tabBar, animated: true)
 			}
 		}
+	}
+	
+//MARK: - Application notifications
+	
+	func applicationWillEnterForeground(_ notification: NSNotification) {
+		FirebaseService.resetUnreadCount(of: session)
+		FirebaseService.resetBadgeCount()
+	}
+	
+	func applicationWillEnterBackground(_ notification: NSNotification) {
+		FirebaseService.resetUnreadCount(of: session)
+		FirebaseService.resetBadgeCount()
 	}
 
 }

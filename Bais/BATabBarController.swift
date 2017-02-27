@@ -77,13 +77,21 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 			}
 			
 		}.catch { _ in }
+	}
+	
+	open override func viewDidAppear(_ animated: Bool) {
+		navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+		navigationController?.setNavigationBarHidden(true, animated: true)
+		UIApplication.shared.statusBarStyle = .default
+		guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+		statusBar.backgroundColor = ColorPalette.white
 		
 		NotificationCenter.default.addObserver(self,
 		                                       selector:#selector(applicationWillEnterForeground(_:)),
 		                                       name:NSNotification.Name.UIApplicationWillEnterForeground,
 		                                       object: nil)
 	}
-	
+
 	open override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		NotificationCenter.default.removeObserver(self)
@@ -142,14 +150,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 			}
 			
 		})
-	}
-	
-	open override func viewDidAppear(_ animated: Bool) {
-		navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-		navigationController?.setNavigationBarHidden(true, animated: true)
-		UIApplication.shared.statusBarStyle = .default
-		guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
-		statusBar.backgroundColor = ColorPalette.white
 	}
 	
 	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

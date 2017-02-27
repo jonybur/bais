@@ -17,7 +17,13 @@ import GeoFire
 
 class FirebaseService{
 	
-	static let currentUserId = (FIRAuth.auth()?.currentUser?.uid)!
+	static var currentUserId: String{
+		get{
+			guard let id = FIRAuth.auth()?.currentUser?.uid else { return "" }
+			return id
+		}
+	}
+	
 	static let rootReference = FIRDatabase.database().reference()
 	static let locationsReference = FIRDatabase.database().reference().child("locations")
 	static let usersReference = FIRDatabase.database().reference().child("users")
@@ -55,9 +61,26 @@ class FirebaseService{
 				continue
 			}
 			postPushNotification(to: user, message: message.text)
+			addToUnreadCount(to: session, of: user)
 		}
 		
 		return reference.key
+	}
+	
+	static func resetUnreadCount(of session: Session){
+		usersReference.child(currentUserId).child("sessions").child(session.id).child("unread_count").setValue(0)
+	}
+	
+	static func addToUnreadCount(to session: Session, of user: User){
+		let unreadCountRef = usersReference.child(user.id).child("sessions").child(session.id).child("unread_count")
+		unreadCountRef.observeSingleEvent(of: .value, with: { snapshot in
+			// increments one to users badge count
+			var unreadCount = 1
+			if snapshot.value != nil{
+				unreadCount += snapshot.value as! Int
+			}
+			unreadCountRef.setValue(unreadCount)
+		})
 	}
 	
 	static func resetBadgeCount(){
@@ -66,7 +89,6 @@ class FirebaseService{
 	
 	static func postPushNotification(to user: User, message: String){
 		let userBadgeCountRef = usersReference.child(user.id).child("badge_count")
-		
 		userBadgeCountRef.observeSingleEvent(of: .value, with: { snapshot in
 			// increments one to users badge count
 			var badgeCount = 1
@@ -168,7 +190,6 @@ class FirebaseService{
 			let data = UIImageJPEGRepresentation(image, 0.75) as Data?
 			let imagesRef = rootStorageReference.child(currentUserId).child(imagePurpose.rawValue + ".jpg")
 			
-			// Upload the file to the path "images/rivers.jpg"
 			imagesRef.put(data!, metadata: nil) { metadata, error in
 				if let error = error {
 					reject(error)
@@ -195,7 +216,9 @@ class FirebaseService{
 		guard let token = FIRInstanceID.instanceID().token() else { return }
 		print("New notification token: " + token)
 		let value = ["notification_token": token]
-		usersReference.child(currentUserId).updateChildValues(value)
+		if (currentUserId != ""){
+			usersReference.child(currentUserId).updateChildValues(value)
+		}
 	}
 	
 	static func updateUserLocation(_ location: CLLocationCoordinate2D){
@@ -260,7 +283,6 @@ class FirebaseService{
 		
 		usersReference.child(currentUserId).child("sessions").updateChildValues(sessionValue)
 		usersReference.child(friendId).child("sessions").updateChildValues(sessionValue)
-
 	}
 	
 	private static func setFriendStatusWith(_ friendId: String, to status: FriendshipStatus){
@@ -305,37 +327,35 @@ class FirebaseService{
 					return
 				}
 				
-				if let nsArray = result as? NSDictionary {
-					if let events = nsArray.object(forKey: "picture") as? NSDictionary{
-						if let datum = events["data"] as? NSDictionary{
-						
-							// OK, we have all facebook information now,
-							// lets download the users profile picture from Facebook
-							let profilePictureUrl = datum["url"] as! String
-							WebAPI.request(url: profilePictureUrl).then(execute: { pictureData -> Void in
-								// cool, now let's upload it to Firebase
-								FirebaseService.storeImage(pictureData, as: .profilePicture).then(execute: { url -> Void in
-									// we have the firebase-stored url!, lets finish pushing our user
-									let messageRef = usersReference
-									let itemRef = messageRef.child(user.uid)
-									let userItem = [
-										"first_name": nsArray["first_name"] as! String,
-										"last_name": nsArray["last_name"] as! String,
-										"facebook_id": FBSDKAccessToken.current().userID!,
-										"profile_picture": url.absoluteString,
-										"birthday": "16/06/1993",//nsArray["birthday"] as! String,
-										"country_code": "",
-										"about": "",
-										"badge_count": 0
-									] as [String : Any]
-									itemRef.updateChildValues(userItem)
-									fulfill()
-								}).catch(execute: { _ in })
-							}).catch(execute: { _ in })
-							
-						}
-					}
-				}
+				guard let nsArray = result as? NSDictionary else { return }
+				guard let events = nsArray.object(forKey: "picture") as? NSDictionary else { return }
+				guard let datum = events["data"] as? NSDictionary else { return }
+				guard let fbSDKAccessToken = FBSDKAccessToken.current().userID else { return }
+				
+				// OK, we have all facebook information now,
+				// lets download the users profile picture from Facebook
+				let profilePictureUrl = datum["url"] as! String
+				WebAPI.request(url: profilePictureUrl).then(execute: { pictureData -> Void in
+					// cool, now let's upload it to Firebase
+					FirebaseService.storeImage(pictureData, as: .profilePicture).then(execute: { url -> Void in
+						// we have the firebase-stored url!, lets finish pushing our user
+						let messageRef = usersReference
+						let itemRef = messageRef.child(user.uid)
+						let userItem = [
+							"first_name": nsArray["first_name"] as! String,
+							"last_name": nsArray["last_name"] as! String,
+							"facebook_id": fbSDKAccessToken,
+							"profile_picture": url.absoluteString,
+							"birthday": "16/06/1993",//nsArray["birthday"] as! String,
+							"country_code": "",
+							"about": "",
+							"badge_count": 0
+						] as [String : Any]
+						itemRef.updateChildValues(userItem)
+						fulfill()
+					}).catch(execute: { _ in })
+				}).catch(execute: { _ in })
+	
 			}.start()
 			
 		}
