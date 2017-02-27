@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let screen: UIViewController!
 		
 		if FIRAuth.auth()?.currentUser != nil && FBSDKProfile.current() != nil {
-			screen = BATabBarController()
+			screen = BALoadingController()
 		} else {
 			screen = BALoginController()
 		}

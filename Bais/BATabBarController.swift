@@ -61,44 +61,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		FirebaseService.resetBadgeCount()
 		
 		self.setBATabBarController()
-		
-		// maybe add a loading here?
-		FirebaseService.getCurrentUser().then { user -> Void in
-			// You can call any combination of these three methods
-			Crashlytics.sharedInstance().setUserName(user.fullName)
-			Crashlytics.sharedInstance().setUserIdentifier(user.id)
-			
-			// load interface after getting user
-			// this allows us to check wether user has location, etc.
-			if (user.country != ""){
-				//self.setBATabBarController()
-			} else {
-				// if user does not have nationality set up (this resolves closing the app before finishing registation bug)
-				let createUserScreen = BAEditProfileController(with: user, as: .create)
-				self.navigationController?.pushViewController(createUserScreen, animated: true)
-			}
-			
-		}.catch { _ in }
-	}
-	
-	open override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		
-		navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-		navigationController?.setNavigationBarHidden(true, animated: true)
-		UIApplication.shared.statusBarStyle = .default
-		guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
-		statusBar.backgroundColor = ColorPalette.white
-		
-		NotificationCenter.default.addObserver(self,
-		                                       selector:#selector(applicationWillEnterForeground(_:)),
-		                                       name:NSNotification.Name.UIApplicationWillEnterForeground,
-		                                       object: nil)
-	}
-
-	open override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-		NotificationCenter.default.removeObserver(self)
 	}
 	
 	private func setBATabBarController(){
@@ -120,6 +82,26 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		observeFriendBadge()
 		
 		selectedIndex = 0
+	}
+	
+	open override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+		navigationController?.setNavigationBarHidden(true, animated: true)
+		UIApplication.shared.statusBarStyle = .default
+		guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+		statusBar.backgroundColor = ColorPalette.white
+		
+		NotificationCenter.default.addObserver(self,
+		                                       selector:#selector(applicationWillEnterForeground(_:)),
+		                                       name:NSNotification.Name.UIApplicationWillEnterForeground,
+		                                       object: nil)
+	}
+
+	open override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	func observeFriendBadge(){
@@ -157,21 +139,21 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	}
 	
 	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-		let authorizationStatus = CLLocationManager.authorizationStatus();
+		let authorizationStatus = CLLocationManager.authorizationStatus()
 		if (authorizationStatus == .authorizedWhenInUse){
-			locationManager.requestLocation();
+			locationManager.requestLocation()
 		}
 	}
 	
 	public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
 		// with this if we make sure that location has coordinates
 		if let location = locationManager.location?.coordinate {
-			FirebaseService.updateUserLocation(location);
+			FirebaseService.updateUserLocation(location)
 		}
 	}
 		
 	public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
-		print("Location Manager failed with error");
+		print("Location Manager failed with error")
 	}
 	
 	func applicationWillEnterForeground(_ notification: NSNotification) {

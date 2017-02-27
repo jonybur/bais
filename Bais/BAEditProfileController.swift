@@ -96,8 +96,8 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	}
 	
 	func actionButtonPressed(_ sender: UIButton){
-		let tabBarController = BATabBarController()
-		navigationController?.pushViewController(tabBarController, animated: true)
+		let loadingController = BALoadingController()
+		navigationController?.pushViewController(loadingController, animated: true)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {

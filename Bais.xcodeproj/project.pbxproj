@@ -68,6 +68,7 @@
 		ABEB8DA81E5302560089000C /* BADetailBackButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */; };
 		ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF08B221D916E5400C6B832 /* AppDelegate.swift */; };
 		ABF50ACC1DEA7651004CB6E8 /* BAUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */; };
+		ABF6D7AC1E64EE83009D2993 /* BALoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6D7AB1E64EE83009D2993 /* BALoadingController.swift */; };
 		ABFA0B311D9A0CB000ED6C16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */; };
 		ABFC76E61E34995700B6498D /* BAUsersHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */; };
 		ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */; };
@@ -140,6 +141,7 @@
 		ABF08B221D916E5400C6B832 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ABF08B2E1D916E5400C6B832 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersController.swift; sourceTree = "<group>"; };
+		ABF6D7AB1E64EE83009D2993 /* BALoadingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALoadingController.swift; sourceTree = "<group>"; };
 		ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersHeaderCellNode.swift; sourceTree = "<group>"; };
 		ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendsController.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				ABB9F2CF1D9170C600E01511 /* BALoginController.swift */,
+				ABF6D7AB1E64EE83009D2993 /* BALoadingController.swift */,
 				ABB9F2C21D9170C600E01511 /* BATabBarController.swift */,
 				ABAE861A1E1F2001005CAE77 /* Tabbed */,
 				AB18B3031E4C0D2B001C294B /* Detail */,
@@ -660,6 +663,7 @@
 				ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */,
 				AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */,
 				ABB9F2F21D9170C600E01511 /* FetchedContent.swift in Sources */,
+				ABF6D7AC1E64EE83009D2993 /* BALoadingController.swift in Sources */,
 				AB3D33A61E45AA8D0058547A /* BADescriptionCellNode.swift in Sources */,
 				AB18B3021E4C03BB001C294B /* BACalendarController.swift in Sources */,
 				ABB9F2DD1D9170C600E01511 /* AppsCommunicator.swift in Sources */,

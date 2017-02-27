@@ -30,9 +30,9 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	
 	init (){
 		let layout = MosaicCollectionViewLayout(startsAt: 10)
-		layout.numberOfColumns = 2;
+		layout.numberOfColumns = 2
 		_collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
-		super.init(nibName: nil, bundle: nil);
+		super.init(nibName: nil, bundle: nil)
 		layout.delegate = self
 		
 		let activityIndicatorSize = (activityIndicatorView?.size)!
