@@ -9,25 +9,6 @@
 import UIKit
 import ESTabBarController_swift
 
-class BABasicContentView: ESTabBarItemContentView {
-	convenience init(){
-		self.init(frame: CGRect.zero)
-	}
-	
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-		textColor = UIColor.init(white: 175.0 / 255.0, alpha: 1.0)
-		highlightTextColor = ColorPalette.orange
-		iconColor = UIColor.init(white: 175.0 / 255.0, alpha: 1.0)
-		highlightIconColor = ColorPalette.orange
-		badgeColor = ColorPalette.orange
-	}
-	
-	public required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-}
-
 class BAHomeContentView: ESTabBarItemContentView{
 	override func updateDisplay() {
 		if selected {
@@ -41,11 +22,16 @@ class BAHomeContentView: ESTabBarItemContentView{
 	}
 }
 
-class BABouncesContentView: BABasicContentView {
+class BABouncesContentView: ESTabBarItemContentView {
 	public var duration = 0.3
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
+		textColor = UIColor.init(white: 175.0 / 255.0, alpha: 1.0)
+		highlightTextColor = ColorPalette.orange
+		iconColor = UIColor.init(white: 175.0 / 255.0, alpha: 1.0)
+		highlightIconColor = ColorPalette.orange
+		badgeColor = ColorPalette.orange
 	}
 	
 	public required init?(coder aDecoder: NSCoder) {
@@ -67,6 +53,20 @@ class BABouncesContentView: BABasicContentView {
 		impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
 		impliesAnimation.duration = duration * 2
 		impliesAnimation.calculationMode = kCAAnimationCubic
+		imageView.layer.add(impliesAnimation, forKey: nil)
+	}
+	
+	override func badgeChangedAnimation(animated: Bool, completion: (() -> ())?) {
+		super.badgeChangedAnimation(animated: animated, completion: nil)
+		notificationAnimation()
+	}
+	
+	func notificationAnimation() {
+		let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.translation.y")
+		impliesAnimation.values = [0.0 ,-8.0, 4.0, -4.0, 3.0, -2.0, 0.0]
+		impliesAnimation.duration = duration * 2
+		impliesAnimation.calculationMode = kCAAnimationCubic
+		
 		imageView.layer.add(impliesAnimation, forKey: nil)
 	}
 }
