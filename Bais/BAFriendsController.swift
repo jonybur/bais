@@ -322,12 +322,21 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				for (idx, session) in self._sessions.enumerated(){
 					if (session.id == sessionId){
 						session.lastMessage = messageString
+						self._sessions = self.rearrange(array: self._sessions, fromIndex: idx, toIndex: 0)
 						self.tableNode.reloadRows(at: [IndexPath(item: idx + 1, section: 0)], with: .fade)
+						// should "bubble" cell to first position of table
 						return
 					}
 				}
 			}
 		}
+	}
+	
+	func rearrange<T>(array: Array<T>, fromIndex: Int, toIndex: Int) -> Array<T>{
+		var arr = array
+		let element = arr.remove(at: fromIndex)
+		arr.insert(element, at: toIndex)
+		return arr
 	}
 	
 	

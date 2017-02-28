@@ -76,9 +76,11 @@ class FirebaseService{
 		unreadCountRef.observeSingleEvent(of: .value, with: { snapshot in
 			// increments one to users badge count
 			var unreadCount = 1
-			if snapshot.value != nil{
-				unreadCount += snapshot.value as! Int
+			guard let fetchedCount = snapshot.value as? Int else {
+				unreadCountRef.setValue(1)
+				return
 			}
+			unreadCount += fetchedCount
 			unreadCountRef.setValue(unreadCount)
 		})
 	}

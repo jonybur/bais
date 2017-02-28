@@ -133,17 +133,18 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		} else {
 			var idxToInsert = [IndexPath]()
 			
-			for idx in 0..._allUsers.count - 1 {
-				let idxPath = IndexPath(item: idx, section: 0)
-				idxToReload.append(idxPath)
-				
-				if (idx > _contentToDisplay.count - 1){
-					idxToInsert.append(idxPath)
+			if (_allUsers.count > 0){
+				for idx in 0..._allUsers.count - 1 {
+					let idxPath = IndexPath(item: idx, section: 0)
+					idxToReload.append(idxPath)
+					
+					if (idx > _contentToDisplay.count - 1){
+						idxToInsert.append(idxPath)
+					}
 				}
+				_contentToDisplay = _allUsers.sorted { $0.distanceFromUser < $1.distanceFromUser }
+				_collectionNode.insertItems(at: idxToInsert)
 			}
-			
-			_contentToDisplay = _allUsers.sorted { $0.distanceFromUser < $1.distanceFromUser }
-			_collectionNode.insertItems(at: idxToInsert)
 		}
 		
 		_collectionNode.reloadItems(at: idxToReload)
