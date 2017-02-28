@@ -22,7 +22,7 @@ target 'Bais' do
   pod 'pop'
   pod 'DGActivityIndicatorView'
 	pod 'AsyncDisplayKit', '>= 2.1'
-  pod 'ESTabBarController-swift'
+  pod 'ESTabBarController-swift', :git => 'https://github.com/jonybur/ESTabBarController.git'
 
   # facebook
   pod 'FBSDKCoreKit', '>= 4.15.1'

@@ -17,7 +17,7 @@ PODS:
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
   - DGActivityIndicatorView (2.1.1)
-  - ESTabBarController-swift (2.0)
+  - ESTabBarController-swift (2.2)
   - Fabric (1.6.11)
   - FBSDKCoreKit (4.18.0):
     - Bolts (~> 1.7)
@@ -119,7 +119,7 @@ DEPENDENCIES:
   - CountryPicker (>= 1.3)
   - Crashlytics
   - DGActivityIndicatorView
-  - ESTabBarController-swift
+  - ESTabBarController-swift (from `https://github.com/jonybur/ESTabBarController.git`)
   - Fabric
   - FBSDKCoreKit (>= 4.15.1)
   - FBSDKLoginKit (>= 4.15.1)
@@ -137,6 +137,8 @@ DEPENDENCIES:
   - SwiftyJSON (>= 3.1.4)
 
 EXTERNAL SOURCES:
+  ESTabBarController-swift:
+    :git: https://github.com/jonybur/ESTabBarController.git
   GeoFire:
     :git: https://github.com/firebase/geofire-objc.git
   NMessenger:
@@ -144,6 +146,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/jonybur/nmessenger.git
 
 CHECKOUT OPTIONS:
+  ESTabBarController-swift:
+    :commit: 630f8d91641ceb57c215a985270c0bb0102e41df
+    :git: https://github.com/jonybur/ESTabBarController.git
   GeoFire:
     :commit: dbb8d193f5ee1371837800d0502bd29cba779da4
     :git: https://github.com/firebase/geofire-objc.git
@@ -158,7 +163,7 @@ SPEC CHECKSUMS:
   CountryPicker: 664c26411d833bb068c80beb15dc951eadde2911
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
-  ESTabBarController-swift: '096f473faaddd32081c006e4f34498757ff485b0'
+  ESTabBarController-swift: 87a222edbf92761564546fd1f1c63d627507cf06
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
   FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
@@ -183,6 +188,6 @@ SPEC CHECKSUMS:
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 9149198aaaf7919a2103151c1fcf25b15bd411d9
+PODFILE CHECKSUM: c28f332e374ac476c724a08d1c917585ef85f217
 
 COCOAPODS: 1.2.0.beta.1
