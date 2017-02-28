@@ -10,10 +10,11 @@ import Foundation
 import UIKit
 import AsyncDisplayKit
 
-class BALocationLockingScreen: UIViewController{
+class BALocationLockingScreen: ASViewController<ASDisplayNode>{
 
 	init (){
-		super.init(nibName: nil, bundle: nil)
+		let node = BALocationLockingScreenCellNode()
+		super.init(node: node)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
