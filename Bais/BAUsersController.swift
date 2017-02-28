@@ -97,14 +97,14 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		return _contentToDisplay[indexPath.item]
 	}
 	
-	//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
+//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
 	internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
 		let user = self.userForIndexPath(originalItemSizeAtIndexPath)
 		let ratio = user.imageRatio
 		return CGSize(width: 1, height: ratio)
 	}
 	
-	//MARK: - BAUsersHeaderViewCell delegate methods
+//MARK: - BAUsersHeaderViewCell delegate methods
 	func usersHeaderCellNodeDidClickButton(_ usersHeaderViewCell: BAUsersHeaderCellNode) {
 		
 		var idxToReload = [IndexPath]()
@@ -151,7 +151,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		showAllUsers = !showAllUsers
 	}
 	
-	//MARK: - BAUsersViewCell delegate methods
+//MARK: - BAUsersViewCell delegate methods
 	func usersCellNodeDidClickButton(_ usersViewCell: BAUsersCellNode) {
 		guard let user = usersViewCell.user else { return }
 		
@@ -185,11 +185,11 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		navigationController?.pushViewController(controller, animated: true)
 	}
 	
-	//MARK: - Firebase
+//MARK: - Firebase
 	// gets current user location
 	private func observeUserLocation() -> Promise<CLLocation>{
 		return Promise{ fulfill, reject in
-			let locationRef = FirebaseService.usersReference.child(FirebaseService.currentUserId).child("location");
+			let locationRef = FirebaseService.usersReference.child(FirebaseService.currentUserId).child("location")
 			locationRef.observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot!) in
 				if let locationArray = snapshot.value as? NSArray{
 					let latitude = locationArray[0] as! Double
@@ -311,7 +311,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		}
 	}
 	
-	//MARK: - Dealloc
+//MARK: - Dealloc
 	deinit {
 		_collectionNode.dataSource = nil;
 		_collectionNode.delegate = nil;

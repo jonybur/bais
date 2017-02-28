@@ -162,7 +162,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 				dismissNoLocationController()
 				presentingNoLocationController = false
 			}
-		} else if (authorizationStatus == .denied || authorizationStatus == .notDetermined){
+		} else if (authorizationStatus == .denied){
 			presentingNoLocationController = true
 			let noLocationController = BALocationLockingScreen()
 			present(noLocationController, animated: true, completion: nil)
@@ -193,5 +193,12 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	
 	func applicationWillEnterForeground(_ notification: NSNotification) {
 		FirebaseService.resetBadgeCount()
+		
+		FirebaseService.checkVersionUpdate().then { updateIsRequired -> Void in
+			if (updateIsRequired){
+				let versionLockingController = BAVersionLockingScreen()
+				self.navigationController?.present(versionLockingController, animated: true, completion: nil)
+			}
+		}.catch { _ in }
 	}
 }

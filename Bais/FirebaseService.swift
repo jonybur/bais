@@ -177,14 +177,15 @@ class FirebaseService{
 	
 	static func checkVersionUpdate() -> Promise<Bool>{
 		return Promise { fulfill, reject in
-			versionsReference.observeSingleEvent(of: .value, with: { snapshot in
-				guard let snapshotVersion = snapshot.value as? NSDictionary else {
-					fulfill(false)
-					return }
-				guard let requiredVersion = snapshotVersion["required_version"] as? String else {
+			versionsReference.observeSingleEvent(of: .childAdded, with: { snapshot in
+				guard let requiredVersion = snapshot.value as? String else {
 					fulfill(false)
 					return }
 				let localVersion = Bundle.main.releaseVersionNumber!
+				
+				if (requiredVersion == localVersion){
+					fulfill(false)
+				}
 				
 				let updateIsRequired = !requiredVersion.versionToInt().lexicographicallyPrecedes(localVersion.versionToInt())
 				fulfill(updateIsRequired)
