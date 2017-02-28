@@ -43,7 +43,7 @@ class BALoadingController: UIViewController{
 				self.navigationController?.pushViewController(tabBarController, animated: false)
 			}
 			
-		}.catch { _ in}
+		}.catch { _ in }
 	}
 	
 }

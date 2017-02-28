@@ -286,7 +286,7 @@ class FirebaseService{
 	}
 	
 	private static func setFriendStatusWith(_ friendId: String, to status: FriendshipStatus){
-		var value = [String:String]()
+		var value = [String : String]()
 		
 		switch (status){
 		case .accepted:

@@ -125,7 +125,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 				guard let sessionAttributes = attributes as? NSDictionary else { continue }
 				guard let isSessionActive = sessionAttributes["active"] as? Bool else { continue }
 				guard let sessionUnreadCount = sessionAttributes["unread_count"] as? Int else { continue }
-				unreadCount += sessionUnreadCount
+				unreadCount += sessionUnreadCount > 0 ? 1 : 0
 				if (isSessionActive){
 					if (unreadCount <= 0){
 						tabBarItem.badgeValue = nil

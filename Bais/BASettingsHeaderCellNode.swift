@@ -75,7 +75,6 @@ class BASettingsHeaderCellNode: ASCellNode{
 		
 		// icono
 		editButtonNode.style.layoutPosition = CGPoint(x: 112.5, y: 112.5)
-		
 		let absoluteLayout = ASAbsoluteLayoutSpec(sizing: .sizeToFit, children: [imagePlace, editButtonNode])
 		
 		// vertical stack

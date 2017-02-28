@@ -255,6 +255,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			
 			// adds to screen
 			FirebaseService.getSession(from: snapshot.key).then(execute: { session -> Void in
+				guard let unreadCount = sessionValues["unread_count"] as? Int else { return }
+				session.unreadCount = unreadCount
 				self.observeLastMessage(of: session.id)
 				self._sessions.append(session)
 				if(self.displayMode == .sessions){
@@ -271,7 +273,18 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			guard let sessionValues = snapshot.value as? NSDictionary else { return }
 			guard let sessionIsActive = sessionValues["active"] as? Bool else { return }
 			if (sessionIsActive){
-				return
+				// should update the cell
+				guard let unreadCount = sessionValues["unread_count"] as? Int else { return }
+				for (idx, session) in self._sessions.enumerated(){
+					if (session.id == snapshot.key){
+						if(self.displayMode == .sessions){
+							session.unreadCount = unreadCount
+							let idxPath = IndexPath(row: idx + 1, section: 0)
+							self.tableNode.reloadRows(at: [idxPath], with: .fade)
+						}
+						return
+					}
+				}
 			}
 			
 			// removes from screen
@@ -298,11 +311,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			// show friends
 			displayMode = .sessions
 		}
-		
-		//tableNode.reloadData()
 	}
 
-	
 	private func observeLastMessage(of sessionId: String){
 		// queries to last message
 		let messageQuery = FirebaseService.sessionsReference.child(sessionId).child("messages").queryLimited(toLast: 1)
