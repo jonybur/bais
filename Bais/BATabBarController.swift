@@ -115,22 +115,46 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		B entrar a child "friends" y sumar todos los que son inviteRecieved
 		*/
 		
+		var invitedFriendsCount = 0
+		var unreadSessionsCount = 0
+		
+		FirebaseService.usersReference.child(FirebaseService.currentUserId).child("friends").observe(.value, with: { snapshot in
+			guard let tabBarItem = self.viewControllers?[1].tabBarItem as? ESTabBarItem else { return }
+			guard let snapshotValue = snapshot.value as? NSDictionary else { return }
+			invitedFriendsCount = 0
+			for (_, user) in snapshotValue{
+				guard let userDictionary = user as? NSDictionary else { continue }
+				guard let relationshipStatus = userDictionary["status"] as? String else { continue }
+				guard let relationshipPostedBy = userDictionary["posted_by"] as? String else { continue }
+				if (relationshipStatus == "invited" && relationshipPostedBy != FirebaseService.currentUserId){
+					// invitation received
+					invitedFriendsCount += 1
+				}
+			}
+			if (invitedFriendsCount + unreadSessionsCount <= 0){
+				tabBarItem.badgeValue = nil
+			} else {
+				let totalCount = invitedFriendsCount + unreadSessionsCount
+				tabBarItem.badgeValue = String(totalCount)
+			}
+		})
+		
 		// this is A unread messages
 		FirebaseService.usersReference.child(FirebaseService.currentUserId).child("sessions").observe(.value, with: { snapshot in
 			guard let sessionsValue = snapshot.value as? NSDictionary else { return }
 			guard let tabBarItem = self.viewControllers?[1].tabBarItem as? ESTabBarItem else { return }
-			var unreadCount = 0
-
+			unreadSessionsCount = 0
 			for (_, attributes) in sessionsValue{
 				guard let sessionAttributes = attributes as? NSDictionary else { continue }
 				guard let isSessionActive = sessionAttributes["active"] as? Bool else { continue }
 				guard let sessionUnreadCount = sessionAttributes["unread_count"] as? Int else { continue }
-				unreadCount += sessionUnreadCount > 0 ? 1 : 0
+				unreadSessionsCount += sessionUnreadCount > 0 ? 1 : 0
 				if (isSessionActive){
-					if (unreadCount <= 0){
+					if (invitedFriendsCount + unreadSessionsCount <= 0){
 						tabBarItem.badgeValue = nil
 					} else {
-						tabBarItem.badgeValue = String(unreadCount)
+						let totalCount = invitedFriendsCount + unreadSessionsCount
+						tabBarItem.badgeValue = String(totalCount)
 					}
 				}
 			}
