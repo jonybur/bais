@@ -39,7 +39,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		switch(authorizationStatus){
 		
 		case .authorizedWhenInUse:
-			locationManager.requestLocation()
+			print ("Location services are authorized")
 			break
 	
 		case .notDetermined:
@@ -157,7 +157,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		let authorizationStatus = CLLocationManager.authorizationStatus()
 		if (authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways){
-			locationManager.requestLocation()
 			if (presentingNoLocationController){
 				dismissNoLocationController()
 				presentingNoLocationController = false
@@ -178,17 +177,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		} else {
 			dismiss(animated: true, completion: nil)
 		}
-	}
-	
-	public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-		// with this if we make sure that location has coordinates
-		if let location = locationManager.location?.coordinate {
-			FirebaseService.updateUserLocation(location)
-		}
-	}
-		
-	public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
-		print("Location Manager failed with error")
 	}
 	
 	func applicationWillEnterForeground(_ notification: NSNotification) {

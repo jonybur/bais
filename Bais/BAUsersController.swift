@@ -14,7 +14,7 @@ import DGActivityIndicatorView
 import PromiseKit
 import GeoFire
 
-class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
+class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, CLLocationManagerDelegate,
 	ASCollectionDataSource, ASCollectionDelegate, BAUsersCellNodeDelegate, BAUsersHeaderCellNodeDelegate {
 
 	var _contentToDisplay = [User]()
@@ -24,6 +24,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	let _collectionNode: ASCollectionNode!
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
 	let usersRef = FirebaseService.usersReference
+	let locationManager = CLLocationManager()
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
 	                                                    tintColor: ColorPalette.orange,
 	                                                    size: 75)
@@ -60,12 +61,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 		self.view.addSubview(activityIndicatorView!);
 		
 		activityIndicatorView?.startAnimating()
-		
-		observeUserLocation().then { location -> Void in
-			CurrentUser.location = location
-			self.populateUsers()
-			self.observeFriends()
-		} .catch { _ in }
+		locationManager.delegate = self
 	}
 	
 	override func viewWillLayoutSubviews() {
@@ -95,6 +91,32 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 	
 	func userForIndexPath(_ indexPath: IndexPath) -> User{
 		return _contentToDisplay[indexPath.item]
+	}
+	
+//MARK: - LocationManager delegate methods
+	
+	public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+		// with this if we make sure that location has coordinates
+		if let location = locationManager.location?.coordinate {
+			FirebaseService.updateUserLocation(location)
+			observeUserLocation().then { location -> Void in
+				CurrentUser.location = location
+				self.populateUsers()
+				self.observeFriends()
+			} .catch { _ in }
+		}
+	}
+	
+	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+		let authorizationStatus = CLLocationManager.authorizationStatus()
+		if (authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways){
+			locationManager.requestLocation()
+		}
+	}
+	
+	
+	public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
+		print("Location Manager failed with error")
 	}
 	
 //MARK: - MosaicCollectionViewLayoutDelegate delegate methods
