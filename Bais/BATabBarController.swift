@@ -18,6 +18,7 @@ import Crashlytics
 open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	
 	let locationManager = CLLocationManager()
+	var presentingNoLocationController = false
 	
     open override func viewDidLoad() {
 		super.viewDidLoad()
@@ -105,16 +106,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	}
 	
 	func observeFriendBadge(){
-		
-		/*
-		A = mensajes recibidos (sin leer)
-		B = friend requests (invites) recibidas
-		A + B = badge count
-		
-		A sumar users/user_id/sessions/session_id/unread_count de cada active session del usuario
-		B entrar a child "friends" y sumar todos los que son inviteRecieved
-		*/
-		
+	
 		var invitedFriendsCount = 0
 		var unreadSessionsCount = 0
 		
@@ -164,8 +156,27 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	
 	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		let authorizationStatus = CLLocationManager.authorizationStatus()
-		if (authorizationStatus == .authorizedWhenInUse){
+		if (authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways){
 			locationManager.requestLocation()
+			if (presentingNoLocationController){
+				dismissNoLocationController()
+				presentingNoLocationController = false
+			}
+		} else if (authorizationStatus == .denied || authorizationStatus == .notDetermined){
+			presentingNoLocationController = true
+			let noLocationController = BALocationLockingScreen()
+			present(noLocationController, animated: true, completion: nil)
+		}
+	}
+	
+	func dismissNoLocationController(){
+		let topController = navigationController?.topViewController!
+		if (topController is UIAlertController){
+			navigationController?.dismiss(animated: true, completion: { 
+				self.dismiss(animated: true, completion: nil)
+			})
+		} else {
+			dismiss(animated: true, completion: nil)
 		}
 	}
 	

@@ -40,8 +40,8 @@ class BASettingsOptionsCellNode: ASCellNode{
 	let logoutNode = BASettingsButtonElementCellNode(title: "Logout")
 	let spacerNode4 = BASettingsSpacerElementCellNode()
 
-	let deleteAccountNode = BASettingsButtonElementCellNode(title: "Delete Account")
-	let spacerNode5 = BASettingsSpacerElementCellNode()
+	//let deleteAccountNode = BASettingsButtonElementCellNode(title: "Delete Account")
+	//let spacerNode5 = BASettingsSpacerElementCellNode()
 	
 	weak var delegate: BASettingsOptionsNodeDelegate?
 	
@@ -53,7 +53,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 		termsServiceNode.addTarget(self, action: #selector(termsOfServicePressed(_:)), forControlEvents: .touchUpInside)
 		licensesNode.addTarget(self, action: #selector(licensesPressed(_:)), forControlEvents: .touchUpInside)
 		logoutNode.addTarget(self, action: #selector(logoutPressed(_:)), forControlEvents: .touchUpInside)
-		deleteAccountNode.addTarget(self, action: #selector(deleteAccountPressed(_:)), forControlEvents: .touchUpInside)
+		//deleteAccountNode.addTarget(self, action: #selector(deleteAccountPressed(_:)), forControlEvents: .touchUpInside)
 
 		/*
 		addSubnode(contactUsNode)
@@ -67,7 +67,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 		addSubnode(termsServiceNode)
 		addSubnode(licensesNode)
 		addSubnode(logoutNode)
-		addSubnode(deleteAccountNode)
+		//addSubnode(deleteAccountNode)
 	}
 	
 	func sharePressed(_ sender: UIButton){
@@ -101,7 +101,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 		verticalStack.alignItems = .start
 		verticalStack.children = [/*contactUsNode, helpAndSupportNode, aboutBaisNode, spacerNode,*/ shareBaisNode, spacerNode2,
 		                          legalNode, privacyPolicyNode, termsServiceNode, licensesNode, spacerNode3,
-		                          logoutNode, spacerNode4, deleteAccountNode, spacerNode5]
+		                          logoutNode, spacerNode4]//, deleteAccountNode, spacerNode5]
 		return verticalStack
 	}
 }

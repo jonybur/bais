@@ -57,7 +57,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		navigationController!.interactivePopGestureRecognizer!.delegate =  self
 	}
 	
-	//MARK: - ASTableNode data source and delegate.
+//MARK: - ASTableNode data source and delegate.
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
 		let item = indexPath.item
@@ -83,7 +83,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		return 3
 	}
 	
-	//MARK: - BASettingsOptionsNodeDelegate methods
+//MARK: - BASettingsOptionsNodeDelegate methods
 	
 	func settingsOptionsNodeDidClickShareButton(){
 		print("stop")
@@ -104,14 +104,14 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		print("stop")
 	}
 	
-	//MARK: - BASettingsHeaderNodeDelegate methods
+//MARK: - BASettingsHeaderNodeDelegate methods
 	
 	func settingsHeaderNodeDidClickEditButton(){
 		let editProfileController = BAEditProfileController(with: CurrentUser.user, as: .settings)
 		navigationController?.pushViewController(editProfileController, animated: true)
 	}
 	
-	//MARK: - Dealloc
+//MARK: - Dealloc
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		userObserver?.removeAllObservers()
