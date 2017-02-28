@@ -87,7 +87,11 @@ class BAChatCellNode: ASCellNode {
 		let imagePlace = ASRatioLayoutSpec(ratio: 1, child: imageNode)
 		imagePlace.style.maxWidth = ASDimension(unit: .points, value: 60)
 		
-		lastMessageNode.style.maxWidth = ASDimension(unit: .points, value: 275)
+		if (session.unreadCount > 0){
+			lastMessageNode.style.maxWidth = ASDimension(unit: .points, value: 175)
+		}else{
+			lastMessageNode.style.maxWidth = ASDimension(unit: .points, value: 260)
+		}
 		lastMessageNode.maximumNumberOfLines = 1
 		
 		// vertical stack
