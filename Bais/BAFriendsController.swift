@@ -323,7 +323,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 					if (session.id == sessionId){
 						session.lastMessage = messageString
 						self._sessions = self.rearrange(array: self._sessions, fromIndex: idx, toIndex: 0)
-						self.tableNode.reloadRows(at: [IndexPath(item: idx + 1, section: 0)], with: .fade)
+						self.tableNode.reloadRows(at: [IndexPath(item: 1, section: 0), IndexPath(item: idx + 1, section: 0)], with: .fade)
 						// should "bubble" cell to first position of table
 						return
 					}
