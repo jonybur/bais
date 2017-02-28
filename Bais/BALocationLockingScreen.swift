@@ -49,8 +49,7 @@ class BALocationLockingScreen: ASViewController<ASDisplayNode>{
 		let alertController = UIAlertController(title: "Where are you?", message: "In order to show you interesting people near you, Bais needs to know where you are.", preferredStyle: .actionSheet)
 		
 		let alertAction = UIAlertAction(title: "Open Settings", style: .default) { action in
-			let url = URL(string: UIApplicationOpenSettingsURLString)!
-			UIApplication.shared.openURL(url)
+			AppsCommunicator.openSettings()
 		}
 		
 		alertController.addAction(alertAction)

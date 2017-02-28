@@ -77,6 +77,16 @@ class AppsCommunicator{
 		UIApplication.shared.openURL(url)
 	}
 	
+	static func openSettings(){
+		let url = URL(string: UIApplicationOpenSettingsURLString)!
+		UIApplication.shared.openURL(url)
+	}
+	
+	static func openAppStore(){
+		let url = URL(string: "https://itunes.apple.com/us/app/bais-argentina/id1152770326")!
+		UIApplication.shared.openURL(url)
+	}
+	
 	static func openInstagram(_ userName: String){
 		let url = URL(string: "instagram://user?username="+userName)!
 		UIApplication.shared.openURL(url)

@@ -26,12 +26,22 @@ class BALoadingController: UIViewController{
 		
 		view.backgroundColor = .white
 		
+		FirebaseService.checkVersionUpdate().then { updateIsRequired -> Void in
+			if (updateIsRequired){
+				let versionLockingController = BAVersionLockingScreen()
+				self.navigationController?.present(versionLockingController, animated: true, completion: nil)
+			} else {
+				self.continuesToTabBar()
+			}
+			
+		}.catch { _ in }
+	}
+	
+	func continuesToTabBar(){
 		// maybe add a loading here?
 		FirebaseService.getCurrentUser().then { user -> Void in
-			// You can call any combination of these three methods
 			Crashlytics.sharedInstance().setUserName(user.fullName)
 			Crashlytics.sharedInstance().setUserIdentifier(user.id)
-			
 			// load interface after getting user
 			// this allows us to check wether user has location, etc.
 			if (user.country == ""){
@@ -42,8 +52,6 @@ class BALoadingController: UIViewController{
 				let tabBarController = BATabBarController()
 				self.navigationController?.pushViewController(tabBarController, animated: false)
 			}
-			
 		}.catch { _ in }
 	}
-	
 }

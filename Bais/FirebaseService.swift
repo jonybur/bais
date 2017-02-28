@@ -25,6 +25,7 @@ class FirebaseService{
 	}
 	
 	static let rootReference = FIRDatabase.database().reference()
+	static let versionsReference = FIRDatabase.database().reference().child("versions")
 	static let locationsReference = FIRDatabase.database().reference().child("locations")
 	static let usersReference = FIRDatabase.database().reference().child("users")
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
@@ -170,6 +171,23 @@ class FirebaseService{
 			usersReference.child(userID).observeSingleEvent(of: .value, with: { snapshot in
 				let user = User(from: snapshot)
 				fulfill(user)
+			})
+		}
+	}
+	
+	static func checkVersionUpdate() -> Promise<Bool>{
+		return Promise { fulfill, reject in
+			versionsReference.observeSingleEvent(of: .value, with: { snapshot in
+				guard let snapshotVersion = snapshot.value as? NSDictionary else {
+					fulfill(false)
+					return }
+				guard let requiredVersion = snapshotVersion["required_version"] as? String else {
+					fulfill(false)
+					return }
+				let localVersion = Bundle.main.releaseVersionNumber!
+				
+				let updateIsRequired = !requiredVersion.versionToInt().lexicographicallyPrecedes(localVersion.versionToInt())
+				fulfill(updateIsRequired)
 			})
 		}
 	}

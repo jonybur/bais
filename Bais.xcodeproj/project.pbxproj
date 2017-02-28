@@ -33,6 +33,7 @@
 		AB6A25C41E46A3EB00661BCF /* BACalendarCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25C31E46A3EB00661BCF /* BACalendarCellNode.swift */; };
 		AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */; };
 		AB7C37A11E65759B00CA253C /* BALocationLockingScreenCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7C37A01E65759B00CA253C /* BALocationLockingScreenCellNode.swift */; };
+		AB7C37A31E65838600CA253C /* BAVersionLockingScreenCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7C37A21E65838600CA253C /* BAVersionLockingScreenCellNode.swift */; };
 		AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */; };
 		AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */; };
 		AB9DDD881E5C36430005E2DA /* BAChatNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9DDD871E5C36430005E2DA /* BAChatNavigationBar.swift */; };
@@ -104,6 +105,7 @@
 		AB6A25C31E46A3EB00661BCF /* BACalendarCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACalendarCellNode.swift; sourceTree = "<group>"; };
 		AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendRequestCellNode.swift; sourceTree = "<group>"; };
 		AB7C37A01E65759B00CA253C /* BALocationLockingScreenCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALocationLockingScreenCellNode.swift; sourceTree = "<group>"; };
+		AB7C37A21E65838600CA253C /* BAVersionLockingScreenCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAVersionLockingScreenCellNode.swift; sourceTree = "<group>"; };
 		AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
 		AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHeaderCellNode.swift; sourceTree = "<group>"; };
 		AB9DDD871E5C36430005E2DA /* BAChatNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatNavigationBar.swift; sourceTree = "<group>"; };
@@ -222,8 +224,8 @@
 		AB35497B1E63844F0099DAC0 /* Locking */ = {
 			isa = PBXGroup;
 			children = (
-				AB3549791E6384260099DAC0 /* BAVersionLockingScreen.swift */,
 				AB35497C1E6384680099DAC0 /* BALocationLockingScreen.swift */,
+				AB3549791E6384260099DAC0 /* BAVersionLockingScreen.swift */,
 			);
 			name = Locking;
 			sourceTree = "<group>";
@@ -264,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				AB7C37A01E65759B00CA253C /* BALocationLockingScreenCellNode.swift */,
+				AB7C37A21E65838600CA253C /* BAVersionLockingScreenCellNode.swift */,
 			);
 			name = Locking;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 				ABB9F2FF1D9170C600E01511 /* RSVPStatus.swift in Sources */,
 				ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */,
 				AB18B3091E4C11DF001C294B /* BASettingsHeaderCellNode.swift in Sources */,
+				AB7C37A31E65838600CA253C /* BAVersionLockingScreenCellNode.swift in Sources */,
 				ABB9F2EB1D9170C600E01511 /* WebService.swift in Sources */,
 				ABD158E11E511C68007C4163 /* BAEditCountryPickerCellNode.swift in Sources */,
 				AB18B3111E4C1D54001C294B /* BASettingsSpacerElementCellNode.swift in Sources */,
