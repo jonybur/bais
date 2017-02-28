@@ -159,7 +159,11 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate,
 			case .noRelationship:
 				FirebaseService.sendFriendRequestTo(friendId: user.id)
 				usersViewCell.user.friendshipStatus = .invitationSent
-				_collectionNode.reloadItems(at: [usersViewCell.indexPath!])
+				if usersViewCell.indexPath != nil{
+					_collectionNode.reloadItems(at: [usersViewCell.indexPath!])
+				} else {
+					print("IndexPath was nil")
+				}
 				break
 			case .invitationSent:
 				break

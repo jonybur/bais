@@ -322,9 +322,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				for (idx, session) in self._sessions.enumerated(){
 					if (session.id == sessionId){
 						session.lastMessage = messageString
-						self._sessions = self.rearrange(array: self._sessions, fromIndex: idx, toIndex: 0)
-						self.tableNode.reloadRows(at: [IndexPath(item: 1, section: 0), IndexPath(item: idx + 1, section: 0)], with: .fade)
 						// should "bubble" cell to first position of table
+						self._sessions = self.rearrange(array: self._sessions, fromIndex: idx, toIndex: 0)
+						// reloads rows that have been swapped
+						self.tableNode.reloadRows(at: [IndexPath(item: 1, section: 0), IndexPath(item: idx + 1, section: 0)], with: .fade)
 						return
 					}
 				}
