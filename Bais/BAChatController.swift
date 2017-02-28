@@ -53,6 +53,11 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 		observeMessages()
 		observeSessionStatus()
 		
+		let emptyCell = createTextMessage("", isIncomingMessage: true)
+		emptyCell.backgroundColor = .clear
+		emptyCell.alpha = 0
+		addMessageToMessenger(emptyCell)
+		
 		for user in session.participants{
 			if (user.id != FirebaseService.currentUserId){
 				let navBar = BAChatNavigationBar(with: user)
