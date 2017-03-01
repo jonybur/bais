@@ -19,7 +19,7 @@ class User{
 	var id = ""
 	var age: Int {
 		get{
-			return Calendar.current.dateComponents([.year], from: birthday, to: self).year ?? 0
+			return Date().years(from: birthday)
 		}
 	}
 	var facebookId = ""
@@ -75,9 +75,18 @@ class User{
 		self.profilePicture = dictionary["profile_picture"] as! String
 		
 		if let birthdayValue = dictionary["birthday"] as? String{
-			let formatter = DateFormatter()
-			formatter.dateFormat="MM/dd/yy"
-			self.birthday = formatter.date(from: birthdayValue)
+			if (birthdayValue == ""){
+				self.birthday = Date()
+			} else {
+				let formatter = DateFormatter()
+				formatter.dateFormat = "MM/dd/yyyy"
+				
+				if (formatter.date(from: birthdayValue) != nil){
+					self.birthday = formatter.date(from: birthdayValue)!
+				}else{
+					self.birthday = Date()
+				}
+			}
 		}
 		
 		if let notificationTokenFromDictionary = dictionary["notification_token"] as? String {

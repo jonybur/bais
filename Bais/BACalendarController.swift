@@ -21,7 +21,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	let _collectionNode: ASCollectionNode!
 	let webService = WebService()
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
-	let activityIndicatorView = DGActivityIndicatorView(type: .ballScaleMultiple,
+	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
 	                                                    tintColor: ColorPalette.orangeLighter,
 	                                                    size: 80)
 	

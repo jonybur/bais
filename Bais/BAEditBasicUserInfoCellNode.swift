@@ -30,8 +30,12 @@ class BAEditBasicUserInfoCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 24, weight: UIFontWeightBold),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		nameAndAgeNode.attributedText = NSAttributedString(string: user.firstName + ", " + String(user.age), attributes: nameAndAgeAttributes)
-		
+		var nameAndAgeString = user.firstName
+		if (user.age > 0){
+			nameAndAgeString += ", " + String(user.age)
+		}
+		nameAndAgeNode.attributedText = NSAttributedString(string: nameAndAgeString, attributes: nameAndAgeAttributes)
+
 		let distanceAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
 			NSForegroundColorAttributeName: ColorPalette.grey]

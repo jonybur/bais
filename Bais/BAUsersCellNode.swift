@@ -71,7 +71,11 @@ class BAUsersCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightLight),
 			NSForegroundColorAttributeName: UIColor.white]
 		
-		nameNode.attributedText = NSAttributedString(string: self.user.firstName, attributes: nameAttributes)
+		var nameAndAgeString = user.firstName
+		if (user.age > 0){
+			nameAndAgeString += ", " + String(user.age)
+		}
+		nameNode.attributedText = NSAttributedString(string: nameAndAgeString, attributes: nameAttributes)
 		
 		let distanceString = self.user.location.distance(from: CurrentUser.location!).redacted()
 		distanceNode.attributedText = NSAttributedString(string: distanceString, attributes: distanceAttributes)

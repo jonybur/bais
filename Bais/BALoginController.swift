@@ -76,7 +76,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		
 		let fbbutton = FBSDKLoginButton()
 		fbbutton.frame = CGRect(x: 40, y: logoView.frame.maxY - 30, width: ez.screenWidth - 80, height: 50)
-		fbbutton.readPermissions = ["public_profile", "user_friends", "user_birthday"]
+		fbbutton.readPermissions = ["public_profile", "user_friends", "user_birthday", "email"]
 		fbbutton.publishPermissions = ["rsvp_event"]
 		fbbutton.delegate = self
 		
