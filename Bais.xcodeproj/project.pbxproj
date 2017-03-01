@@ -39,6 +39,7 @@
 		AB8036D21E667B32000AE2A0 /* BALicensesCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D11E667B32000AE2A0 /* BALicensesCellNode.swift */; };
 		AB8036D41E668887000AE2A0 /* BALicensesButtonCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D31E668887000AE2A0 /* BALicensesButtonCellNode.swift */; };
 		AB8036D61E669008000AE2A0 /* BALicenseDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D51E669008000AE2A0 /* BALicenseDetailController.swift */; };
+		AB8036D91E669A69000AE2A0 /* BALicenseDescriptionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D81E669A69000AE2A0 /* BALicenseDescriptionCellNode.swift */; };
 		AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */; };
 		AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */; };
 		AB9DDD881E5C36430005E2DA /* BAChatNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9DDD871E5C36430005E2DA /* BAChatNavigationBar.swift */; };
@@ -116,6 +117,7 @@
 		AB8036D11E667B32000AE2A0 /* BALicensesCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALicensesCellNode.swift; sourceTree = "<group>"; };
 		AB8036D31E668887000AE2A0 /* BALicensesButtonCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALicensesButtonCellNode.swift; sourceTree = "<group>"; };
 		AB8036D51E669008000AE2A0 /* BALicenseDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALicenseDetailController.swift; sourceTree = "<group>"; };
+		AB8036D81E669A69000AE2A0 /* BALicenseDescriptionCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALicenseDescriptionCellNode.swift; sourceTree = "<group>"; };
 		AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
 		AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHeaderCellNode.swift; sourceTree = "<group>"; };
 		AB9DDD871E5C36430005E2DA /* BAChatNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatNavigationBar.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				AB8036CF1E667B28000AE2A0 /* BALicensesHeaderCellNode.swift */,
 				AB8036D11E667B32000AE2A0 /* BALicensesCellNode.swift */,
 				AB8036D31E668887000AE2A0 /* BALicensesButtonCellNode.swift */,
+				AB8036D81E669A69000AE2A0 /* BALicenseDescriptionCellNode.swift */,
 			);
 			name = Licenses;
 			sourceTree = "<group>";
@@ -720,6 +723,7 @@
 				ABB9F2F61D9170C600E01511 /* InstagramPicture.swift in Sources */,
 				AB6A25C21E46A3DF00661BCF /* BACalendarHeaderCellNode.swift in Sources */,
 				ABB9F2EC1D9170C600E01511 /* ColorPalette.swift in Sources */,
+				AB8036D91E669A69000AE2A0 /* BALicenseDescriptionCellNode.swift in Sources */,
 				ABA234541E4D883600CBAF53 /* BAEditDescriptionCellNode.swift in Sources */,
 				ABDAB5291E5A7B9A0067FBB5 /* Session.swift in Sources */,
 				AB8036D41E668887000AE2A0 /* BALicensesButtonCellNode.swift in Sources */,

@@ -13,7 +13,7 @@ import PromiseKit
 import FBSDKLoginKit
 
 final class BALicensesController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
-BALicensesHeaderNodeDelegate, BALicensesNodeDelegate, UIGestureRecognizerDelegate {
+BADefaultHeaderCellNodeDelegate, BALicensesNodeDelegate, UIGestureRecognizerDelegate {
 
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -50,10 +50,11 @@ BALicensesHeaderNodeDelegate, BALicensesNodeDelegate, UIGestureRecognizerDelegat
 //MARK: - Settings node
 	
 	internal func licensesNodeDidClickLicenseButton(_ button: BALicensesButtonElementCellNode) {
-		
+		let licenseDetailController = BALicenseDetailController(productName: button.productName, license: button.license)
+		navigationController?.pushViewController(licenseDetailController, animated: true)
 	}
 	
-	internal func settingsHeaderNodeDidClickBackButton() {
+	internal func defaultHeaderNodeDidClickBackButton() {
 		_ = navigationController?.popViewController(animated: true)
 	}
 	
@@ -63,7 +64,7 @@ BALicensesHeaderNodeDelegate, BALicensesNodeDelegate, UIGestureRecognizerDelegat
 		let item = indexPath.item
 		
 		if (item == 0){
-			let headerCellNode = BALicensesHeaderCellNode()
+			let headerCellNode = BADefaultHeaderCellNode(title: "Licenses")
 			headerCellNode.delegate = self
 			return headerCellNode
 		} else if (item == 1){

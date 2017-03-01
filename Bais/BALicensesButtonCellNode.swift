@@ -11,9 +11,11 @@ import AsyncDisplayKit
 
 class BALicensesButtonElementCellNode: BASettingsButtonElementCellNode{
 	var license = String()
+	var productName = String()
 	
-	convenience init(title: String, license: String){
-		self.init(title: title)
+	convenience init(productName: String, license: String){
+		self.init(title: productName)
+		self.productName = productName
 		self.license = license
 	}
 }

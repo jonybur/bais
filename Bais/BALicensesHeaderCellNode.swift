@@ -9,34 +9,34 @@
 import Foundation
 import AsyncDisplayKit
 
-protocol BALicensesHeaderNodeDelegate: class {
-	func licensesHeaderNodeDidClickBackButton()
+protocol BADefaultHeaderCellNodeDelegate: class {
+	func defaultHeaderNodeDidClickBackButton()
 }
 
-class BALicensesHeaderCellNode: ASCellNode{
+class BADefaultHeaderCellNode: ASCellNode{
 
 	let backButtonNode = ASButtonNode()
 	let titleNode = ASTextNode()
-	weak var delegate: BALicensesHeaderNodeDelegate?
+	weak var delegate: BADefaultHeaderCellNodeDelegate?
 	
-	required override init() {
+	required init(title: String) {
 		super.init()
 		
 		backButtonNode.setImage(UIImage(named:"chat-back"), for: [])
 		backButtonNode.addTarget(self, action: #selector(editPressed(_:)), forControlEvents: .touchUpInside)
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 20, weight: UIFontWeightBold),
+			NSFontAttributeName: UIFont.systemFont(ofSize: 18, weight: UIFontWeightBold),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		titleNode.attributedText = NSAttributedString(string: "Licenses", attributes: nameAttributes)
+		titleNode.attributedText = NSAttributedString(string: title, attributes: nameAttributes)
 		
 		addSubnode(backButtonNode)
 		addSubnode(titleNode)
 	}
 	
 	func editPressed(_ sender: UIButton){
-		delegate?.licensesHeaderNodeDidClickBackButton()
+		delegate?.defaultHeaderNodeDidClickBackButton()
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -46,10 +46,13 @@ class BALicensesHeaderCellNode: ASCellNode{
 		
 		let absoluteSpec = ASAbsoluteLayoutSpec(children: [backButtonNode])
 		
-		let insets = UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0)
+		let buttonInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+		let buttonSpec = ASInsetLayoutSpec(insets: buttonInsets, child: absoluteSpec)
 		
-		let buttonSpec = ASInsetLayoutSpec(insets: insets, child: absoluteSpec)
-		let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: titleNode)
+		let titleInsets = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+		let insetSpec = ASInsetLayoutSpec(insets: titleInsets, child: titleNode)
+		
+		let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: insetSpec)
 		
 		return ASOverlayLayoutSpec(child: centerSpec, overlay: buttonSpec)
 	}
