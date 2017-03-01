@@ -40,10 +40,6 @@ target 'Bais' do
   # chat
   pod 'NMessenger', :git => 'https://github.com/jonybur/nmessenger.git', :branch => 'asdk-2.1'
   
-  # to deprecate
-  #pod 'AwaitKit', '>= 2.0.0'
-  #pod 'ESTabBarController-swift', :git => 'https://github.com/jonybur/ESTabBarController.git'
-
 end
 
 post_install do |installer|

@@ -10,6 +10,7 @@ import UIKit
 import AsyncDisplayKit
 import Firebase
 import PromiseKit
+import FBSDKLoginKit
 
 final class BASettingsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
 BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizerDelegate {
@@ -86,7 +87,19 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 //MARK: - BASettingsOptionsNodeDelegate methods
 	
 	func settingsOptionsNodeDidClickShareButton(){
-		print("stop")
+		// text to share
+		let text = "Check out Bais... it shows you exchange students nearby! http://apple.co/2lTS4Ru"
+		
+		// set up activity view controller
+		let textToShare = [ text ]
+		let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+		activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+		
+		// exclude some activity types from the list (optional)
+		activityViewController.excludedActivityTypes = [ UIActivityType.airDrop ]
+		
+		// present the view controller
+		present(activityViewController, animated: true, completion: nil)
 	}
 	func settingsOptionsNodeDidClickPrivacyPolicyButton(){
 		print("stop")
@@ -95,10 +108,19 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		print("stop")
 	}
 	func settingsOptionsNodeDidClickLicensesButton(){
-		print("stop")
+		let licensesController = BALicensesController()
+		navigationController?.pushViewController(licensesController, animated: true)
 	}
 	func settingsOptionsNodeDidClickLogoutButton(){
-		print("stop")
+		let alert = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .actionSheet)
+		alert.addAction(UIAlertAction(title: "Logout", style: .default, handler: { action in
+			FirebaseService.logOut()
+			FBSDKLoginManager().logOut()
+			let loginController = BALoginController()
+			self.navigationController?.pushViewController(loginController, animated: true)
+		}))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		present(alert, animated: true, completion: nil)
 	}
 	func settingsOptionsNodeDidClickDeleteAccountButton(){
 		print("stop")

@@ -34,6 +34,11 @@
 		AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */; };
 		AB7C37A11E65759B00CA253C /* BALocationLockingScreenCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7C37A01E65759B00CA253C /* BALocationLockingScreenCellNode.swift */; };
 		AB7C37A31E65838600CA253C /* BAVersionLockingScreenCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7C37A21E65838600CA253C /* BAVersionLockingScreenCellNode.swift */; };
+		AB8036CD1E667A3D000AE2A0 /* BALicensesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036CC1E667A3D000AE2A0 /* BALicensesController.swift */; };
+		AB8036D01E667B28000AE2A0 /* BALicensesHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036CF1E667B28000AE2A0 /* BALicensesHeaderCellNode.swift */; };
+		AB8036D21E667B32000AE2A0 /* BALicensesCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D11E667B32000AE2A0 /* BALicensesCellNode.swift */; };
+		AB8036D41E668887000AE2A0 /* BALicensesButtonCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D31E668887000AE2A0 /* BALicensesButtonCellNode.swift */; };
+		AB8036D61E669008000AE2A0 /* BALicenseDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D51E669008000AE2A0 /* BALicenseDetailController.swift */; };
 		AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */; };
 		AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */; };
 		AB9DDD881E5C36430005E2DA /* BAChatNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9DDD871E5C36430005E2DA /* BAChatNavigationBar.swift */; };
@@ -106,6 +111,11 @@
 		AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendRequestCellNode.swift; sourceTree = "<group>"; };
 		AB7C37A01E65759B00CA253C /* BALocationLockingScreenCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALocationLockingScreenCellNode.swift; sourceTree = "<group>"; };
 		AB7C37A21E65838600CA253C /* BAVersionLockingScreenCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAVersionLockingScreenCellNode.swift; sourceTree = "<group>"; };
+		AB8036CC1E667A3D000AE2A0 /* BALicensesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALicensesController.swift; sourceTree = "<group>"; };
+		AB8036CF1E667B28000AE2A0 /* BALicensesHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALicensesHeaderCellNode.swift; sourceTree = "<group>"; };
+		AB8036D11E667B32000AE2A0 /* BALicensesCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALicensesCellNode.swift; sourceTree = "<group>"; };
+		AB8036D31E668887000AE2A0 /* BALicensesButtonCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALicensesButtonCellNode.swift; sourceTree = "<group>"; };
+		AB8036D51E669008000AE2A0 /* BALicenseDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALicenseDetailController.swift; sourceTree = "<group>"; };
 		AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
 		AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHeaderCellNode.swift; sourceTree = "<group>"; };
 		AB9DDD871E5C36430005E2DA /* BAChatNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatNavigationBar.swift; sourceTree = "<group>"; };
@@ -271,6 +281,25 @@
 			name = Locking;
 			sourceTree = "<group>";
 		};
+		AB8036CE1E667B1B000AE2A0 /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				AB8036CF1E667B28000AE2A0 /* BALicensesHeaderCellNode.swift */,
+				AB8036D11E667B32000AE2A0 /* BALicensesCellNode.swift */,
+				AB8036D31E668887000AE2A0 /* BALicensesButtonCellNode.swift */,
+			);
+			name = Licenses;
+			sourceTree = "<group>";
+		};
+		AB8036D71E669012000AE2A0 /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				AB8036CC1E667A3D000AE2A0 /* BALicensesController.swift */,
+				AB8036D51E669008000AE2A0 /* BALicenseDetailController.swift */,
+			);
+			name = Licenses;
+			sourceTree = "<group>";
+		};
 		AB9DDD891E5C36460005E2DA /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +394,7 @@
 		ABB9F30A1D9171CA00E01511 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AB8036CE1E667B1B000AE2A0 /* Licenses */,
 				AB7C379F1E65757E00CA253C /* Locking */,
 				AB27DF351E63912B00FAE513 /* TabBar */,
 				AB18B3061E4C1103001C294B /* Tabbed */,
@@ -419,6 +449,7 @@
 				AB18B3031E4C0D2B001C294B /* Detail */,
 				ABFA0B321D9A245600ED6C16 /* Chat */,
 				AB35497B1E63844F0099DAC0 /* Locking */,
+				AB8036D71E669012000AE2A0 /* Licenses */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -669,12 +700,15 @@
 				AB3D33A21E458C9E0058547A /* BAImageCarouselCellNode.swift in Sources */,
 				ABEB8DA81E5302560089000C /* BADetailBackButtonNode.swift in Sources */,
 				ABB9F2F51D9170C600E01511 /* InstagramMedia.swift in Sources */,
+				AB8036D01E667B28000AE2A0 /* BALicensesHeaderCellNode.swift in Sources */,
 				ABB9F3071D9170C600E01511 /* WebAPI.swift in Sources */,
 				AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */,
 				AB0E468B1DF3E628003CA68C /* MosaicCollectionViewLayout.swift in Sources */,
+				AB8036CD1E667A3D000AE2A0 /* BALicensesController.swift in Sources */,
 				ABB9F2ED1D9170C600E01511 /* BATabBarController.swift in Sources */,
 				AB4F5D771D98EB4F003586B2 /* User.swift in Sources */,
 				ABA234521E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift in Sources */,
+				AB8036D61E669008000AE2A0 /* BALicenseDetailController.swift in Sources */,
 				ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */,
 				AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */,
 				ABB9F2F21D9170C600E01511 /* FetchedContent.swift in Sources */,
@@ -688,6 +722,7 @@
 				ABB9F2EC1D9170C600E01511 /* ColorPalette.swift in Sources */,
 				ABA234541E4D883600CBAF53 /* BAEditDescriptionCellNode.swift in Sources */,
 				ABDAB5291E5A7B9A0067FBB5 /* Session.swift in Sources */,
+				AB8036D41E668887000AE2A0 /* BALicensesButtonCellNode.swift in Sources */,
 				ABB9F2FD1D9170C600E01511 /* Place.swift in Sources */,
 				ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */,
 				ABB9F2DF1D9170C600E01511 /* Utilities.swift in Sources */,
@@ -716,6 +751,7 @@
 				ABB9F3051D9170C600E01511 /* UIRepeatingVideo.swift in Sources */,
 				ABDAB52B1E5A7C1E0067FBB5 /* Message.swift in Sources */,
 				ABB9F2F71D9170C600E01511 /* InstagramUser.swift in Sources */,
+				AB8036D21E667B32000AE2A0 /* BALicensesCellNode.swift in Sources */,
 				ABEB8DA61E5301510089000C /* BADetailActionButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

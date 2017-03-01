@@ -37,6 +37,13 @@ class FirebaseService{
 		case profilePicture = "profile_picture"
 	}
 	
+	static func logOut(){
+		resetUserNotificationToken()
+		CurrentUser.user = nil
+		CurrentUser.location = CLLocation()
+		try! FIRAuth.auth()!.signOut()
+	}
+	
 	static func sendReport(for user: User, reason: String){
 		let value = [
 			"user_id": user.id,
@@ -233,12 +240,17 @@ class FirebaseService{
 		usersReference.child(currentUserId).updateChildValues(["country_code": country])
 	}
 	
+	static func resetUserNotificationToken(){
+		if (currentUserId != ""){
+			usersReference.child(currentUserId).child("notification_token").setValue("")
+		}
+	}
+	
 	static func updateUserNotificationToken(){
 		guard let token = FIRInstanceID.instanceID().token() else { return }
 		print("New notification token: " + token)
-		let value = ["notification_token": token]
 		if (currentUserId != ""){
-			usersReference.child(currentUserId).updateChildValues(value)
+			usersReference.child(currentUserId).child("notification_token").setValue(token)
 		}
 	}
 	
