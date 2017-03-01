@@ -16,10 +16,16 @@ class BALicenseDescriptionCellNode: ASCellNode{
 	required init(license: String){
 		super.init()
 		
+		let licenseAttributes = [
+			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+			NSForegroundColorAttributeName: ColorPalette.grey]
+		licenseText.attributedText = NSAttributedString(string: license, attributes: licenseAttributes)
+		
+		addSubnode(licenseText)
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-		return ASLayoutSpec()
+		return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 20, left: 15, bottom: 30, right: 15), child: licenseText)
 	}
 	
 }
