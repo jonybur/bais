@@ -354,7 +354,7 @@ class FirebaseService{
 													parameters: ["fields": "picture.width(400),first_name,last_name,birthday"],
 													httpMethod: "GET")
 			
-			graphRequest?.start { connection, result, error in
+			_ = graphRequest?.start (completionHandler: { connection, result, error in
 				if error != nil {
 					print("ERROR: " + error.debugDescription)
 					return
@@ -389,7 +389,7 @@ class FirebaseService{
 					}).catch(execute: { _ in })
 				}).catch(execute: { _ in })
 	
-			}.start()
+			})
 			
 		}
 	}

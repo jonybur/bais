@@ -28,13 +28,12 @@ class WebService{
 	
 	func setNewRSVPStatus(_ eventId: String, rsvpStatus: RSVPStatus){
 		
-		let graphRequest = FBSDKGraphRequest(graphPath: eventId + "/" + String(describing: rsvpStatus),
+		let graphRequest = FBSDKGraphRequest(graphPath: eventId + "/" + rsvpStatus.getValue(),
 		                                                        parameters: nil, httpMethod: "POST");
 		
-		graphRequest?.start { connection, result, error in
-			// TODO: check if result is success = 1
-			//returns rsvpStatus
-		}.start()
+		_ = graphRequest?.start(completionHandler: { connection, result, error in
+			print("Updates RSVP status")
+		})
 		
 	}
 	
@@ -47,7 +46,7 @@ class WebService{
 		let graphPath = eventId + "/" + rsvpStatus.getValue() + "/" + FBSDKAccessToken.current().userID
 		let graphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: nil);
 		
-		graphRequest?.start { connection, result, error in
+		_ = graphRequest?.start (completionHandler: { connection, result, error in
 			
 			if error != nil {
 				print("ERROR: " + error.debugDescription)
@@ -72,7 +71,7 @@ class WebService{
 					}
 				}
 			}
-		}.start()
+		})
 	}
 		
 	// call from main thread
@@ -82,7 +81,7 @@ class WebService{
 		let graphRequest = FBSDKGraphRequest(graphPath: "baisinternationalstudents",
 		                                     parameters: ["fields": "events{description,end_time,name,place,id,start_time,cover}"])
 		
-		graphRequest?.start { connection, result, error in
+		_ = graphRequest?.start (completionHandler: { connection, result, error in
 			if error != nil {
 				print("ERROR: " + error.debugDescription)
 				return
@@ -141,7 +140,7 @@ class WebService{
 
 				self.delegate?.eventsLoaded!(eventsArray)
 			}
-		}.start()
+		})
 	}
 	
 	func stringToNSDate(_ value: String) -> Date {
