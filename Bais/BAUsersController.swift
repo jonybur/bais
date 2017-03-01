@@ -26,8 +26,8 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	let usersRef = FirebaseService.usersReference
 	let locationManager = CLLocationManager()
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
-	                                                    tintColor: ColorPalette.orange,
-	                                                    size: 75)
+	                                                    tintColor: ColorPalette.orangeLighter,
+	                                                    size: 80)
 	
 	init (){
 		let layout = MosaicCollectionViewLayout(startsAt: 10)
@@ -96,7 +96,6 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 //MARK: - LocationManager delegate methods
 	
 	public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-		// with this if we make sure that location has coordinates
 		if let location = locationManager.location?.coordinate {
 			FirebaseService.updateUserLocation(location)
 			observeUserLocation().then { location -> Void in

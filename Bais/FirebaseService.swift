@@ -351,7 +351,7 @@ class FirebaseService{
 			if FBSDKAccessToken.current() == nil { return }
 			
 			let graphRequest = FBSDKGraphRequest(graphPath: "me",
-													parameters: ["fields": "picture.width(400),first_name,last_name,birthday"],
+													parameters: ["fields": "picture.width(400),first_name,last_name,birthday,email"],
 													httpMethod: "GET")
 			
 			_ = graphRequest?.start (completionHandler: { connection, result, error in
@@ -360,8 +360,8 @@ class FirebaseService{
 					return
 				}
 				
-				guard let nsArray = result as? NSDictionary else { return }
-				guard let events = nsArray.object(forKey: "picture") as? NSDictionary else { return }
+				guard let graphResult = result as? NSDictionary else { return }
+				guard let events = graphResult.object(forKey: "picture") as? NSDictionary else { return }
 				guard let datum = events["data"] as? NSDictionary else { return }
 				guard let fbSDKAccessToken = FBSDKAccessToken.current().userID else { return }
 				
@@ -374,12 +374,19 @@ class FirebaseService{
 						// we have the firebase-stored url!, lets finish pushing our user
 						let messageRef = usersReference
 						let itemRef = messageRef.child(user.uid)
+				
+						let firstName = graphResult.value(forKey: "first_name") == nil ? "" : graphResult.value(forKey: "first_name") as! String
+						let lastName = graphResult.value(forKey: "last_name") == nil ? "" : graphResult.value(forKey: "last_name") as! String
+						let birthday = graphResult.value(forKey: "birthday") == nil ? "" : graphResult.value(forKey: "birthday") as! String
+						let email = graphResult.value(forKey: "email") == nil ? "" : graphResult.value(forKey: "email") as! String
+						
 						let userItem = [
-							"first_name": nsArray["first_name"] as! String,
-							"last_name": nsArray["last_name"] as! String,
+							"first_name": firstName,
+							"last_name": lastName,
 							"facebook_id": fbSDKAccessToken,
 							"profile_picture": url.absoluteString,
-							"birthday": "16/06/1993",//nsArray["birthday"] as! String,
+							"birthday": birthday,
+							"email": email,
 							"country_code": "",
 							"about": "",
 							"badge_count": 0

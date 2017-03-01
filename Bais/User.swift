@@ -17,12 +17,17 @@ class CurrentUser {
 
 class User{
 	var id = ""
-	var age: Int = 0
+	var age: Int {
+		get{
+			return Calendar.current.dateComponents([.year], from: birthday, to: self).year ?? 0
+		}
+	}
 	var facebookId = ""
 	var firstName = ""
 	var lastName = ""
 	var countryCode = ""
 	var about = ""
+	var birthday = Date()
 	var notificationToken = ""
 	var profilePicture = ""
 	var location = CLLocation()
@@ -68,6 +73,12 @@ class User{
 		self.lastName = dictionary["last_name"] as! String
 		self.countryCode = dictionary["country_code"] as! String
 		self.profilePicture = dictionary["profile_picture"] as! String
+		
+		if let birthdayValue = dictionary["birthday"] as? String{
+			let formatter = DateFormatter()
+			formatter.dateFormat="MM/dd/yy"
+			self.birthday = formatter.date(from: birthdayValue)
+		}
 		
 		if let notificationTokenFromDictionary = dictionary["notification_token"] as? String {
 			self.notificationToken = notificationTokenFromDictionary
