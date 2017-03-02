@@ -39,7 +39,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		let activityIndicatorSize = (activityIndicatorView?.size)!
 		activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - activityIndicatorSize) / 2,
 		                                      y: (ez.screenHeight - activityIndicatorSize) / 2,
-		                                      width: activityIndicatorSize, height: activityIndicatorSize);
+		                                      width: activityIndicatorSize, height: activityIndicatorSize)
 		
 		extendedLayoutIncludesOpaqueBars = true
 		

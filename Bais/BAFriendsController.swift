@@ -31,7 +31,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	//var _usersToDisplay = [User]()
 	var _sessions = [Session]()
 	var _requests = [User]()
+	var emptyStateNode: BAEmptyStateCellNode!
 	var displayMode: ChatDisplayMode = .sessions//: ChatDisplayMode!
+	//var showEmptyState = false
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -51,6 +53,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		observeFriends()
+		
+		emptyStateNode = BAEmptyStateCellNode(title: "You don't have any\nfriend requests.")
+		emptyStateNode.frame = CGRect(x: 0, y: 150, width: ez.screenWidth, height: ez.screenHeight - 300)
+		super.node.addSubnode(emptyStateNode)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -106,14 +112,20 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		if (displayMode != nil){
-			if (displayMode == .requests){
-				return self._requests.count > 0 ? self._requests.count + 1 : 1
-			} else if (displayMode == .sessions){
-				return self._sessions.count > 0 ? self._sessions.count + 1 : 1
-			}
+		var rowCount = 0
+		
+		// gets item count (includes header)
+		if (displayMode == .requests){
+			rowCount = _requests.count > 0 ? _requests.count + 1 : 1
+		} else if (displayMode == .sessions){
+			rowCount = _sessions.count > 0 ? _sessions.count + 1 : 1
 		}
-		return 0
+		
+		// if only got header back, then should show empty state cell node
+		emptyStateNode.alpha = rowCount == 1 ? 1 : 0
+		
+		// return normal count
+		return rowCount
 	}
 	
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

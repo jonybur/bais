@@ -77,6 +77,7 @@
 		ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF08B221D916E5400C6B832 /* AppDelegate.swift */; };
 		ABF50ACC1DEA7651004CB6E8 /* BAUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */; };
 		ABF6D7AC1E64EE83009D2993 /* BALoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6D7AB1E64EE83009D2993 /* BALoadingController.swift */; };
+		ABF6E05B1E68269100617A54 /* BAEmptyStateCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6E05A1E68269100617A54 /* BAEmptyStateCellNode.swift */; };
 		ABFA0B311D9A0CB000ED6C16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */; };
 		ABFC76E61E34995700B6498D /* BAUsersHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */; };
 		ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */; };
@@ -158,6 +159,7 @@
 		ABF08B2E1D916E5400C6B832 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersController.swift; sourceTree = "<group>"; };
 		ABF6D7AB1E64EE83009D2993 /* BALoadingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BALoadingController.swift; sourceTree = "<group>"; };
+		ABF6E05A1E68269100617A54 /* BAEmptyStateCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEmptyStateCellNode.swift; sourceTree = "<group>"; };
 		ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersHeaderCellNode.swift; sourceTree = "<group>"; };
 		ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendsController.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 		ABB9F30A1D9171CA00E01511 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				ABF6E0591E68267900617A54 /* EmptyState */,
 				AB8036CE1E667B1B000AE2A0 /* Licenses */,
 				AB7C379F1E65757E00CA253C /* Locking */,
 				AB27DF351E63912B00FAE513 /* TabBar */,
@@ -513,6 +516,14 @@
 				ABF08B2E1D916E5400C6B832 /* Info.plist */,
 			);
 			path = Bais;
+			sourceTree = "<group>";
+		};
+		ABF6E0591E68267900617A54 /* EmptyState */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6E05A1E68269100617A54 /* BAEmptyStateCellNode.swift */,
+			);
+			name = EmptyState;
 			sourceTree = "<group>";
 		};
 		ABFA0B321D9A245600ED6C16 /* Chat */ = {
@@ -710,6 +721,7 @@
 				AB8036CD1E667A3D000AE2A0 /* BALicensesController.swift in Sources */,
 				ABB9F2ED1D9170C600E01511 /* BATabBarController.swift in Sources */,
 				AB4F5D771D98EB4F003586B2 /* User.swift in Sources */,
+				ABF6E05B1E68269100617A54 /* BAEmptyStateCellNode.swift in Sources */,
 				ABA234521E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift in Sources */,
 				AB8036D61E669008000AE2A0 /* BALicenseDetailController.swift in Sources */,
 				ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */,
