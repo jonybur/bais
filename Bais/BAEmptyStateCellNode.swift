@@ -9,13 +9,27 @@
 import Foundation
 import AsyncDisplayKit
 
+class BAEmptyStateFriendRequestsCellNode: BAEmptyStateCellNode{
+	init(){
+		super.init(title: "You don't have any\nfriend requests.", image: UIImage(named: "BaisLogo")!)
+	}
+}
+
+class BAEmptyStateMessagesCellNode: BAEmptyStateCellNode{
+	init(){
+		super.init(title: "You don't have any messages.", image: UIImage(named: "BaisLogo")!)
+	}
+}
+
 class BAEmptyStateCellNode: ASCellNode {
 	
 	let titleNode = ASTextNode()
 	let imageNode = ASImageNode()
 	
-	init(title: String) {
+	init(title: String, image: UIImage) {
 		super.init()
+		
+		self.frame = CGRect(x: 0, y: 150, width: ez.screenWidth, height: ez.screenHeight - 300)
 		
 		let titleParagraphStyle = NSMutableParagraphStyle()
 		titleParagraphStyle.alignment = .center
@@ -26,7 +40,7 @@ class BAEmptyStateCellNode: ASCellNode {
 			NSParagraphStyleAttributeName: titleParagraphStyle]
 		titleNode.attributedText = NSAttributedString(string: title, attributes: titleAttributes)
 		
-		imageNode.image = UIImage(named: "BaisLogo")
+		imageNode.image = image
 		
 		addSubnode(imageNode)
 		addSubnode(titleNode)

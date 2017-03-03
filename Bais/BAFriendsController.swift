@@ -31,7 +31,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	//var _usersToDisplay = [User]()
 	var _sessions = [Session]()
 	var _requests = [User]()
-	var emptyStateNode: BAEmptyStateCellNode!
+	var emptyStateMessagesNode = BAEmptyStateMessagesCellNode()
+	var emptyStateFriendRequestNode = BAEmptyStateFriendRequestsCellNode()
 	var displayMode: ChatDisplayMode = .sessions//: ChatDisplayMode!
 	//var showEmptyState = false
 	
@@ -53,10 +54,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		observeFriends()
-		
-		emptyStateNode = BAEmptyStateCellNode(title: "You don't have any\nfriend requests.")
-		emptyStateNode.frame = CGRect(x: 0, y: 150, width: ez.screenWidth, height: ez.screenHeight - 300)
-		super.node.addSubnode(emptyStateNode)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -122,7 +119,15 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		
 		// if only got header back, then should show empty state cell node
-		emptyStateNode.alpha = rowCount == 1 ? 1 : 0
+		if (rowCount == 1){
+			if (displayMode == .requests){
+				emptyStateMessagesNode.alpha = 0
+				emptyStateFriendRequestNode.alpha = 1
+			} else if (displayMode == .sessions){
+				emptyStateMessagesNode.alpha = 1
+				emptyStateFriendRequestNode.alpha = 0
+			}
+		}
 		
 		// return normal count
 		return rowCount
@@ -156,7 +161,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		displayMode = displayMode.next()
 		
 		// adds the header to the final count
-		
 		var elementsToDisplay = 0
 		if (displayMode == .requests){
 			elementsToDisplay = _requests.count + 1
@@ -222,9 +226,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				}
 			}
 			
-		}
-		userFriendsRef.observe(.childMoved) { (snapshot: FIRDataSnapshot!) in
-			print("moved")
 		}
 		userFriendsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
 			for (idx, request) in self._requests.enumerated(){
