@@ -54,6 +54,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		observeFriends()
+		self.node.addSubnode(emptyStateMessagesNode)
+		self.node.addSubnode(emptyStateFriendRequestNode)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -118,16 +120,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			rowCount = _sessions.count > 0 ? _sessions.count + 1 : 1
 		}
 		
-		// if only got header back, then should show empty state cell node
-		if (rowCount == 1){
-			if (displayMode == .requests){
-				emptyStateMessagesNode.alpha = 0
-				emptyStateFriendRequestNode.alpha = 1
-			} else if (displayMode == .sessions){
-				emptyStateMessagesNode.alpha = 1
-				emptyStateFriendRequestNode.alpha = 0
-			}
-		}
+		displayEmptyState(rowCount)
 		
 		// return normal count
 		return rowCount
@@ -197,6 +190,24 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			}
 		}
 		tableNode.reloadRows(at: idxToReload, with: .fade)
+		
+		displayEmptyState(tableNode.numberOfRows(inSection: 0))
+	}
+	
+	private func displayEmptyState(_ rowCount: Int){
+		// if only got header back, then should show empty state cell node
+		if (rowCount == 1){
+			if (displayMode == .requests){
+				emptyStateMessagesNode.alpha = 0
+				emptyStateFriendRequestNode.alpha = 1
+			} else if (displayMode == .sessions){
+				emptyStateMessagesNode.alpha = 1
+				emptyStateFriendRequestNode.alpha = 0
+			}
+		} else {
+			emptyStateMessagesNode.alpha = 0
+			emptyStateFriendRequestNode.alpha = 0
+		}
 	}
 	
 //MARK: - Firebase
@@ -225,6 +236,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 					}
 				}
 			}
+			let tableRows = self.tableNode.numberOfRows(inSection: 0)
+			self.displayEmptyState(tableRows)
 			
 		}
 		userFriendsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
@@ -238,7 +251,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 					return
 				}
 			}
-			
+			let tableRows = self.tableNode.numberOfRows(inSection: 0)
+			self.displayEmptyState(tableRows)
 		}
 		userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
 			// promises get resolved when all users are complete
@@ -311,6 +325,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 					return
 				}
 			}
+			
+			let tableRows = self.tableNode.numberOfRows(inSection: 0)
+			self.displayEmptyState(tableRows)
 		}
 	}
 
