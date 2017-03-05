@@ -65,9 +65,9 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
         let fbbutton = FBSDKLoginButton()
         fbbutton.frame = CGRect(x: 40, y: logoView.frame.maxY - 30, width: ez.screenWidth - 80, height: 50)
         fbbutton.readPermissions = ["public_profile", "user_friends", "user_birthday", "email"]
-        fbbutton.publishPermissions = ["rsvp_event"]
+        //fbbutton.publishPermissions = [""]
         fbbutton.delegate = self
-        
+		
         let warningView = UITextView()
         warningView.frame = CGRect(x: 5, y: (fbbutton.frame).maxY + 5, width: ez.screenWidth - 10, height: 0)
         warningView.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
@@ -93,25 +93,35 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		if (error != nil || result.isCancelled){
             self.removeActivityIndicator()
 		} else {
-            activityIndicatorView?.startAnimating()
-            activityIndicatorViewBackground.alpha = 0.75
-            
-			let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-			FIRAuth.auth()?.signIn(with: credential) { (user, error) in
-				if let error = error {
-                    self.removeActivityIndicator()
-					print("Sign in failed:", error.localizedDescription)
+			let loginManager = FBSDKLoginManager()
+			loginManager.logIn(withPublishPermissions: ["rsvp_event"], from: self, handler: { (result, error) in
+				if (error != nil || (result?.isCancelled)!){
 				} else {
-					// should wait until this finishes
-					FirebaseService.registerUser(user!).then(execute: { _ -> Void in
-						self.moveToCreateUserScreen()
-					}).catch(execute: { _ in })
+					self.signInToFirebase()
 				}
-			}
+			})
 			
 		}
 	}
-    
+	
+	func signInToFirebase(){
+		activityIndicatorView?.startAnimating()
+		activityIndicatorViewBackground.alpha = 0.75
+		
+		let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+		FIRAuth.auth()?.signIn(with: credential) { (user, error) in
+			if let error = error {
+				self.removeActivityIndicator()
+				print("Sign in failed:", error.localizedDescription)
+			} else {
+				// should wait until this finishes
+				FirebaseService.registerUser(user!).then(execute: { _ -> Void in
+					self.moveToCreateUserScreen()
+				}).catch(execute: { _ in })
+			}
+		}
+	}
+	
 	func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
 		return true
 	}

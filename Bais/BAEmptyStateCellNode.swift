@@ -11,13 +11,13 @@ import AsyncDisplayKit
 
 class BAEmptyStateFriendRequestsCellNode: BAEmptyStateCellNode{
 	init(){
-		super.init(title: "You don't have any\nfriend requests.", image: UIImage(named: "BaisLogo")!)
+		super.init(title: "You don't have any\nfriend requests.", image: UIImage(named: "empty-friends")!)
 	}
 }
 
 class BAEmptyStateMessagesCellNode: BAEmptyStateCellNode{
 	init(){
-		super.init(title: "You don't have any messages.", image: UIImage(named: "BaisLogo")!)
+		super.init(title: "You don't have any messages.", image: UIImage(named: "empty-messages")!)
 	}
 }
 
@@ -36,7 +36,7 @@ class BAEmptyStateCellNode: ASCellNode {
 		
 		let titleAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium),
-			NSForegroundColorAttributeName: ColorPalette.grey,
+			NSForegroundColorAttributeName: ColorPalette.lightGrey,
 			NSParagraphStyleAttributeName: titleParagraphStyle]
 		titleNode.attributedText = NSAttributedString(string: title, attributes: titleAttributes)
 		
