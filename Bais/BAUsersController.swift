@@ -191,8 +191,10 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 			case .invitationReceived:
 				break
 			case .accepted:
-				//let chatController = BAChatController(with: user)
-				//navigationController?.pushViewController(chatController, animated: true)
+				FirebaseService.getSessionByUser(user.id).then(execute: { session -> Void in
+					let chatController = BAChatController(with: session)
+					self.navigationController?.pushViewController(chatController, animated: true)
+				}).catch(execute: { _ in })
 				break
 			default:
 				break

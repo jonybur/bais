@@ -94,18 +94,20 @@ class FirebaseService{
 	}
 	
 	static func resetBadgeCount(){
-		usersReference.child(currentUserId).child("badge_count").setValue(0)
+		let userBadgeCountRef = usersReference.child(currentUserId).child("badge_count")
+		userBadgeCountRef.runTransactionBlock { currentData -> FIRTransactionResult in
+			currentData.value = 0
+			return FIRTransactionResult.success(withValue: currentData)
+		}
 	}
 	
 	static func postPushNotification(to user: User, message: String){
 		let userBadgeCountRef = usersReference.child(user.id).child("badge_count")
-		userBadgeCountRef.observeSingleEvent(of: .value, with: { snapshot in
-			// increments one to users badge count
-			var badgeCount = 1
-			if snapshot.value != nil{
-				badgeCount += snapshot.value as! Int
-			}
-			userBadgeCountRef.setValue(badgeCount)
+		userBadgeCountRef.runTransactionBlock { currentData -> FIRTransactionResult in
+			
+			guard let currentBadgeValue = currentData.value as? Int else { return FIRTransactionResult.success(withValue: currentData) }
+			let newBadgeValue = currentBadgeValue + 1
+			currentData.value = newBadgeValue
 			
 			// sends push notification
 			let httpHeaders = [
@@ -116,8 +118,8 @@ class FirebaseService{
 			let notification = [
 				"title": CurrentUser.user.firstName,
 				"body": message,
-				"badge": badgeCount
-			] as [String : Any]
+				"badge": newBadgeValue
+				] as [String : Any]
 			
 			let body = [
 				"to": user.notificationToken,
@@ -125,7 +127,9 @@ class FirebaseService{
 				] as [String : Any]
 			
 			_ = WebAPI.postRequest(url: "https://fcm.googleapis.com/fcm/send", body: body, headers: httpHeaders)
-		})
+			
+			return FIRTransactionResult.success(withValue: currentData)
+		}
 	}
 	
 	
@@ -266,6 +270,18 @@ class FirebaseService{
 		CurrentUser.location = CLLocation(latitude: location.latitude, longitude: location.longitude)
 	}
 	
+	static func getSessionByUser(_ userId: String) -> Promise<Session>{
+		return Promise{ fulfill, reject in
+			usersReference.child(currentUserId).child("sessions_by_user").child(userId).observeSingleEvent(of: .value, with: { snapshot in
+				guard let sessionId = snapshot.value as? String else { return }
+				
+				self.getSession(from: sessionId).then(execute: { session -> Void in
+					fulfill(session)
+				}).catch(execute: { _ in })
+			})
+		}
+	}
+	
 	static func endFriendRelationshipWith(friendId: String, sessionId: String){
 		let selfRef = usersReference.child(currentUserId)
 		let friendRef = usersReference.child(friendId)
@@ -287,14 +303,29 @@ class FirebaseService{
 	static func acceptFriendRequestFrom(friendId: String){
 		setFriendStatusWith(friendId, to: .accepted)
 		// create session
-		startSessionWith(friendId)
+		let sessionId = startSessionWith(friendId)
+		// add user-session to sessions_by_user
+		addSessionsByUser(friendId, sessionId)
+	}
+	
+	static func addSessionsByUser(_ friendId: String, _ sessionId: String){
+		
+		let userValue = [
+			friendId: sessionId
+		]
+		
+		let friendValue = [
+			currentUserId: sessionId
+		]
+		usersReference.child(currentUserId).child("sessions_by_user").updateChildValues(userValue)
+		usersReference.child(friendId).child("sessions_by_user").updateChildValues(friendValue)
 	}
 	
 	static func sendFriendRequestTo(friendId: String){
 		setFriendStatusWith(friendId, to: .invitationSent)
 	}
 	
-	private static func startSessionWith(_ friendId: String){
+	private static func startSessionWith(_ friendId: String) -> String{
 		// create session on /sessions
 		let users =
 			[currentUserId: true,
@@ -302,8 +333,8 @@ class FirebaseService{
 		let value = [
 			"participants": users
 		] as [String : Any]
-		let selfRef = sessionsReference.childByAutoId()
-		selfRef.updateChildValues(value)
+		let sessionRef = sessionsReference.childByAutoId()
+		sessionRef.updateChildValues(value)
 		
 		let sessionAttributes = [
 			"active": true,
@@ -311,11 +342,13 @@ class FirebaseService{
 		] as [String : Any]
 		
 		let sessionValue = [
-			selfRef.key: sessionAttributes
+			sessionRef.key: sessionAttributes
 		] as [String : Any]
 		
 		usersReference.child(currentUserId).child("sessions").updateChildValues(sessionValue)
 		usersReference.child(friendId).child("sessions").updateChildValues(sessionValue)
+		
+		return sessionRef.key
 	}
 	
 	private static func setFriendStatusWith(_ friendId: String, to status: FriendshipStatus){

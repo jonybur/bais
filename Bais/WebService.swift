@@ -29,7 +29,7 @@ class WebService{
 	func setNewRSVPStatus(_ eventId: String, rsvpStatus: RSVPStatus){
 		
 		let graphRequest = FBSDKGraphRequest(graphPath: eventId + "/" + rsvpStatus.getValue(),
-		                                                        parameters: nil, httpMethod: "POST");
+		                                                        parameters: nil, httpMethod: "POST")
 		
 		_ = graphRequest?.start(completionHandler: { connection, result, error in
 			print("Updates RSVP status")
