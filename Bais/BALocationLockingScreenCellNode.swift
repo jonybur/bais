@@ -17,7 +17,7 @@ class BALocationLockingScreenCellNode: ASDisplayNode{
 	required override init() {
 		super.init()
 		
-		topImageNode.image = UIImage(named: "BaisLogo")
+		topImageNode.image = UIImage(named: "location-lock")
 		
 		let titleAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),

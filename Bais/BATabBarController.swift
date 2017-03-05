@@ -80,6 +80,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		let controllers = [v1, v2, v3, v4]
 		viewControllers = controllers
 		
+		observeAppVersion()
 		observeFriendBadge()
 		
 		selectedIndex = 0
@@ -106,7 +107,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 	}
 	
 	func observeFriendBadge(){
-	
 		var invitedFriendsCount = 0
 		var unreadSessionsCount = 0
 		
@@ -178,15 +178,31 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 			dismiss(animated: true, completion: nil)
 		}
 	}
+
+//MARK: - Version check
 	
+	// only when it opens app from foreground
 	func applicationWillEnterForeground(_ notification: NSNotification) {
 		FirebaseService.resetBadgeCount()
-		
 		FirebaseService.checkVersionUpdate().then { updateIsRequired -> Void in
 			if (updateIsRequired){
 				let versionLockingController = BAVersionLockingScreen()
 				self.navigationController?.present(versionLockingController, animated: true, completion: nil)
 			}
 		}.catch { _ in }
+	}
+	
+	// continuous check
+	func observeAppVersion(){
+		FirebaseService.versionsReference.observe(.value, with: { snapshot in
+			guard let requiredVersion = snapshot.value as? String else { return }
+			let localVersion = Bundle.main.releaseVersionNumber!
+			let updateIsRequired = !requiredVersion.versionToInt().lexicographicallyPrecedes(localVersion.versionToInt())
+			
+			if (updateIsRequired && requiredVersion != localVersion){
+				let versionLockingController = BAVersionLockingScreen()
+				self.navigationController?.present(versionLockingController, animated: true, completion: nil)
+			}
+		})
 	}
 }

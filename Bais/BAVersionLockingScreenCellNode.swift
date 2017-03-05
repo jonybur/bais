@@ -17,7 +17,7 @@ class BAVersionLockingScreenCellNode: ASDisplayNode{
 	required override init() {
 		super.init()
 		
-		topImageNode.image = UIImage(named: "BaisLogo")
+		topImageNode.image = UIImage(named: "version-lock")
 		
 		let titleAttributes = [
 			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
