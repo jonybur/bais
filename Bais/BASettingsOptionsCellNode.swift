@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol BASettingsOptionsNodeDelegate: class {
 	func settingsOptionsNodeDidClickShareButton()
+	func settingsOptionsNodeDidClickFeedbackButton()
 	func settingsOptionsNodeDidClickPrivacyPolicyButton()
 	func settingsOptionsNodeDidClickTermsOfServiceButton()
 	func settingsOptionsNodeDidClickLicensesButton()
@@ -29,6 +30,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 	*/
 	
 	let shareBaisNode = BASettingsButtonElementCellNode(title: "Share Bais")
+	let feedbackNode = BASettingsButtonElementCellNode(title: "Give Us Feedback")
 	let spacerNode2 = BASettingsSpacerElementCellNode()
 	
 	let legalNode = BASettingsHeaderElementCellNode(title: "Legal")
@@ -49,6 +51,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 		super.init()
 		
 		shareBaisNode.addTarget(self, action: #selector(sharePressed(_:)), forControlEvents: .touchUpInside)
+		feedbackNode.addTarget(self, action: #selector(feedbackPressed(_:)), forControlEvents: .touchUpInside)
 		privacyPolicyNode.addTarget(self, action: #selector(privacyPolicyPressed(_:)), forControlEvents: .touchUpInside)
 		termsServiceNode.addTarget(self, action: #selector(termsOfServicePressed(_:)), forControlEvents: .touchUpInside)
 		licensesNode.addTarget(self, action: #selector(licensesPressed(_:)), forControlEvents: .touchUpInside)
@@ -62,6 +65,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 		*/
 		
 		addSubnode(shareBaisNode)
+		addSubnode(feedbackNode)
 		addSubnode(legalNode)
 		addSubnode(privacyPolicyNode)
 		addSubnode(termsServiceNode)
@@ -72,6 +76,10 @@ class BASettingsOptionsCellNode: ASCellNode{
 	
 	func sharePressed(_ sender: UIButton){
 		delegate?.settingsOptionsNodeDidClickShareButton()
+	}
+	
+	func feedbackPressed(_ sender: UIButton){
+		delegate?.settingsOptionsNodeDidClickFeedbackButton()
 	}
 	
 	func privacyPolicyPressed(_ sender: UIButton){
@@ -99,7 +107,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .start
-		verticalStack.children = [/*contactUsNode, helpAndSupportNode, aboutBaisNode, spacerNode,*/ shareBaisNode, spacerNode2,
+		verticalStack.children = [/*contactUsNode, helpAndSupportNode, aboutBaisNode, spacerNode,*/ shareBaisNode, feedbackNode, spacerNode2,
 		                          legalNode, privacyPolicyNode, termsServiceNode, licensesNode, spacerNode3,
 		                          logoutNode, spacerNode4]//, deleteAccountNode, spacerNode5]
 		return verticalStack

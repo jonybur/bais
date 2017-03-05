@@ -101,6 +101,31 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		// present the view controller
 		present(activityViewController, animated: true, completion: nil)
 	}
+	
+	func settingsOptionsNodeDidClickFeedbackButton() {
+		let alert = UIAlertController(title: "Give Us Feedback", message: "Your suggestions and ideas are important to us.", preferredStyle: .alert)
+		alert.addTextField { textField in
+			textField.placeholder = "Write your suggestions"
+			textField.autocapitalizationType = .sentences
+		}
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { action in
+			let textField = alert.textFields![0] as UITextField
+			if ((textField.text?.characters.count)! > 0){
+				FirebaseService.sendFeedback(textField.text!)
+				self.showThankYou()
+			}
+		}))
+		present(alert, animated:true, completion:nil)
+	}
+	
+	func showThankYou(){
+		let alert = UIAlertController(title: "Thank you! ❤️", message: "Though we can't respond to everyone who submits feedback, we review many of the ideas people send us and use them to improve the BAIS experience for everyone.", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Done", style: .cancel, handler: nil))
+		present(alert, animated:true, completion:nil)
+	}
+	
 	func settingsOptionsNodeDidClickPrivacyPolicyButton(){
 		print("stop")
 	}

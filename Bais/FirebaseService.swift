@@ -30,6 +30,7 @@ class FirebaseService{
 	static let usersReference = FIRDatabase.database().reference().child("users")
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
 	static let reportsReference = FIRDatabase.database().reference().child("reports")
+	static let feedbackReference = FIRDatabase.database().reference().child("feedback")
 	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-79d67.appspot.com")
 	static let serverKey = "***REMOVED***"
 	
@@ -42,6 +43,16 @@ class FirebaseService{
 		CurrentUser.user = nil
 		CurrentUser.location = CLLocation()
 		try! FIRAuth.auth()!.signOut()
+	}
+	
+	static func sendFeedback(_ text: String){
+		let value = [
+			"user_id": currentUserId,
+			"comments": text,
+			"timestamp": FIRServerValue.timestamp()
+			] as [String : Any]
+		let reference = feedbackReference.childByAutoId()
+		reference.updateChildValues(value)
 	}
 	
 	static func sendReport(for user: User, reason: String){

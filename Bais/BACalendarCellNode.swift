@@ -168,7 +168,7 @@ class BACalendarCellNode: ASCellNode {
 	//MARK: - BAUsersCellNodeDelegate methods
 	
 	func bannerPressed(_ sender: UIButton){
-		delegate?.calendarCellNodeDidClickView(self);
+		delegate?.calendarCellNodeDidClickView(self)
 	}
 	
 	func singleButtonPressed(_ sender: UIButton){

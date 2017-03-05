@@ -11,7 +11,7 @@ import AsyncDisplayKit
 import Firebase
 import PromiseKit
 
-final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate {
+final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, UIGestureRecognizerDelegate, BABasicUserInfoCellNodeDelegate {
 	
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var user = User()
@@ -92,6 +92,7 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 			return headerCellNode
 		} else if (item == 1){
 			let basicCellNode = BABasicUserInfoCellNode(with: user)
+			basicCellNode.delegate = self
 			return basicCellNode
 		} else if (item == 2){
 			let descriptionCellNode = BADescriptionInfoCellNode(with: user)
@@ -107,6 +108,36 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
 		return 4
+	}
+	
+//MARK: - BasicUserInfo delegate
+	
+	func basicUserInfoTapMore(_ basicUserInfoCellNode: BABasicUserInfoCellNode) {
+		
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		
+		alert.addAction(UIAlertAction(title: "Report " + user.firstName, style: .default, handler: { action in
+			self.reportAction()
+		}))
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		
+		present(alert, animated: true, completion: nil)
+	}
+	
+	func reportAction(){
+		let alert = UIAlertController(title: "Report User", message: "Is this person bothering you?\nTell us what they did.", preferredStyle: .alert)
+		alert.addTextField { textField in
+			textField.placeholder = "Additional Info (Optional)"
+			textField.autocapitalizationType = .sentences
+		}
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { action in
+			let textField = alert.textFields![0] as UITextField
+			FirebaseService.sendReport(for: self.user, reason: textField.text!)
+		}))
+		present(alert, animated:true, completion:nil)
 	}
 	
 }
