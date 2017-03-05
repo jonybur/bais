@@ -15,6 +15,7 @@ class BADetailBackButtonNode: ASButtonNode {
 	override init() {
 		super.init()
 		
+		frame = CGRect(x: 0, y: 10, width: 75, height: 75)
 		style.preferredSize = CGSize(width: 75, height: 75)
 		setImage(UIImage(named: "back-button"), for: [])
 	}

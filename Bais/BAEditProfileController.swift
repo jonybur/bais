@@ -46,14 +46,6 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		backButtonNode.frame = CGRect(x: 0, y: 10, width: 75, height: 75)
-		actionButtonNode.frame = CGRect(x: ez.screenWidth / 2 - ez.screenWidth / 4, y: ez.screenHeight - 60, width: ez.screenWidth / 2, height: 50)
-		
-		let yourCarefullyDrawnPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: actionButtonNode.frame.width, height: actionButtonNode.frame.height), cornerRadius: 20)
-		let maskForYourPath = CAShapeLayer()
-		maskForYourPath.path = yourCarefullyDrawnPath.cgPath
-		actionButtonNode.layer.mask = maskForYourPath
 
 		if (mode == .settings){
 			super.node.addSubnode(backButtonNode)

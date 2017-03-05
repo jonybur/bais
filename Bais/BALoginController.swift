@@ -45,7 +45,10 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
                                                       y: (ez.screenHeight - 120) / 2,
                                                       width: 120, height: 120)
         activityIndicatorViewBackground.alpha = 0
-        activityIndicatorViewBackground.layer.cornerRadius = 10
+		let yourCarefullyDrawnPath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: activityIndicatorViewBackground.frame.width, height: activityIndicatorViewBackground.frame.height), cornerRadius: 20)
+		let maskForYourPath = CAShapeLayer()
+		maskForYourPath.path = yourCarefullyDrawnPath.cgPath
+		activityIndicatorViewBackground.layer.mask = maskForYourPath
         activityIndicatorViewBackground.backgroundColor = .black
 
         view.addSubview(repeatVideo.playerViewController.view)
