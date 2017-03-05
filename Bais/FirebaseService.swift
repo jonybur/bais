@@ -25,7 +25,7 @@ class FirebaseService{
 	}
 	
 	static let rootReference = FIRDatabase.database().reference()
-	static let versionsReference = FIRDatabase.database().reference().child("versions")
+	static let versionsReference = FIRDatabase.database().reference().child("versions").child("required_version")
 	static let locationsReference = FIRDatabase.database().reference().child("locations")
 	static let usersReference = FIRDatabase.database().reference().child("users")
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
@@ -76,21 +76,21 @@ class FirebaseService{
 	}
 	
 	static func resetUnreadCount(of session: Session){
-		usersReference.child(currentUserId).child("sessions").child(session.id).child("unread_count").setValue(0)
+		let userBadgeCountRef = usersReference.child(currentUserId).child("sessions").child(session.id).child("unread_count")
+		userBadgeCountRef.runTransactionBlock { currentData -> FIRTransactionResult in
+			currentData.value = 0
+			return FIRTransactionResult.success(withValue: currentData)
+		}
 	}
 	
 	static func addToUnreadCount(to session: Session, of user: User){
 		let unreadCountRef = usersReference.child(user.id).child("sessions").child(session.id).child("unread_count")
-		unreadCountRef.observeSingleEvent(of: .value, with: { snapshot in
-			// increments one to users badge count
-			var unreadCount = 1
-			guard let fetchedCount = snapshot.value as? Int else {
-				unreadCountRef.setValue(1)
-				return
-			}
-			unreadCount += fetchedCount
-			unreadCountRef.setValue(unreadCount)
-		})
+		unreadCountRef.runTransactionBlock { currentData -> FIRTransactionResult in
+			guard let currentBadgeValue = currentData.value as? Int else { return FIRTransactionResult.success(withValue: currentData) }
+			let newBadgeValue = currentBadgeValue + 1
+			currentData.value = newBadgeValue
+			return FIRTransactionResult.success(withValue: currentData)
+		}
 	}
 	
 	static func resetBadgeCount(){
@@ -188,10 +188,12 @@ class FirebaseService{
 	
 	static func checkVersionUpdate() -> Promise<Bool>{
 		return Promise { fulfill, reject in
-			versionsReference.observeSingleEvent(of: .childAdded, with: { snapshot in
-				guard let requiredVersion = snapshot.value as? String else {
+			
+			versionsReference.runTransactionBlock { currentData -> FIRTransactionResult in
+				guard let requiredVersion = currentData.value as? String else {
 					fulfill(false)
-					return }
+					return FIRTransactionResult.success(withValue: currentData) }
+				
 				let localVersion = Bundle.main.releaseVersionNumber!
 				
 				if (requiredVersion == localVersion){
@@ -200,7 +202,9 @@ class FirebaseService{
 				
 				let updateIsRequired = !requiredVersion.versionToInt().lexicographicallyPrecedes(localVersion.versionToInt())
 				fulfill(updateIsRequired)
-			})
+				
+				return FIRTransactionResult.success(withValue: currentData)
+			}
 		}
 	}
 	
@@ -246,15 +250,22 @@ class FirebaseService{
 	
 	static func resetUserNotificationToken(){
 		if (currentUserId != ""){
-			usersReference.child(currentUserId).child("notification_token").setValue("")
+			let userNotificationTokenRef = usersReference.child(currentUserId).child("notification_token")
+			userNotificationTokenRef.runTransactionBlock { currentData -> FIRTransactionResult in
+				currentData.value = ""
+				return FIRTransactionResult.success(withValue: currentData)
+			}
 		}
 	}
 	
 	static func updateUserNotificationToken(){
 		guard let token = FIRInstanceID.instanceID().token() else { return }
-		print("New notification token: " + token)
 		if (currentUserId != ""){
-			usersReference.child(currentUserId).child("notification_token").setValue(token)
+			let userNotificationTokenRef = usersReference.child(currentUserId).child("notification_token")
+			userNotificationTokenRef.runTransactionBlock { currentData -> FIRTransactionResult in
+				currentData.value = token
+				return FIRTransactionResult.success(withValue: currentData)
+			}
 		}
 	}
 	
@@ -309,11 +320,9 @@ class FirebaseService{
 	}
 	
 	static func addSessionsByUser(_ friendId: String, _ sessionId: String){
-		
 		let userValue = [
 			friendId: sessionId
 		]
-		
 		let friendValue = [
 			currentUserId: sessionId
 		]
