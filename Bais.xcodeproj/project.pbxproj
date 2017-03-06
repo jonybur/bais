@@ -63,7 +63,6 @@
 		ABB9F2F81D9170C600E01511 /* InstagramVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CD1D9170C600E01511 /* InstagramVideo.swift */; };
 		ABB9F2FA1D9170C600E01511 /* BALoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CF1D9170C600E01511 /* BALoginController.swift */; };
 		ABB9F2FD1D9170C600E01511 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D21D9170C600E01511 /* Place.swift */; };
-		ABB9F2FE1D9170C600E01511 /* rollercoaster_comp.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = ABB9F2D31D9170C600E01511 /* rollercoaster_comp.mp4 */; };
 		ABB9F2FF1D9170C600E01511 /* RSVPStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D41D9170C600E01511 /* RSVPStatus.swift */; };
 		ABB9F3021D9170C600E01511 /* UberProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D71D9170C600E01511 /* UberProduct.swift */; };
 		ABB9F3051D9170C600E01511 /* UIRepeatingVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DA1D9170C600E01511 /* UIRepeatingVideo.swift */; };
@@ -72,6 +71,7 @@
 		ABD158E11E511C68007C4163 /* BAEditCountryPickerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */; };
 		ABDAB5291E5A7B9A0067FBB5 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDAB5281E5A7B9A0067FBB5 /* Session.swift */; };
 		ABDAB52B1E5A7C1E0067FBB5 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDAB52A1E5A7C1E0067FBB5 /* Message.swift */; };
+		ABE1AA651E6D83A900079C2B /* bais_background.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = ABE1AA641E6D83A900079C2B /* bais_background.mp4 */; };
 		ABEB8DA61E5301510089000C /* BAActionButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB8DA51E5301510089000C /* BAActionButtonNode.swift */; };
 		ABEB8DA81E5302560089000C /* BADetailBackButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */; };
 		ABF08B231D916E5400C6B832 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF08B221D916E5400C6B832 /* AppDelegate.swift */; };
@@ -142,7 +142,6 @@
 		ABB9F2CD1D9170C600E01511 /* InstagramVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramVideo.swift; sourceTree = "<group>"; };
 		ABB9F2CF1D9170C600E01511 /* BALoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BALoginController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ABB9F2D21D9170C600E01511 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
-		ABB9F2D31D9170C600E01511 /* rollercoaster_comp.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = rollercoaster_comp.mp4; sourceTree = "<group>"; };
 		ABB9F2D41D9170C600E01511 /* RSVPStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSVPStatus.swift; sourceTree = "<group>"; };
 		ABB9F2D71D9170C600E01511 /* UberProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UberProduct.swift; sourceTree = "<group>"; };
 		ABB9F2DA1D9170C600E01511 /* UIRepeatingVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIRepeatingVideo.swift; sourceTree = "<group>"; };
@@ -152,6 +151,7 @@
 		ABDAB5281E5A7B9A0067FBB5 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		ABDAB52A1E5A7C1E0067FBB5 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		ABDEC2131DCFDD0800484759 /* Bais.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bais.entitlements; sourceTree = "<group>"; };
+		ABE1AA641E6D83A900079C2B /* bais_background.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = bais_background.mp4; path = ../../bais_background.mp4; sourceTree = "<group>"; };
 		ABEB8DA51E5301510089000C /* BAActionButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAActionButtonNode.swift; sourceTree = "<group>"; };
 		ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BADetailBackButtonNode.swift; sourceTree = "<group>"; };
 		ABF08B1F1D916E5400C6B832 /* Bais.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bais.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -500,6 +500,7 @@
 		ABF08B211D916E5400C6B832 /* Bais */ = {
 			isa = PBXGroup;
 			children = (
+				ABE1AA641E6D83A900079C2B /* bais_background.mp4 */,
 				ABDEC2131DCFDD0800484759 /* Bais.entitlements */,
 				ABB9F3081D9171A600E01511 /* Enums */,
 				ABB9F3091D9171B200E01511 /* Extensions */,
@@ -510,7 +511,6 @@
 				ABB9F30A1D9171CA00E01511 /* Views */,
 				ABB9F30E1D9171EB00E01511 /* Controllers */,
 				ABB9F2B81D9170C600E01511 /* Assets.xcassets */,
-				ABB9F2D31D9170C600E01511 /* rollercoaster_comp.mp4 */,
 				ABF08B221D916E5400C6B832 /* AppDelegate.swift */,
 				ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */,
 				ABF08B2E1D916E5400C6B832 /* Info.plist */,
@@ -611,8 +611,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABB9F2FE1D9170C600E01511 /* rollercoaster_comp.mp4 in Resources */,
 				ABB9F2E31D9170C600E01511 /* Assets.xcassets in Resources */,
+				ABE1AA651E6D83A900079C2B /* bais_background.mp4 in Resources */,
 				ABFA0B311D9A0CB000ED6C16 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

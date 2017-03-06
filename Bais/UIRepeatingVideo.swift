@@ -21,7 +21,7 @@ class UIRepeatingVideo{
     
     // starts the loginscreen video by default, on fullscreen
     convenience init (){
-        let filePath : String = Bundle.main.path(forResource: "rollercoaster_comp", ofType: "mp4")!;
+        let filePath : String = Bundle.main.path(forResource: "bais_background", ofType: "mp4")!;
         let movieURL : URL = URL(fileURLWithPath: filePath);
         
         // if it's running on iPhone 4 or 4s, then remove black borders
