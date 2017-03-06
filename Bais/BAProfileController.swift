@@ -17,6 +17,7 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	var user = User()
 	var backButtonNode = ASButtonNode()
 	var actionButtonNode: BAFriendshipActionButtonNode!
+	var allowsAction = true
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -46,6 +47,10 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("Storyboards are not supported")
+	}
+	
+	func hideActionButton(){
+		actionButtonNode.removeFromSupernode()
 	}
 	
 	override func viewDidLoad() {

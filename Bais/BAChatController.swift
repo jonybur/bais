@@ -128,6 +128,7 @@ class BAChatController: NMessengerViewController, BAChatNavigationBarDelegate {
 		guard let user = chatNavigationBar.user else { return }
 		
 		let controller = BAProfileController(with: user)
+		controller.hideActionButton()
 		navigationController?.pushViewController(controller, animated: true)
 	}
 	

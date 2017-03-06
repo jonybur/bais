@@ -88,8 +88,16 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	}
 	
 	func actionButtonPressed(_ sender: UIButton){
-		let loadingController = BALoadingController()
-		navigationController?.pushViewController(loadingController, animated: true)
+		
+		if (actionButtonNode.allowsDone){
+			let loadingController = BALoadingController()
+			navigationController?.pushViewController(loadingController, animated: true)
+		} else {
+			let alert = UIAlertController(title: "Please fill in your country", message: "We need to know where are you from before continuing", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+			present(alert, animated: true, completion: nil)
+
+		}
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {

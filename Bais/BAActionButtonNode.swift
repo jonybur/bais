@@ -64,17 +64,18 @@ class BAFriendshipActionButtonNode: BAActionButtonNode{
 
 class BADetailActionButtonNode: BAActionButtonNode {
 	
+	var allowsDone = false
+	
 	override init() {
 		super.init()
 		style.preferredSize = CGSize(width: 300, height: 50)
 		setButtonTitle("Done")
 		alpha = 0.5
-		isEnabled = false
 	}
 	
 	func enable(){
 		alpha = 1
-		isEnabled = true
+		allowsDone = true
 	}
 	
 }
