@@ -27,6 +27,7 @@ class FirebaseService{
 	static let rootReference = FIRDatabase.database().reference()
 	static let versionsReference = FIRDatabase.database().reference().child("versions").child("required_version")
 	static let locationsReference = FIRDatabase.database().reference().child("locations")
+	static let locationsHistoryReference = FIRDatabase.database().reference().child("locations_history")
 	static let usersReference = FIRDatabase.database().reference().child("users")
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
 	static let reportsReference = FIRDatabase.database().reference().child("reports")
@@ -287,6 +288,11 @@ class FirebaseService{
 		let value = ["location": locationValue]
 		
 		usersReference.child(currentUserId).updateChildValues(value)
+		
+		let historicValue = ["location": locationValue,
+		                     "timestamp": FIRServerValue.timestamp()
+							] as [String : Any]
+		locationsHistoryReference.child(currentUserId).childByAutoId().updateChildValues(historicValue)
 		
 		geoFire?.setLocation(CLLocation(latitude: location.latitude, longitude: location.longitude), forKey: currentUserId)
 		CurrentUser.location = CLLocation(latitude: location.latitude, longitude: location.longitude)
