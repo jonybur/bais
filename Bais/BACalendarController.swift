@@ -186,7 +186,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	func loginToFacebookWithReadPermissions() -> Promise<Void>{
 		return Promise{ fulfill, reject in
 			let loginManager = FBSDKLoginManager()
-			loginManager.logIn(withReadPermissions: ["public_profile", "user_friends", "user_birthday", "email"], from: self, handler: { (result, error) in
+			loginManager.logIn(withReadPermissions: WebService.readPermissions, from: self, handler: { (result, error) in
 				if (error != nil || (result?.isCancelled)!){ } else {
 					fulfill()
 				}
@@ -197,7 +197,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	func loginToFacebookWithPublishPermissions() -> Promise<Void>{
 		return Promise{ fulfill, reject in
 			let loginManager = FBSDKLoginManager()
-			loginManager.logIn(withPublishPermissions: ["rsvp_event"], from: self, handler: { (result, error) in
+			loginManager.logIn(withPublishPermissions: WebService.publishPermissions, from: self, handler: { (result, error) in
 				if (error != nil || (result?.isCancelled)!){ } else {
 					fulfill()
 				}

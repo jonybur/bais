@@ -25,6 +25,8 @@ import FBSDKLoginKit
 class WebService{
 	
 	weak var delegate: WebServiceDelegate?
+	static let readPermissions = ["public_profile", "user_friends", "user_birthday", "email"]
+	static let publishPermissions = ["rsvp_event"]
 	let uberServerToken = "b_kEklxu3QSAD_ZigupALYGYzSWs-DDB132IrpcU"
 	var uberProducts = [UberProduct]()
 	
@@ -81,7 +83,6 @@ class WebService{
 		if (FBSDKAccessToken.current().expirationDate < Date()){
 			print("Facebook token is expired")
 			delegate?.needsFacebookLogin!()
-			a = false
 		} else {
 			print("Facebook token is valid")
 			fetchFacebookEvents()
