@@ -91,15 +91,12 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
     }
 	
 	func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Swift.Error!) {
-		
 		if (error != nil || result.isCancelled){
             self.removeActivityIndicator()
 		} else {
 			let loginManager = FBSDKLoginManager()
 			loginManager.logIn(withPublishPermissions: ["rsvp_event"], from: self, handler: { (result, error) in
-				if (error != nil || (result?.isCancelled)!){
-					
-				} else {
+				if (error != nil || (result?.isCancelled)!){ } else {
 					self.signInToFirebase()
 				}
 			})

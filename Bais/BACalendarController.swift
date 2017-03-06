@@ -12,6 +12,7 @@ import FirebaseDatabase
 import FirebaseAuth
 import DGActivityIndicatorView
 import PromiseKit
+import FBSDKLoginKit
 import GeoFire
 
 class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate,
@@ -85,7 +86,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 		return _contentToDisplay.count
 	}
 	
-	//MARK: - WebService delegate methods
+//MARK: - WebService delegate methods
 	
 	internal func eventsLoaded(_ events: [Event]) {
 		var idxToInsert = [IndexPath]()
@@ -117,12 +118,14 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 		}
 	}
 	
-	//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
+//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
+	
 	internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
 		return CGSize(width: 1, height: 0.6)
 	}
 	
-	//MARK: - BACalendarCellNode delegate methods
+//MARK: - BACalendarCellNode delegate methods
+	
 	internal func calendarCellNodeDidClickInterestedButton(_ calendarViewCell: BACalendarCellNode) {
 		setStatusForEvent(with: calendarViewCell.event.id, status: .maybe)
 	}
@@ -172,7 +175,38 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 		gotRSVPStatus(of: id, status: status)
 	}
 	
-	//MARK: - Dealloc
+	func needsFacebookLogin(){
+		loginToFacebookWithReadPermissions().then(execute: { _ -> Void in
+			self.loginToFacebookWithPublishPermissions().then(execute: { _ -> Void in
+				self.webService.getFacebookEvents()
+			}).catch(execute: { _ in })
+		}).catch(execute: { _ in })
+	}
+	
+	func loginToFacebookWithReadPermissions() -> Promise<Void>{
+		return Promise{ fulfill, reject in
+			let loginManager = FBSDKLoginManager()
+			loginManager.logIn(withReadPermissions: ["public_profile", "user_friends", "user_birthday", "email"], from: self, handler: { (result, error) in
+				if (error != nil || (result?.isCancelled)!){ } else {
+					fulfill()
+				}
+			})
+		}
+	}
+	
+	func loginToFacebookWithPublishPermissions() -> Promise<Void>{
+		return Promise{ fulfill, reject in
+			let loginManager = FBSDKLoginManager()
+			loginManager.logIn(withPublishPermissions: ["rsvp_event"], from: self, handler: { (result, error) in
+				if (error != nil || (result?.isCancelled)!){ } else {
+					fulfill()
+				}
+			})
+		}
+	}
+	
+//MARK: - Dealloc
+	
 	deinit {
 		_collectionNode.dataSource = nil
 		_collectionNode.delegate = nil

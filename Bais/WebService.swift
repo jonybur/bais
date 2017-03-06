@@ -12,11 +12,13 @@ import Alamofire
 import PromiseKit
 import CoreLocation
 import FBSDKCoreKit
+import FBSDKLoginKit
 
 @objc protocol WebServiceDelegate: class {
 	@objc optional func eventsLoaded(_ events: [Event])
 	@objc optional func uberProductsLoaded(_ uberProducts: [UberProduct])
 	@objc optional func gotRSVPStatus(of eventId: String, status: RSVPStatus)
+	@objc optional func needsFacebookLogin()
 }
 
 // rename to WebService
@@ -73,10 +75,20 @@ class WebService{
 			}
 		})
 	}
-		
-	// call from main thread
+	
+	// recursive while token is expired
 	func getFacebookEvents(){
-		
+		if (FBSDKAccessToken.current().expirationDate < Date()){
+			print("Facebook token is expired")
+			delegate?.needsFacebookLogin!()
+			a = false
+		} else {
+			print("Facebook token is valid")
+			fetchFacebookEvents()
+		}
+	}
+	
+	func fetchFacebookEvents(){
 		// gets events from facebook
 		let graphRequest = FBSDKGraphRequest(graphPath: "baisinternationalstudents",
 		                                     parameters: ["fields": "events{description,end_time,name,place,id,start_time,cover}"])
@@ -118,7 +130,7 @@ class WebService{
 											}
 											
 											let coordinates : CLLocation = CLLocation(latitude: location["latitude"] as! Double,
-												longitude: location["longitude"] as! Double);
+											                                          longitude: location["longitude"] as! Double);
 											parsedEvent.place.coordinates = coordinates;
 										}
 									}
@@ -137,7 +149,7 @@ class WebService{
 				eventsArray = eventsArray.sorted(by: {
 					$0.startTime.compare($1.startTime as Date) == ComparisonResult.orderedAscending
 				});
-
+				
 				self.delegate?.eventsLoaded!(eventsArray)
 			}
 		})

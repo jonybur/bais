@@ -219,7 +219,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 					let longitude = locationArray[1] as! Double
 					fulfill(CLLocation(latitude: latitude, longitude: longitude))
 				}
-			});
+			})
 		}
 	}
 	
