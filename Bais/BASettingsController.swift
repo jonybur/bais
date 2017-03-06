@@ -127,10 +127,10 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	}
 	
 	func settingsOptionsNodeDidClickPrivacyPolicyButton(){
-		print("stop")
+		AppsCommunicator.openWebsite("http://bursz.com/legal/bais_privacy_policy.pdf")
 	}
 	func settingsOptionsNodeDidClickTermsOfServiceButton(){
-		print("stop")
+		AppsCommunicator.openWebsite("http://bursz.com/legal/bais_terms_of_use.pdf")
 	}
 	func settingsOptionsNodeDidClickLicensesButton(){
 		let licensesController = BALicensesController()
@@ -163,5 +163,4 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	override func viewWillDisappear(_ animated: Bool) {
 		userObserver?.removeAllObservers()
 	}
-	
 }

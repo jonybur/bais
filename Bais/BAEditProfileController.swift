@@ -209,6 +209,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		tableNode.reloadRows(at: idxPathToReload, with: .fade)
 		FirebaseService.updateUserNationality(with: code)
 		actionButtonNode.enable()
+		tableNode.view.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
 	}
 	
 //MARK: - BAEditBasicUserInfoCellNodeDelegate methods
@@ -221,6 +222,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		let idxPath = [IndexPath(item: 2, section:0)]
 		tableNode.insertRows(at: idxPath, with: .fade)
 		tableNode.reloadRows(at: idxPath, with: .fade)
+		tableNode.view.setContentOffset(CGPoint(x: 0, y: 200), animated: true)
 	}
 	
 //MARK: - BAEditDescriptionCellNode methods
