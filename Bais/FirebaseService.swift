@@ -427,7 +427,6 @@ class FirebaseService{
 						// we have the firebase-stored url!, lets finish pushing our user
 						let messageRef = usersReference
 						let itemRef = messageRef.child(user.uid)
-						print(graphResult)
 						let firstName = graphResult.value(forKey: "first_name") == nil ? "" : graphResult.value(forKey: "first_name") as! String
 						let lastName = graphResult.value(forKey: "last_name") == nil ? "" : graphResult.value(forKey: "last_name") as! String
 						let birthday = graphResult.value(forKey: "birthday") == nil ? "" : graphResult.value(forKey: "birthday") as! String

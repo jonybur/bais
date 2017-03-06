@@ -61,7 +61,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		FirebaseService.updateUserNotificationToken()
 		FirebaseService.resetBadgeCount()
 		
-		self.setBATabBarController()
+		setBATabBarController()
 	}
 	
 	private func setBATabBarController(){

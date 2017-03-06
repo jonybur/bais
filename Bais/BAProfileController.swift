@@ -16,6 +16,7 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
 	var user = User()
 	var backButtonNode = ASButtonNode()
+	var actionButtonNode: BAFriendshipActionButtonNode!
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -50,11 +51,17 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		actionButtonNode = BAFriendshipActionButtonNode(with: user.friendshipStatus)
+		
 		backButtonNode.frame = CGRect(x: 0, y: 10, width: 75, height: 75)
 		backButtonNode.setImage(UIImage(named: "back-button"), for: [])
 		backButtonNode.addTarget(self, action: #selector(backButtonPressed(_:)), forControlEvents: .touchUpInside)
-		
+		actionButtonNode.addTarget(self, action: #selector(actionButtonPressed(_:)), forControlEvents: .touchUpInside)
+
 		super.node.addSubnode(backButtonNode)
+		super.node.addSubnode(actionButtonNode)
+		
+		observeFriendship()
 	}
 	
 	func backButtonPressed(_ sender: UIButton){
@@ -69,13 +76,15 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		
 		if (scrollView.contentOffset.y < 0){
 			scrollView.contentOffset.y = 0
 		}
 		
 		backButtonNode.view.center = CGPoint(x: backButtonNode.view.center.x,
 		                                     y: scrollView.contentOffset.y + backButtonNode.view.frame.height / 2 + 10)
+		
+		actionButtonNode.view.center = CGPoint(x: actionButtonNode.view.center.x,
+		                                       y: scrollView.contentOffset.y + ez.screenHeight - actionButtonNode.view.frame.height + 15)
 	}
 	
 	override var prefersStatusBarHidden: Bool {
@@ -108,6 +117,58 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
 		return 4
+	}
+	
+//MARK: - ActionButton delegate
+	
+	func observeFriendship(){
+	
+		let userId = FirebaseService.currentUserId
+		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")
+		
+		userFriendsRef.observe(.childChanged, with: { snapshot in
+			let newFriendshipStatus = FirebaseService.parseFriendStatus(from: snapshot)
+			self.refreshButtonFor(userId: snapshot.key, friendshipStatus: newFriendshipStatus)
+		})
+		
+		userFriendsRef.observe(.childAdded, with: { snapshot in
+			let newFriendshipStatus = FirebaseService.parseFriendStatus(from: snapshot)
+			self.refreshButtonFor(userId: snapshot.key, friendshipStatus: newFriendshipStatus)
+		})
+		
+		userFriendsRef.observe(.childRemoved, with: { snapshot in
+			self.refreshButtonFor(userId: snapshot.key, friendshipStatus: .noRelationship)
+		})
+	}
+	
+	func refreshButtonFor(userId: String, friendshipStatus: FriendshipStatus){
+		if (user.id != userId){
+			return
+		}
+		actionButtonNode.friendshipStatus = friendshipStatus
+		actionButtonNode.setFriendshipAction()
+
+	}
+	
+	func actionButtonPressed(_ button: BAFriendshipActionButtonNode){
+		switch (button.friendshipStatus){
+		case .noRelationship:
+			FirebaseService.sendFriendRequestTo(friendId: user.id)
+			button.friendshipStatus = .invitationSent
+			break
+		case .invitationSent:
+			break
+		case .invitationReceived:
+			break
+		case .accepted:
+			FirebaseService.getSessionByUser(user.id).then(execute: { session -> Void in
+				let chatController = BAChatController(with: session)
+				self.navigationController?.pushViewController(chatController, animated: true)
+			}).catch(execute: { _ in })
+			break
+		default:
+			break
+		}
 	}
 	
 //MARK: - BasicUserInfo delegate
