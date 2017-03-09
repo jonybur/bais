@@ -115,10 +115,27 @@ class WebService{
 									parsedEvent.eventDescription = event["description"] as! String;
 									parsedEvent.name = event["name"] as! String;
 									
-									// TODO: Also remove "I Bais Argentina"
+									if let index = parsedEvent.name.range(of:" - BAIS Argentina") {
+										let startPos = parsedEvent.name.distance(from: parsedEvent.name.startIndex, to: index.lowerBound)
+										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos - 1)
+										parsedEvent.name = parsedEvent.name[range]
+									}
+									
+									if let index = parsedEvent.name.range(of:" l BAIS Argentina") {
+										let startPos = parsedEvent.name.distance(from: parsedEvent.name.startIndex, to: index.lowerBound)
+										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos - 1)
+										parsedEvent.name = parsedEvent.name[range]
+									}
+									
+									if let index = parsedEvent.name.range(of:" I BAIS Argentina") {
+										let startPos = parsedEvent.name.distance(from: parsedEvent.name.startIndex, to: index.lowerBound)
+										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos - 1)
+										parsedEvent.name = parsedEvent.name[range]
+									}
+									
 									if let separatorChar = parsedEvent.name.indexOfCharacter("|") {
-										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: separatorChar-1);
-										parsedEvent.name = parsedEvent.name[range];
+										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: separatorChar - 1)
+										parsedEvent.name = parsedEvent.name[range]
 									}
 									
 									// change to guards

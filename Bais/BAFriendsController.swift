@@ -54,8 +54,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		observeFriends()
-		self.node.addSubnode(emptyStateMessagesNode)
-		self.node.addSubnode(emptyStateFriendRequestNode)
+		node.addSubnode(emptyStateMessagesNode)
+		node.addSubnode(emptyStateFriendRequestNode)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -92,6 +92,12 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			let headerNode = BAChatHeaderCellNode(with: displayMode)
 			headerNode.delegate = self
 			return headerNode
+		}
+		
+		//let numberOfRows = tableNode.numberOfRows(inSection: 0)
+		if (10 == item){
+			let spacerNode = BASpacerCellNode()
+			return spacerNode
 		}
 		
 		if (displayMode == .requests){
@@ -167,7 +173,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		if (tableRows < elementsToDisplay){
 			// need to add more rows to make up for elementsToDisplay
 			var idxToInsert = [IndexPath]()
-			for idx in tableRows...elementsToDisplay-1{
+			for idx in tableRows...elementsToDisplay - 1{
 				let idxPath = IndexPath(item:idx, section:0)
 				idxToInsert.append(idxPath)
 			}
