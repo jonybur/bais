@@ -117,19 +117,19 @@ class WebService{
 									
 									if let index = parsedEvent.name.range(of:" - BAIS Argentina") {
 										let startPos = parsedEvent.name.distance(from: parsedEvent.name.startIndex, to: index.lowerBound)
-										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos - 1)
+										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos)
 										parsedEvent.name = parsedEvent.name[range]
 									}
 									
 									if let index = parsedEvent.name.range(of:" l BAIS Argentina") {
 										let startPos = parsedEvent.name.distance(from: parsedEvent.name.startIndex, to: index.lowerBound)
-										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos - 1)
+										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos)
 										parsedEvent.name = parsedEvent.name[range]
 									}
 									
 									if let index = parsedEvent.name.range(of:" I BAIS Argentina") {
 										let startPos = parsedEvent.name.distance(from: parsedEvent.name.startIndex, to: index.lowerBound)
-										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos - 1)
+										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos)
 										parsedEvent.name = parsedEvent.name[range]
 									}
 									

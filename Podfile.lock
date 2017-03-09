@@ -131,7 +131,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/Storage
   - GeoFire (from `https://github.com/firebase/geofire-objc.git`)
-  - NMessenger (from `https://github.com/jonybur/nmessenger.git`, branch `asdk-2.1`)
+  - NMessenger (from `https://github.com/eBay/NMessenger.git`, branch `ASDK-2.1`)
   - pop
   - PromiseKit (~> 4.0)
   - SwiftyJSON (>= 3.1.4)
@@ -142,8 +142,8 @@ EXTERNAL SOURCES:
   GeoFire:
     :git: https://github.com/firebase/geofire-objc.git
   NMessenger:
-    :branch: asdk-2.1
-    :git: https://github.com/jonybur/nmessenger.git
+    :branch: ASDK-2.1
+    :git: https://github.com/eBay/NMessenger.git
 
 CHECKOUT OPTIONS:
   ESTabBarController-swift:
@@ -153,8 +153,8 @@ CHECKOUT OPTIONS:
     :commit: dbb8d193f5ee1371837800d0502bd29cba779da4
     :git: https://github.com/firebase/geofire-objc.git
   NMessenger:
-    :commit: bf95b87fa4910472d69f2a8335353383330fdada
-    :git: https://github.com/jonybur/nmessenger.git
+    :commit: d9099389ee8c83a4ee3838b325a64215dca27ba9
+    :git: https://github.com/eBay/NMessenger.git
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
@@ -188,6 +188,6 @@ SPEC CHECKSUMS:
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 1039c332fc7359734a1566438a1f5cc149d28e2c
+PODFILE CHECKSUM: 96ea5d812377cc65d81deb1454c51b576d24d5fb
 
 COCOAPODS: 1.2.0
