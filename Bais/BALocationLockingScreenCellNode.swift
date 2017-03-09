@@ -32,7 +32,7 @@ class BALocationLockingScreenCellNode: ASDisplayNode{
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: titleParagraphStyle]
 		
-		descriptionNode.attributedText = NSAttributedString(string: "In order to show you interesting people near you, Bais needs to know where you are.\n\nGo to Settings > Privacy > Location Services, and switch Bais to ON.", attributes: descriptionAttributes)
+		descriptionNode.attributedText = NSAttributedString(string: "In order to show you interesting people near you, BAIS needs to know where you are.\n\nGo to Settings > Privacy > Location Services, and switch BAIS to ON.", attributes: descriptionAttributes)
 		
 		addSubnode(topImageNode)
 		addSubnode(titleNode)

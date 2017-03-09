@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>BAIS</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -48,7 +50,7 @@
 	<key>FacebookAppID</key>
 	<string>819066684896381</string>
 	<key>FacebookDisplayName</key>
-	<string>Bais</string>
+	<string>BAIS</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -95,11 +97,11 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Bais would like to have access to the camera</string>
+	<string>BAIS would like to have access to the camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Bais wants to show you interesting people nearby</string>
+	<string>BAIS wants to show you interesting people nearby</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Bais would like to have access to your photo library</string>
+	<string>BAIS would like to have access to your photo library</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

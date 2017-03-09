@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     let facebookAppId = "819066684896381"
-    let facebookDisplayName = "Bais"
+    let facebookDisplayName = "BAIS"
     
     var navigationController = UINavigationController()
 	

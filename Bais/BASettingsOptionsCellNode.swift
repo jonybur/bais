@@ -29,7 +29,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 	let spacerNode = BASettingsSpacerElementCellNode()
 	*/
 	
-	let shareBaisNode = BASettingsButtonElementCellNode(title: "Share Bais")
+	let shareBaisNode = BASettingsButtonElementCellNode(title: "Share BAIS")
 	let feedbackNode = BASettingsButtonElementCellNode(title: "Give Us Feedback")
 	let spacerNode2 = BASettingsSpacerElementCellNode()
 	

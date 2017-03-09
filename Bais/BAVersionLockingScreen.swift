@@ -46,7 +46,7 @@ class BAVersionLockingScreen: ASViewController<ASDisplayNode>{
 	}
 	
 	func presentAlertController(){
-		let alertController = UIAlertController(title: "An update is required", message: "In order to keep using the app, Bais needs be updated.", preferredStyle: .actionSheet)
+		let alertController = UIAlertController(title: "An update is required", message: "In order to keep using the app, BAIS needs be updated.", preferredStyle: .actionSheet)
 		
 		let alertAction = UIAlertAction(title: "Go to AppStore", style: .default) { action in
 			AppsCommunicator.openAppStore()

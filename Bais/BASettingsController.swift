@@ -88,7 +88,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	
 	func settingsOptionsNodeDidClickShareButton(){
 		// text to share
-		let text = "Check out Bais... it shows you exchange students nearby! http://apple.co/2lTS4Ru"
+		let text = "Check out BAIS... it shows you exchange students nearby! http://apple.co/2lTS4Ru"
 		
 		// set up activity view controller
 		let textToShare = [ text ]

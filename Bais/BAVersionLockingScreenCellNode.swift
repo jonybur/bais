@@ -32,7 +32,7 @@ class BAVersionLockingScreenCellNode: ASDisplayNode{
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: titleParagraphStyle]
 		
-		descriptionNode.attributedText = NSAttributedString(string: "In order to keep using the app,\nan update is required.\n\nPlease go to the AppStore and download\nthe latest version of Bais.", attributes: descriptionAttributes)
+		descriptionNode.attributedText = NSAttributedString(string: "In order to keep using the app,\nan update is required.\n\nPlease go to the AppStore and download\nthe latest version of BAIS.", attributes: descriptionAttributes)
 		
 		addSubnode(topImageNode)
 		addSubnode(titleNode)
