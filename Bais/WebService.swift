@@ -114,29 +114,7 @@ class WebService{
 									parsedEvent.id = event["id"] as! String;
 									parsedEvent.eventDescription = event["description"] as! String;
 									parsedEvent.name = event["name"] as! String;
-									
-									if let index = parsedEvent.name.range(of:" - BAIS Argentina") {
-										let startPos = parsedEvent.name.distance(from: parsedEvent.name.startIndex, to: index.lowerBound)
-										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos)
-										parsedEvent.name = parsedEvent.name[range]
-									}
-									
-									if let index = parsedEvent.name.range(of:" l BAIS Argentina") {
-										let startPos = parsedEvent.name.distance(from: parsedEvent.name.startIndex, to: index.lowerBound)
-										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos)
-										parsedEvent.name = parsedEvent.name[range]
-									}
-									
-									if let index = parsedEvent.name.range(of:" I BAIS Argentina") {
-										let startPos = parsedEvent.name.distance(from: parsedEvent.name.startIndex, to: index.lowerBound)
-										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: startPos)
-										parsedEvent.name = parsedEvent.name[range]
-									}
-									
-									if let separatorChar = parsedEvent.name.indexOfCharacter("|") {
-										let range = parsedEvent.name.startIndex..<parsedEvent.name.characters.index(parsedEvent.name.startIndex, offsetBy: separatorChar - 1)
-										parsedEvent.name = parsedEvent.name[range]
-									}
+									parsedEvent.name = self.takeOutEventNameSuffix(eventName: parsedEvent.name)
 									
 									// change to guards
 									if let place = event["place"] as? NSDictionary{
@@ -147,7 +125,7 @@ class WebService{
 												parsedEvent.place.street = street;
 											}
 											
-											let coordinates : CLLocation = CLLocation(latitude: location["latitude"] as! Double,
+											let coordinates: CLLocation = CLLocation(latitude: location["latitude"] as! Double,
 											                                          longitude: location["longitude"] as! Double);
 											parsedEvent.place.coordinates = coordinates;
 										}
@@ -171,6 +149,33 @@ class WebService{
 				self.delegate?.eventsLoaded!(eventsArray)
 			}
 		})
+	}
+	
+	func takeOutEventNameSuffix(eventName: String) -> String{
+		var parsedEventName = eventName
+		if let index = eventName.range(of:" - BAIS Argentina") {
+			let startPos = eventName.distance(from: eventName.startIndex, to: index.lowerBound)
+			let range = eventName.startIndex..<eventName.characters.index(eventName.startIndex, offsetBy: startPos)
+			parsedEventName = eventName[range]
+		}
+		
+		if let index = eventName.range(of:" l BAIS Argentina") {
+			let startPos = eventName.distance(from: eventName.startIndex, to: index.lowerBound)
+			let range = eventName.startIndex..<eventName.characters.index(eventName.startIndex, offsetBy: startPos)
+			parsedEventName = eventName[range]
+		}
+		
+		if let index = eventName.range(of:" I BAIS Argentina") {
+			let startPos = eventName.distance(from: eventName.startIndex, to: index.lowerBound)
+			let range = eventName.startIndex..<eventName.characters.index(eventName.startIndex, offsetBy: startPos)
+			parsedEventName = eventName[range]
+		}
+		
+		if let separatorChar = eventName.indexOfCharacter("|") {
+			let range = eventName.startIndex..<eventName.characters.index(eventName.startIndex, offsetBy: separatorChar - 1)
+			parsedEventName = eventName[range]
+		}
+		return parsedEventName
 	}
 	
 	func stringToNSDate(_ value: String) -> Date {
