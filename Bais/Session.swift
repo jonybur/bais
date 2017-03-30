@@ -14,7 +14,7 @@ import CoreLocation
 class Session{
 	var id = ""
 	var unreadCount = 0
-	var lastMessage = ""
+	var lastMessage = Message()
 	var participants = [User]()
 	var messages = [Message]()
 	

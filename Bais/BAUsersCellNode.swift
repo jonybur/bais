@@ -136,8 +136,8 @@ class BAUsersCellNode: ASCellNode {
 		buttonNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: 50)
 		buttonNode.style.flexBasis = ASDimension (unit: .fraction, value: 0.2)
 		buttonNode.style.flexShrink = 1
-		buttonNode.contentVerticalAlignment = .alignmentCenter
-		buttonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		buttonNode.contentVerticalAlignment = .center
+		buttonNode.contentHorizontalAlignment = .middle
 
 		// stack
 		let verticalStack = ASStackLayoutSpec()

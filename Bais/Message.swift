@@ -14,6 +14,9 @@ class Message{
 	var senderId = ""
 	var timestamp: CGFloat = 0
 	
+	init(){
+	}
+	
 	init(text: String, senderId: String){
 		self.text = text
 		self.senderId = senderId

@@ -55,8 +55,8 @@ class BAEditCountryPickerCellNode: ASCellNode, CountryPickerDelegate {
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 		// left button
 		doneButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width - 30, height: 50)
-		doneButtonNode.contentVerticalAlignment = .alignmentCenter
-		doneButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		doneButtonNode.contentVerticalAlignment = .center
+		doneButtonNode.contentHorizontalAlignment = .middle
 		
 		// text inset
 		let textInsets = UIEdgeInsets(top: 180, left: 15, bottom: 20, right: 0)

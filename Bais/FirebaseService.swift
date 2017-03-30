@@ -80,7 +80,7 @@ class FirebaseService{
 			if (user.id == currentUserId){
 				continue
 			}
-			postPushNotification(to: user, message: message.text)
+			postPushNotification(to: user, title: CurrentUser.user.firstName, body: message.text, sound: true)
 			addToUnreadCount(to: session, of: user)
 		}
 		
@@ -113,7 +113,11 @@ class FirebaseService{
 		}
 	}
 	
-	static func postPushNotification(to user: User, message: String){
+	static func postPushNotification(to user: User, body: String, sound: Bool){
+		postPushNotification(to: user, title: "", body: body, sound: sound)
+	}
+	
+	static func postPushNotification(to user: User, title: String, body bodyString: String, sound: Bool){
 		let userBadgeCountRef = usersReference.child(user.id).child("badge_count")
 		userBadgeCountRef.runTransactionBlock { currentData -> FIRTransactionResult in
 			
@@ -127,11 +131,18 @@ class FirebaseService{
 				"Authorization": "key=" + FirebaseService.serverKey
 			]
 			
-			let notification = [
-				"title": CurrentUser.user.firstName,
-				"body": message,
+			var notification = [
+				"body": bodyString,
 				"badge": newBadgeValue
 				] as [String : Any]
+			
+			if (title.characters.count > 0){
+				notification.updateValue(title, forKey: "title")
+			}
+			
+			if (sound){
+				notification.updateValue("default", forKey: "sound")
+			}
 			
 			let body = [
 				"to": user.notificationToken,
@@ -349,6 +360,10 @@ class FirebaseService{
 	
 	static func sendFriendRequestTo(friendId: String){
 		setFriendStatusWith(friendId, to: .invitationSent)
+		getUser(with: friendId).then { user -> Void in
+			let message = CurrentUser.user.firstName + " sent you a friend request!"
+			postPushNotification(to: user, body: message, sound: false)
+		}.catch { error in }
 	}
 	
 	private static func startSessionWith(_ friendId: String) -> String{

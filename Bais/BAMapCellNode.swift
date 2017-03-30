@@ -55,13 +55,13 @@ class BAMapCellNode: ASCellNode{
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 		// left button
 		uberButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width / 2 - 15, height: 50)
-		uberButtonNode.contentVerticalAlignment = .alignmentCenter
-		uberButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		uberButtonNode.contentVerticalAlignment = .center
+		uberButtonNode.contentHorizontalAlignment = .middle
 		
 		// right button
 		directionsButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width / 2 - 15, height: 50)
-		directionsButtonNode.contentVerticalAlignment = .alignmentCenter
-		directionsButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		directionsButtonNode.contentVerticalAlignment = .center
+		directionsButtonNode.contentHorizontalAlignment = .middle
 		
 		// vertical stack
 		let horizontalStack = ASStackLayoutSpec()

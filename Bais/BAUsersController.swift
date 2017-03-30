@@ -19,6 +19,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 
 	var _contentToDisplay = [User]()
 	var _allUsers = [User]()
+	var didFindLocation = false
 	var showAllUsers = false
 
 	let _collectionNode: ASCollectionNode!
@@ -61,6 +62,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		self.view.addSubview(activityIndicatorView!);
 		
 		activityIndicatorView?.startAnimating()
+		locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
 		locationManager.delegate = self
 	}
 	
@@ -96,7 +98,11 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 //MARK: - LocationManager delegate methods
 	
 	public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+		if(didFindLocation){
+			return
+		}
 		if let location = locationManager.location?.coordinate {
+			didFindLocation = true
 			FirebaseService.updateUserLocation(location)
 			observeUserLocation().then { location -> Void in
 				CurrentUser.location = location
@@ -321,7 +327,6 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	
 	// get friendship status of user
 	private func getFriendshipStatusFor(user: User) -> Promise<User>{
-		
 		return Promise{ fulfill, reject in
 			// query to friend relationship
 			let relationshipQuery = FirebaseService.usersReference

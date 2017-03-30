@@ -65,7 +65,7 @@ class BAChatCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
-		lastMessageNode.attributedText = NSAttributedString(string: session.lastMessage, attributes: lastMessageAttributes)
+		lastMessageNode.attributedText = NSAttributedString(string: session.lastMessage.text, attributes: lastMessageAttributes)
 		
 		if (session.unreadCount > 0){
 			let notificationCountAttributes = [

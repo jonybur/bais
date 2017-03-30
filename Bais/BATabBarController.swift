@@ -33,8 +33,9 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		view.backgroundColor = ColorPalette.white
 		
 		navigationController?.setNavigationBarHidden(true, animated: false)
-
+		
 		locationManager.delegate = self
+		
 		let authorizationStatus = CLLocationManager.authorizationStatus()
 		switch(authorizationStatus){
 		

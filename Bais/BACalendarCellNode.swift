@@ -132,18 +132,18 @@ class BACalendarCellNode: ASCellNode {
 		
 		// bottom button
 		singleButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: 50)
-		singleButtonNode.contentVerticalAlignment = .alignmentCenter
-		singleButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		singleButtonNode.contentVerticalAlignment = .center
+		singleButtonNode.contentHorizontalAlignment = .middle
 		
 		// left button
 		leftButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width / 2, height: 50)
-		leftButtonNode.contentVerticalAlignment = .alignmentCenter
-		leftButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		leftButtonNode.contentVerticalAlignment = .center
+		leftButtonNode.contentHorizontalAlignment = .middle
 		
 		// right button
 		rightButtonNode.style.preferredSize = CGSize(width: constrainedSize.max.width / 2, height: 50)
-		rightButtonNode.contentVerticalAlignment = .alignmentCenter
-		rightButtonNode.contentHorizontalAlignment = .horizontalAlignmentMiddle
+		rightButtonNode.contentVerticalAlignment = .center
+		rightButtonNode.contentHorizontalAlignment = .middle
 		
 		// horizontal stack
 		let horizontalButtonStack = ASStackLayoutSpec()

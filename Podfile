@@ -38,7 +38,7 @@ target 'Bais' do
   pod 'CountryPicker', '>= 1.3'
 
   # chat
-  pod 'NMessenger', :git => 'https://github.com/eBay/NMessenger.git', :branch => 'ASDK-2.1'
+  pod 'NMessenger', '>= 1.0.80'
   
 end
 

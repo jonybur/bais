@@ -26,11 +26,11 @@ enum ChatDisplayMode: String{
 
 final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate, BAChatHeaderCellNodeDelegate, BAFriendRequestCellNodeDelegate {
 	
-	// change this to one user array _usersToDisplay with two pointer arrays _friends and _requests
+	// change this to one user array _usersToDisplay with two pointer arrays sessions and requests
 	// also, change this to dictionaries String:User
 	//var _usersToDisplay = [User]()
-	var _sessions = [Session]()
-	var _requests = [User]()
+	var sessions = [Session]()
+	var requests = [User]()
 	var emptyStateMessagesNode = BAEmptyStateMessagesCellNode()
 	var emptyStateFriendRequestNode = BAEmptyStateFriendRequestsCellNode()
 	var displayMode: ChatDisplayMode = .sessions//: ChatDisplayMode!
@@ -71,14 +71,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
 		if (displayMode == .requests){
 			// taps request
-			let user = _requests[indexPath.item - 1]
+			let user = requests[indexPath.item - 1]
 			self.navigationController?.pushViewController(BAProfileController(with: user), animated: true)
 			self.tableNode.deselectRow(at: indexPath, animated: true)
 			return
 		}
 		
 		// taps friend (opens chat)
-		let session = _sessions[indexPath.item - 1]
+		let session = sessions[indexPath.item - 1]
 		self.navigationController?.pushViewController(BAChatController(with: session), animated: true)
 		self.tableNode.deselectRow(at: indexPath, animated: true)
 	}
@@ -94,20 +94,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			return headerNode
 		}
 		
-		//let numberOfRows = tableNode.numberOfRows(inSection: 0)
-		if (10 == item){
-			let spacerNode = BASpacerCellNode()
-			return spacerNode
-		}
-		
 		if (displayMode == .requests){
-			let user = _requests[item - 1]
+			let user = requests[item - 1]
 			let chatNode = BAFriendRequestCellNode(with: user)
 			chatNode.delegate = self
 			return chatNode
 		}
 		
-		let session = _sessions[item - 1]
+		let session = sessions[item - 1]
 		let chatNode = BAChatCellNode(with: session)
 		return chatNode
 	}
@@ -121,9 +115,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
 		// gets item count (includes header)
 		if (displayMode == .requests){
-			rowCount = _requests.count > 0 ? _requests.count + 1 : 1
+			rowCount = requests.count > 0 ? requests.count + 1 : 1
 		} else if (displayMode == .sessions){
-			rowCount = _sessions.count > 0 ? _sessions.count + 1 : 1
+			rowCount = sessions.count > 0 ? sessions.count + 1 : 1
 		}
 		
 		displayEmptyState(rowCount)
@@ -142,7 +136,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
 			// TODO kill request
-			FirebaseService.denyFriendRequestFrom(friendId: self._requests[indexPath.item - 1].id)
+			FirebaseService.denyFriendRequestFrom(friendId: self.requests[indexPath.item - 1].id)
 		}
 		removeAction.backgroundColor = ColorPalette.orange
 		return [removeAction]
@@ -162,9 +156,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		// adds the header to the final count
 		var elementsToDisplay = 0
 		if (displayMode == .requests){
-			elementsToDisplay = _requests.count + 1
+			elementsToDisplay = requests.count + 1
 		} else if (displayMode == .sessions){
-			elementsToDisplay = _sessions.count + 1
+			elementsToDisplay = sessions.count + 1
 		}
 		
 		// current row count
@@ -231,9 +225,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			
 			// if status is accepted, remove from requests
 			if (status == .accepted){
-				for (idx, user) in self._requests.enumerated(){
+				for (idx, user) in self.requests.enumerated(){
 					if (user.id == userId){
-						self._requests.remove(at: idx)
+						self.requests.remove(at: idx)
 						if (self.displayMode == .requests){
 							let idxPath = IndexPath(row: idx + 1, section: 0)
 							self.tableNode.deleteRows(at: [idxPath], with: .fade)
@@ -247,9 +241,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			
 		}
 		userFriendsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
-			for (idx, request) in self._requests.enumerated(){
+			for (idx, request) in self.requests.enumerated(){
 				if (request.id == snapshot.key){
-					self._requests.remove(at: idx)
+					self.requests.remove(at: idx)
 					if(self.displayMode == .requests){
 						let idxPath = IndexPath(row: idx + 1, section: 0)
 						self.tableNode.deleteRows(at: [idxPath], with: .fade)
@@ -265,10 +259,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			FirebaseService.getUserFromRelationship(from: snapshot).then(execute: { user -> Void in
 				// got user
 				if (user.friendshipStatus == .invitationReceived){
-					self._requests.append(user)
+					self.requests.append(user)
 					if (self.displayMode == .requests){
 						// add new row to section
-						let idxPath = IndexPath(row: self._requests.count, section: 0)
+						let idxPath = IndexPath(row: self.requests.count, section: 0)
 						self.tableNode.insertRows(at: [idxPath], with: .fade)
 					}
 				}
@@ -291,10 +285,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				guard let unreadCount = sessionValues["unread_count"] as? Int else { return }
 				session.unreadCount = unreadCount
 				self.observeLastMessage(of: session.id)
-				self._sessions.append(session)
+				self.sessions.append(session)
 				if(self.displayMode == .sessions){
 					// add new row to section
-					let idxPath = IndexPath(row: self._sessions.count, section: 0)
+					let idxPath = IndexPath(row: self.sessions.count, section: 0)
 					self.tableNode.insertRows(at: [idxPath], with: .fade)
 				}
 			}).catch(execute: { _ in })
@@ -308,7 +302,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			if (sessionIsActive){
 				// should update the cell
 				guard let unreadCount = sessionValues["unread_count"] as? Int else { return }
-				for (idx, session) in self._sessions.enumerated(){
+				for (idx, session) in self.sessions.enumerated(){
 					if (session.id == snapshot.key){
 						if(self.displayMode == .sessions){
 							session.unreadCount = unreadCount
@@ -321,9 +315,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			}
 			
 			// removes from screen
-			for (idx, session) in self._sessions.enumerated(){
+			for (idx, session) in self.sessions.enumerated(){
 				if (session.id == snapshot.key){
-					self._sessions.remove(at: idx)
+					self.sessions.remove(at: idx)
 					if(self.displayMode == .sessions){
 						let idxPath = IndexPath(row: idx + 1, section: 0)
 						self.tableNode.deleteRows(at: [idxPath], with: .fade)
@@ -338,12 +332,12 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 
 	private func selectDisplayMode(){
-		if (_sessions.count == 0 && _requests.count == 0){
+		if (sessions.count == 0 && requests.count == 0){
 			// show empty message
-		} else if (_sessions.count == 0){
+		} else if (sessions.count == 0){
 			// show requests
 			displayMode = .requests
-		} else if (_requests.count == 0){
+		} else if (requests.count == 0){
 			// show friends
 			displayMode = .sessions
 		}
@@ -353,28 +347,33 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		// queries to last message
 		let messageQuery = FirebaseService.sessionsReference.child(sessionId).child("messages").queryLimited(toLast: 1)
 		messageQuery.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
-			if let message = snapshot.value as? NSDictionary{
-				let messageString = message["text"] as! String
-				for (idx, session) in self._sessions.enumerated(){
+			
+			if let messageDictionary = snapshot.value as? NSDictionary{
+				
+				let text = messageDictionary["text"] as! String
+				let senderId = messageDictionary["sender_id"] as! String
+				let message = Message(text: text, senderId: senderId)
+				message.timestamp = messageDictionary["timestamp"] as! CGFloat
+				
+				for session in self.sessions{
 					if (session.id == sessionId){
-						session.lastMessage = messageString
-						// should "bubble" cell to first position of table
-						self._sessions = self.rearrange(array: self._sessions, fromIndex: idx, toIndex: 0)
+						session.lastMessage = message
 						// reloads rows that have been swapped
-						self.tableNode.reloadRows(at: [IndexPath(item: 1, section: 0), IndexPath(item: idx + 1, section: 0)], with: .fade)
+						
+						// TODO: optimize this (only swap selected rows)
+						self.sessions = self.sessions.sorted(by: { $0.lastMessage.timestamp > $1.lastMessage.timestamp })
+						
+						// TODO: optimize this (reload rows until lowest row that has to be updated)
+						var idxPaths = [IndexPath]()
+						for idx in 1...self.sessions.count{
+							idxPaths.append(IndexPath(item: idx, section: 0))
+						}
+						self.tableNode.reloadRows(at: idxPaths, with: .fade)
 						return
 					}
 				}
 			}
 		}
 	}
-	
-	func rearrange<T>(array: Array<T>, fromIndex: Int, toIndex: Int) -> Array<T>{
-		var arr = array
-		let element = arr.remove(at: fromIndex)
-		arr.insert(element, at: toIndex)
-		return arr
-	}
-	
 	
 }
