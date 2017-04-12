@@ -119,6 +119,8 @@ class FirebaseService{
 	
 	static func postPushNotification(to user: User, title: String, body bodyString: String, sound: Bool){
 		let userBadgeCountRef = usersReference.child(user.id).child("badge_count")
+		
+		// TODO: should run transaction block for notification token as well?
 		userBadgeCountRef.runTransactionBlock { currentData -> FIRTransactionResult in
 			
 			guard let currentBadgeValue = currentData.value as? Int else { return FIRTransactionResult.success(withValue: currentData) }
@@ -154,7 +156,6 @@ class FirebaseService{
 			return FIRTransactionResult.success(withValue: currentData)
 		}
 	}
-	
 	
 	static func getUserFromRelationship(from relationshipSnapshot: FIRDataSnapshot) -> Promise<User>{
 		let status = parseFriendStatus(from: relationshipSnapshot)
@@ -345,6 +346,11 @@ class FirebaseService{
 		let sessionId = startSessionWith(friendId)
 		// add user-session to sessions_by_user
 		addSessionsByUser(friendId, sessionId)
+		
+		getUser(with: friendId).then { user -> Void in
+			let message = CurrentUser.user.firstName + " accepted your friend request"
+			self.postPushNotification(to: user, body: message, sound: true)
+		}.catch { error in }
 	}
 	
 	static func addSessionsByUser(_ friendId: String, _ sessionId: String){
@@ -361,7 +367,7 @@ class FirebaseService{
 	static func sendFriendRequestTo(friendId: String){
 		setFriendStatusWith(friendId, to: .invitationSent)
 		getUser(with: friendId).then { user -> Void in
-			let message = CurrentUser.user.firstName + " sent you a friend request!"
+			let message = CurrentUser.user.firstName + " sent you a friend request"
 			postPushNotification(to: user, body: message, sound: false)
 		}.catch { error in }
 	}

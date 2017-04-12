@@ -135,7 +135,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
-			// TODO kill request
 			FirebaseService.denyFriendRequestFrom(friendId: self.requests[indexPath.item - 1].id)
 		}
 		removeAction.backgroundColor = ColorPalette.orange
