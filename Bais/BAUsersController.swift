@@ -239,7 +239,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		let geoFire = GeoFire(firebaseRef: FirebaseService.locationsReference)
 		
 		observeUserLocation().then { userLocation -> Void in
-			let kilometerRadius: Double = 10
+			let kilometerRadius = 15.0
 			let query = geoFire?.query(at: userLocation, withRadius: kilometerRadius)
 			self._allUsers = [User]()
 			
@@ -308,8 +308,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 			if (user.id == userId){
 				user.friendshipStatus = friendshipStatus
 				let idxPath = IndexPath(item: idx, section: 0)
-				self._collectionNode.reloadItems(at: [idxPath])
-				self._collectionNode.reloadData()
+				_collectionNode.reloadItems(at: [idxPath])
 				break
 			}
 		}
