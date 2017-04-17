@@ -482,7 +482,7 @@
 		ABF08B161D916E5400C6B832 = {
 			isa = PBXGroup;
 			children = (
-				ABF08B211D916E5400C6B832 /* Bais */,
+				ABF08B211D916E5400C6B832 /* BAIS */,
 				ABF08B201D916E5400C6B832 /* Products */,
 				881A4E44726A74D735DAA17E /* Pods */,
 				A20AC3B1C5DA4B39966F8AE3 /* Frameworks */,
@@ -497,7 +497,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ABF08B211D916E5400C6B832 /* Bais */ = {
+		ABF08B211D916E5400C6B832 /* BAIS */ = {
 			isa = PBXGroup;
 			children = (
 				ABE1AA661E6D861200079C2B /* bais_background.mp4 */,
@@ -515,6 +515,7 @@
 				ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */,
 				ABF08B2E1D916E5400C6B832 /* Info.plist */,
 			);
+			name = BAIS;
 			path = Bais;
 			sourceTree = "<group>";
 		};
@@ -588,7 +589,7 @@
 					};
 				};
 			};
-			buildConfigurationList = ABF08B1A1D916E5400C6B832 /* Build configuration list for PBXProject "Bais" */;
+			buildConfigurationList = ABF08B1A1D916E5400C6B832 /* Build configuration list for PBXProject "BAIS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -922,7 +923,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		ABF08B1A1D916E5400C6B832 /* Build configuration list for PBXProject "Bais" */ = {
+		ABF08B1A1D916E5400C6B832 /* Build configuration list for PBXProject "BAIS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ABF08B2F1D916E5400C6B832 /* Debug */,
