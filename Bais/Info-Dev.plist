@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>BAIS</string>
+	<string>Development</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,12 +27,12 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb819066684896381</string>
+				<string>fb963897143746667</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>54</string>
+	<string>73</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -48,7 +48,7 @@
 		</array>
 	</dict>
 	<key>FacebookAppID</key>
-	<string>819066684896381</string>
+	<string>963897143746667</string>
 	<key>FacebookDisplayName</key>
 	<string>BAIS</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

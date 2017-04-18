@@ -20,9 +20,14 @@ import Crashlytics
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
-    let facebookAppId = "819066684896381"
-    let facebookDisplayName = "BAIS"
+	
+	#if DEVELOPMENT
+	let facebookAppId = "963897143746667"
+	let facebookDisplayName = "BAIS Dev"
+	#else
+	let facebookAppId = "819066684896381"
+	let facebookDisplayName = "BAIS"
+	#endif
     
     var navigationController = UINavigationController()
 	
@@ -59,9 +64,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		// [END register_for_notifications]
 		
-		FIRApp.configure()
+		#if DEVELOPMENT
+		let firebaseSettingsPath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: ".plist")
+		#else
+		let firebaseSettingsPath = Bundle.main.path(forResource: "GoogleService-Info", ofType: ".plist")
+		#endif
 		
-		FIRDatabase.database().persistenceEnabled = true
+		let options = FIROptions(contentsOfFile: firebaseSettingsPath)
+		FIRApp.configure(with: options!)
+		
+		FIRDatabase.database().persistenceEnabled = false
 		
 		let screen: UIViewController!
 		

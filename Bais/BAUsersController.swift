@@ -339,6 +339,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	}
 	
 //MARK: - Dealloc
+	
 	deinit {
 		_collectionNode.dataSource = nil;
 		_collectionNode.delegate = nil;

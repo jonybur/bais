@@ -26,9 +26,85 @@
 		AB3DDB0F1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DDB0E1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift */; };
 		AB3DDB121E4ABEA000D005A6 /* BAMapCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DDB111E4ABEA000D005A6 /* BAMapCellNode.swift */; };
 		AB3F76A41E4975C800AF5C45 /* BAEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3F76A31E4975C800AF5C45 /* BAEventController.swift */; };
+		AB459E411EA6B2E40048E1B6 /* BAChatNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9DDD871E5C36430005E2DA /* BAChatNavigationBar.swift */; };
+		AB459E421EA6B2E40048E1B6 /* BAUsersCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */; };
+		AB459E431EA6B2E40048E1B6 /* BASpacerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */; };
+		AB459E441EA6B2E40048E1B6 /* BAEditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA2344E1E4D713200CBAF53 /* BAEditProfileController.swift */; };
+		AB459E451EA6B2E40048E1B6 /* BASettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B3041E4C0D44001C294B /* BASettingsController.swift */; };
+		AB459E461EA6B2E40048E1B6 /* BACalendarCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25C31E46A3EB00661BCF /* BACalendarCellNode.swift */; };
+		AB459E471EA6B2E40048E1B6 /* BALocationLockingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB35497C1E6384680099DAC0 /* BALocationLockingScreen.swift */; };
+		AB459E481EA6B2E40048E1B6 /* BALocationLockingScreenCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7C37A01E65759B00CA253C /* BALocationLockingScreenCellNode.swift */; };
+		AB459E491EA6B2E40048E1B6 /* BALoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CF1D9170C600E01511 /* BALoginController.swift */; };
+		AB459E4A1EA6B2E40048E1B6 /* BAVersionLockingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3549791E6384260099DAC0 /* BAVersionLockingScreen.swift */; };
+		AB459E4B1EA6B2E40048E1B6 /* UberProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D71D9170C600E01511 /* UberProduct.swift */; };
+		AB459E4C1EA6B2E40048E1B6 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D741D98D204003586B2 /* FirebaseService.swift */; };
+		AB459E4D1EA6B2E40048E1B6 /* BAImageCarouselCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A11E458C9E0058547A /* BAImageCarouselCellNode.swift */; };
+		AB459E4E1EA6B2E40048E1B6 /* BADetailBackButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */; };
+		AB459E4F1EA6B2E40048E1B6 /* InstagramMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CA1D9170C600E01511 /* InstagramMedia.swift */; };
+		AB459E501EA6B2E40048E1B6 /* BALicensesHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036CF1E667B28000AE2A0 /* BALicensesHeaderCellNode.swift */; };
+		AB459E511EA6B2E40048E1B6 /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DC1D9170C600E01511 /* WebAPI.swift */; };
+		AB459E521EA6B2E40048E1B6 /* BAChatHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */; };
+		AB459E531EA6B2E40048E1B6 /* MosaicCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */; };
+		AB459E541EA6B2E40048E1B6 /* BALicensesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036CC1E667A3D000AE2A0 /* BALicensesController.swift */; };
+		AB459E551EA6B2E40048E1B6 /* BATabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C21D9170C600E01511 /* BATabBarController.swift */; };
+		AB459E561EA6B2E40048E1B6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D761D98EB4F003586B2 /* User.swift */; };
+		AB459E571EA6B2E40048E1B6 /* BAEmptyStateCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6E05A1E68269100617A54 /* BAEmptyStateCellNode.swift */; };
+		AB459E581EA6B2E40048E1B6 /* BAEditImageCarouselCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA234511E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift */; };
+		AB459E591EA6B2E40048E1B6 /* BALicenseDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D51E669008000AE2A0 /* BALicenseDetailController.swift */; };
+		AB459E5A1EA6B2E40048E1B6 /* BAChatCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */; };
+		AB459E5B1EA6B2E40048E1B6 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8B5F851D9DD10600727BF8 /* FriendshipStatus.swift */; };
+		AB459E5C1EA6B2E40048E1B6 /* FetchedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C71D9170C600E01511 /* FetchedContent.swift */; };
+		AB459E5D1EA6B2E40048E1B6 /* BALoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6D7AB1E64EE83009D2993 /* BALoadingController.swift */; };
+		AB459E5E1EA6B2E40048E1B6 /* BADescriptionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A51E45AA8D0058547A /* BADescriptionCellNode.swift */; };
+		AB459E5F1EA6B2E40048E1B6 /* BACalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25BE1E46A20100661BCF /* BACalendarController.swift */; };
+		AB459E601EA6B2E40048E1B6 /* AppsCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B21D9170C600E01511 /* AppsCommunicator.swift */; };
+		AB459E611EA6B2E40048E1B6 /* BAUsersHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */; };
+		AB459E621EA6B2E40048E1B6 /* InstagramPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CB1D9170C600E01511 /* InstagramPicture.swift */; };
+		AB459E631EA6B2E40048E1B6 /* BACalendarHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25C11E46A3DF00661BCF /* BACalendarHeaderCellNode.swift */; };
+		AB459E641EA6B2E40048E1B6 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C11D9170C600E01511 /* ColorPalette.swift */; };
+		AB459E651EA6B2E40048E1B6 /* BALicenseDescriptionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D81E669A69000AE2A0 /* BALicenseDescriptionCellNode.swift */; };
+		AB459E661EA6B2E40048E1B6 /* BAEditDescriptionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA234531E4D883600CBAF53 /* BAEditDescriptionCellNode.swift */; };
+		AB459E671EA6B2E40048E1B6 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDAB5281E5A7B9A0067FBB5 /* Session.swift */; };
+		AB459E681EA6B2E40048E1B6 /* BALicensesButtonCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D31E668887000AE2A0 /* BALicensesButtonCellNode.swift */; };
+		AB459E691EA6B2E40048E1B6 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D21D9170C600E01511 /* Place.swift */; };
+		AB459E6A1EA6B2E40048E1B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF08B221D916E5400C6B832 /* AppDelegate.swift */; };
+		AB459E6B1EA6B2E40048E1B6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2B41D9170C600E01511 /* Utilities.swift */; };
+		AB459E6C1EA6B2E40048E1B6 /* BASettingsHeaderElementCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B30C1E4C1917001C294B /* BASettingsHeaderElementCellNode.swift */; };
+		AB459E6D1EA6B2E40048E1B6 /* BAEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3F76A31E4975C800AF5C45 /* BAEventController.swift */; };
+		AB459E6E1EA6B2E40048E1B6 /* BAProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCBDA451DA78B670001AC59 /* BAProfileController.swift */; };
+		AB459E6F1EA6B2E40048E1B6 /* BASettingsOptionsCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B30A1E4C1812001C294B /* BASettingsOptionsCellNode.swift */; };
+		AB459E701EA6B2E40048E1B6 /* BAUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */; };
+		AB459E711EA6B2E40048E1B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C41D9170C600E01511 /* Event.swift */; };
+		AB459E721EA6B2E40048E1B6 /* BAChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2BF1D9170C600E01511 /* BAChatController.swift */; };
+		AB459E731EA6B2E40048E1B6 /* InstagramVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CD1D9170C600E01511 /* InstagramVideo.swift */; };
+		AB459E741EA6B2E40048E1B6 /* BAFriendRequestCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */; };
+		AB459E751EA6B2E40048E1B6 /* BAMapCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DDB111E4ABEA000D005A6 /* BAMapCellNode.swift */; };
+		AB459E761EA6B2E40048E1B6 /* RSVPStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2D41D9170C600E01511 /* RSVPStatus.swift */; };
+		AB459E771EA6B2E40048E1B6 /* BAFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */; };
+		AB459E781EA6B2E40048E1B6 /* BASettingsHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B3081E4C11DF001C294B /* BASettingsHeaderCellNode.swift */; };
+		AB459E791EA6B2E40048E1B6 /* BAVersionLockingScreenCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7C37A21E65838600CA253C /* BAVersionLockingScreenCellNode.swift */; };
+		AB459E7A1EA6B2E40048E1B6 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2C01D9170C600E01511 /* WebService.swift */; };
+		AB459E7B1EA6B2E40048E1B6 /* BAEditCountryPickerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */; };
+		AB459E7C1EA6B2E40048E1B6 /* BASettingsSpacerElementCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B3101E4C1D54001C294B /* BASettingsSpacerElementCellNode.swift */; };
+		AB459E7D1EA6B2E40048E1B6 /* BAEditBasicUserInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA234551E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift */; };
+		AB459E7E1EA6B2E40048E1B6 /* BATabBarContentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27DF3A1E6391B000FAE513 /* BATabBarContentViews.swift */; };
+		AB459E7F1EA6B2E40048E1B6 /* BABasicEventInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DDB0E1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift */; };
+		AB459E801EA6B2E40048E1B6 /* BABasicUserInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D33A31E4598CE0058547A /* BABasicUserInfoCellNode.swift */; };
+		AB459E811EA6B2E40048E1B6 /* BASettingsButtonElementCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB18B30E1E4C1B05001C294B /* BASettingsButtonElementCellNode.swift */; };
+		AB459E821EA6B2E40048E1B6 /* UIRepeatingVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2DA1D9170C600E01511 /* UIRepeatingVideo.swift */; };
+		AB459E831EA6B2E40048E1B6 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDAB52A1E5A7C1E0067FBB5 /* Message.swift */; };
+		AB459E841EA6B2E40048E1B6 /* InstagramUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB9F2CC1D9170C600E01511 /* InstagramUser.swift */; };
+		AB459E851EA6B2E40048E1B6 /* BALicensesCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8036D11E667B32000AE2A0 /* BALicensesCellNode.swift */; };
+		AB459E861EA6B2E40048E1B6 /* BAActionButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB8DA51E5301510089000C /* BAActionButtonNode.swift */; };
+		AB459E881EA6B2E40048E1B6 /* Pods_Bais.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF6B2B119653D993B14B315 /* Pods_Bais.framework */; };
+		AB459E8A1EA6B2E40048E1B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABB9F2B81D9170C600E01511 /* Assets.xcassets */; };
+		AB459E8B1EA6B2E40048E1B6 /* bais_background.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = ABE1AA661E6D861200079C2B /* bais_background.mp4 */; };
+		AB459E8C1EA6B2E40048E1B6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */; };
 		AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D741D98D204003586B2 /* FirebaseService.swift */; };
 		AB4F5D771D98EB4F003586B2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F5D761D98EB4F003586B2 /* User.swift */; };
 		AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */; };
+		AB63A17C1EA6B85D00840315 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB63A17B1EA6B85D00840315 /* GoogleService-Info-Dev.plist */; };
+		AB63A17D1EA6BC9500840315 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB63A17B1EA6B85D00840315 /* GoogleService-Info-Dev.plist */; };
 		AB6A25C21E46A3DF00661BCF /* BACalendarHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25C11E46A3DF00661BCF /* BACalendarHeaderCellNode.swift */; };
 		AB6A25C41E46A3EB00661BCF /* BACalendarCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A25C31E46A3EB00661BCF /* BACalendarCellNode.swift */; };
 		AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */; };
@@ -104,9 +180,12 @@
 		AB3DDB0E1E4ABBA800D005A6 /* BABasicEventInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BABasicEventInfoCellNode.swift; sourceTree = "<group>"; };
 		AB3DDB111E4ABEA000D005A6 /* BAMapCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAMapCellNode.swift; sourceTree = "<group>"; };
 		AB3F76A31E4975C800AF5C45 /* BAEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAEventController.swift; sourceTree = "<group>"; };
+		AB459E941EA6B2E40048E1B6 /* BAIS Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BAIS Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB459E951EA6B2E40048E1B6 /* Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-Dev.plist"; path = "/Users/Jonathan/Desktop/bais/Bais/Info-Dev.plist"; sourceTree = "<absolute>"; };
 		AB4F5D741D98D204003586B2 /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		AB4F5D761D98EB4F003586B2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB4FD1691DEBF90900612473 /* BAUsersCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersCellNode.swift; sourceTree = "<group>"; };
+		AB63A17B1EA6B85D00840315 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		AB6A25BE1E46A20100661BCF /* BACalendarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACalendarController.swift; sourceTree = "<group>"; };
 		AB6A25C11E46A3DF00661BCF /* BACalendarHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACalendarHeaderCellNode.swift; sourceTree = "<group>"; };
 		AB6A25C31E46A3EB00661BCF /* BACalendarCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACalendarCellNode.swift; sourceTree = "<group>"; };
@@ -154,7 +233,7 @@
 		ABE1AA661E6D861200079C2B /* bais_background.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = bais_background.mp4; sourceTree = "<group>"; };
 		ABEB8DA51E5301510089000C /* BAActionButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAActionButtonNode.swift; sourceTree = "<group>"; };
 		ABEB8DA71E5302560089000C /* BADetailBackButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BADetailBackButtonNode.swift; sourceTree = "<group>"; };
-		ABF08B1F1D916E5400C6B832 /* Bais.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bais.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF08B1F1D916E5400C6B832 /* BAIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BAIS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF08B221D916E5400C6B832 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ABF08B2E1D916E5400C6B832 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABF50ACB1DEA7651004CB6E8 /* BAUsersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersController.swift; sourceTree = "<group>"; };
@@ -166,6 +245,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AB459E871EA6B2E40048E1B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB459E881EA6B2E40048E1B6 /* Pods_Bais.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABF08B1C1D916E5400C6B832 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -492,7 +579,8 @@
 		ABF08B201D916E5400C6B832 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ABF08B1F1D916E5400C6B832 /* Bais.app */,
+				ABF08B1F1D916E5400C6B832 /* BAIS.app */,
+				AB459E941EA6B2E40048E1B6 /* BAIS Dev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -513,6 +601,8 @@
 				ABB9F2B81D9170C600E01511 /* Assets.xcassets */,
 				ABF08B221D916E5400C6B832 /* AppDelegate.swift */,
 				ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */,
+				AB63A17B1EA6B85D00840315 /* GoogleService-Info-Dev.plist */,
+				AB459E951EA6B2E40048E1B6 /* Info-Dev.plist */,
 				ABF08B2E1D916E5400C6B832 /* Info.plist */,
 			);
 			name = BAIS;
@@ -538,9 +628,31 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		ABF08B1E1D916E5400C6B832 /* Bais */ = {
+		AB459E3E1EA6B2E40048E1B6 /* BAIS Dev */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ABF08B311D916E5400C6B832 /* Build configuration list for PBXNativeTarget "Bais" */;
+			buildConfigurationList = AB459E911EA6B2E40048E1B6 /* Build configuration list for PBXNativeTarget "BAIS Dev" */;
+			buildPhases = (
+				AB459E3F1EA6B2E40048E1B6 /* [CP] Check Pods Manifest.lock */,
+				AB459E401EA6B2E40048E1B6 /* Sources */,
+				AB459E871EA6B2E40048E1B6 /* Frameworks */,
+				AB459E891EA6B2E40048E1B6 /* Resources */,
+				AB459E8D1EA6B2E40048E1B6 /* [CP] Embed Pods Frameworks */,
+				AB459E8E1EA6B2E40048E1B6 /* [CP] Copy Pods Resources */,
+				AB459E8F1EA6B2E40048E1B6 /* Autoincrement build */,
+				AB459E901EA6B2E40048E1B6 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BAIS Dev";
+			productName = Bais;
+			productReference = AB459E941EA6B2E40048E1B6 /* BAIS Dev.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ABF08B1E1D916E5400C6B832 /* BAIS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABF08B311D916E5400C6B832 /* Build configuration list for PBXNativeTarget "BAIS" */;
 			buildPhases = (
 				DB3B19C619CAC66231A678AC /* [CP] Check Pods Manifest.lock */,
 				ABF08B1B1D916E5400C6B832 /* Sources */,
@@ -555,9 +667,9 @@
 			);
 			dependencies = (
 			);
-			name = Bais;
+			name = BAIS;
 			productName = Bais;
-			productReference = ABF08B1F1D916E5400C6B832 /* Bais.app */;
+			productReference = ABF08B1F1D916E5400C6B832 /* BAIS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -570,6 +682,9 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Board Social, Inc.";
 				TargetAttributes = {
+					AB459E3E1EA6B2E40048E1B6 = {
+						DevelopmentTeam = TRJS4744Z8;
+					};
 					ABF08B1E1D916E5400C6B832 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = TRJS4744Z8;
@@ -602,17 +717,30 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ABF08B1E1D916E5400C6B832 /* Bais */,
+				ABF08B1E1D916E5400C6B832 /* BAIS */,
+				AB459E3E1EA6B2E40048E1B6 /* BAIS Dev */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AB459E891EA6B2E40048E1B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB459E8A1EA6B2E40048E1B6 /* Assets.xcassets in Resources */,
+				AB63A17D1EA6BC9500840315 /* GoogleService-Info-Dev.plist in Resources */,
+				AB459E8B1EA6B2E40048E1B6 /* bais_background.mp4 in Resources */,
+				AB459E8C1EA6B2E40048E1B6 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABF08B1D1D916E5400C6B832 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				ABB9F2E31D9170C600E01511 /* Assets.xcassets in Resources */,
+				AB63A17C1EA6B85D00840315 /* GoogleService-Info-Dev.plist in Resources */,
 				ABE1AA671E6D861200079C2B /* bais_background.mp4 in Resources */,
 				ABFA0B311D9A0CB000ED6C16 /* GoogleService-Info.plist in Resources */,
 			);
@@ -650,6 +778,78 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bais/Pods-Bais-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		AB459E3F1EA6B2E40048E1B6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AB459E8D1EA6B2E40048E1B6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bais/Pods-Bais-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB459E8E1EA6B2E40048E1B6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bais/Pods-Bais-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB459E8F1EA6B2E40048E1B6 /* Autoincrement build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Autoincrement build";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		AB459E901EA6B2E40048E1B6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" ***REMOVED*** c10fbfe139e048dcfb304ec935045bc2fb1f2a98d87e810003e5cf74c55417b8";
 		};
 		AB45CDB01E6129DD0037869F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -696,6 +896,83 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AB459E401EA6B2E40048E1B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB459E411EA6B2E40048E1B6 /* BAChatNavigationBar.swift in Sources */,
+				AB459E421EA6B2E40048E1B6 /* BAUsersCellNode.swift in Sources */,
+				AB459E431EA6B2E40048E1B6 /* BASpacerCellNode.swift in Sources */,
+				AB459E441EA6B2E40048E1B6 /* BAEditProfileController.swift in Sources */,
+				AB459E451EA6B2E40048E1B6 /* BASettingsController.swift in Sources */,
+				AB459E461EA6B2E40048E1B6 /* BACalendarCellNode.swift in Sources */,
+				AB459E471EA6B2E40048E1B6 /* BALocationLockingScreen.swift in Sources */,
+				AB459E481EA6B2E40048E1B6 /* BALocationLockingScreenCellNode.swift in Sources */,
+				AB459E491EA6B2E40048E1B6 /* BALoginController.swift in Sources */,
+				AB459E4A1EA6B2E40048E1B6 /* BAVersionLockingScreen.swift in Sources */,
+				AB459E4B1EA6B2E40048E1B6 /* UberProduct.swift in Sources */,
+				AB459E4C1EA6B2E40048E1B6 /* FirebaseService.swift in Sources */,
+				AB459E4D1EA6B2E40048E1B6 /* BAImageCarouselCellNode.swift in Sources */,
+				AB459E4E1EA6B2E40048E1B6 /* BADetailBackButtonNode.swift in Sources */,
+				AB459E4F1EA6B2E40048E1B6 /* InstagramMedia.swift in Sources */,
+				AB459E501EA6B2E40048E1B6 /* BALicensesHeaderCellNode.swift in Sources */,
+				AB459E511EA6B2E40048E1B6 /* WebAPI.swift in Sources */,
+				AB459E521EA6B2E40048E1B6 /* BAChatHeaderCellNode.swift in Sources */,
+				AB459E531EA6B2E40048E1B6 /* MosaicCollectionViewLayout.swift in Sources */,
+				AB459E541EA6B2E40048E1B6 /* BALicensesController.swift in Sources */,
+				AB459E551EA6B2E40048E1B6 /* BATabBarController.swift in Sources */,
+				AB459E561EA6B2E40048E1B6 /* User.swift in Sources */,
+				AB459E571EA6B2E40048E1B6 /* BAEmptyStateCellNode.swift in Sources */,
+				AB459E581EA6B2E40048E1B6 /* BAEditImageCarouselCellNode.swift in Sources */,
+				AB459E591EA6B2E40048E1B6 /* BALicenseDetailController.swift in Sources */,
+				AB459E5A1EA6B2E40048E1B6 /* BAChatCellNode.swift in Sources */,
+				AB459E5B1EA6B2E40048E1B6 /* FriendshipStatus.swift in Sources */,
+				AB459E5C1EA6B2E40048E1B6 /* FetchedContent.swift in Sources */,
+				AB459E5D1EA6B2E40048E1B6 /* BALoadingController.swift in Sources */,
+				AB459E5E1EA6B2E40048E1B6 /* BADescriptionCellNode.swift in Sources */,
+				AB459E5F1EA6B2E40048E1B6 /* BACalendarController.swift in Sources */,
+				AB459E601EA6B2E40048E1B6 /* AppsCommunicator.swift in Sources */,
+				AB459E611EA6B2E40048E1B6 /* BAUsersHeaderCellNode.swift in Sources */,
+				AB459E621EA6B2E40048E1B6 /* InstagramPicture.swift in Sources */,
+				AB459E631EA6B2E40048E1B6 /* BACalendarHeaderCellNode.swift in Sources */,
+				AB459E641EA6B2E40048E1B6 /* ColorPalette.swift in Sources */,
+				AB459E651EA6B2E40048E1B6 /* BALicenseDescriptionCellNode.swift in Sources */,
+				AB459E661EA6B2E40048E1B6 /* BAEditDescriptionCellNode.swift in Sources */,
+				AB459E671EA6B2E40048E1B6 /* Session.swift in Sources */,
+				AB459E681EA6B2E40048E1B6 /* BALicensesButtonCellNode.swift in Sources */,
+				AB459E691EA6B2E40048E1B6 /* Place.swift in Sources */,
+				AB459E6A1EA6B2E40048E1B6 /* AppDelegate.swift in Sources */,
+				AB459E6B1EA6B2E40048E1B6 /* Utilities.swift in Sources */,
+				AB459E6C1EA6B2E40048E1B6 /* BASettingsHeaderElementCellNode.swift in Sources */,
+				AB459E6D1EA6B2E40048E1B6 /* BAEventController.swift in Sources */,
+				AB459E6E1EA6B2E40048E1B6 /* BAProfileController.swift in Sources */,
+				AB459E6F1EA6B2E40048E1B6 /* BASettingsOptionsCellNode.swift in Sources */,
+				AB459E701EA6B2E40048E1B6 /* BAUsersController.swift in Sources */,
+				AB459E711EA6B2E40048E1B6 /* Event.swift in Sources */,
+				AB459E721EA6B2E40048E1B6 /* BAChatController.swift in Sources */,
+				AB459E731EA6B2E40048E1B6 /* InstagramVideo.swift in Sources */,
+				AB459E741EA6B2E40048E1B6 /* BAFriendRequestCellNode.swift in Sources */,
+				AB459E751EA6B2E40048E1B6 /* BAMapCellNode.swift in Sources */,
+				AB459E761EA6B2E40048E1B6 /* RSVPStatus.swift in Sources */,
+				AB459E771EA6B2E40048E1B6 /* BAFriendsController.swift in Sources */,
+				AB459E781EA6B2E40048E1B6 /* BASettingsHeaderCellNode.swift in Sources */,
+				AB459E791EA6B2E40048E1B6 /* BAVersionLockingScreenCellNode.swift in Sources */,
+				AB459E7A1EA6B2E40048E1B6 /* WebService.swift in Sources */,
+				AB459E7B1EA6B2E40048E1B6 /* BAEditCountryPickerCellNode.swift in Sources */,
+				AB459E7C1EA6B2E40048E1B6 /* BASettingsSpacerElementCellNode.swift in Sources */,
+				AB459E7D1EA6B2E40048E1B6 /* BAEditBasicUserInfoCellNode.swift in Sources */,
+				AB459E7E1EA6B2E40048E1B6 /* BATabBarContentViews.swift in Sources */,
+				AB459E7F1EA6B2E40048E1B6 /* BABasicEventInfoCellNode.swift in Sources */,
+				AB459E801EA6B2E40048E1B6 /* BABasicUserInfoCellNode.swift in Sources */,
+				AB459E811EA6B2E40048E1B6 /* BASettingsButtonElementCellNode.swift in Sources */,
+				AB459E821EA6B2E40048E1B6 /* UIRepeatingVideo.swift in Sources */,
+				AB459E831EA6B2E40048E1B6 /* Message.swift in Sources */,
+				AB459E841EA6B2E40048E1B6 /* InstagramUser.swift in Sources */,
+				AB459E851EA6B2E40048E1B6 /* BALicensesCellNode.swift in Sources */,
+				AB459E861EA6B2E40048E1B6 /* BAActionButtonNode.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABF08B1B1D916E5400C6B832 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -776,6 +1053,71 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		AB459E921EA6B2E40048E1B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82318B2C04D00B6FB970C108 /* Pods-Bais.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Bais/Bais.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = TRJS4744Z8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PIN_REMOTE_IMAGE=1",
+					"DEVELOPMENT=1",
+				);
+				INFOPLIST_FILE = "Bais/Info-Dev.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEVELOPMENT\"";
+				PRODUCT_BUNDLE_IDENTIFIER = com.baisapp.BaisDev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		AB459E931EA6B2E40048E1B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 40BDC291BD8D1F55A1BC5F42 /* Pods-Bais.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Bais/Bais.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = TRJS4744Z8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PIN_REMOTE_IMAGE=1",
+					"DEVELOPMENT=1",
+				);
+				INFOPLIST_FILE = "Bais/Info-Dev.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEVELOPMENT\"";
+				PRODUCT_BUNDLE_IDENTIFIER = com.baisapp.BaisDev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
 		ABF08B2F1D916E5400C6B832 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -883,6 +1225,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = TRJS4744Z8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PIN_REMOTE_IMAGE=1",
+					"DEVELOPMENT=0",
+				);
 				INFOPLIST_FILE = Bais/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -909,6 +1258,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = TRJS4744Z8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PIN_REMOTE_IMAGE=1",
+					"DEVELOPMENT=0",
+				);
 				INFOPLIST_FILE = Bais/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -923,6 +1279,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AB459E911EA6B2E40048E1B6 /* Build configuration list for PBXNativeTarget "BAIS Dev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB459E921EA6B2E40048E1B6 /* Debug */,
+				AB459E931EA6B2E40048E1B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ABF08B1A1D916E5400C6B832 /* Build configuration list for PBXProject "BAIS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -932,7 +1297,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ABF08B311D916E5400C6B832 /* Build configuration list for PBXNativeTarget "Bais" */ = {
+		ABF08B311D916E5400C6B832 /* Build configuration list for PBXNativeTarget "BAIS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ABF08B321D916E5400C6B832 /* Debug */,

@@ -32,8 +32,13 @@ class FirebaseService{
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
 	static let reportsReference = FIRDatabase.database().reference().child("reports")
 	static let feedbackReference = FIRDatabase.database().reference().child("feedback")
+	#if DEVELOPMENT
+	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-dev.appspot.com")
+	static let serverKey = "***REMOVED***"
+	#else
 	static let rootStorageReference = FIRStorage.storage().reference(forURL: "gs://bais-79d67.appspot.com")
 	static let serverKey = "***REMOVED***"
+	#endif
 	
 	enum ImagePurpose: String{
 		case profilePicture = "profile_picture"
@@ -252,6 +257,7 @@ class FirebaseService{
 			
 			imagesRef.put(data!, metadata: nil) { metadata, error in
 				if let error = error {
+					print("ERROR: " + error.localizedDescription)
 					reject(error)
 				} else {
 					fulfill(metadata!.downloadURL()!)
