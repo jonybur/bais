@@ -17,13 +17,13 @@ import GeoFire
 class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, CLLocationManagerDelegate,
 	ASCollectionDataSource, ASCollectionDelegate, BAUsersCellNodeDelegate, BAUsersHeaderCellNodeDelegate {
 
-	var _contentToDisplay = [User]()
-	var _allUsers = [User]()
+	var contentToDisplay = [User]()
+	var allUsers = [User]()
 	var didFindLocation = false
 	var showAllUsers = false
 
-	let _collectionNode: ASCollectionNode!
-	let _layoutInspector = MosaicCollectionViewLayoutInspector()
+	let collectionNode: ASCollectionNode!
+	let layoutInspector = MosaicCollectionViewLayoutInspector()
 	let usersRef = FirebaseService.usersReference
 	let locationManager = CLLocationManager()
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
@@ -33,7 +33,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	init (){
 		let layout = MosaicCollectionViewLayout(startsAt: 10)
 		layout.numberOfColumns = 2
-		_collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
+		collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
 		super.init(nibName: nil, bundle: nil)
 		layout.delegate = self
 		
@@ -44,12 +44,12 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		
 		extendedLayoutIncludesOpaqueBars = true
 		
-		_collectionNode.dataSource = self;
-		_collectionNode.delegate = self;
-		_collectionNode.view.layoutInspector = _layoutInspector
-		_collectionNode.backgroundColor = ColorPalette.white
-		_collectionNode.view.isScrollEnabled = true
-		_collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
+		collectionNode.dataSource = self;
+		collectionNode.delegate = self;
+		collectionNode.view.layoutInspector = layoutInspector
+		collectionNode.backgroundColor = ColorPalette.white
+		collectionNode.view.isScrollEnabled = true
+		collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
 	}
 	
 	required init(coder: NSCoder) {
@@ -58,7 +58,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.view.addSubnode(_collectionNode!)
+		self.view.addSubnode(collectionNode!)
 		self.view.addSubview(activityIndicatorView!);
 		
 		activityIndicatorView?.startAnimating()
@@ -67,11 +67,11 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	}
 	
 	override func viewWillLayoutSubviews() {
-		_collectionNode.frame = self.view.bounds;
+		collectionNode.frame = self.view.bounds;
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
-		let user = _contentToDisplay[indexPath.item]
+		let user = contentToDisplay[indexPath.item]
 		let node = BAUsersCellNode(with: user)
 		node.delegate = self
 		return node
@@ -88,11 +88,11 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-		return _contentToDisplay.count
+		return contentToDisplay.count
 	}
 	
 	func userForIndexPath(_ indexPath: IndexPath) -> User{
-		return _contentToDisplay[indexPath.item]
+		return contentToDisplay[indexPath.item]
 	}
 	
 //MARK: - LocationManager delegate methods
@@ -119,7 +119,6 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		}
 	}
 	
-	
 	public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
 		print("Location Manager failed with error")
 	}
@@ -140,7 +139,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 			var countryToDisplay = [User]()
 			var idxToDelete = [IndexPath]()
 			
-			for user in _allUsers {
+			for user in allUsers {
 				if (user.country == CurrentUser.user.country){
 					let idxPath = IndexPath(item: countryToDisplay.count, section: 0)
 					idxToReload.append(idxPath)
@@ -148,33 +147,33 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 				}
 			}
 			
-			if (idxToReload.count < _allUsers.count){
-				for idx in idxToReload.count..._allUsers.count - 1{
+			if (idxToReload.count < allUsers.count){
+				for idx in idxToReload.count...allUsers.count - 1{
 					let idxPath = IndexPath(item: idx, section: 0)
 					idxToDelete.append(idxPath)
 				}
 			}
 			
-			_contentToDisplay = countryToDisplay.sorted { $0.distanceFromUser < $1.distanceFromUser }
-			_collectionNode.deleteItems(at: idxToDelete)
+			contentToDisplay = countryToDisplay.sorted { $0.distanceFromUser < $1.distanceFromUser }
+			collectionNode.deleteItems(at: idxToDelete)
 		} else {
 			var idxToInsert = [IndexPath]()
 			
-			if (_allUsers.count > 0){
-				for idx in 0..._allUsers.count - 1 {
+			if (allUsers.count > 0){
+				for idx in 0...allUsers.count - 1 {
 					let idxPath = IndexPath(item: idx, section: 0)
 					idxToReload.append(idxPath)
 					
-					if (idx > _contentToDisplay.count - 1){
+					if (idx > contentToDisplay.count - 1){
 						idxToInsert.append(idxPath)
 					}
 				}
-				_contentToDisplay = _allUsers.sorted { $0.distanceFromUser < $1.distanceFromUser }
-				_collectionNode.insertItems(at: idxToInsert)
+				contentToDisplay = allUsers.sorted { $0.distanceFromUser < $1.distanceFromUser }
+				collectionNode.insertItems(at: idxToInsert)
 			}
 		}
 		
-		_collectionNode.reloadItems(at: idxToReload)
+		collectionNode.reloadItems(at: idxToReload)
 		showAllUsers = !showAllUsers
 	}
 	
@@ -187,7 +186,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 				FirebaseService.sendFriendRequestTo(friendId: user.id)
 				usersViewCell.user.friendshipStatus = .invitationSent
 				if usersViewCell.indexPath != nil{
-					_collectionNode.reloadItems(at: [usersViewCell.indexPath!])
+					collectionNode.reloadItems(at: [usersViewCell.indexPath!])
 				} else {
 					print("IndexPath was nil")
 				}
@@ -215,6 +214,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	}
 	
 //MARK: - Firebase
+	
 	// gets current user location
 	private func observeUserLocation() -> Promise<CLLocation>{
 		return Promise{ fulfill, reject in
@@ -229,9 +229,47 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		}
 	}
 	
-	private func resortElementsAndReloadView(){
-		self._contentToDisplay = self._allUsers.sorted { $0.distanceFromUser < $1.distanceFromUser }
-		self._collectionNode.reloadSections(IndexSet(integer:0))
+	private func addUserAndReloadCollection(user: User){
+		let idxOfAddedUser = addUserToOrderedArray(user: user)
+		contentToDisplay = allUsers
+		
+		let idxPath = [IndexPath(item: contentToDisplay.count - 1, section: 0)]
+		collectionNode.insertItems(at: idxPath)
+		
+		reloadItems(from: idxOfAddedUser)
+	}
+	
+	private func reloadItems(from itemNumber: Int){
+		var idxToReload = [IndexPath]()
+		for idx in itemNumber...allUsers.count - 1 {
+			let idxPath = IndexPath(item: idx, section: 0)
+			idxToReload.append(idxPath)
+		}
+		collectionNode.reloadItems(at: idxToReload)
+	}
+	
+	/*
+	private func removeUserAndReloadCollection(userId: String){
+		for (idx, user) in self.allUsers.enumerated(){
+			if (user.id == userId){
+				self.allUsers.remove(at: idx)
+				return
+			}
+		}
+	}
+	*/
+	
+	// improve performance of this
+	private func addUserToOrderedArray(user: User) -> Int{
+		for (idx, usr) in allUsers.enumerated(){
+			if (user.distanceFromUser < usr.distanceFromUser){
+				allUsers.insert(user, at: idx)
+				return idx
+			}
+		}
+		
+		allUsers.append(user)
+		return 0
 	}
 	
 	// gets all users (should filter by distance? paginate?)
@@ -241,7 +279,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		observeUserLocation().then { userLocation -> Void in
 			let kilometerRadius = 15.0
 			let query = geoFire?.query(at: userLocation, withRadius: kilometerRadius)
-			self._allUsers = [User]()
+			self.allUsers = [User]()
 			
 			// if a user enters the range, add to list
 			query?.observe(.keyEntered, with: { (key: String?, location: CLLocation?) in
@@ -252,21 +290,9 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 				self.getUserByKey(key!).then(execute: { user -> Promise<User> in
 					return self.getFriendshipStatusFor(user: user)
 				}).then(execute: { user -> Void in
-					self._allUsers.append(user)
-					self.resortElementsAndReloadView()
+					self.addUserAndReloadCollection(user: user)
 					self.activityIndicatorView?.stopAnimating()
 				}).catch(execute: { _ in })
-			})
-			
-			// if a user leaves the range, remove from list
-			query?.observe(.keyExited, with: { (key: String?, location: CLLocation?) in
-				for (idx, user) in self._allUsers.enumerated(){
-					if (user.id == key){
-						self._allUsers.remove(at: idx)
-						self.resortElementsAndReloadView()
-						return
-					}
-				}
 			})
 		}.catch { _ in }
 	}
@@ -297,18 +323,18 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	private func updateUserFriendshipStatusAndReloadCell(set friendshipStatus: FriendshipStatus, to userId: String){
 		
 		// update on both arrays
-		for user in self._allUsers{
+		for user in self.allUsers{
 			if (user.id == userId){
 				user.friendshipStatus = friendshipStatus
 				break
 			}
 		}
 		
-		for (idx, user) in self._contentToDisplay.enumerated(){
+		for (idx, user) in self.contentToDisplay.enumerated(){
 			if (user.id == userId){
 				user.friendshipStatus = friendshipStatus
 				let idxPath = IndexPath(item: idx, section: 0)
-				_collectionNode.reloadItems(at: [idxPath])
+				collectionNode.reloadItems(at: [idxPath])
 				break
 			}
 		}
@@ -341,8 +367,8 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 //MARK: - Dealloc
 	
 	deinit {
-		_collectionNode.dataSource = nil;
-		_collectionNode.delegate = nil;
+		collectionNode.dataSource = nil;
+		collectionNode.delegate = nil;
 	}
 }
 

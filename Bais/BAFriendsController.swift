@@ -28,13 +28,11 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	// change this to one user array _usersToDisplay with two pointer arrays sessions and requests
 	// also, change this to dictionaries String:User
-	//var _usersToDisplay = [User]()
 	var sessions = [Session]()
 	var requests = [User]()
 	var emptyStateMessagesNode = BAEmptyStateMessagesCellNode()
 	var emptyStateFriendRequestNode = BAEmptyStateFriendRequestsCellNode()
-	var displayMode: ChatDisplayMode = .sessions//: ChatDisplayMode!
-	//var showEmptyState = false
+	var displayMode: ChatDisplayMode = .sessions
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
