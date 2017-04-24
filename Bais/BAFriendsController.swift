@@ -32,7 +32,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	var requests = [User]()
 	var emptyStateMessagesNode = BAEmptyStateMessagesCellNode()
 	var emptyStateFriendRequestNode = BAEmptyStateFriendRequestsCellNode()
-	var displayMode: ChatDisplayMode = .sessions
+	var displayMode: ChatDisplayMode = .sessions//: ChatDisplayMode!
+	//var showEmptyState = false
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -86,16 +87,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
 		let item = indexPath.item
 		
-		// first item returns header
 		if (item == 0){
 			let headerNode = BAChatHeaderCellNode(with: displayMode)
 			headerNode.delegate = self
 			return headerNode
-		}
-		
-		// last item returns spacer
-		if (item == sessions.count + 1){
-			return BASpacerCellNode()
 		}
 		
 		if (displayMode == .requests){
@@ -119,9 +114,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
 		// gets item count (includes header)
 		if (displayMode == .requests){
-			rowCount = requests.count > 0 ? requests.count + 2 : 1
+			rowCount = requests.count > 0 ? requests.count + 1 : 1
 		} else if (displayMode == .sessions){
-			rowCount = sessions.count > 0 ? sessions.count + 2 : 1
+			rowCount = sessions.count > 0 ? sessions.count + 1 : 1
 		}
 		
 		displayEmptyState(rowCount)
@@ -155,13 +150,13 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode) {
 		displayMode = displayMode.next()
-
+		
 		// adds the header to the final count
 		var elementsToDisplay = 0
 		if (displayMode == .requests){
-			elementsToDisplay = requests.count > 0 ? requests.count + 2 : 1
+			elementsToDisplay = requests.count + 1
 		} else if (displayMode == .sessions){
-			elementsToDisplay = sessions.count > 0 ? sessions.count + 2 : 1
+			elementsToDisplay = sessions.count + 1
 		}
 		
 		// current row count

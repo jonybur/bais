@@ -15,8 +15,8 @@ class Event: NSObject{
 	var eventDescription = ""
 	var name = ""
 	var imageUrl = ""
-	var startTime = Date()
-	var endTime = Date()
+	var startTime = Date(timeIntervalSince1970: 0)
+	var endTime = Date(timeIntervalSince1970: 0)
 	var place = Place()
 	var status: RSVPStatus = .undefined
 	
@@ -31,26 +31,30 @@ class Event: NSObject{
 		if (startDateComponents.day != endDateComponents.day){
 			// September 30 - October 4
 			let startDateFormatter = DateFormatter()
-			startDateFormatter.dateFormat = "MMMM d '-' "
+			startDateFormatter.dateFormat = "MMMM d"
 			let startDateString = startDateFormatter.string(from: startTime as Date)
+			dateString = startDateString
 			
-			let endDateFormatter = DateFormatter()
-			endDateFormatter.dateFormat = "MMMM d"
-			let endDateString = endDateFormatter.string(from: endTime as Date)
-			
-			dateString = startDateString + endDateString
+			if (endTime != Date(timeIntervalSince1970: 0)){
+				let endDateFormatter = DateFormatter()
+				endDateFormatter.dateFormat = " '-' MMMM d"
+				let endDateString = endDateFormatter.string(from: endTime as Date)
+				dateString += endDateString
+			}
 			
 		} else {
 			// Saturday, September 14 at 3:00 PM - 4:00 PM
 			let startDateFormatter = DateFormatter()
-			startDateFormatter.dateFormat = "EEEE',' MMMM d 'at' h:mm a '-' "
+			startDateFormatter.dateFormat = "EEEE',' MMMM d 'at' h:mm a"
 			let startDateString = startDateFormatter.string(from: startTime as Date)
+			dateString = startDateString
 			
-			let endDateFormatter = DateFormatter()
-			endDateFormatter.dateFormat = "h:mm a"
-			let endDateString = endDateFormatter.string(from: endTime as Date)
-			
-			dateString = startDateString + endDateString
+			if (endTime != Date(timeIntervalSince1970: 0)){
+				let endDateFormatter = DateFormatter()
+				endDateFormatter.dateFormat = " '-' h:mm a"
+				let endDateString = endDateFormatter.string(from: endTime as Date)
+				dateString += endDateString
+			}
 		}
 		
 		return dateString

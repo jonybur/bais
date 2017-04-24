@@ -109,10 +109,17 @@ class WebService{
 							for data in datum{
 								if let event = data as? NSDictionary{
 									let parsedEvent = Event();
-									parsedEvent.startTime = self.stringToNSDate(event["start_time"] as! String);
-									parsedEvent.endTime = self.stringToNSDate(event["end_time"] as! String);
+									if (event.object(forKey: "end_time") != nil){
+										parsedEvent.endTime = self.stringToNSDate(event["end_time"] as! String);
+									}
+									
+									if (event.object(forKey: "description") != nil){
+										parsedEvent.eventDescription = event["description"] as! String;
+									}
+									if (event.object(forKey: "start_time") != nil){
+										parsedEvent.startTime = self.stringToNSDate(event["start_time"] as! String);
+									}
 									parsedEvent.id = event["id"] as! String;
-									parsedEvent.eventDescription = event["description"] as! String;
 									parsedEvent.name = event["name"] as! String;
 									parsedEvent.name = self.takeOutEventNameSuffix(eventName: parsedEvent.name)
 									
