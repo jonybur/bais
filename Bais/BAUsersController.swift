@@ -277,6 +277,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		let geoFire = GeoFire(firebaseRef: FirebaseService.locationsReference)
 		
 		observeUserLocation().then { userLocation -> Void in
+			// radius of CABA == 8 km
 			let kilometerRadius = 15.0
 			let query = geoFire?.query(at: userLocation, withRadius: kilometerRadius)
 			self.allUsers = [User]()
