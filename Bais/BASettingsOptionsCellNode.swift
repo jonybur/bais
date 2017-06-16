@@ -24,12 +24,13 @@ class BASettingsOptionsCellNode: ASCellNode{
 	/*
 	let contactUsNode = BASettingsHeaderElementCellNode(title: "Contact Us")
 	let helpAndSupportNode = BASettingsButtonElementCellNode(title: "Help & Support")
-	let aboutBaisNode = BASettingsButtonElementCellNode(title: "About the NGO")
+	let aboutBAISNode = BASettingsButtonElementCellNode(title: "About the NGO")
 
 	let spacerNode = BASettingsSpacerElementCellNode()
 	*/
 	
-	let shareBaisNode = BASettingsButtonElementCellNode(title: "Share BAIS")
+    let couponsBAISNode = BASettingsButtonElementCellNode(title: "My Coupons", notificationCount: 1)
+	let shareBAISNode = BASettingsButtonElementCellNode(title: "Share BAIS")
 	let feedbackNode = BASettingsButtonElementCellNode(title: "Give Us Feedback")
 	let spacerNode2 = BASettingsSpacerElementCellNode()
 	
@@ -50,7 +51,8 @@ class BASettingsOptionsCellNode: ASCellNode{
 	required override init() {
 		super.init()
 		
-		shareBaisNode.addTarget(self, action: #selector(sharePressed(_:)), forControlEvents: .touchUpInside)
+        couponsBAISNode.addTarget(self, action: #selector(couponsPressed(_:)), forControlEvents: .touchUpInside)
+		shareBAISNode.addTarget(self, action: #selector(sharePressed(_:)), forControlEvents: .touchUpInside)
 		feedbackNode.addTarget(self, action: #selector(feedbackPressed(_:)), forControlEvents: .touchUpInside)
 		privacyPolicyNode.addTarget(self, action: #selector(privacyPolicyPressed(_:)), forControlEvents: .touchUpInside)
 		termsServiceNode.addTarget(self, action: #selector(termsOfServicePressed(_:)), forControlEvents: .touchUpInside)
@@ -61,10 +63,11 @@ class BASettingsOptionsCellNode: ASCellNode{
 		/*
 		addSubnode(contactUsNode)
 		addSubnode(helpAndSupportNode)
-		addSubnode(aboutBaisNode)
+		addSubnode(aboutBAISNode)
 		*/
 		
-		addSubnode(shareBaisNode)
+        addSubnode(couponsBAISNode)
+		addSubnode(shareBAISNode)
 		addSubnode(feedbackNode)
 		addSubnode(legalNode)
 		addSubnode(privacyPolicyNode)
@@ -74,6 +77,10 @@ class BASettingsOptionsCellNode: ASCellNode{
 		//addSubnode(deleteAccountNode)
 	}
 	
+    func couponsPressed(_ sender: UIButton){
+        delegate?.settingsOptionsNodeDidClickShareButton()
+    }
+    
 	func sharePressed(_ sender: UIButton){
 		delegate?.settingsOptionsNodeDidClickShareButton()
 	}
@@ -107,9 +114,7 @@ class BASettingsOptionsCellNode: ASCellNode{
 		let verticalStack = ASStackLayoutSpec()
 		verticalStack.direction = .vertical
 		verticalStack.alignItems = .start
-		verticalStack.children = [/*contactUsNode, helpAndSupportNode, aboutBaisNode, spacerNode,*/ shareBaisNode, feedbackNode, spacerNode2,
-		                          legalNode, privacyPolicyNode, termsServiceNode, licensesNode, spacerNode3,
-		                          logoutNode, spacerNode4]//, deleteAccountNode, spacerNode5]
+		verticalStack.children = [/*contactUsNode, helpAndSupportNode, aboutBAISNode, spacerNode,*/couponsBAISNode, shareBAISNode, feedbackNode, spacerNode2, legalNode, privacyPolicyNode, termsServiceNode, licensesNode, spacerNode3, logoutNode, spacerNode4]//, deleteAccountNode, spacerNode5]
 		return verticalStack
 	}
 }

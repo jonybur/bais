@@ -13,8 +13,14 @@ class BALicensesButtonElementCellNode: BASettingsButtonElementCellNode{
 	var license = String()
 	var productName = String()
 	
-	convenience init(productName: String, license: String){
-		self.init(title: productName)
+    convenience init(productName: String, license: String){
+        self.init(title: productName, notificationCount: 0)
+        self.productName = productName
+        self.license = license
+    }
+    
+    convenience init(productName: String, license: String, notificationCount: Int){
+        self.init(title: productName, notificationCount: notificationCount)
 		self.productName = productName
 		self.license = license
 	}
