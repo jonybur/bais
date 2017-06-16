@@ -116,7 +116,19 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		if (displayMode == .requests){
 			rowCount = requests.count > 0 ? requests.count + 1 : 1
 		} else if (displayMode == .sessions){
-			rowCount = sessions.count > 0 ? sessions.count + 1 : 1
+            
+            if (sessions.count == 0){
+                return 1;
+            }
+			
+            let noMessagesCount = self.sessionCountWithNoMessages()
+            if (noMessagesCount > 0){
+                // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
+                rowCount = sessions.count - noMessagesCount + 2
+            } else {
+                rowCount = sessions.count + 1
+            }
+            
 		}
 		
 		displayEmptyState(rowCount)
@@ -125,6 +137,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		return rowCount
 	}
 	
+    func sessionCountWithNoMessages() -> Int{
+        var sessionCount = 0
+        for session in sessions{
+            sessionCount += session.lastMessage.timestamp == 0 ? 1 : 0
+        }
+        return sessionCount
+    }
+    
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		if (indexPath.item == 0 || displayMode == .sessions){
 			return false
