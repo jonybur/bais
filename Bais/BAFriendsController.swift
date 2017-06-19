@@ -75,6 +75,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			self.tableNode.deselectRow(at: indexPath, animated: true)
 			return
 		}
+        
+        if (indexPath.item == 1 && sessionListWithNoMessages().count > 0){
+            return
+        }
 		
 		// taps friend (opens chat)
 		let session = sessions[indexPath.item - 1]
@@ -100,6 +104,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			return chatNode
 		}
 		
+        let noMessagesSessions = sessionListWithNoMessages()
+        
+        if (item == 1 && noMessagesSessions.count > 0){
+            // should load horizontal chat list
+            // gets list of sessions that has no messages
+            return BAChatHorizontalScrollCellNode(with: noMessagesSessions)
+        }
+        
 		let session = sessions[item - 1]
 		let chatNode = BAChatCellNode(with: session)
 		return chatNode
@@ -121,7 +133,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                 return 1;
             }
 			
-            let noMessagesCount = self.sessionCountWithNoMessages()
+            let noMessagesCount = sessionListWithNoMessages().count
             if (noMessagesCount > 0){
                 // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
                 rowCount = sessions.count - noMessagesCount + 2
@@ -136,16 +148,20 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		// return normal count
 		return rowCount
 	}
-	
-    func sessionCountWithNoMessages() -> Int{
-        var sessionCount = 0
-        for session in sessions{
-            sessionCount += session.lastMessage.timestamp == 0 ? 1 : 0
-        }
-        return sessionCount
+    
+    func sessionListWithMessages() -> [Session]{
+        return self.sessions.filter ({ session -> Bool in
+            return session.lastMessage.timestamp != 0
+        })
     }
     
-	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func sessionListWithNoMessages() -> [Session]{
+        return self.sessions.filter ({ session -> Bool in
+            return session.lastMessage.timestamp == 0
+        })
+    }
+	
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		if (indexPath.item == 0 || displayMode == .sessions){
 			return false
 		}
@@ -179,7 +195,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             if (sessions.count == 0){
                 elementsToDisplay = 1;
             } else {
-                let noMessagesCount = self.sessionCountWithNoMessages()
+                let noMessagesCount = sessionListWithNoMessages().count
                 if (noMessagesCount > 0){
                     // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
                     elementsToDisplay = sessions.count - noMessagesCount + 2

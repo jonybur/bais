@@ -157,6 +157,7 @@
 		ABFA0B311D9A0CB000ED6C16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */; };
 		ABFC76E61E34995700B6498D /* BAUsersHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */; };
 		ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */; };
+		EB117F891EF7837600FB827F /* BAChatHorizontalScrollCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB117F881EF7837600FB827F /* BAChatHorizontalScrollCellNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -242,6 +243,7 @@
 		ABFA0B301D9A0CB000ED6C16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersHeaderCellNode.swift; sourceTree = "<group>"; };
 		ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendsController.swift; sourceTree = "<group>"; };
+		EB117F881EF7837600FB827F /* BAChatHorizontalScrollCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHorizontalScrollCellNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -454,6 +456,7 @@
 				AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */,
 				ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */,
 				AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */,
+				EB117F881EF7837600FB827F /* BAChatHorizontalScrollCellNode.swift */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -979,6 +982,7 @@
 			files = (
 				AB9DDD881E5C36430005E2DA /* BAChatNavigationBar.swift in Sources */,
 				AB4FD16A1DEBF90900612473 /* BAUsersCellNode.swift in Sources */,
+				EB117F891EF7837600FB827F /* BAChatHorizontalScrollCellNode.swift in Sources */,
 				AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */,
 				ABB617C31E4D986B00C1C43C /* BAEditProfileController.swift in Sources */,
 				AB18B3051E4C0D44001C294B /* BASettingsController.swift in Sources */,
