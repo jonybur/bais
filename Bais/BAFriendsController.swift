@@ -176,8 +176,19 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		if (displayMode == .requests){
 			elementsToDisplay = requests.count + 1
 		} else if (displayMode == .sessions){
-			elementsToDisplay = sessions.count + 1
-		}
+            if (sessions.count == 0){
+                elementsToDisplay = 1;
+            } else {
+                let noMessagesCount = self.sessionCountWithNoMessages()
+                if (noMessagesCount > 0){
+                    // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
+                    elementsToDisplay = sessions.count - noMessagesCount + 2
+                } else {
+                    elementsToDisplay = sessions.count + 1
+                }
+            }
+            
+        }
 		
 		// current row count
 		let tableRows = tableNode.numberOfRows(inSection: 0)
