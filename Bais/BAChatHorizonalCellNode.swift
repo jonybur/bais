@@ -2,14 +2,6 @@
 //  BAChatHorizonalCellNode.swift
 //  BAIS
 //
-//  Created by jbursztyn on 6/22/17.
-//  Copyright © 2017 Board Social, Inc. All rights reserved.
-//
-
-//
-//  BAChatHorizontalScrollCellNode.swift
-//  BAIS
-//
 //  Created by jbursztyn on 6/19/17.
 //  Copyright © 2017 Board Social, Inc. All rights reserved.
 //
@@ -49,7 +41,7 @@ class BAChatHorizonalCellNode: ASCellNode {
             let rect = CGRect(origin: CGPoint(0, 0), size: image.size)
             
             UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)
-            let maskPath = UIBezierPath(roundedRect: rect, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: 60, height: 60))
+            let maskPath = UIBezierPath(roundedRect: rect, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: 80, height: 80))
             maskPath.addClip()
             image.draw(in: rect)
             modifiedImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -62,7 +54,7 @@ class BAChatHorizonalCellNode: ASCellNode {
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let imagePlace = ASRatioLayoutSpec(ratio: 1, child: sessionNode)
-        imagePlace.style.maxWidth = ASDimension(unit: .points, value: 60)
-        return ASInsetLayoutSpec (insets: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 10), child: imagePlace)
+        imagePlace.style.preferredSize = CGSize(width: 80, height: 80)
+        return ASInsetLayoutSpec (insets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5), child: imagePlace)
     }
 }
