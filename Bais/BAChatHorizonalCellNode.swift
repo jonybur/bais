@@ -28,7 +28,7 @@ class BAChatHorizonalCellNode: ASCellNode {
         selectionStyle = .none
         
         self.session = session
-        let imageNode = ASNetworkImageNode()
+        
         var otherUser: User!
         for user in session.participants{
             if (user.id != FirebaseService.currentUserId){
@@ -41,10 +41,10 @@ class BAChatHorizonalCellNode: ASCellNode {
             return
         }
         
-        imageNode.setURL(URL(string: otherUser.profilePicture), resetToDefault: false)
-        imageNode.shouldRenderProgressImages = true
-        imageNode.contentMode = .scaleAspectFill
-        imageNode.imageModificationBlock = { image in
+        sessionNode.setURL(URL(string: otherUser.profilePicture), resetToDefault: false)
+        sessionNode.shouldRenderProgressImages = true
+        sessionNode.contentMode = .scaleAspectFill
+        sessionNode.imageModificationBlock = { image in
             var modifiedImage: UIImage!
             let rect = CGRect(origin: CGPoint(0, 0), size: image.size)
             
@@ -57,18 +57,12 @@ class BAChatHorizonalCellNode: ASCellNode {
             return modifiedImage
         }
         
-        self.addSubnode(imageNode)
+        self.addSubnode(sessionNode)
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        
-        var ratios = [ASRatioLayoutSpec]()
-        
-        // imagen
         let imagePlace = ASRatioLayoutSpec(ratio: 1, child: sessionNode)
         imagePlace.style.maxWidth = ASDimension(unit: .points, value: 60)
-        ratios.append(imagePlace)
-        
         return ASInsetLayoutSpec (insets: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 10), child: imagePlace)
     }
 }

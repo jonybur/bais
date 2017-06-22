@@ -10,26 +10,25 @@ import Foundation
 import AsyncDisplayKit
 import DGActivityIndicatorView
 
-class BAChatHorizonalController: UIViewController, MosaicCollectionViewLayoutDelegate, ASCollectionDataSource, ASCollectionDelegate {
+class BAChatHorizonalController: UIViewController, ASCollectionDataSource, ASCollectionDelegate {
     
     let _collectionNode: ASCollectionNode!
-    let _layoutInspector = MosaicCollectionViewLayoutInspector()
     var sessions: [Session]!
     
     required init(with sessions: [Session]) {
         self.sessions = sessions;
-        let layout = MosaicCollectionViewLayout(startsAt: 10)
-        layout.numberOfColumns = 1
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
         _collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
         super.init(nibName: nil, bundle: nil)
-        layout.delegate = self
         
         extendedLayoutIncludesOpaqueBars = true
         
         _collectionNode.dataSource = self
         _collectionNode.delegate = self
-        _collectionNode.view.layoutInspector = _layoutInspector
-        _collectionNode.backgroundColor = ColorPalette.blue
+        _collectionNode.backgroundColor = ColorPalette.white
+        _collectionNode.view.showsHorizontalScrollIndicator = false
+        _collectionNode.view.showsVerticalScrollIndicator = false
         _collectionNode.view.isScrollEnabled = true
         _collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
     }
@@ -63,12 +62,6 @@ class BAChatHorizonalController: UIViewController, MosaicCollectionViewLayoutDel
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
         return ASCellNode()
-    }
-    
-    //MARK: - MosaicCollectionViewLayoutDelegate delegate methods
-    
-    internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
-        return CGSize(width: 1, height: 0.6)
     }
     
     //MARK: - Dealloc

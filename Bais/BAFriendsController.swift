@@ -113,10 +113,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             let node = ASCellNode(viewControllerBlock: { () -> UIViewController in
                 let sessionsWithNoMessages = self.sessionListWithNoMessages()
                 let tasty = BAChatHorizonalController(with: sessionsWithNoMessages)
-                tasty.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: ez.screenWidth, height: 200))
+                tasty.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: ez.screenWidth, height: 100))
                 return tasty
             }, didLoad: nil)
-            node.style.preferredSize = CGSize(width: ez.screenWidth, height: 200)
+            node.style.preferredSize = CGSize(width: ez.screenWidth, height: 100)
             
             return node;
         }
