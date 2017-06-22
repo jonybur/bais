@@ -109,7 +109,16 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
         if (item == 1 && noMessagesSessions.count > 0){
             // should load horizontal chat list
             // gets list of sessions that has no messages
-            return BAChatHorizontalScrollCellNode(with: noMessagesSessions)
+            
+            let node = ASCellNode(viewControllerBlock: { () -> UIViewController in
+                let sessionsWithNoMessages = self.sessionListWithNoMessages()
+                let tasty = BAChatHorizonalController(with: sessionsWithNoMessages)
+                tasty.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: ez.screenWidth, height: 200))
+                return tasty
+            }, didLoad: nil)
+            node.style.preferredSize = CGSize(width: ez.screenWidth, height: 200)
+            
+            return node;
         }
         
 		let session = sessions[item - 1]

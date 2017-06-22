@@ -161,7 +161,7 @@ class BAUsersCellNode: ASCellNode {
 	func setFriendshipAction(){
 		switch (user.friendshipStatus){
 			case .accepted:
-				setButtonTitle("Chat")
+				setButtonTitle("Chat", ColorPalette.orange)
 				break;
 			case .invitationSent:
 				setButtonTitle("Invite sent")
@@ -174,8 +174,12 @@ class BAUsersCellNode: ASCellNode {
 				break;
 		}
 	}
+    
+    func setButtonTitle(_ title: String, _ color: UIColor){
+        self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: color, for: [])
+    }
 	
 	func setButtonTitle(_ title: String){
-		self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+		self.setButtonTitle(title, ColorPalette.grey)
 	}
 }

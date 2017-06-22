@@ -53,7 +53,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
+        
 		navigationController!.interactivePopGestureRecognizer!.isEnabled = true
 		navigationController!.interactivePopGestureRecognizer!.delegate =  self
 	}

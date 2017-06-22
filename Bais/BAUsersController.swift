@@ -285,7 +285,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 			// if a user enters the range, add to list
 			query?.observe(.keyEntered, with: { (key: String?, location: CLLocation?) in
 				if (key == FirebaseService.currentUserId){
-					return
+                    return
 				}
 				
 				self.getUserByKey(key!).then(execute: { user -> Promise<User> in
