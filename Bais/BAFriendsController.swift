@@ -79,8 +79,16 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             return
         }
 		
+        // ignore last item in table (last item is a spacer)
+        if (indexPath.item == tableNode.numberOfRows(inSection: 0) - 1){
+            return
+        }
+        
 		// taps friend (opens chat)
-		let session = sessions[indexPath.item - 1]
+        // TODO: improve this method
+        let sessionsToLoad = sessionListWithMessages()
+        let rowsDelta = tableNode.numberOfRows(inSection: 0) - sessionsToLoad.count - 1
+		let session = sessionsToLoad[indexPath.item - rowsDelta]
 		self.navigationController?.pushViewController(BAChatController(with: session), animated: true)
 		self.tableNode.deselectRow(at: indexPath, animated: true)
 	}
