@@ -13,7 +13,6 @@ import pop
 // add a delegate here to be able switch modes
 class BACalendarHeaderCellNode: ASCellNode {
 	let nameNode = ASTextNode()
-	var blockButton: Bool = false
 	
 	required override init() {
 		super.init()

@@ -158,6 +158,8 @@
 		ABFC76E61E34995700B6498D /* BAUsersHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */; };
 		ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */; };
 		EB117F891EF7837600FB827F /* BAChatHorizonalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB117F881EF7837600FB827F /* BAChatHorizonalController.swift */; };
+		EB30F1E51F0097EE002F04BC /* BAChatHorizontalHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB30F1E41F0097EE002F04BC /* BAChatHorizontalHeaderCellNode.swift */; };
+		EB30F1E71F00A20E002F04BC /* BAChatVerticalHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB30F1E61F00A20E002F04BC /* BAChatVerticalHeaderCellNode.swift */; };
 		EB8107411EFC5601004548E0 /* BAChatHorizonalCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8107401EFC5601004548E0 /* BAChatHorizonalCellNode.swift */; };
 /* End PBXBuildFile section */
 
@@ -245,6 +247,8 @@
 		ABFC76E51E34995700B6498D /* BAUsersHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAUsersHeaderCellNode.swift; sourceTree = "<group>"; };
 		ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAFriendsController.swift; sourceTree = "<group>"; };
 		EB117F881EF7837600FB827F /* BAChatHorizonalController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHorizonalController.swift; sourceTree = "<group>"; };
+		EB30F1E41F0097EE002F04BC /* BAChatHorizontalHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHorizontalHeaderCellNode.swift; sourceTree = "<group>"; };
+		EB30F1E61F00A20E002F04BC /* BAChatVerticalHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatVerticalHeaderCellNode.swift; sourceTree = "<group>"; };
 		EB8107401EFC5601004548E0 /* BAChatHorizonalCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAChatHorizonalCellNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -457,9 +461,11 @@
 			isa = PBXGroup;
 			children = (
 				AB9B5BA91E347733001A9085 /* BAChatHeaderCellNode.swift */,
-				ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */,
 				AB75EDCB1E3C678900078C66 /* BAFriendRequestCellNode.swift */,
 				EB8107401EFC5601004548E0 /* BAChatHorizonalCellNode.swift */,
+				ABA9C3741E307B0300DE5F56 /* BAChatCellNode.swift */,
+				EB30F1E41F0097EE002F04BC /* BAChatHorizontalHeaderCellNode.swift */,
+				EB30F1E61F00A20E002F04BC /* BAChatVerticalHeaderCellNode.swift */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -1030,10 +1036,12 @@
 				ABB9F2DF1D9170C600E01511 /* Utilities.swift in Sources */,
 				AB18B30D1E4C1917001C294B /* BASettingsHeaderElementCellNode.swift in Sources */,
 				AB3F76A41E4975C800AF5C45 /* BAEventController.swift in Sources */,
+				EB30F1E71F00A20E002F04BC /* BAChatVerticalHeaderCellNode.swift in Sources */,
 				ABCBDA461DA78B670001AC59 /* BAProfileController.swift in Sources */,
 				AB18B30B1E4C1812001C294B /* BASettingsOptionsCellNode.swift in Sources */,
 				ABF50ACC1DEA7651004CB6E8 /* BAUsersController.swift in Sources */,
 				ABB9F2EF1D9170C600E01511 /* Event.swift in Sources */,
+				EB30F1E51F0097EE002F04BC /* BAChatHorizontalHeaderCellNode.swift in Sources */,
 				ABB9F2EA1D9170C600E01511 /* BAChatController.swift in Sources */,
 				ABB9F2F81D9170C600E01511 /* InstagramVideo.swift in Sources */,
 				AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */,

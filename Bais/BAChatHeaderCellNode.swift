@@ -69,7 +69,7 @@ class BAChatHeaderCellNode: ASCellNode {
 		
 		switch (mode) {
 		case .sessions:
-			nameNode.attributedText = NSAttributedString(string: "My Messages", attributes: nameAttributes)
+			nameNode.attributedText = NSAttributedString(string: "My Friends", attributes: nameAttributes)
 			buttonNode.setImage(UIImage(named:"invites-button"), for: [])
 			break
 		case .requests:

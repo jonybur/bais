@@ -32,8 +32,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	var requests = [User]()
 	var emptyStateMessagesNode = BAEmptyStateMessagesCellNode()
 	var emptyStateFriendRequestNode = BAEmptyStateFriendRequestsCellNode()
-	var displayMode: ChatDisplayMode = .sessions//: ChatDisplayMode!
-	//var showEmptyState = false
+	var displayMode: ChatDisplayMode = .sessions
 	
 	var tableNode: ASTableNode {
 		return node as! ASTableNode
@@ -106,19 +105,25 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
         let noMessagesSessions = sessionListWithNoMessages()
         
-        if (item == 1 && noMessagesSessions.count > 0){
+        if (noMessagesSessions.count > 0){
             // should load horizontal chat list
             // gets list of sessions that has no messages
             
-            let node = ASCellNode(viewControllerBlock: { () -> UIViewController in
-                let sessionsWithNoMessages = self.sessionListWithNoMessages()
-                let tasty = BAChatHorizonalController(with: sessionsWithNoMessages)
-                tasty.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: ez.screenWidth, height: 100))
-                return tasty
-            }, didLoad: nil)
-            node.style.preferredSize = CGSize(width: ez.screenWidth, height: 100)
-            
-            return node;
+            if (item == 1){
+                return BAChatHorizontalHeaderCellNode()
+            } else if (item == 2){
+                let node = ASCellNode(viewControllerBlock: { () -> UIViewController in
+                    let sessionsWithNoMessages = self.sessionListWithNoMessages()
+                    let tasty = BAChatHorizonalController(with: sessionsWithNoMessages)
+                    tasty.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: ez.screenWidth, height: 130))
+                    return tasty
+                }, didLoad: nil)
+                node.style.preferredSize = CGSize(width: ez.screenWidth, height: 130)
+                
+                return node;
+            } else if (item == 3){
+                return BAChatVerticalHeaderCellNode()
+            }
         }
         
 		let session = sessions[item - 1]
@@ -145,7 +150,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             let noMessagesCount = sessionListWithNoMessages().count
             if (noMessagesCount > 0){
                 // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
-                rowCount = sessions.count - noMessagesCount + 2
+                rowCount = sessions.count - noMessagesCount + 2 + 1 + 1 /* for New Friends header, testing */
             } else {
                 rowCount = sessions.count + 1
             }
@@ -207,8 +212,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                 let noMessagesCount = sessionListWithNoMessages().count
                 if (noMessagesCount > 0){
                     // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
-                    elementsToDisplay = sessions.count - noMessagesCount + 2
+                    elementsToDisplay = sessions.count - noMessagesCount + 2 + 1 + 1 /* for New Friends Header, testing */
                 } else {
+                    // no horizontal scrolling list
                     elementsToDisplay = sessions.count + 1
                 }
             }

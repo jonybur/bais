@@ -19,7 +19,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	ASCollectionDataSource, ASCollectionDelegate, BACalendarCellNodeDelegate, WebServiceDelegate {
 	
 	var _contentToDisplay = [Event]()
-	let _collectionNode: ASCollectionNode!
+	let collectionNode: ASCollectionNode!
 	let webService = WebService()
 	let _layoutInspector = MosaicCollectionViewLayoutInspector()
 	let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
@@ -29,7 +29,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	init (){
 		let layout = MosaicCollectionViewLayout(startsAt: 10)
 		layout.numberOfColumns = 1
-		_collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
+		collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
 		super.init(nibName: nil, bundle: nil)
 		layout.delegate = self
 		
@@ -40,12 +40,12 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 		
 		extendedLayoutIncludesOpaqueBars = true
 		
-		_collectionNode.dataSource = self
-		_collectionNode.delegate = self
-		_collectionNode.view.layoutInspector = _layoutInspector
-		_collectionNode.backgroundColor = ColorPalette.white
-		_collectionNode.view.isScrollEnabled = true
-		_collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
+		collectionNode.dataSource = self
+		collectionNode.delegate = self
+		collectionNode.view.layoutInspector = _layoutInspector
+		collectionNode.backgroundColor = ColorPalette.white
+		collectionNode.view.isScrollEnabled = true
+		collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
 	}
 	
 	required init(coder: NSCoder) {
@@ -54,7 +54,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.view.addSubnode(_collectionNode!)
+		self.view.addSubnode(collectionNode!)
 		self.view.addSubview(activityIndicatorView!)
 		
 		activityIndicatorView?.startAnimating()
@@ -64,7 +64,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	}
 
 	override func viewWillLayoutSubviews() {
-		_collectionNode.frame = self.view.bounds
+		collectionNode.frame = self.view.bounds
 	}
 	
 	func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
@@ -103,8 +103,8 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 			webService.getRSVPStatus(of: event)
 		}
 		
-		_collectionNode.insertItems(at: idxToInsert)
-		_collectionNode.reloadItems(at: idxToInsert)
+		collectionNode.insertItems(at: idxToInsert)
+		collectionNode.reloadItems(at: idxToInsert)
 		activityIndicatorView?.removeFromSuperview()
 	}
 	
@@ -112,7 +112,7 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 		for (idx, event) in _contentToDisplay.enumerated(){
 			if(event.id == eventId){
 				event.status = status
-				_collectionNode.reloadItems(at: [IndexPath(item: idx, section: 0)])
+				collectionNode.reloadItems(at: [IndexPath(item: idx, section: 0)])
 				return
 			}
 		}
@@ -208,8 +208,8 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 //MARK: - Dealloc
 	
 	deinit {
-		_collectionNode.dataSource = nil
-		_collectionNode.delegate = nil
+		collectionNode.dataSource = nil
+		collectionNode.delegate = nil
 	}
 }
 

@@ -12,25 +12,28 @@ import DGActivityIndicatorView
 
 class BAChatHorizonalController: UIViewController, ASCollectionDataSource, ASCollectionDelegate {
     
-    let _collectionNode: ASCollectionNode!
-    var sessions: [Session]!
+    let collectionNode: ASCollectionNode!
+    var sessions = [Session]()
     
     required init(with sessions: [Session]) {
+        
         self.sessions = sessions;
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        _collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
+        layout.sectionHeadersPinToVisibleBounds = true
+        collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
         super.init(nibName: nil, bundle: nil)
         
         extendedLayoutIncludesOpaqueBars = true
         
-        _collectionNode.dataSource = self
-        _collectionNode.delegate = self
-        _collectionNode.backgroundColor = ColorPalette.white
-        _collectionNode.view.showsHorizontalScrollIndicator = false
-        _collectionNode.view.showsVerticalScrollIndicator = false
-        _collectionNode.view.isScrollEnabled = true
-        _collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
+        collectionNode.dataSource = self
+        collectionNode.delegate = self
+        collectionNode.backgroundColor = ColorPalette.white
+        collectionNode.view.showsHorizontalScrollIndicator = false
+        collectionNode.view.showsVerticalScrollIndicator = false
+        collectionNode.view.isScrollEnabled = true
+        collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
     }
     
     required init(coder: NSCoder) {
@@ -39,11 +42,11 @@ class BAChatHorizonalController: UIViewController, ASCollectionDataSource, ASCol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubnode(_collectionNode!)
+        self.view.addSubnode(collectionNode!)
     }
     
     override func viewWillLayoutSubviews() {
-        _collectionNode.frame = self.view.bounds
+        collectionNode.frame = self.view.bounds
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
@@ -51,7 +54,7 @@ class BAChatHorizonalController: UIViewController, ASCollectionDataSource, ASCol
         let chatHorizontalCellNode = BAChatHorizonalCellNode(with: session)
         return chatHorizontalCellNode
     }
-    
+
     func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
         return 1
     }
@@ -60,15 +63,11 @@ class BAChatHorizonalController: UIViewController, ASCollectionDataSource, ASCol
         return sessions.count
     }
     
-    func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-        return ASCellNode()
-    }
-    
     //MARK: - Dealloc
     
     deinit {
-        _collectionNode.dataSource = nil
-        _collectionNode.delegate = nil
+        collectionNode.dataSource = nil
+        collectionNode.delegate = nil
     }
 }
 

@@ -13,6 +13,7 @@ class BAChatHorizonalCellNode: ASCellNode {
     
     var session: Session!
     var sessionNode = ASNetworkImageNode()
+    let nameNode = ASTextNode()
     
     required init(with session: Session) {
         super.init()
@@ -49,12 +50,29 @@ class BAChatHorizonalCellNode: ASCellNode {
             return modifiedImage
         }
         
-        self.addSubnode(sessionNode)
+        
+        let nameAttributes = [
+            NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium),
+            NSForegroundColorAttributeName: ColorPalette.grey]
+        
+        nameNode.attributedText = NSAttributedString(string: otherUser.firstName, attributes: nameAttributes)
+        
+        addSubnode(sessionNode)
+        addSubnode(nameNode)
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        
         let imagePlace = ASRatioLayoutSpec(ratio: 1, child: sessionNode)
         imagePlace.style.preferredSize = CGSize(width: 80, height: 80)
-        return ASInsetLayoutSpec (insets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 5), child: imagePlace)
+        
+        // vertical stack
+        let verticalStack = ASStackLayoutSpec()
+        verticalStack.direction = .vertical
+        verticalStack.alignItems = .center
+        verticalStack.children = [imagePlace, nameNode]
+        verticalStack.spacing = 5
+        
+        return ASInsetLayoutSpec (insets: UIEdgeInsets(top: 0, left: 15, bottom: 5, right: 0), child: verticalStack)
     }
 }
