@@ -126,14 +126,27 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             }
         }
         
-		let session = sessions[item - 1]
-		let chatNode = BAChatCellNode(with: session)
-		return chatNode
+        // TODO: improve this method
+        let sessionsToLoad = sessionListWithMessages()
+        // TODO: make this work with other variable of headers (4 is current)
+        let idx = item - 4
+        if (sessionsToLoad.count > idx){
+            let session = sessionsToLoad[idx]
+            let chatNode = BAChatCellNode(with: session)
+            return chatNode
+        }
+        
+		return BASpacerCellNode()
 	}
 	
 	func numberOfSections(in tableNode: ASTableNode) -> Int {
 		return 1
 	}
+    
+    func rowCountForSessionsAndNoMessages() -> Int{
+        let noMessagesCount = sessionListWithNoMessages().count
+        return sessions.count - noMessagesCount + 2 + 1 + 1 /*header for new friends*/ + 1 /*header for messages*/
+    }
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
 		var rowCount = 0
@@ -150,7 +163,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             let noMessagesCount = sessionListWithNoMessages().count
             if (noMessagesCount > 0){
                 // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
-                rowCount = sessions.count - noMessagesCount + 2 + 1 + 1 /* for New Friends header, testing */
+                rowCount = rowCountForSessionsAndNoMessages()
             } else {
                 rowCount = sessions.count + 1
             }
@@ -212,7 +225,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                 let noMessagesCount = sessionListWithNoMessages().count
                 if (noMessagesCount > 0){
                     // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
-                    elementsToDisplay = sessions.count - noMessagesCount + 2 + 1 + 1 /* for New Friends Header, testing */
+                    elementsToDisplay = rowCountForSessionsAndNoMessages()
                 } else {
                     // no horizontal scrolling list
                     elementsToDisplay = sessions.count + 1

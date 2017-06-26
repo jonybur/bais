@@ -277,8 +277,8 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		let geoFire = GeoFire(firebaseRef: FirebaseService.locationsReference)
 		
 		observeUserLocation().then { userLocation -> Void in
-			// radius of CABA == 8 km
-			let kilometerRadius = 15.0
+			// first step
+			let kilometerRadius = 0.5
 			let query = geoFire?.query(at: userLocation, withRadius: kilometerRadius)
 			self.allUsers = [User]()
 			
@@ -287,7 +287,6 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 				if (key == FirebaseService.currentUserId){
                     return
 				}
-				
 				self.getUserByKey(key!).then(execute: { user -> Promise<User> in
 					return self.getFriendshipStatusFor(user: user)
 				}).then(execute: { user -> Void in
@@ -295,9 +294,25 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 					self.activityIndicatorView?.stopAnimating()
 				}).catch(execute: { _ in })
 			})
+            
+            // steps through radius size
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3)) {
+                query?.radius = 2.0
+            }
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(6)) {
+                query?.radius = 15.0
+            }
+            /*
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(12)) {
+                query?.radius = 10.0
+            }
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(15)) {
+                query?.radius = 15.0
+            }
+            */
 		}.catch { _ in }
 	}
-	
+    
 	private func observeFriends(){
 		let userId = FirebaseService.currentUserId
 		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")

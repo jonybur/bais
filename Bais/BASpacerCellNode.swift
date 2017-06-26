@@ -14,6 +14,7 @@ class BASpacerCellNode: ASCellNode {
 	
 	override init() {
 		super.init()
+        self.selectionStyle = .none
 	}
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

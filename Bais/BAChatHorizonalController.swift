@@ -51,7 +51,15 @@ class BAChatHorizonalController: UIViewController, ASCollectionDataSource, ASCol
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
         let session = sessions[indexPath.item]
-        let chatHorizontalCellNode = BAChatHorizonalCellNode(with: session)
+        
+        var mode: ChatHorizonalCellNodeMode = .center
+        if (indexPath.item == 0){
+            mode = .leftMost
+        } else if (indexPath.item == sessions.count - 1) {
+            mode = .rightMost
+        }
+        
+        let chatHorizontalCellNode = BAChatHorizonalCellNode(with: session, mode: mode)
         return chatHorizontalCellNode
     }
 
