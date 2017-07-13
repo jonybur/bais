@@ -1,7 +1,7 @@
 platform :ios, '10.0'
 use_frameworks!
 
-target 'Bais' do
+target 'BAIS' do
   swift_version = "3.0"
 
   # developer tools
