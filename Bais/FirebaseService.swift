@@ -384,7 +384,8 @@ class FirebaseService{
 			[currentUserId: true,
 			 friendId: true]
 		let value = [
-			"participants": users
+			"participants": users,
+			"started": FIRServerValue.timestamp()
 		] as [String : Any]
 		let sessionRef = sessionsReference.childByAutoId()
 		sessionRef.updateChildValues(value)
@@ -474,6 +475,7 @@ class FirebaseService{
 							"email": email,
 							"country_code": "",
 							"about": "",
+							"registered": FIRServerValue.timestamp(),
 							"badge_count": 0
 						] as [String : Any]
 						itemRef.updateChildValues(userItem)
