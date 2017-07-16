@@ -123,7 +123,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             } else if (item == 2){
                 let node = ASCellNode(viewControllerBlock: { () -> UIViewController in
                     let sessionsWithNoMessages = self.sessionListWithNoMessages()
-                    let chatHorizontalController = BAChatHorizontalController(with: sessionsWithNoMessages)
+                    let chatHorizontalController = BAChatHorizonalController(with: sessionsWithNoMessages)
                     chatHorizontalController.superNavigationController = self.navigationController
                     chatHorizontalController.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: ez.screenWidth, height: 130))
                     return chatHorizontalController
