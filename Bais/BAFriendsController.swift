@@ -28,7 +28,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	
 	// change this to one user array _usersToDisplay with two pointer arrays sessions and requests
 	// also, change this to dictionaries String:User
-	var sessions = [Session]()
+    var sessions = [Session]()
+    var sessionsWithMessages = [Session]()
 	var requests = [User]()
 	var emptyStateMessagesNode = BAEmptyStateMessagesCellNode()
 	var emptyStateFriendRequestNode = BAEmptyStateFriendRequestsCellNode()
@@ -122,9 +123,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             } else if (item == 2){
                 let node = ASCellNode(viewControllerBlock: { () -> UIViewController in
                     let sessionsWithNoMessages = self.sessionListWithNoMessages()
-                    let tasty = BAChatHorizonalController(with: sessionsWithNoMessages)
-                    tasty.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: ez.screenWidth, height: 130))
-                    return tasty
+                    let chatHorizontalController = BAChatHorizontalController(with: sessionsWithNoMessages)
+                    chatHorizontalController.superNavigationController = self.navigationController
+                    chatHorizontalController.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: ez.screenWidth, height: 130))
+                    return chatHorizontalController
                 }, didLoad: nil)
                 node.style.preferredSize = CGSize(width: ez.screenWidth, height: 130)
                 
@@ -134,8 +136,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             }
         }
         
-        // TODO: improve this method
-        let sessionsToLoad = sessionListWithMessages()
+        let sessionsToLoad = sessionsWithMessages
         // TODO: make this work with other variable of headers (4 is current)
         let idx = item - 4
         if (sessionsToLoad.count > idx){
@@ -185,15 +186,19 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
     
     func sessionListWithMessages() -> [Session]{
-        return self.sessions.filter ({ session -> Bool in
+        let messagesSessions = self.sessions.filter ({ session -> Bool in
             return session.lastMessage.timestamp != 0
         })
+        return messagesSessions.sorted(by: { $0.lastMessage.timestamp > $1.lastMessage.timestamp })
     }
     
     func sessionListWithNoMessages() -> [Session]{
         return self.sessions.filter ({ session -> Bool in
             return session.lastMessage.timestamp == 0
         })
+        
+        // should sort by creation date
+        //return sessions.sorted(by: { $0.lastMessage.timestamp > $1.lastMessage.timestamp })
     }
 	
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -364,13 +369,13 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			// adds to screen
 			FirebaseService.getSession(from: snapshot.key).then(execute: { session -> Void in
 				guard let unreadCount = sessionValues["unread_count"] as? Int else { return }
-				session.unreadCount = unreadCount
-				self.observeLastMessage(of: session.id)
-				self.sessions.append(session)
+                session.unreadCount = unreadCount
+                self.sessions.append(session)
+				self.observeLastMessage(of: session)
 				if(self.displayMode == .sessions){
 					// add new row to section
-					let idxPath = IndexPath(row: self.sessions.count, section: 0)
-					self.tableNode.insertRows(at: [idxPath], with: .fade)
+					//let idxPath = IndexPath(row: self.sessions.count, section: 0)
+					//self.tableNode.insertRows(at: [idxPath], with: .fade)
 				}
 			}).catch(execute: { _ in })
 		}
@@ -424,35 +429,68 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 	}
 
-	private func observeLastMessage(of sessionId: String){
+	private func observeLastMessage(of session: Session){
 		// queries to last message
-		let messageQuery = FirebaseService.sessionsReference.child(sessionId).child("messages").queryLimited(toLast: 1)
+		let messageQuery = FirebaseService.sessionsReference.child(session.id).child("messages").queryLimited(toLast: 1)
+        
 		messageQuery.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
-			
+            
 			if let messageDictionary = snapshot.value as? NSDictionary{
 				
 				let text = messageDictionary["text"] as! String
 				let senderId = messageDictionary["sender_id"] as! String
 				let message = Message(text: text, senderId: senderId)
 				message.timestamp = messageDictionary["timestamp"] as! CGFloat
-				
-				for session in self.sessions{
-					if (session.id == sessionId){
-						session.lastMessage = message
-						// reloads rows that have been swapped
-						
-						// TODO: optimize this (only swap selected rows)
-						self.sessions = self.sessions.sorted(by: { $0.lastMessage.timestamp > $1.lastMessage.timestamp })
-						
-						// TODO: optimize this (reload rows until lowest row that has to be updated)
-						var idxPaths = [IndexPath]()
-						for idx in 1...self.sessions.count{
-							idxPaths.append(IndexPath(item: idx, section: 0))
-						}
-						self.tableNode.reloadRows(at: idxPaths, with: .fade)
-						return
-					}
-				}
+                
+                // if session didnt have messages (or first time retrieving)
+                if (!self.sessionsWithMessages.contains(where: { s -> Bool in session.id == s.id})){
+                    self.sessionsWithMessages.append(session)
+                    
+                    print("N OF ROWS " + String(self.tableNode.numberOfRows(inSection: 0)))
+                    // should add row
+                    //let idxPath = IndexPath(row: self.sessionsWithMessages.count + 4, section: 0)
+                    //self.tableNode.insertRows(at: [idxPath], with: .fade)
+                }
+                
+                // sort to have ordered timestamps
+                self.sessionsWithMessages = self.sessionsWithMessages.sorted(by: { $0.lastMessage.timestamp > $1.lastMessage.timestamp })
+                
+                // TODO: no need for this when sessions become a dictionary
+                for (idx, s) in self.sessions.enumerated() {
+                    if (s.id == session.id){
+                        s.lastMessage = message;
+                        self.sessions[idx] = s;
+                    }
+                }
+                
+                
+                
+                /*
+                var idxPaths = [IndexPath]()
+                for idx in 1...self.tableNode.numberOfRows(inSection: 0) - 1{
+                    idxPaths.append(IndexPath(item: idx, section: 0))
+                }
+                self.tableNode.reloadRows(at: idxPaths, with: .fade)
+                */
+                
+                //self.tableNode.reloadRows(at: , with: )
+                
+				/*
+                let sessionsWithMessages = self.sessionListWithMessages()
+                for session in sessionsWithMessages{
+                    if (session.id == sessionId){
+                        session.lastMessage = message
+                        
+                        // TODO: optimize this (reload rows until lowest row that has to be updated)
+                        var idxPaths = [IndexPath]()
+                        for idx in 1...self.sessions.count{
+                            idxPaths.append(IndexPath(item: idx, section: 0))
+                        }
+                        self.tableNode.reloadRows(at: idxPaths, with: .fade)
+                        return
+                    }
+                }
+                */
 			}
 		}
 	}
