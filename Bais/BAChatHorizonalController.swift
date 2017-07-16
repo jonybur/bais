@@ -14,6 +14,7 @@ class BAChatHorizonalController: UIViewController, ASCollectionDataSource, ASCol
     
     let collectionNode: ASCollectionNode!
     var sessions = [Session]()
+    var superNavigationController: UINavigationController?
     
     required init(with sessions: [Session]) {
         
@@ -47,6 +48,11 @@ class BAChatHorizonalController: UIViewController, ASCollectionDataSource, ASCol
     
     override func viewWillLayoutSubviews() {
         collectionNode.frame = self.view.bounds
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        let session = sessions[indexPath.item]
+        superNavigationController?.pushViewController(BAChatController(with: session), animated: true)
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
