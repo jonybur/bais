@@ -248,17 +248,6 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		collectionNode.reloadItems(at: idxToReload)
 	}
 	
-	/*
-	private func removeUserAndReloadCollection(userId: String){
-		for (idx, user) in self.allUsers.enumerated(){
-			if (user.id == userId){
-				self.allUsers.remove(at: idx)
-				return
-			}
-		}
-	}
-	*/
-	
 	// improve performance of this
 	private func addUserToOrderedArray(user: User) -> Int{
 		for (idx, usr) in allUsers.enumerated(){
@@ -278,7 +267,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		
 		observeUserLocation().then { userLocation -> Void in
 			// first step
-			let kilometerRadius = 0.5
+			let kilometerRadius = 15.0//0.5
 			let query = geoFire?.query(at: userLocation, withRadius: kilometerRadius)
 			self.allUsers = [User]()
 			
@@ -296,12 +285,13 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 			})
             
             // steps through radius size
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3)) {
+            /*DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3)) {
                 query?.radius = 2.0
             }
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(6)) {
                 query?.radius = 15.0
             }
+            */
             /*
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(12)) {
                 query?.radius = 10.0
