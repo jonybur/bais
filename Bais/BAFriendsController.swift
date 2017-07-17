@@ -153,8 +153,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
     
     func rowCountForSessionsAndNoMessages() -> Int{
-        let noMessagesCount = sessionListWithNoMessages().count
-        return sessions.count - noMessagesCount + 2 + 1 + 1 /*header for new friends*/ + 1 /*header for messages*/
+        return sessionsWithMessages.count + 2 + 1 /*header for new friends*/ + 1 /*header for messages*/ + 1 /*spacer*/
     }
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
@@ -164,7 +163,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		if (displayMode == .requests){
 			rowCount = requests.count > 0 ? requests.count + 1 : 1
 		} else if (displayMode == .sessions){
-            
             if (sessions.count == 0){
                 return 1;
             }
@@ -174,9 +172,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                 // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
                 rowCount = rowCountForSessionsAndNoMessages()
             } else {
-                rowCount = sessions.count + 1
+                rowCount = sessionsWithMessages.count + 1
             }
-            
 		}
 		
 		displayEmptyState(rowCount)
@@ -428,6 +425,23 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			displayMode = .sessions
 		}
 	}
+    
+    func reloadActiveRows(){
+        let noMessagesCount = sessionListWithNoMessages().count
+        if (noMessagesCount > 0){
+            // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
+            // refreshes rows
+            
+            var idxPaths = [IndexPath]()
+            for idx in 3...self.tableNode.numberOfRows(inSection: 0) - 1{
+                idxPaths.append(IndexPath(item: idx, section: 0))
+            }
+            self.tableNode.reloadRows(at: idxPaths, with: .fade)
+            
+        } else {
+            //rowCount = sessionsWithMessages.count + 1
+        }
+    }
 
 	private func observeLastMessage(of session: Session){
 		// queries to last message
@@ -445,15 +459,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                 // if session didnt have messages (or first time retrieving)
                 if (!self.sessionsWithMessages.contains(where: { s -> Bool in session.id == s.id})){
                     self.sessionsWithMessages.append(session)
-                    
-                    print("N OF ROWS " + String(self.tableNode.numberOfRows(inSection: 0)))
-                    // should add row
-                    //let idxPath = IndexPath(row: self.sessionsWithMessages.count + 4, section: 0)
-                    //self.tableNode.insertRows(at: [idxPath], with: .fade)
                 }
-                
-                // sort to have ordered timestamps
-                self.sessionsWithMessages = self.sessionsWithMessages.sorted(by: { $0.lastMessage.timestamp > $1.lastMessage.timestamp })
                 
                 // TODO: no need for this when sessions become a dictionary
                 for (idx, s) in self.sessions.enumerated() {
@@ -463,34 +469,13 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                     }
                 }
                 
+                // sort to have ordered timestamps
+                self.sessionsWithMessages = self.sessionsWithMessages.sorted(by: { $0.lastMessage.timestamp > $1.lastMessage.timestamp })
                 
+                let _ = self.tableNode.numberOfRows(inSection: 0)
+                self.tableNode.reloadData()
                 
-                /*
-                var idxPaths = [IndexPath]()
-                for idx in 1...self.tableNode.numberOfRows(inSection: 0) - 1{
-                    idxPaths.append(IndexPath(item: idx, section: 0))
-                }
-                self.tableNode.reloadRows(at: idxPaths, with: .fade)
-                */
-                
-                //self.tableNode.reloadRows(at: , with: )
-                
-				/*
-                let sessionsWithMessages = self.sessionListWithMessages()
-                for session in sessionsWithMessages{
-                    if (session.id == sessionId){
-                        session.lastMessage = message
-                        
-                        // TODO: optimize this (reload rows until lowest row that has to be updated)
-                        var idxPaths = [IndexPath]()
-                        for idx in 1...self.sessions.count{
-                            idxPaths.append(IndexPath(item: idx, section: 0))
-                        }
-                        self.tableNode.reloadRows(at: idxPaths, with: .fade)
-                        return
-                    }
-                }
-                */
+                self.reloadActiveRows()
 			}
 		}
 	}
