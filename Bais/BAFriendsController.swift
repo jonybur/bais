@@ -369,11 +369,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                 session.unreadCount = unreadCount
                 self.sessions.append(session)
 				self.observeLastMessage(of: session)
-				if(self.displayMode == .sessions){
-					// add new row to section
-					//let idxPath = IndexPath(row: self.sessions.count, section: 0)
-					//self.tableNode.insertRows(at: [idxPath], with: .fade)
-				}
 			}).catch(execute: { _ in })
 		}
 	

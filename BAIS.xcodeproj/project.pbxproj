@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5673F3431F1F131F00AD6FEE /* BACouponController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673F3421F1F131F00AD6FEE /* BACouponController.swift */; };
+		5673F3461F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673F3451F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift */; };
 		98E065071595FBADC7398C85 /* Pods_BAIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4B708BCF614883E27A87B4 /* Pods_BAIS.framework */; };
 		AB0E468B1DF3E628003CA68C /* MosaicCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */; };
 		AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */; };
@@ -165,6 +167,8 @@
 /* Begin PBXFileReference section */
 		0AF6B2B119653D993B14B315 /* Pods_Bais.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bais.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E4B708BCF614883E27A87B4 /* Pods_BAIS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BAIS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5673F3421F1F131F00AD6FEE /* BACouponController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACouponController.swift; sourceTree = "<group>"; };
+		5673F3451F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACouponHeaderCellNode.swift; sourceTree = "<group>"; };
 		AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicCollectionViewLayout.swift; sourceTree = "<group>"; };
 		AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASpacerCellNode.swift; sourceTree = "<group>"; };
 		AB18B3041E4C0D44001C294B /* BASettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASettingsController.swift; sourceTree = "<group>"; };
@@ -271,6 +275,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5673F3441F1F13C800AD6FEE /* Coupon */ = {
+			isa = PBXGroup;
+			children = (
+				5673F3451F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift */,
+			);
+			name = Coupon;
+			sourceTree = "<group>";
+		};
 		881A4E44726A74D735DAA17E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +314,7 @@
 		AB18B3061E4C1103001C294B /* Tabbed */ = {
 			isa = PBXGroup;
 			children = (
+				5673F3441F1F13C800AD6FEE /* Coupon */,
 				ABAE861C1E1F2498005CAE77 /* Users */,
 				ABAE861D1E1F250F005CAE77 /* Friends */,
 				AB6A25C01E46A3CE00661BCF /* Calendar */,
@@ -434,6 +447,7 @@
 				ABFF2A121E2F1B0E00B10B76 /* BAFriendsController.swift */,
 				EB117F881EF7837600FB827F /* BAChatHorizonalController.swift */,
 				AB6A25BE1E46A20100661BCF /* BACalendarController.swift */,
+				5673F3421F1F131F00AD6FEE /* BACouponController.swift */,
 				AB18B3041E4C0D44001C294B /* BASettingsController.swift */,
 			);
 			name = Tabbed;
@@ -969,6 +983,7 @@
 				ABA234521E4D882000CBAF53 /* BAEditImageCarouselCellNode.swift in Sources */,
 				AB8036D61E669008000AE2A0 /* BALicenseDetailController.swift in Sources */,
 				ABA9C3751E307B0300DE5F56 /* BAChatCellNode.swift in Sources */,
+				5673F3431F1F131F00AD6FEE /* BACouponController.swift in Sources */,
 				AB8B5F861D9DD10600727BF8 /* FriendshipStatus.swift in Sources */,
 				ABB9F2F21D9170C600E01511 /* FetchedContent.swift in Sources */,
 				ABF6D7AC1E64EE83009D2993 /* BALoadingController.swift in Sources */,
@@ -997,6 +1012,7 @@
 				ABB9F2EA1D9170C600E01511 /* BAChatController.swift in Sources */,
 				ABB9F2F81D9170C600E01511 /* InstagramVideo.swift in Sources */,
 				AB75EDCC1E3C678900078C66 /* BAFriendRequestCellNode.swift in Sources */,
+				5673F3461F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift in Sources */,
 				AB3DDB121E4ABEA000D005A6 /* BAMapCellNode.swift in Sources */,
 				ABB9F2FF1D9170C600E01511 /* RSVPStatus.swift in Sources */,
 				ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */,

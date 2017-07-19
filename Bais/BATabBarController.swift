@@ -69,16 +69,18 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		let v1 = BAUsersController()
 		let v2 = BAFriendsController()
 		let v3 = BACalendarController()
-		let v4 = BASettingsController()
+        let v4 = BACouponController()
+		let v5 = BASettingsController()
 		
 		tabBar.backgroundColor = ColorPalette.white
 		
 		v1.tabBarItem = ESTabBarItem.init(BAHomeContentView(), title: nil, image: UIImage(named: "home-empty-icon"), selectedImage: UIImage(named: "home-full-icon"))
 		v2.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "chat-icon"), selectedImage: UIImage(named: "chat-icon"))
 		v3.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "calendar-icon"), selectedImage: UIImage(named: "calendar-icon"))
-		v4.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "settings-icon"), selectedImage: UIImage(named: "settings-icon"))
+        v4.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "coupon-icon"), selectedImage: UIImage(named: "coupon-icon"))
+		v5.tabBarItem = ESTabBarItem.init(BABouncesContentView(), title: nil, image: UIImage(named: "settings-icon"), selectedImage: UIImage(named: "settings-icon"))
 		
-		let controllers = [v1, v2, v3, v4]
+		let controllers = [v1, v2, v3, v4, v5]
 		viewControllers = controllers
 		
 		observeAppVersion()
