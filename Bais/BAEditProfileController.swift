@@ -215,8 +215,12 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		tableNode.deleteRows(at: idxPath, with: .fade)
 		let idxPathToReload = [IndexPath(item: 1, section:0), IndexPath(item: 2, section:0)]
 		tableNode.reloadRows(at: idxPathToReload, with: .fade)
-		FirebaseService.updateUserNationality(with: code)
-		actionButtonNode.enable()
+		
+        if (code.characters.count > 0){
+            FirebaseService.updateUserNationality(with: code)
+            actionButtonNode.enable()
+        }
+        
 		tableNode.view.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
 	}
 	

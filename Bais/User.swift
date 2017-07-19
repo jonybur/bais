@@ -65,6 +65,11 @@ class User{
 			self.setValuesFromDictionary(dictionary, key: snapshot.key)
 		}
 	}
+    
+    convenience init (from dictionary: NSDictionary, and key: String){
+        self.init()
+        self.setValuesFromDictionary(dictionary, key: key)
+    }
 	
 	private func setValuesFromDictionary(_ dictionary: NSDictionary, key id: String){
 		self.id = id

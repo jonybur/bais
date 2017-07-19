@@ -106,7 +106,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 			FirebaseService.updateUserLocation(location)
 			observeUserLocation().then { location -> Void in
 				CurrentUser.location = location
-				self.populateUsers()
+				self.populateAllUsers()
 				self.observeFriends()
 			} .catch { _ in }
 		}
@@ -260,11 +260,27 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		allUsers.append(user)
 		return 0
 	}
+    
+    // method to avoid using GeoFire, non scalable
+    private func populateAllUsers(){
+        self.allUsers = [User]()
+        
+        self.getAllUsers().then(execute: { users -> Promise<[User]> in
+            return self.getFriendshipStatusFor(users: users)
+        }).then(execute: { users -> Void in
+            if (users.count > 0){
+                self.allUsers = users.sorted(by: { $0.distanceFromUser < $1.distanceFromUser })
+                self.contentToDisplay = self.allUsers
+                self.activityIndicatorView?.stopAnimating()
+                self.collectionNode.reloadData()
+            }
+        }).catch(execute: { _ in })
+    }
 	
-	// gets all users (should filter by distance? paginate?)
+	// gets all users using GeoFire (should filter by distance? paginate?)
 	private func populateUsers(){
 		let geoFire = GeoFire(firebaseRef: FirebaseService.locationsReference)
-		
+        // NOTE: why observes user location again?
 		observeUserLocation().then { userLocation -> Void in
 			// first step
 			let kilometerRadius = 15.0//0.5
@@ -285,19 +301,18 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 			})
             
             // steps through radius size
-            /*DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3)) {
-                query?.radius = 2.0
+            /*
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3)) {
+                 query?.radius = 2.0
             }
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(6)) {
-                query?.radius = 15.0
+                 query?.radius = 15.0
             }
-            */
-            /*
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(12)) {
-                query?.radius = 10.0
+                 query?.radius = 20.0
             }
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(15)) {
-                query?.radius = 15.0
+                 query?.radius = 25.0
             }
             */
 		}.catch { _ in }
@@ -356,6 +371,43 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 		}
 	}
 	
+    // get user by userId
+    private func getAllUsers() -> Promise<[User]>{
+        return Promise{ fulfill, reject in
+            var users = [User]()
+            FirebaseService.usersReference.observeSingleEvent(of: .value, with: { snapshot in
+                guard let userDictionary = snapshot.value as? NSDictionary else { return }
+                for (key, val) in userDictionary{
+                    guard let userKey = key as? String else { continue }
+                    guard let userValue = val as? NSDictionary else { continue }
+                    if (userKey == FirebaseService.currentUserId){
+                        continue
+                    }
+                    let user = User(from: userValue, and: userKey)
+                    if (user.distanceFromUser <= 20000){
+                        users.append(user)
+                    }
+                }
+                fulfill(users)
+            })
+        }
+    }
+    
+    private func getFriendshipStatusFor(users: [User]) -> Promise<[User]>{
+        return Promise{ fulfill, reject in
+
+            var promises = [Promise<User>]()
+            
+            for user in users{
+                promises.append(self.getFriendshipStatusFor(user: user))
+            }
+            
+            when(fulfilled: promises).then(execute: { result -> Void in
+                fulfill(result)
+            }).catch(execute: { _ in })
+        }
+    }
+    
 	// get friendship status of user
 	private func getFriendshipStatusFor(user: User) -> Promise<User>{
 		return Promise{ fulfill, reject in
