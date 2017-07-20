@@ -139,7 +139,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
         let sessionsToLoad = sessionsWithMessages
         // TODO: make this work with other variable of headers (4 is current)
         let idx = item - 4
-        if (sessionsToLoad.count > idx){
+        if (sessionsToLoad.count > idx && idx >= 0){
             let session = sessionsToLoad[idx]
             let chatNode = BAChatCellNode(with: session)
             return chatNode
