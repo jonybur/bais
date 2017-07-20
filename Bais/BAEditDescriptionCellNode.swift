@@ -21,7 +21,7 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 	let descriptionNode = ASEditableTextNode()
 	let buttonNode = ASButtonNode()
 	let titleAttributes = [
-		NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 14),
+		NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
 		NSForegroundColorAttributeName: ColorPalette.grey]
 	
 	required init(with user: User) {

@@ -64,11 +64,11 @@ class BAUsersCellNode: ASCellNode {
 		shadow.shadowOffset = CGSize(width: 0, height: 0)
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 15),
 			NSForegroundColorAttributeName: UIColor.white]
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 12),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 13),
 			NSForegroundColorAttributeName: UIColor.white]
 		
 		var nameAndAgeString = user.firstName

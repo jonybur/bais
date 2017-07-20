@@ -17,7 +17,7 @@ class BASettingsHeaderElementCellNode: ASCellNode{
 		super.init()
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 14),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		titleNode.attributedText = NSAttributedString(string: title, attributes: distanceAttributes)

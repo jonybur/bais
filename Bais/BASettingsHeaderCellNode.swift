@@ -49,7 +49,7 @@ class BASettingsHeaderCellNode: ASCellNode{
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAndAgeAttributes)
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 16),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		nationalityNode.attributedText = NSAttributedString(string: user.country, attributes: distanceAttributes)

@@ -56,7 +56,7 @@ class BACalendarCellNode: ASCellNode {
 			maskPath.addClip()
 			image.draw(in: rect)
 			
-			let gradientImage = image.tintedWithLinearGradientColors(colorsArr: [UIColor.init(white: 0, alpha: 0.6).cgColor, UIColor.clear.cgColor])
+			let gradientImage = image.tintedWithLinearGradientColors(colorsArr: [UIColor.init(white: 0, alpha: 0.75).cgColor, UIColor.clear.cgColor])
 			gradientImage.draw(in: CGRect(origin: CGPoint(0, gradientImage.size.height / 2), size: gradientImage.size))
 			modifiedImage = UIGraphicsGetImageFromCurrentImageContext()
 			UIGraphicsEndImageContext()
@@ -70,11 +70,11 @@ class BACalendarCellNode: ASCellNode {
 		shadow.shadowOffset = CGSize(width: 0, height: 0)
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 15),
 			NSForegroundColorAttributeName: UIColor.white]
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 12),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 13),
 			NSForegroundColorAttributeName: UIColor.white]
 		
 		nameNode.attributedText = NSAttributedString(string: self.event.name, attributes: nameAttributes)
