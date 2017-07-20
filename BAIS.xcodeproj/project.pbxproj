@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		563F2DFC1F203BB80057D0E2 /* BACouponCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563F2DFB1F203BB80057D0E2 /* BACouponCellNode.swift */; };
+		563F2DFE1F20566C0057D0E2 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563F2DFD1F20566C0057D0E2 /* Coupon.swift */; };
 		5673F3431F1F131F00AD6FEE /* BACouponController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673F3421F1F131F00AD6FEE /* BACouponController.swift */; };
 		5673F3461F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673F3451F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift */; };
 		98E065071595FBADC7398C85 /* Pods_BAIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4B708BCF614883E27A87B4 /* Pods_BAIS.framework */; };
@@ -167,6 +169,8 @@
 /* Begin PBXFileReference section */
 		0AF6B2B119653D993B14B315 /* Pods_Bais.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bais.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E4B708BCF614883E27A87B4 /* Pods_BAIS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BAIS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		563F2DFB1F203BB80057D0E2 /* BACouponCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BACouponCellNode.swift; sourceTree = "<group>"; };
+		563F2DFD1F20566C0057D0E2 /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
 		5673F3421F1F131F00AD6FEE /* BACouponController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACouponController.swift; sourceTree = "<group>"; };
 		5673F3451F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACouponHeaderCellNode.swift; sourceTree = "<group>"; };
 		AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicCollectionViewLayout.swift; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				5673F3451F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift */,
+				563F2DFB1F203BB80057D0E2 /* BACouponCellNode.swift */,
 			);
 			name = Coupon;
 			sourceTree = "<group>";
@@ -534,6 +539,7 @@
 				AB4F5D761D98EB4F003586B2 /* User.swift */,
 				ABDAB5281E5A7B9A0067FBB5 /* Session.swift */,
 				ABDAB52A1E5A7C1E0067FBB5 /* Message.swift */,
+				563F2DFD1F20566C0057D0E2 /* Coupon.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -970,9 +976,11 @@
 				AB4F5D751D98D204003586B2 /* FirebaseService.swift in Sources */,
 				AB3D33A21E458C9E0058547A /* BAImageCarouselCellNode.swift in Sources */,
 				ABEB8DA81E5302560089000C /* BADetailBackButtonNode.swift in Sources */,
+				563F2DFE1F20566C0057D0E2 /* Coupon.swift in Sources */,
 				EB8107411EFC5601004548E0 /* BAChatHorizonalCellNode.swift in Sources */,
 				ABB9F2F51D9170C600E01511 /* InstagramMedia.swift in Sources */,
 				AB8036D01E667B28000AE2A0 /* BALicensesHeaderCellNode.swift in Sources */,
+				563F2DFC1F203BB80057D0E2 /* BACouponCellNode.swift in Sources */,
 				ABB9F3071D9170C600E01511 /* WebAPI.swift in Sources */,
 				AB9B5BAA1E347733001A9085 /* BAChatHeaderCellNode.swift in Sources */,
 				AB0E468B1DF3E628003CA68C /* MosaicCollectionViewLayout.swift in Sources */,

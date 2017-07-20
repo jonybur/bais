@@ -54,7 +54,7 @@ class BACouponController: UIViewController, MosaicCollectionViewLayoutDelegate,
         self.view.addSubnode(collectionNode!)
         self.view.addSubview(activityIndicatorView!)
         
-        activityIndicatorView?.startAnimating()
+        //activityIndicatorView?.startAnimating()
     }
     
     override func viewWillLayoutSubviews() {
@@ -70,17 +70,17 @@ class BACouponController: UIViewController, MosaicCollectionViewLayoutDelegate,
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return 1
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
-        return ASCellNode()
+        return BACouponCellNode(with: Coupon())
     }
     
     //MARK: - MosaicCollectionViewLayoutDelegate delegate methods
     
     internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
-        return CGSize(width: 1, height: 0.6)
+        return CGSize(width: 1, height: 0.457)
     }
         
     //MARK: - Dealloc

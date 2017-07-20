@@ -150,7 +150,6 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 	
 	func displayOptions(for event: Event){
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		
 		if (event.status == .maybe){
 			alert.addAction(UIAlertAction(title: "Going", style: .default, handler: { action in
 				self.setStatusForEvent(with: event.id, status: .attending)
@@ -160,13 +159,10 @@ class BACalendarController: UIViewController, MosaicCollectionViewLayoutDelegate
 				self.setStatusForEvent(with: event.id, status: .maybe)
 			}))
 		}
-		
 		alert.addAction(UIAlertAction(title: "Not Going", style: .default, handler: { action in
 			self.setStatusForEvent(with: event.id, status: .declined)
 		}))
-		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		
 		present(alert, animated: true, completion: nil)
 	}
 	
