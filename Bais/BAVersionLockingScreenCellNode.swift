@@ -20,7 +20,7 @@ class BAVersionLockingScreenCellNode: ASDisplayNode{
 		topImageNode.image = UIImage(named: "version-lock")
 		
 		let titleAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 28),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		titleNode.attributedText = NSAttributedString(string: "Update required", attributes: titleAttributes)
 		
@@ -28,7 +28,7 @@ class BAVersionLockingScreenCellNode: ASDisplayNode{
 		titleParagraphStyle.alignment = .center
 		
 		let descriptionAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 14),
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: titleParagraphStyle]
 		

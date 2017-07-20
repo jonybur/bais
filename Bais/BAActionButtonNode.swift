@@ -23,7 +23,7 @@ class BAActionButtonNode: ASButtonNode{
 	}
 	
 	func setButtonTitle(_ title: String){
-		setTitle(title, with: UIFont.systemFont(ofSize: 20, weight: UIFontWeightRegular), with: .white, for: [])
+		setTitle(title, with: UIFont.init(name: "SourceSansPro-Regular", size: 20), with: .white, for: [])
 	}
 }
 

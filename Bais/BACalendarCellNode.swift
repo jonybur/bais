@@ -70,11 +70,11 @@ class BACalendarCellNode: ASCellNode {
 		shadow.shadowOffset = CGSize(width: 0, height: 0)
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
 			NSForegroundColorAttributeName: UIColor.white]
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightLight),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 12),
 			NSForegroundColorAttributeName: UIColor.white]
 		
 		nameNode.attributedText = NSAttributedString(string: self.event.name, attributes: nameAttributes)
@@ -193,19 +193,19 @@ class BACalendarCellNode: ASCellNode {
 		switch(rsvpStatus){
 		case .declined:
 			// 2 buttons, "interested" and "going"
-			leftButtonNode.setTitle("Interested", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
-			rightButtonNode.setTitle("Going", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+			leftButtonNode.setTitle("Interested", with: UIFont.init(name: "SourceSansPro-SemiBold", size: 14), with: ColorPalette.grey, for: [])
+			rightButtonNode.setTitle("Going", with: UIFont.init(name: "SourceSansPro-SemiBold", size: 14), with: ColorPalette.grey, for: [])
 			break
 		case .maybe:
 			// 1 button, "interested"
-			singleButtonNode.setTitle("Interested", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+			singleButtonNode.setTitle("Interested", with: UIFont.init(name: "SourceSansPro-SemiBold", size: 14), with: ColorPalette.grey, for: [])
 			break
 		case .attending:
 			// 1 button, "going"
-			singleButtonNode.setTitle("Going", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+			singleButtonNode.setTitle("Going", with: UIFont.init(name: "SourceSansPro-SemiBold", size: 14), with: ColorPalette.grey, for: [])
 			break
 		case .undefined:
-			singleButtonNode.setTitle("", with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: ColorPalette.grey, for: [])
+			singleButtonNode.setTitle("", with: UIFont.init(name: "SourceSansPro-SemiBold", size: 14), with: ColorPalette.grey, for: [])
 			break
 		}
 	}

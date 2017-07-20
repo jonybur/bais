@@ -31,12 +31,12 @@ class BAMapCellNode: ASCellNode{
 		initializeOnMainThread(place)
 		
 		uberButtonNode.setTitle("Uber",
-		                        with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+		                        with: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
 		                        with: ColorPalette.grey, for: [])
 		uberButtonNode.addTarget(self, action: #selector(self.uberButtonPressed(_:)), forControlEvents: .touchUpInside)
 		
 		directionsButtonNode.setTitle("Directions",
-		                              with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+		                              with: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
 		                              with: ColorPalette.grey, for: [])
 		directionsButtonNode.addTarget(self, action: #selector(self.directionsButtonPressed(_:)), forControlEvents: .touchUpInside)
 		

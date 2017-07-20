@@ -29,7 +29,7 @@ class BADescriptionInfoCellNode: ASCellNode {
 		paragraphAttributes.lineSpacing = 5
 		
 		let descriptionAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: paragraphAttributes]
 

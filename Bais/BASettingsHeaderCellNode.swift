@@ -43,13 +43,13 @@ class BASettingsHeaderCellNode: ASCellNode{
 		}
 		
 		let nameAndAgeAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 24, weight: UIFontWeightBold),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 24),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAndAgeAttributes)
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		nationalityNode.attributedText = NSAttributedString(string: user.country, attributes: distanceAttributes)

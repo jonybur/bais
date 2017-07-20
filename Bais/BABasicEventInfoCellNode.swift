@@ -20,13 +20,13 @@ class BABasicEventInfoCellNode: ASCellNode {
 		super.init()
 		
 		let nameAndAgeAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 24, weight: UIFontWeightBold),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 24),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		nameNode.attributedText = NSAttributedString(string: event.name, attributes: nameAndAgeAttributes)
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 14),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		dateNode.attributedText = NSAttributedString(string: event.redactedDate(), attributes: distanceAttributes)

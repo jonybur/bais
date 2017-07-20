@@ -18,7 +18,7 @@ class BACouponHeaderCellNode: ASCellNode {
         super.init()
         
         let nameAttributes = [
-            NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
+            NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 28),
             NSForegroundColorAttributeName: ColorPalette.grey]
         
         nameNode.attributedText = NSAttributedString(string: "My Coupons", attributes: nameAttributes)

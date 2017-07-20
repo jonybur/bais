@@ -43,7 +43,7 @@ class BAUsersHeaderCellNode: ASCellNode {
 		self.location = location
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 28),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		nameNode.attributedText = NSAttributedString(string: "All Countries", attributes: nameAttributes)
@@ -89,16 +89,16 @@ class BAUsersHeaderCellNode: ASCellNode {
 		blockButton = true
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 28),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		switch (currentMode) {
 		case .distance:
-			nameNode.attributedText = NSAttributedString(string: "Only " + location!, attributes: nameAttributes)
+            nameNode.attributedText = NSAttributedString(string: "Only " + location!, attributes: nameAttributes)
 			buttonNode.setImage(UIImage(named:"distance-button"), for: [])
 			break
 		case .country:
-			nameNode.attributedText = NSAttributedString(string: "All Countries", attributes: nameAttributes)
+            nameNode.attributedText = NSAttributedString(string: "All Countries", attributes: nameAttributes)
 			buttonNode.setImage(UIImage(named:"country-button"), for: [])
 			break
 		}

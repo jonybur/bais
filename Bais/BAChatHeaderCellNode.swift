@@ -64,7 +64,7 @@ class BAChatHeaderCellNode: ASCellNode {
 	
 	func setDisplayMode(){
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 28, weight: UIFontWeightBold),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 28),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		switch (mode) {

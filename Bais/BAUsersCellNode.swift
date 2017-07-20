@@ -64,11 +64,11 @@ class BAUsersCellNode: ASCellNode {
 		shadow.shadowOffset = CGSize(width: 0, height: 0)
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
 			NSForegroundColorAttributeName: UIColor.white]
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.systemFont(ofSize: 12, weight: UIFontWeightLight),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 12),
 			NSForegroundColorAttributeName: UIColor.white]
 		
 		var nameAndAgeString = user.firstName
@@ -176,7 +176,7 @@ class BAUsersCellNode: ASCellNode {
 	}
     
     func setButtonTitle(_ title: String, _ color: UIColor){
-        self.buttonNode.setTitle(title, with: UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium), with: color, for: [])
+        self.buttonNode.setTitle(title, with: UIFont.init(name: "SourceSansPro-SemiBold", size: 14), with: color, for: [])
     }
 	
 	func setButtonTitle(_ title: String){

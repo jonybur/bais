@@ -17,7 +17,7 @@ class BAChatHorizontalHeaderCellNode: ASCellNode {
         super.init()
         
         let nameAttributes = [
-            NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightBold),
+            NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 16),
             NSForegroundColorAttributeName: ColorPalette.orange]
         
         nameNode.attributedText = NSAttributedString(string: "New Friends", attributes: nameAttributes)
