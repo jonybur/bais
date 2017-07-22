@@ -36,7 +36,7 @@ class BABasicUserInfoCellNode: ASCellNode {
 		nameAndAgeNode.attributedText = NSAttributedString(string: nameAndAgeString, attributes: nameAndAgeAttributes)
 		
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 14),
+			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		var distanceString = ""
