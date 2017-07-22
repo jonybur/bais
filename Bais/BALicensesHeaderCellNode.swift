@@ -26,7 +26,7 @@ class BADefaultHeaderCellNode: ASCellNode{
 		backButtonNode.addTarget(self, action: #selector(editPressed(_:)), forControlEvents: .touchUpInside)
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 18),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Bold", size: 18),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		titleNode.attributedText = NSAttributedString(string: title, attributes: nameAttributes)

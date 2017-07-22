@@ -28,14 +28,14 @@ class BASettingsButtonElementCellNode: ASButtonNode{
         notificationCountNode.image = UIImage(named: "empty-circle")
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 20),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Bold", size: 20),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		titleTextNode.attributedText = NSAttributedString(string: title, attributes: nameAttributes)
         
         if (notificationCount > 0){
             let notificationCountAttributes = [
-                NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 14),
+                NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 14),
                 NSForegroundColorAttributeName: UIColor.white]
             let unreadCount = String(notificationCount)
             notificationCountTextNode.attributedText = NSAttributedString(string: unreadCount, attributes: notificationCountAttributes)

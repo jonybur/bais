@@ -72,7 +72,7 @@ class BALoginController: UIViewController, FBSDKLoginButtonDelegate {
 		
         let warningView = UITextView()
         warningView.frame = CGRect(x: 5, y: (fbbutton.frame).maxY + 5, width: ez.screenWidth - 10, height: 0)
-        warningView.font = UIFont.init(name: "SourceSansPro-Light", size: 11)
+        warningView.font = UIFont.init(name: "Nunito-Regular", size: 11)
         warningView.textColor = ColorPalette.white
         warningView.text = "By continuing, you agree to our Terms of Service\nand Privacy Policy"
         warningView.textAlignment = .center

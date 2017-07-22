@@ -90,6 +90,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = navigationController
         window!.makeKeyAndVisible()
 		application.statusBarStyle = .default
+        
+        for family: String in UIFont.familyNames{
+            for names: String in UIFont.fontNames(forFamilyName: family){
+                print("== \(names)")
+            }
+        }
 		
         return true
     }

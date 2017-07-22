@@ -21,7 +21,7 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 	let descriptionNode = ASEditableTextNode()
 	let buttonNode = ASButtonNode()
 	let titleAttributes = [
-		NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
+		NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 14),
 		NSForegroundColorAttributeName: ColorPalette.grey]
 	
 	required init(with user: User) {
@@ -31,7 +31,7 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 		paragraphAttributes.lineSpacing = 5
 		
 		descriptionNode.typingAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 16),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: paragraphAttributes]
 		
@@ -39,7 +39,7 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 		
 		descriptionNode.attributedPlaceholderText = NSAttributedString(string: "Write about yourself",
 		                                                               attributes: [
-																		NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 16),
+																		NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 16),
 																		NSForegroundColorAttributeName: ColorPalette.lightGrey,
 																		NSParagraphStyleAttributeName: paragraphAttributes])
 		

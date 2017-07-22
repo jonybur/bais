@@ -32,7 +32,7 @@ class BAEditCountryPickerCellNode: ASCellNode, CountryPickerDelegate {
 		})
 		
 		doneButtonNode.setTitle("Done",
-		                        with: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
+		                        with: UIFont.init(name: "Nunito-SemiBold", size: 14),
 		                        with: ColorPalette.grey, for: [])
 		
 		doneButtonNode.addTarget(self, action: #selector(doneButtonPressed(_:)), forControlEvents: .touchUpInside)

@@ -63,13 +63,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		FirebaseService.resetBadgeCount()
 		
 		setBATabBarController()
-        
-        
-        for family: String in UIFont.familyNames{
-            for names: String in UIFont.fontNames(forFamilyName: family){
-                print("== \(names)")
-            }
-        }
 	}
 	
 	private func setBATabBarController(){

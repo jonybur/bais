@@ -56,20 +56,20 @@ class BAChatCellNode: ASCellNode {
 		}
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 18),
+			NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 18),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		nameNode.attributedText = NSAttributedString(string: otherUser.firstName, attributes: nameAttributes)
 		
 		let lastMessageAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 16),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		lastMessageNode.attributedText = NSAttributedString(string: session.lastMessage.text, attributes: lastMessageAttributes)
 		
 		if (session.unreadCount > 0){
 			let notificationCountAttributes = [
-				NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 14),
+				NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 14),
 				NSForegroundColorAttributeName: UIColor.white]
 			let unreadCount = String(session.unreadCount)
 			notificationCountTextNode.attributedText = NSAttributedString(string: unreadCount, attributes: notificationCountAttributes)

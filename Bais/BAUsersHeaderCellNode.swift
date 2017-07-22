@@ -43,7 +43,7 @@ class BAUsersHeaderCellNode: ASCellNode {
 		self.location = location
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 28),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Bold", size: 28),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		nameNode.attributedText = NSAttributedString(string: "All Countries", attributes: nameAttributes)
@@ -89,7 +89,7 @@ class BAUsersHeaderCellNode: ASCellNode {
 		blockButton = true
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 28),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Bold", size: 28),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		switch (currentMode) {

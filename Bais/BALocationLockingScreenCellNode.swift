@@ -20,7 +20,7 @@ class BALocationLockingScreenCellNode: ASDisplayNode{
 		topImageNode.image = UIImage(named: "location-lock")
 		
 		let titleAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Bold", size: 28),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Bold", size: 28),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		titleNode.attributedText = NSAttributedString(string: "Where are you?", attributes: titleAttributes)
 		
@@ -28,7 +28,7 @@ class BALocationLockingScreenCellNode: ASDisplayNode{
 		titleParagraphStyle.alignment = .center
 		
 		let descriptionAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 14),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 14),
 			NSForegroundColorAttributeName: ColorPalette.grey,
 			NSParagraphStyleAttributeName: titleParagraphStyle]
 		

@@ -59,7 +59,7 @@ class BAChatHorizonalCellNode: ASCellNode {
         
         
         let nameAttributes = [
-            NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 16),
+            NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 16),
             NSForegroundColorAttributeName: ColorPalette.grey]
         
         nameNode.attributedText = NSAttributedString(string: otherUser.firstName, attributes: nameAttributes)

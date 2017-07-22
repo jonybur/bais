@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>386</string>
+	<string>391</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -104,18 +104,9 @@
 	<string>BAIS would like to have access to your photo library</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>SourceSansPro-BoldItalic.ttf</string>
-		<string>SourceSansPro-ExtraLight.ttf</string>
-		<string>SourceSansPro-ExtraLightItalic.ttf</string>
-		<string>SourceSansPro-Italic.ttf</string>
-		<string>SourceSansPro-Light.ttf</string>
-		<string>SourceSansPro-LightItalic.ttf</string>
-		<string>SourceSansPro-Regular.ttf</string>
-		<string>SourceSansPro-SemiBold.ttf</string>
-		<string>SourceSansPro-SemiBoldItalic.ttf</string>
-		<string>SourceSansPro-Bold.ttf</string>
-		<string>SourceSansPro-Black.ttf</string>
-		<string>SourceSansPro-BlackItalic.ttf</string>
+		<string>Nunito-SemiBold.ttf</string>
+		<string>Nunito-Bold.ttf</string>
+		<string>Nunito-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

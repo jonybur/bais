@@ -56,7 +56,7 @@ class BAChatNavigationBar: ASCellNode {
 		settingsButtonNode.addTarget(self, action: #selector(settingsButtonPressed(_:)), forControlEvents: .touchUpInside)
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-SemiBold", size: 16),
+			NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAttributes)
 		

@@ -35,7 +35,7 @@ class BAEmptyStateCellNode: ASCellNode {
 		titleParagraphStyle.alignment = .center
 		
 		let titleAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 16),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.lightGrey,
 			NSParagraphStyleAttributeName: titleParagraphStyle]
 		titleNode.attributedText = NSAttributedString(string: title, attributes: titleAttributes)

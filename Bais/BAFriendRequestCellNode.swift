@@ -46,12 +46,12 @@ class BAFriendRequestCellNode: ASCellNode {
 		}
 		
 		let nameAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 18),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 18),
 			NSForegroundColorAttributeName: UIColor.black]
 		
 		nameNode.attributedText = NSAttributedString(string: user.firstName, attributes: nameAttributes)
 		
-		acceptButtonNode.setTitle("ACCEPT", with: UIFont.init(name: "SourceSansPro-Bold", size: 16), with: ColorPalette.grey, for: [])
+		acceptButtonNode.setTitle("ACCEPT", with: UIFont.init(name: "Nunito-Bold", size: 16), with: ColorPalette.grey, for: [])
 		acceptButtonNode.addTarget(self, action: #selector(pressedAcceptButton(_:)), forControlEvents: .touchUpInside)
 		acceptButtonNode.addTarget(self, action: #selector(buttonBlocker(_:)), forControlEvents: .touchDragInside)
 		acceptButtonNode.addTarget(self, action: #selector(buttonBlocker(_:)), forControlEvents: .touchDragOutside)

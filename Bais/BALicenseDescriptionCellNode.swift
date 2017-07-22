@@ -17,7 +17,7 @@ class BALicenseDescriptionCellNode: ASCellNode{
 		super.init()
 		
 		let licenseAttributes = [
-			NSFontAttributeName: UIFont.init(name: "SourceSansPro-Regular", size: 14),
+			NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 14),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		licenseText.attributedText = NSAttributedString(string: license, attributes: licenseAttributes)
 		
