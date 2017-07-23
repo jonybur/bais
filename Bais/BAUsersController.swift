@@ -120,7 +120,7 @@ class BAUsersController: UIViewController, MosaicCollectionViewLayoutDelegate, C
 	}
 	
 	public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
-		print("Location Manager failed with error")
+        print("Location Manager failed with error: " + error.localizedDescription)
 	}
 	
 //MARK: - MosaicCollectionViewLayoutDelegate delegate methods

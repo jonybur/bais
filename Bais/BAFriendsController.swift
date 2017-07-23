@@ -298,7 +298,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	// gets friends and reloads table after getting all information
 	private func observeFriends() {
 		
-		// user friends
+		// user friends (REQUESTS)
 		let userId = FirebaseService.currentUserId
 		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")
 		
@@ -334,8 +334,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 					return
 				}
 			}
-			let tableRows = self.tableNode.numberOfRows(inSection: 0)
-			self.displayEmptyState(tableRows)
+            let tableRows = self.tableNode.numberOfRows(inSection: 0)
+            self.displayEmptyState(tableRows)
 		}
 		userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
 			// promises get resolved when all users are complete
@@ -352,7 +352,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			}).catch(execute: { _ in })
 		}
 		
-		// user sessions
+		// user sessions (CHATS)
 		let userSessionsRef = FirebaseService.usersReference.child(userId).child("sessions")
 		userSessionsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
 			

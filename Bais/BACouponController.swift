@@ -22,6 +22,7 @@ class BACouponController: UIViewController, MosaicCollectionViewLayoutDelegate,
     let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
                                                         tintColor: ColorPalette.orangeLighter,
                                                         size: 80)
+    var coupons = [Coupon]()
     
     init (){
         let layout = MosaicCollectionViewLayout(startsAt: 10)
@@ -54,7 +55,20 @@ class BACouponController: UIViewController, MosaicCollectionViewLayoutDelegate,
         self.view.addSubnode(collectionNode!)
         self.view.addSubview(activityIndicatorView!)
         
+        observeCoupons()
         //activityIndicatorView?.startAnimating()
+    }
+    
+    private func observeCoupons() {
+        // observe coupons
+        let userId = FirebaseService.currentUserId
+        let userFriendsRef = FirebaseService.usersReference.child(userId).child("coupons")
+        userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
+            guard let dictionary = snapshot.value as? NSDictionary else { return }
+            let coupon = Coupon(from: dictionary)
+            self.coupons.append(coupon)
+            print("stop")
+        }
     }
     
     override func viewWillLayoutSubviews() {

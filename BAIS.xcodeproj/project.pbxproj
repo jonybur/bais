@@ -176,7 +176,6 @@
 		563F2DFD1F20566C0057D0E2 /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
 		5673F3421F1F131F00AD6FEE /* BACouponController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACouponController.swift; sourceTree = "<group>"; };
 		5673F3451F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACouponHeaderCellNode.swift; sourceTree = "<group>"; };
-		5694E0FF1F23C04C007A6B09 /* OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = OFL.txt; path = ../../../../Downloads/Nunito/OFL.txt; sourceTree = "<group>"; };
 		5694E1371F23C286007A6B09 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		5694E13C1F23C286007A6B09 /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		5694E13F1F23C286007A6B09 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -309,7 +308,6 @@
 				5694E13C1F23C286007A6B09 /* Nunito-Bold.ttf */,
 				5694E1371F23C286007A6B09 /* Nunito-Regular.ttf */,
 				5694E13F1F23C286007A6B09 /* Nunito-SemiBold.ttf */,
-				5694E0FF1F23C04C007A6B09 /* OFL.txt */,
 			);
 			name = Nunito;
 			sourceTree = "<group>";

@@ -85,6 +85,7 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		
 		observeAppVersion()
 		observeFriendBadge()
+        observeCoupons()
 		
 		selectedIndex = 0
 	}
@@ -108,7 +109,44 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		super.viewWillDisappear(animated)
 		NotificationCenter.default.removeObserver(self)
 	}
+    
+//MARK: - Firebase methods
+    
+    // observe coupon
+    func observeCoupons(){
+        // user sessions (CHATS)
+        let userId = FirebaseService.currentUserId
+        
+        let couponsSessionsRef = FirebaseService.usersReference.child(userId).child("coupons")
+        couponsSessionsRef.observe(.value) { (snapshot: FIRDataSnapshot!) in
+            guard let dictionary = snapshot.value as? NSDictionary else {
+                // should grant on_register coupon
+                self.grantCoupon(for: "on_register")
+                return
+            }
+            
+            // this only happens on old users
+            if (dictionary["on_register"] == nil){
+                self.grantCoupon(for: "on_register")
+            }
+        }
+    }
+    
+    func grantCoupon(for promotionId: String){
+        // fetches coupon
+        FirebaseService.promotionsReference.child(promotionId).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
+            // checks if promotion exists
+            guard let couponId = snapshot.value as? String else { return }
+            
+            let userId = FirebaseService.currentUserId
+            let couponsSessionsRef = FirebaseService.usersReference.child(userId).child("coupons")
+            let coupon = ["coupon_id": couponId,
+                          "redeemed": false] as [String : Any]
+            couponsSessionsRef.setValue([promotionId: coupon])
+        }
+    }
 	
+    // chat badge
 	func observeFriendBadge(){
 		var invitedFriendsCount = 0
 		var unreadSessionsCount = 0
@@ -156,6 +194,8 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 			
 		})
 	}
+    
+//MARK: - Location manager
 	
 	public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		let authorizationStatus = CLLocationManager.authorizationStatus()

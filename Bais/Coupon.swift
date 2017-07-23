@@ -9,4 +9,15 @@
 import Foundation
 
 class Coupon{
+    var image = ""
+    var promotionId = ""
+    var couponId: String?
+    var redeemed: Bool?
+    
+    convenience init (from dictionary: NSDictionary){
+        self.init()
+        couponId = dictionary["coupon_id"] as? String
+        redeemed = dictionary["redeemed"] as? Bool
+        print("hola")
+    }
 }

@@ -29,6 +29,8 @@ class FirebaseService{
 	static let locationsReference = FIRDatabase.database().reference().child("locations")
 	static let locationsHistoryReference = FIRDatabase.database().reference().child("locations_history")
 	static let usersReference = FIRDatabase.database().reference().child("users")
+    static let promotionsReference = FIRDatabase.database().reference().child("promotions")
+    static let couponsReference = FIRDatabase.database().reference().child("coupons")
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
 	static let reportsReference = FIRDatabase.database().reference().child("reports")
 	static let feedbackReference = FIRDatabase.database().reference().child("feedback")
@@ -454,17 +456,19 @@ class FirebaseService{
 				
 				// OK, we have all facebook information now,
 				// lets download the users profile picture from Facebook
-				let profilePictureUrl = datum["url"] as! String
+                guard let profilePictureUrl = datum["url"] as? String else { return }
+                
 				WebAPI.request(url: profilePictureUrl).then(execute: { pictureData -> Void in
 					// cool, now let's upload it to Firebase
 					FirebaseService.storeImage(pictureData, as: .profilePicture).then(execute: { url -> Void in
 						// we have the firebase-stored url!, lets finish pushing our user
 						let messageRef = usersReference
 						let itemRef = messageRef.child(user.uid)
-						let firstName = graphResult.value(forKey: "first_name") == nil ? "" : graphResult.value(forKey: "first_name") as! String
-						let lastName = graphResult.value(forKey: "last_name") == nil ? "" : graphResult.value(forKey: "last_name") as! String
-						let birthday = graphResult.value(forKey: "birthday") == nil ? "" : graphResult.value(forKey: "birthday") as! String
-						let email = graphResult.value(forKey: "email") == nil ? "" : graphResult.value(forKey: "email") as! String
+                        
+                        guard let firstName = graphResult["first_name"] as? String else { return }
+                        guard let lastName = graphResult["last_name"] as? String else { return }
+                        guard let birthday = graphResult["birthday"] as? String else { return }
+                        guard let email = graphResult["email"] as? String else { return }
 						
 						let userItem = [
 							"first_name": firstName,
