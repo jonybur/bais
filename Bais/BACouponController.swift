@@ -15,12 +15,11 @@ import PromiseKit
 import FBSDKLoginKit
 
 class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate {
-    
+
     var coupons = [Coupon]()
     var tableNode: ASTableNode {
         return node as! ASTableNode
     }
-    let _layoutInspector = MosaicCollectionViewLayoutInspector()
     
     init() {
         super.init(node: ASTableNode())
@@ -44,7 +43,7 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
         let userFriendsRef = FirebaseService.usersReference.child(userId).child("coupons")
         userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
             guard let dictionary = snapshot.value as? NSDictionary else { return }
-            let coupon = Coupon(from: dictionary)
+            let coupon = Coupon(from: dictionary, key: snapshot.key)
             if (!coupon.redeemed){
                 coupon.fetchAdditionalData().then(execute: { _ -> Void in
                     self.coupons.append(coupon)
@@ -81,6 +80,14 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let removeAction = UITableViewRowAction(style: .normal, title: "Delete") { (rowAction, indexPath) in
             // show message alert
+            let alert = UIAlertController(title: "Delete this coupon?", message: "You will lose access to this coupon. This action cannot be undone.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                let coupon = self.coupons[indexPath.item - 1]
+                let userId = FirebaseService.currentUserId
+                FirebaseService.usersReference.child(userId).child("coupons").child(coupon.promotionId).child("redeemed").setValue(true)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
         removeAction.backgroundColor = ColorPalette.orange
         return [removeAction]

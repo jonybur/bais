@@ -13,11 +13,13 @@ class Coupon{
     var couponId = ""
     var redeemed = false
     var imageUrl = ""
+    var promotionId = ""
     
-    convenience init (from dictionary: NSDictionary){
+    convenience init (from dictionary: NSDictionary, key: String){
         self.init()
         couponId = dictionary["coupon_id"] as! String
         redeemed = dictionary["redeemed"] as! Bool
+        promotionId = key
     }
     
     func fetchAdditionalData() -> Promise<Void>{
