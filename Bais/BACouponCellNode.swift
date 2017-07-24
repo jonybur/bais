@@ -20,6 +20,7 @@ class BACouponCellNode: ASCellNode {
     required init(with coupon: Coupon) {
         super.init()
         
+        selectionStyle = .none
         imageNode.setURL(URL(string: coupon.imageUrl), resetToDefault: false)
         imageNode.shouldRenderProgressImages = true
         imageNode.contentMode = .scaleAspectFill
@@ -42,7 +43,8 @@ class BACouponCellNode: ASCellNode {
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         // image is expected to be 960x430
         let imageLayout = ASRatioLayoutSpec(ratio: 0.448, child: imageNode)
-        let insetLayout = ASInsetLayoutSpec(insets: UIEdgeInsetsMake(15, 15, 15, 15), child: imageLayout)
+        // top left bottom right
+        let insetLayout = ASInsetLayoutSpec(insets: UIEdgeInsetsMake(12, 12, 12, 12), child: imageLayout)
         return insetLayout
     }
 }

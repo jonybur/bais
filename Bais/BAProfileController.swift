@@ -127,7 +127,6 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 //MARK: - ActionButton delegate
 	
 	func observeFriendship(){
-	
 		let userId = FirebaseService.currentUserId
 		let userFriendsRef = FirebaseService.usersReference.child(userId).child("friends")
 		
@@ -152,7 +151,6 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		actionButtonNode.friendshipStatus = friendshipStatus
 		actionButtonNode.setFriendshipAction()
-
 	}
 	
 	func actionButtonPressed(_ button: BAFriendshipActionButtonNode){
@@ -179,15 +177,11 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 //MARK: - BasicUserInfo delegate
 	
 	func basicUserInfoTapMore(_ basicUserInfoCellNode: BABasicUserInfoCellNode) {
-		
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		
 		alert.addAction(UIAlertAction(title: "Report " + user.firstName, style: .default, handler: { action in
 			self.reportAction()
 		}))
-		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		
 		present(alert, animated: true, completion: nil)
 	}
 	
@@ -197,7 +191,6 @@ final class BAProfileController: ASViewController<ASDisplayNode>, ASTableDataSou
 			textField.placeholder = "Additional Info (Optional)"
 			textField.autocapitalizationType = .sentences
 		}
-		
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { action in
 			let textField = alert.textFields![0] as UITextField
