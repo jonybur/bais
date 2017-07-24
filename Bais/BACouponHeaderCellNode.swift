@@ -23,16 +23,16 @@ class BACouponHeaderCellNode: ASCellNode {
         
         nameNode.attributedText = NSAttributedString(string: "My Coupons", attributes: nameAttributes)
         
-        self.selectionStyle = .none
+        selectionStyle = .none
         
-        self.addSubnode(self.nameNode)
+        addSubnode(nameNode)
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         
         // move down
         let insetSpec = ASInsetLayoutSpec()
-        insetSpec.insets = UIEdgeInsets(top: 28, left: 3, bottom: 30, right: 15)
+        insetSpec.insets = UIEdgeInsets(top: 45, left: 15, bottom: 15, right: 15)
         insetSpec.child = nameNode
         
         return insetSpec

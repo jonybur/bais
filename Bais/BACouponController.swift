@@ -14,49 +14,28 @@ import DGActivityIndicatorView
 import PromiseKit
 import FBSDKLoginKit
 
-class BACouponController: UIViewController, MosaicCollectionViewLayoutDelegate,
-                            ASCollectionDataSource, ASCollectionDelegate {
+class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate {
     
-    let collectionNode: ASCollectionNode!
-    let _layoutInspector = MosaicCollectionViewLayoutInspector()
-    let activityIndicatorView = DGActivityIndicatorView(type: .ballScale,
-                                                        tintColor: ColorPalette.orangeLighter,
-                                                        size: 80)
     var coupons = [Coupon]()
+    var tableNode: ASTableNode {
+        return node as! ASTableNode
+    }
+    let _layoutInspector = MosaicCollectionViewLayoutInspector()
     
-    init (){
-        let layout = MosaicCollectionViewLayout(startsAt: 10)
-        layout.numberOfColumns = 1
-        collectionNode = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
-        super.init(nibName: nil, bundle: nil)
-        layout.delegate = self
-        
-        let activityIndicatorSize = (activityIndicatorView?.size)!
-        activityIndicatorView!.frame = CGRect(x: (ez.screenWidth - activityIndicatorSize) / 2,
-                                              y: (ez.screenHeight - activityIndicatorSize) / 2,
-                                              width: activityIndicatorSize, height: activityIndicatorSize);
-        
-        extendedLayoutIncludesOpaqueBars = true
-        
-        collectionNode.dataSource = self
-        collectionNode.delegate = self
-        collectionNode.view.layoutInspector = _layoutInspector
-        collectionNode.backgroundColor = ColorPalette.white
-        collectionNode.view.isScrollEnabled = true
-        collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
+    init() {
+        super.init(node: ASTableNode())
+        tableNode.delegate = self
+        tableNode.dataSource = self
+        tableNode.view.separatorStyle = .none
     }
     
-    required init(coder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("Storyboards are not supported")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubnode(collectionNode!)
-        self.view.addSubview(activityIndicatorView!)
-        
         observeCoupons()
-        //activityIndicatorView?.startAnimating()
     }
     
     private func observeCoupons() {
@@ -69,52 +48,42 @@ class BACouponController: UIViewController, MosaicCollectionViewLayoutDelegate,
             if (!coupon.redeemed){
                 coupon.fetchAdditionalData().then(execute: { _ -> Void in
                     self.coupons.append(coupon)
-                    self.collectionNode.reloadData()
+                    self.tableNode.reloadData()
                 }).catch(execute: { _ in })
             }
         }
     }
     
-    override func viewWillLayoutSubviews() {
-        collectionNode.frame = self.view.bounds
-    }
-    
-    func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-        return BACouponHeaderCellNode()
-    }
-    
-    func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-        return 1
-    }
-    
-    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return coupons.count
-    }
-    
-    func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
-        let coupon = coupons[indexPath.item]
+    func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+        let item = indexPath.item
+        
+        if (item == 0){
+            return BACouponHeaderCellNode()
+        }
+        
+        if (item > coupons.count){
+            return BASpacerCellNode()
+        }
+        
+        let coupon = coupons[indexPath.item - 1]
         return BACouponCellNode(with: coupon)
     }
     
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return 1
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        let count = coupons.count > 0 ? coupons.count + 1 : 0 // for bottom spacer
+        return count + 1 // for header
+    }
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
-            
+        let removeAction = UITableViewRowAction(style: .normal, title: "Delete") { (rowAction, indexPath) in
+            // show message alert
         }
         removeAction.backgroundColor = ColorPalette.orange
         return [removeAction]
-    }
-    
-//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
-    
-    internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
-        return CGSize(width: 1, height: 0.457)
-    }
-        
-//MARK: - Dealloc
-    
-    deinit {
-        collectionNode.dataSource = nil
-        collectionNode.delegate = nil
     }
 }
 

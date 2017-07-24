@@ -40,10 +40,10 @@ class BACouponCellNode: ASCellNode {
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        // imagen
-        let imageLayout = ASRatioLayoutSpec(ratio: 1, child: imageNode)
-        imageLayout.style.minWidth = ASDimension(unit: .points, value: constrainedSize.max.width)
-        return imageLayout
+        // image is expected to be 960x430
+        let imageLayout = ASRatioLayoutSpec(ratio: 0.448, child: imageNode)
+        let insetLayout = ASInsetLayoutSpec(insets: UIEdgeInsetsMake(15, 15, 15, 15), child: imageLayout)
+        return insetLayout
     }
 }
 
