@@ -43,7 +43,6 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		super.viewWillAppear(animated)
 		
 		userObserver = FirebaseService.usersReference.child(FirebaseService.currentUserId)
-		
 		userObserver?.observe(.value, with: { snapshot in
 			let user = User(from: snapshot)
 			CurrentUser.user = user
@@ -147,6 +146,7 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		present(alert, animated: true, completion: nil)
 	}
+    
 	func settingsOptionsNodeDidClickDeleteAccountButton(){
 		print("stop")
 	}

@@ -66,8 +66,12 @@ class BACouponController: UIViewController, MosaicCollectionViewLayoutDelegate,
         userFriendsRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
             guard let dictionary = snapshot.value as? NSDictionary else { return }
             let coupon = Coupon(from: dictionary)
-            self.coupons.append(coupon)
-            print("stop")
+            if (!coupon.redeemed){
+                coupon.fetchAdditionalData().then(execute: { _ -> Void in
+                    self.coupons.append(coupon)
+                    self.collectionNode.reloadData()
+                }).catch(execute: { _ in })
+            }
         }
     }
     
@@ -84,20 +88,29 @@ class BACouponController: UIViewController, MosaicCollectionViewLayoutDelegate,
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return coupons.count
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
-        return BACouponCellNode(with: Coupon())
+        let coupon = coupons[indexPath.item]
+        return BACouponCellNode(with: coupon)
     }
     
-    //MARK: - MosaicCollectionViewLayoutDelegate delegate methods
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let removeAction = UITableViewRowAction(style: .normal, title: "Reject") { (rowAction, indexPath) in
+            
+        }
+        removeAction.backgroundColor = ColorPalette.orange
+        return [removeAction]
+    }
+    
+//MARK: - MosaicCollectionViewLayoutDelegate delegate methods
     
     internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
         return CGSize(width: 1, height: 0.457)
     }
         
-    //MARK: - Dealloc
+//MARK: - Dealloc
     
     deinit {
         collectionNode.dataSource = nil
