@@ -113,7 +113,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		
         let noMessagesSessions = sessionListWithNoMessages()
-        
         if (noMessagesSessions.count > 0){
             // should load horizontal chat list
             // gets list of sessions that has no messages
@@ -246,7 +245,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		
 		// current row count
 		let tableRows = tableNode.numberOfRows(inSection: 0)
-		
 		if (tableRows < elementsToDisplay){
 			// need to add more rows to make up for elementsToDisplay
 			var idxToInsert = [IndexPath]()
@@ -273,7 +271,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			}
 		}
 		tableNode.reloadRows(at: idxToReload, with: .fade)
-		
 		displayEmptyState(tableNode.numberOfRows(inSection: 0))
 	}
 	

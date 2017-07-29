@@ -15,8 +15,8 @@ import PromiseKit
 import FBSDKLoginKit
 
 class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate {
-
-    var coupons = [Coupon]()
+    var emptyStateMessagesNode = BAEmptyStateMessagesCellNode()
+    var coupons = [String:Coupon]()
     var tableNode: ASTableNode {
         return node as! ASTableNode
     }
@@ -35,6 +35,7 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
     override func viewDidLoad() {
         super.viewDidLoad()
         observeCoupons()
+        //node.addSubnode(emptyStateMessagesNode)
     }
     
     private func observeCoupons() {
@@ -46,25 +47,29 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
             let coupon = Coupon(from: dictionary, key: snapshot.key)
             if (!coupon.redeemed){
                 coupon.fetchAdditionalData().then(execute: { _ -> Void in
-                    self.coupons.append(coupon)
+                    self.coupons[coupon.couponId] = coupon
                     self.tableNode.reloadData()
                 }).catch(execute: { _ in })
             }
+        }
+        
+        userFriendsRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
+            guard let dictionary = snapshot.value as? NSDictionary else { return }
+            guard let couponId = dictionary["coupon_id"] as? String else { return }
+            self.coupons.removeValue(forKey: couponId)
+            self.tableNode.reloadData()
         }
     }
     
     func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
         let item = indexPath.item
-        
         if (item == 0){
             return BACouponHeaderCellNode()
         }
-        
         if (item > coupons.count){
             return BASpacerCellNode()
         }
-        
-        let coupon = coupons[indexPath.item - 1]
+        let coupon = Array(coupons.values)[indexPath.item - 1]
         return BACouponCellNode(with: coupon)
     }
     
@@ -86,7 +91,7 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
             // show message alert
             let alert = UIAlertController(title: "Delete this coupon?", message: "You will lose access to this coupon\nThis action cannot be undone!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                let coupon = self.coupons[indexPath.item - 1]
+                let coupon = Array(self.coupons.values)[indexPath.item - 1]
                 let userId = FirebaseService.currentUserId
                 FirebaseService.usersReference.child(userId).child("coupons").child(coupon.promotionId).child("redeemed").setValue(true)
             }))

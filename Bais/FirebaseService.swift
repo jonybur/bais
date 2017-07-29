@@ -30,6 +30,7 @@ class FirebaseService{
 	static let locationsHistoryReference = FIRDatabase.database().reference().child("locations_history")
 	static let usersReference = FIRDatabase.database().reference().child("users")
     static let promotionsReference = FIRDatabase.database().reference().child("promotions")
+    static let referenceIdsReference = FIRDatabase.database().reference().child("reference_ids")
     static let couponsReference = FIRDatabase.database().reference().child("coupons")
 	static let sessionsReference = FIRDatabase.database().reference().child("sessions")
 	static let reportsReference = FIRDatabase.database().reference().child("reports")
@@ -45,7 +46,31 @@ class FirebaseService{
 	enum ImagePurpose: String{
 		case profilePicture = "profile_picture"
 	}
+    
+    static func setReferenceId(){
+        FirebaseService.usersReference.child(currentUserId).child("reference_id").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
+            // checks if referenceId exists
+            guard let _ = snapshot.value as? String else {
+                FirebaseService.createReferenceId()
+                return
+            }
+        }
+    }
 	
+    static func createReferenceId(){
+        let firstNameLetter = CurrentUser.user.firstName.characters.count > 0 ?
+            CurrentUser.user.firstName.substring(to: 1) : ""
+        let lastNameLetter = CurrentUser.user.lastName.characters.count > 0 ?
+            CurrentUser.user.lastName.substring(to: 1) : ""
+
+        let referenceId = firstNameLetter + lastNameLetter + String(ez.random(0..<99999))
+        let value = [
+            referenceId: currentUserId
+        ]
+        referenceIdsReference.updateChildValues(value)
+        usersReference.child(currentUserId).child("reference_id").setValue(referenceId)
+    }
+    
 	static func logOut(){
 		resetUserNotificationToken()
 		CurrentUser.user = nil

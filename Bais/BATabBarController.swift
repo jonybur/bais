@@ -86,7 +86,8 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		observeAppVersion()
 		observeFriendBadge()
         observeCoupons()
-		
+        FirebaseService.setReferenceId()
+        
 		selectedIndex = 0
 	}
 	
@@ -98,7 +99,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
 		UIApplication.shared.statusBarStyle = .default
 		guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
 		statusBar.backgroundColor = ColorPalette.white
-		
 		NotificationCenter.default.addObserver(self,
 		                                       selector:#selector(applicationWillEnterForeground(_:)),
 		                                       name:NSNotification.Name.UIApplicationWillEnterForeground,
@@ -116,7 +116,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
     func observeCoupons(){
         // user sessions (CHATS)
         let userId = FirebaseService.currentUserId
-        
         let couponsSessionsRef = FirebaseService.usersReference.child(userId).child("coupons")
         couponsSessionsRef.observe(.value) { (snapshot: FIRDataSnapshot!) in
             guard let dictionary = snapshot.value as? NSDictionary else {
@@ -124,7 +123,6 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
                 self.grantCoupon(for: "on_register")
                 return
             }
-            
             // this only happens on old users
             if (dictionary["on_register"] == nil){
                 self.grantCoupon(for: "on_register")

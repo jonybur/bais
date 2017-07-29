@@ -21,6 +21,13 @@ class BAEmptyStateMessagesCellNode: BAEmptyStateCellNode{
 	}
 }
 
+class BAEmptyStateCouponsCellNode: BAEmptyStateCellNode{
+    init(){
+        super.init(title: "You don't have any coupons.", image: UIImage(named: "empty-messages")!)
+    }
+}
+
+
 class BAEmptyStateCellNode: ASCellNode {
 	
 	let titleNode = ASTextNode()
@@ -38,7 +45,7 @@ class BAEmptyStateCellNode: ASCellNode {
 			NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.lightGrey,
 			NSParagraphStyleAttributeName: titleParagraphStyle]
-		titleNode.attributedText = NSAttributedString(string: title, attributes: titleAttributes)
+        titleNode.attributedText = NSAttributedString(string: title, attributes: titleAttributes)
 		
 		imageNode.image = image
 		
