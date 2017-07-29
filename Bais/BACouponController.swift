@@ -73,14 +73,18 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
     }
     
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        let count = coupons.count > 0 ? coupons.count + 1 : 0 // for bottom spacer
-        return count + 1 // for header
+        if (coupons.count > 0){
+            // header and spacer
+            return coupons.count + 2
+        }
+        // header and empty state box
+        return 2
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let removeAction = UITableViewRowAction(style: .normal, title: "Delete") { (rowAction, indexPath) in
             // show message alert
-            let alert = UIAlertController(title: "Delete this coupon?", message: "You will lose access to this coupon. This action cannot be undone.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Delete this coupon?", message: "You will lose access to this coupon\nThis action cannot be undone!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                 let coupon = self.coupons[indexPath.item - 1]
                 let userId = FirebaseService.currentUserId
