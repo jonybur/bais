@@ -13,7 +13,8 @@ import PromiseKit
 
 final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
 	BAEditBasicUserInfoCellNodeDelegate, BAEditCountryPickerCellNodeDelegate, BAEditImageCarouselCellNodeDelegate,
-	BAEditDescriptionCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	BAEditDescriptionCellNodeDelegate,
+    UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	var user = User()
 	var backButtonNode = BADetailBackButtonNode()
@@ -67,10 +68,12 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		view.endEditing(true)
 	}
 	
+    var keyboardHeight: CGFloat = 0
 	func keyboardWillShow(notification: NSNotification) {
 		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if (keyboardSize.height > 0) { keyboardHeight = keyboardSize.height }
 			if self.view.frame.origin.y == 0{
-				self.view.frame.origin.y -= keyboardSize.height
+				self.view.frame.origin.y -= keyboardHeight
 			}
 		}
 	}
@@ -78,7 +81,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	func keyboardWillHide(notification: NSNotification) {
 		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 			if self.view.frame.origin.y != 0{
-				self.view.frame.origin.y += keyboardSize.height
+				self.view.frame.origin.y += keyboardHeight
 			}
 		}
 	}
@@ -88,7 +91,6 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	}
 	
 	func actionButtonPressed(_ sender: UIButton){
-		
 		if (actionButtonNode.allowsDone){
 			let loadingController = BALoadingController()
 			navigationController?.pushViewController(loadingController, animated: true)
@@ -96,7 +98,6 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 			let alert = UIAlertController(title: "Please fill in your country", message: "We need to know where are you from before continuing", preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
 			present(alert, animated: true, completion: nil)
-
 		}
 	}
 	
@@ -138,20 +139,26 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 			let basicCellNode = BAEditBasicUserInfoCellNode(with: user, allowsCountryEditing: mode == .create)
 			basicCellNode.delegate = self
 			return basicCellNode
-		}
+        }
 		
 		if (showCountryPicker){
-			if (item == 2){
-				let countryPickerCellNode = BAEditCountryPickerCellNode()
-				countryPickerCellNode.delegate = self
-				return countryPickerCellNode
-			} else if (item == 3){
+            if (item == 2){
+                let countryPickerCellNode = BAEditCountryPickerCellNode()
+                countryPickerCellNode.delegate = self
+                return countryPickerCellNode
+            } else if (item == 3) {
+                let referralCellNode = BAEditReferralCellNode()
+                return referralCellNode
+            } else if (item == 4) {
 				let descriptionCellNode = BAEditDescriptionCellNode(with: user)
 				descriptionCellNode.delegate = self
 				return descriptionCellNode
 			}
 		} else {
-			if (item == 2){
+            if (item == 2) {
+                let referralCellNode = BAEditReferralCellNode()
+                return referralCellNode
+            } else if (item == 3){
 				let descriptionCellNode = BAEditDescriptionCellNode(with: user)
 				descriptionCellNode.delegate = self
 				return descriptionCellNode
@@ -166,7 +173,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		return showCountryPicker ? 5 : 4
+        return showCountryPicker ? 6 : 5
 	}
 	
 //MARK: - BAEditImageCarouselCellNodeDelegate methods
@@ -196,7 +203,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	
 	internal func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
 		let image = info[UIImagePickerControllerEditedImage] as? UIImage
-		dismiss(animated: true, completion: nil)
+		dismiss(animated: false, completion: nil)
 		
 		FirebaseService.storeImage(image!, as: .profilePicture).then { url -> Void in
 			self.user.profilePicture = url.absoluteString
@@ -215,13 +222,11 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		tableNode.deleteRows(at: idxPath, with: .fade)
 		let idxPathToReload = [IndexPath(item: 1, section:0), IndexPath(item: 2, section:0)]
 		tableNode.reloadRows(at: idxPathToReload, with: .fade)
-		
         if (code.characters.count > 0){
             FirebaseService.updateUserNationality(with: code)
             actionButtonNode.enable()
         }
-        
-		tableNode.view.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+		tableNode.view.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
 	}
 	
 //MARK: - BAEditBasicUserInfoCellNodeDelegate methods
@@ -234,7 +239,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		let idxPath = [IndexPath(item: 2, section:0)]
 		tableNode.insertRows(at: idxPath, with: .fade)
 		tableNode.reloadRows(at: idxPath, with: .fade)
-		tableNode.view.setContentOffset(CGPoint(x: 0, y: 200), animated: true)
+		tableNode.view.setContentOffset(CGPoint(x: 0, y: 200), animated: false)
 	}
 	
 //MARK: - BAEditDescriptionCellNode methods

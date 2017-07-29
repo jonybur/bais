@@ -33,7 +33,6 @@ class BALoadingController: UIViewController{
 			} else {
 				self.continuesToTabBar()
 			}
-			
 		}.catch { _ in }
 	}
 	

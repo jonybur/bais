@@ -60,7 +60,6 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 			textCounterNode.attributedText = NSAttributedString(string: "0/400", attributes: titleAttributes)
 			return
 		}
-		
 		textCounterNode.attributedText = NSAttributedString(string: String(attributedText.length) + "/400", attributes: titleAttributes)
 		
 		// TODO: re-layout descriptionNode according to attributedText length
@@ -106,5 +105,4 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 		
 		return textInsetSpec
 	}
-	
 }

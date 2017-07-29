@@ -14,6 +14,7 @@
 		5694E1431F23C291007A6B09 /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5694E13C1F23C286007A6B09 /* Nunito-Bold.ttf */; };
 		5694E14C1F23C291007A6B09 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5694E1371F23C286007A6B09 /* Nunito-Regular.ttf */; };
 		5694E14D1F23C291007A6B09 /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5694E13F1F23C286007A6B09 /* Nunito-SemiBold.ttf */; };
+		56BF46FB1F2D1325004ECA0D /* BAEditReferralCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BF46FA1F2D1325004ECA0D /* BAEditReferralCellNode.swift */; };
 		98E065071595FBADC7398C85 /* Pods_BAIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4B708BCF614883E27A87B4 /* Pods_BAIS.framework */; };
 		AB0E468B1DF3E628003CA68C /* MosaicCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */; };
 		AB121B151E45BC5300EEDCC3 /* BASpacerCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */; };
@@ -179,6 +180,7 @@
 		5694E1371F23C286007A6B09 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		5694E13C1F23C286007A6B09 /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		5694E13F1F23C286007A6B09 /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
+		56BF46FA1F2D1325004ECA0D /* BAEditReferralCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAEditReferralCellNode.swift; sourceTree = "<group>"; };
 		AB0E468A1DF3E628003CA68C /* MosaicCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicCollectionViewLayout.swift; sourceTree = "<group>"; };
 		AB121B141E45BC5300EEDCC3 /* BASpacerCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASpacerCellNode.swift; sourceTree = "<group>"; };
 		AB18B3041E4C0D44001C294B /* BASettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASettingsController.swift; sourceTree = "<group>"; };
@@ -457,6 +459,7 @@
 				ABA234551E4D895F00CBAF53 /* BAEditBasicUserInfoCellNode.swift */,
 				ABD158E01E511C68007C4163 /* BAEditCountryPickerCellNode.swift */,
 				ABA234531E4D883600CBAF53 /* BAEditDescriptionCellNode.swift */,
+				56BF46FA1F2D1325004ECA0D /* BAEditReferralCellNode.swift */,
 			);
 			name = EditProfile;
 			sourceTree = "<group>";
@@ -1051,6 +1054,7 @@
 				5673F3461F1F13DE00AD6FEE /* BACouponHeaderCellNode.swift in Sources */,
 				AB3DDB121E4ABEA000D005A6 /* BAMapCellNode.swift in Sources */,
 				ABB9F2FF1D9170C600E01511 /* RSVPStatus.swift in Sources */,
+				56BF46FB1F2D1325004ECA0D /* BAEditReferralCellNode.swift in Sources */,
 				ABFF2A131E2F1B0E00B10B76 /* BAFriendsController.swift in Sources */,
 				AB18B3091E4C11DF001C294B /* BASettingsHeaderCellNode.swift in Sources */,
 				AB7C37A31E65838600CA253C /* BAVersionLockingScreenCellNode.swift in Sources */,
