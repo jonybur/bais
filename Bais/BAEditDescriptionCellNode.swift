@@ -12,6 +12,7 @@ import AsyncDisplayKit
 
 protocol BAEditDescriptionCellNodeDelegate: class {
 	func editDescriptionCellNodeDidFinishEditing(about: String)
+    func editDescriptionCellNodeDidUpdateText(text: String)
 }
 
 class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
@@ -58,10 +59,11 @@ class BAEditDescriptionCellNode: ASCellNode, ASEditableTextNodeDelegate {
 	func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
 		guard let attributedText = editableTextNode.attributedText else {
 			textCounterNode.attributedText = NSAttributedString(string: "0/400", attributes: titleAttributes)
+            delegate?.editDescriptionCellNodeDidUpdateText(text: "")
 			return
 		}
 		textCounterNode.attributedText = NSAttributedString(string: String(attributedText.length) + "/400", attributes: titleAttributes)
-		
+        delegate?.editDescriptionCellNodeDidUpdateText(text: attributedText.string)
 		// TODO: re-layout descriptionNode according to attributedText length
 		if (attributedText.length > 400){
 			let range = NSRange(location: 0, length: 400)

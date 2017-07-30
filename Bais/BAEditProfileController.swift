@@ -13,14 +13,14 @@ import PromiseKit
 
 final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
 	BAEditBasicUserInfoCellNodeDelegate, BAEditCountryPickerCellNodeDelegate, BAEditImageCarouselCellNodeDelegate,
-	BAEditDescriptionCellNodeDelegate,
-    UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	BAEditDescriptionCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	var user = User()
 	var backButtonNode = BADetailBackButtonNode()
 	var actionButtonNode = BADetailActionButtonNode()
-	var showCountryPicker: Bool = false
 	var mode: EditProfileMode?
+    var showCountryPicker: Bool = false
+    var keyboardHeight: CGFloat = 0
 	
 	enum EditProfileMode: String{
 		case settings = "settings", create = "create"
@@ -68,7 +68,6 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		view.endEditing(true)
 	}
 	
-    var keyboardHeight: CGFloat = 0
 	func keyboardWillShow(notification: NSNotification) {
 		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if (keyboardSize.height > 0) { keyboardHeight = keyboardSize.height }
@@ -79,7 +78,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	}
 	
 	func keyboardWillHide(notification: NSNotification) {
-		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+		if let _ = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 			if self.view.frame.origin.y != 0{
 				self.view.frame.origin.y += keyboardHeight
 			}
@@ -121,6 +120,11 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 		actionButtonNode.view.center = CGPoint(x: actionButtonNode.view.center.x,
 		                                     y: scrollView.contentOffset.y + ez.screenHeight - actionButtonNode.view.frame.height + 15)
 	}
+    
+    func updateAbout(_ about: String){
+        user.about = about
+        FirebaseService.updateUserAbout(with: about)
+    }
 	
 	override var prefersStatusBarHidden: Bool {
 		return true
@@ -141,6 +145,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 			return basicCellNode
         }
 		
+        // this will only happen on EditProfileMode.create anyways
 		if (showCountryPicker){
             if (item == 2){
                 let countryPickerCellNode = BAEditCountryPickerCellNode()
@@ -155,14 +160,23 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 				return descriptionCellNode
 			}
 		} else {
-            if (item == 2) {
-                let referralCellNode = BAEditReferralCellNode()
-                return referralCellNode
-            } else if (item == 3){
-				let descriptionCellNode = BAEditDescriptionCellNode(with: user)
-				descriptionCellNode.delegate = self
-				return descriptionCellNode
-			}
+            if (mode == .create) {
+                // should show referral
+                if (item == 2) {
+                    let referralCellNode = BAEditReferralCellNode()
+                    return referralCellNode
+                } else if (item == 3) {
+                    let descriptionCellNode = BAEditDescriptionCellNode(with: user)
+                    descriptionCellNode.delegate = self
+                    return descriptionCellNode
+                }
+            } else {
+                if (item == 2) {
+                    let descriptionCellNode = BAEditDescriptionCellNode(with: user)
+                    descriptionCellNode.delegate = self
+                    return descriptionCellNode
+                }
+            }
 		}
 		
 		return BASpacerCellNode()
@@ -173,7 +187,10 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return showCountryPicker ? 6 : 5
+        if (mode == .create) {
+            return showCountryPicker ? 6 : 5
+        }
+        return showCountryPicker ? 5 : 4
 	}
 	
 //MARK: - BAEditImageCarouselCellNodeDelegate methods
@@ -244,9 +261,11 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	
 //MARK: - BAEditDescriptionCellNode methods
 	
+    internal func editDescriptionCellNodeDidUpdateText(text: String) {
+        updateAbout(text)
+    }
+    
 	internal func editDescriptionCellNodeDidFinishEditing(about: String) {
-		user.about = about
-		FirebaseService.updateUserAbout(with: about)
+		updateAbout(about)
 	}
-
 }
