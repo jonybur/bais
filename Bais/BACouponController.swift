@@ -47,16 +47,15 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
             let coupon = Coupon(from: dictionary, key: snapshot.key)
             if (!coupon.redeemed){
                 coupon.fetchAdditionalData().then(execute: { _ -> Void in
-                    self.coupons[coupon.couponId] = coupon
+                    self.coupons[coupon.promotionId] = coupon
                     self.tableNode.reloadData()
                 }).catch(execute: { _ in })
             }
         }
         
         userFriendsRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
-            guard let dictionary = snapshot.value as? NSDictionary else { return }
-            guard let couponId = dictionary["coupon_id"] as? String else { return }
-            self.coupons.removeValue(forKey: couponId)
+            guard let _ = snapshot.value as? NSDictionary else { return }
+            self.coupons.removeValue(forKey: snapshot.key)
             self.tableNode.reloadData()
         }
     }

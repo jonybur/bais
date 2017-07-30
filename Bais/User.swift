@@ -27,6 +27,8 @@ class User{
 	var lastName = ""
 	var countryCode = ""
 	var about = ""
+    var promoId = ""
+    var referenceId = ""
 	var birthday = Date()
 	var notificationToken = ""
 	var profilePicture = ""
@@ -73,11 +75,34 @@ class User{
 	
 	private func setValuesFromDictionary(_ dictionary: NSDictionary, key id: String){
 		self.id = id
-		self.facebookId = dictionary["facebook_id"] as! String
-		self.firstName = dictionary["first_name"] as! String
-		self.lastName = dictionary["last_name"] as! String
-		self.countryCode = dictionary["country_code"] as! String
-		self.profilePicture = dictionary["profile_picture"] as! String
+		
+        if let facebookId = dictionary["facebook_id"] as? String {
+            self.facebookId = facebookId
+        }
+        
+        if let promoId = dictionary["promo_id"] as? String {
+            self.promoId = promoId
+        }
+        
+        if let referenceId = dictionary["reference_id"] as? String {
+            self.referenceId = referenceId
+        }
+        
+        if let firstName = dictionary["first_name"] as? String {
+            self.firstName = firstName
+        }
+        
+        if let lastName = dictionary["last_name"] as? String {
+            self.lastName = lastName
+        }
+        
+        if let countryCode = dictionary["country_code"] as? String {
+            self.countryCode = countryCode
+        }
+        
+        if let profilePicture = dictionary["profile_picture"] as? String {
+            self.profilePicture = profilePicture
+        }
 		
 		if let birthdayValue = dictionary["birthday"] as? String{
 			if (birthdayValue == ""){

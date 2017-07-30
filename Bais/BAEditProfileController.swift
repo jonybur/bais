@@ -13,8 +13,9 @@ import PromiseKit
 
 final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate,
 	BAEditBasicUserInfoCellNodeDelegate, BAEditCountryPickerCellNodeDelegate, BAEditImageCarouselCellNodeDelegate,
-	BAEditDescriptionCellNodeDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-	
+	BAEditDescriptionCellNodeDelegate, BAEditReferralCellNodeDelegate,
+    UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+   
 	var user = User()
 	var backButtonNode = BADetailBackButtonNode()
 	var actionButtonNode = BADetailActionButtonNode()
@@ -54,8 +55,15 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 			super.node.addSubnode(actionButtonNode)
 		}
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+		NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        
+		NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
 		
 		let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
 		view.addGestureRecognizer(tap)
@@ -125,7 +133,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
         user.about = about
         FirebaseService.updateUserAbout(with: about)
     }
-	
+    
 	override var prefersStatusBarHidden: Bool {
 		return true
 	}
@@ -153,6 +161,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
                 return countryPickerCellNode
             } else if (item == 3) {
                 let referralCellNode = BAEditReferralCellNode()
+                referralCellNode.delegate = self
                 return referralCellNode
             } else if (item == 4) {
 				let descriptionCellNode = BAEditDescriptionCellNode(with: user)
@@ -164,6 +173,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
                 // should show referral
                 if (item == 2) {
                     let referralCellNode = BAEditReferralCellNode()
+                    referralCellNode.delegate = self
                     return referralCellNode
                 } else if (item == 3) {
                     let descriptionCellNode = BAEditDescriptionCellNode(with: user)
@@ -268,4 +278,11 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 	internal func editDescriptionCellNodeDidFinishEditing(about: String) {
 		updateAbout(about)
 	}
+
+//MARK: - BAEditReferralCellNodeDelegate methods
+
+    func editReferralCellNodeDidUpdateText(text: String) {
+        user.promoId = text
+        FirebaseService.updateUserPromoId(with: text)
+    }
 }

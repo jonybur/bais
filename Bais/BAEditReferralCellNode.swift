@@ -10,7 +10,12 @@ import Foundation
 import UIKit
 import AsyncDisplayKit
 
+protocol BAEditReferralCellNodeDelegate: class {
+    func editReferralCellNodeDidUpdateText(text: String)
+}
+
 class BAEditReferralCellNode: ASCellNode, ASEditableTextNodeDelegate {
+    weak var delegate: BAEditReferralCellNodeDelegate?
     let titleTextNode = ASTextNode()
     let descriptionNode = ASEditableTextNode()
     let buttonNode = ASButtonNode()
@@ -49,8 +54,12 @@ class BAEditReferralCellNode: ASCellNode, ASEditableTextNodeDelegate {
     }
     
     func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
-        guard let attributedText = editableTextNode.attributedText else { return }
+        guard let attributedText = editableTextNode.attributedText else {
+            delegate?.editReferralCellNodeDidUpdateText(text: "")
+            return
+        }
         let enterIndex = attributedText.string.indexOfCharacter("\n")
+        delegate?.editReferralCellNodeDidUpdateText(text: attributedText.string)
         if (enterIndex != nil){
             var newText = attributedText.string
             let index = newText.index(newText.startIndex, offsetBy: enterIndex!)

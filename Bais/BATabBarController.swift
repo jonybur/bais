@@ -117,33 +117,30 @@ open class BATabBarController: ESTabBarController, CLLocationManagerDelegate {
         // user sessions (CHATS)
         let userId = FirebaseService.currentUserId
         let couponsSessionsRef = FirebaseService.usersReference.child(userId).child("coupons")
-        couponsSessionsRef.observe(.value) { (snapshot: FIRDataSnapshot!) in
+        couponsSessionsRef.observeSingleEvent(of: .value, with: { snapshot in
             guard let dictionary = snapshot.value as? NSDictionary else {
                 // should grant on_register coupon
-                self.grantCoupon(for: "on_register")
+                self.grantCouponsOnRegister()
                 return
             }
             // this only happens on old users
             if (dictionary["on_register"] == nil){
-                self.grantCoupon(for: "on_register")
+                self.grantCouponsOnRegister()
             }
+        })
+    }
+    
+    func grantCouponsOnRegister(){
+        FirebaseService.grantCoupon(for: "on_register")
+        // checks if user has a promo id
+        if (CurrentUser.user.promoId.characters.count > 0){
+            FirebaseService.referenceIdsReference.child(CurrentUser.user.promoId).observeSingleEvent(of: .value, with: { snapshot in
+                guard let userId = snapshot.value as? String else { /* no user reference found */ return }
+                FirebaseService.grantReferralCoupon(to: userId)
+            })
         }
     }
     
-    func grantCoupon(for promotionId: String){
-        // fetches coupon
-        FirebaseService.promotionsReference.child(promotionId).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
-            // checks if promotion exists
-            guard let couponId = snapshot.value as? String else { return }
-            
-            let userId = FirebaseService.currentUserId
-            let couponsSessionsRef = FirebaseService.usersReference.child(userId).child("coupons")
-            let coupon = ["coupon_id": couponId,
-                          "redeemed": false] as [String : Any]
-            couponsSessionsRef.setValue([promotionId: coupon])
-        }
-    }
-	
     // chat badge
 	func observeFriendBadge(){
 		var invitedFriendsCount = 0
