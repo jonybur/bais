@@ -15,7 +15,7 @@ import PromiseKit
 import FBSDKLoginKit
 
 class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, ASTableDelegate {
-    var emptyStateMessagesNode = BAEmptyStateMessagesCellNode()
+    var emptyStateCouponsNode = BAEmptyStateCouponsCellNode()
     var coupons = [String:Coupon]()
     var tableNode: ASTableNode {
         return node as! ASTableNode
@@ -35,7 +35,7 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
     override func viewDidLoad() {
         super.viewDidLoad()
         observeCoupons()
-        //node.addSubnode(emptyStateMessagesNode)
+        node.addSubnode(emptyStateCouponsNode)
     }
     
     private func observeCoupons() {
@@ -52,7 +52,6 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
                 }).catch(execute: { _ in })
             }
         }
-        
         userFriendsRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             guard let _ = snapshot.value as? NSDictionary else { return }
             self.coupons.removeValue(forKey: snapshot.key)
@@ -79,9 +78,11 @@ class BACouponController: ASViewController<ASDisplayNode>, ASTableDataSource, AS
     func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
         if (coupons.count > 0){
             // header and spacer
+            emptyStateCouponsNode.alpha = 0
             return coupons.count + 2
         }
         // header and empty state box
+        emptyStateCouponsNode.alpha = 1
         return 2
     }
     

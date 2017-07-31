@@ -87,15 +87,15 @@ BASettingsHeaderNodeDelegate, BASettingsOptionsNodeDelegate, UIGestureRecognizer
 	
 	func settingsOptionsNodeDidClickShareButton(){
 		// text to share
-		let text = "Check out BAIS... it shows you exchange students nearby! http://apple.co/2lTS4Ru"
+        let text = CurrentUser.user.firstName + " wants to invite you to try BAIS. Register using promo code " + CurrentUser.user.referenceId + "\n\nDownload now! http://apple.co/2lTS4Ru"
 		
 		// set up activity view controller
-		let textToShare = [ text ]
+		let textToShare = [text]
 		let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
 		activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
 		
 		// exclude some activity types from the list (optional)
-		activityViewController.excludedActivityTypes = [ UIActivityType.airDrop ]
+		activityViewController.excludedActivityTypes = [UIActivityType.airDrop]
 		
 		// present the view controller
 		present(activityViewController, animated: true, completion: nil)

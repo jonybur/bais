@@ -23,7 +23,7 @@ class BAEmptyStateMessagesCellNode: BAEmptyStateCellNode{
 
 class BAEmptyStateCouponsCellNode: BAEmptyStateCellNode{
     init(){
-        super.init(title: "You don't have any coupons.", image: UIImage(named: "empty-messages")!)
+        super.init(title: "You don't have any coupons\nInvite friends to win prizes!", image: UIImage(named: "empty-coupons")!)
     }
 }
 
@@ -42,7 +42,7 @@ class BAEmptyStateCellNode: ASCellNode {
 		titleParagraphStyle.alignment = .center
 		
 		let titleAttributes = [
-			NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 16),
+			NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 16),
 			NSForegroundColorAttributeName: ColorPalette.lightGrey,
 			NSParagraphStyleAttributeName: titleParagraphStyle]
         titleNode.attributedText = NSAttributedString(string: title, attributes: titleAttributes)

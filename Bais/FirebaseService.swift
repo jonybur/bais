@@ -93,12 +93,13 @@ class FirebaseService{
         let lastNameLetter = CurrentUser.user.lastName.characters.count > 0 ?
             CurrentUser.user.lastName.substring(to: 1) : ""
 
-        let referenceId = firstNameLetter + lastNameLetter + String(ez.random(0..<99999))
+        let referenceId = firstNameLetter + lastNameLetter + String(ez.random(0..<9999))
         let value = [
             referenceId: currentUserId
         ]
         referenceIdsReference.updateChildValues(value)
         usersReference.child(currentUserId).child("reference_id").setValue(referenceId)
+        CurrentUser.user.referenceId = referenceId
     }
     
 	static func logOut(){

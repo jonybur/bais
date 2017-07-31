@@ -85,7 +85,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		navigationController.pushViewController(screen, animated: false)
 		navigationController.isNavigationBarHidden = true
-
+        if #available(iOS 11.0, *) {
+            navigationController.navigationBar.prefersLargeTitles = false
+        }
+        
 		window = UIWindow(frame: UIScreen.main.bounds)
         window!.rootViewController = navigationController
         window!.makeKeyAndVisible()
