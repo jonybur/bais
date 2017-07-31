@@ -92,7 +92,11 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		// taps friend (opens chat)
         // TODO: improve this method
         let sessionsToLoad = sessionListWithMessages()
-        let rowsDelta = tableNode.numberOfRows(inSection: 0) - sessionsToLoad.count - 1
+        var rowsDelta = tableNode.numberOfRows(inSection: 0) - sessionsToLoad.count - 1
+        if (sessionListWithNoMessages().count == 0){
+            rowsDelta += 1
+        }
+        
 		let session = sessionsToLoad[indexPath.item - rowsDelta]
 		self.navigationController?.pushViewController(BAChatController(with: session), animated: true)
 		self.tableNode.deselectRow(at: indexPath, animated: true)
@@ -116,8 +120,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			return chatNode
 		}
 		
-        let noMessagesSessions = sessionListWithNoMessages()
-        if (noMessagesSessions.count > 0) {
+        if (sessionListWithNoMessages().count > 0) {
             // should load horizontal chat list
             // gets list of sessions that has no messages
             
@@ -134,14 +137,14 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                 node.style.preferredSize = CGSize(width: ez.screenWidth, height: 130)
                 
                 return node;
-            } else if (item == 3){
+            } else if (item == 3 && self.sessionsWithMessages.count > 0){
                 return BAChatVerticalHeaderCellNode()
             }
         }
         
         let sessionsToLoad = sessionsWithMessages
         // TODO: make this work with other variable of headers (4 is current)
-        let idx = item - 4
+        let idx = sessionListWithNoMessages().count > 0 ? item - 4 : item - 1
         if (sessionsToLoad.count > idx && idx >= 0){
             let session = sessionsToLoad[idx]
             let chatNode = BAChatCellNode(with: session)
@@ -170,8 +173,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                 return 1;
             }
 			
-            let noMessagesCount = sessionListWithNoMessages().count
-            if (noMessagesCount > 0){
+            if (sessionListWithNoMessages().count > 0){
                 // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
                 rowCount = rowCountForSessionsAndNoMessages()
             } else {
@@ -193,9 +195,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
     }
     
     func sessionListWithNoMessages() -> [Session]{
-        return self.sessions.filter ({ session -> Bool in
+        return [Session]()/*self.sessions.filter ({ session -> Bool in
             return session.lastMessage.timestamp == 0
-        })
+        })*/
         
         // should sort by creation date
         //return sessions.sorted(by: { $0.lastMessage.timestamp > $1.lastMessage.timestamp })
@@ -235,8 +237,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
             if (sessions.count == 0){
                 elementsToDisplay = 1;
             } else {
-                let noMessagesCount = sessionListWithNoMessages().count
-                if (noMessagesCount > 0){
+                if (sessionListWithNoMessages().count > 0){
                     // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
                     elementsToDisplay = rowCountForSessionsAndNoMessages()
                 } else {
@@ -244,7 +245,6 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
                     elementsToDisplay = sessions.count + 1
                 }
             }
-            
         }
 		
 		// current row count
@@ -423,8 +423,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
     
     func reloadActiveRows(){
-        let noMessagesCount = sessionListWithNoMessages().count
-        if (noMessagesCount > 0){
+        if (sessionListWithNoMessages().count > 0){
             // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
             // refreshes rows
             
