@@ -67,6 +67,10 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		if (indexPath.item == 0){
 			return
 		}
+        
+        if (sessionListWithNoMessages().count > 0 && (indexPath.item == 1 || indexPath.item == 3)){
+            return
+        }
 		
 		if (displayMode == .requests){
 			// taps request
@@ -113,7 +117,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		
         let noMessagesSessions = sessionListWithNoMessages()
-        if (noMessagesSessions.count > 0){
+        if (noMessagesSessions.count > 0) {
             // should load horizontal chat list
             // gets list of sessions that has no messages
             
