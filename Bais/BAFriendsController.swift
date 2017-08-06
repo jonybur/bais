@@ -163,26 +163,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
     }
 	
 	func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-		var rowCount = 0
-		
-		// gets item count (includes header)
-		if (displayMode == .requests){
-			rowCount = requests.count > 0 ? requests.count + 1 : 1
-		} else if (displayMode == .sessions){
-            if (sessions.count == 0){
-                return 1;
-            }
-			
-            if (sessionListWithNoMessages().count > 0){
-                // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
-                rowCount = rowCountForSessionsAndNoMessages()
-            } else {
-                rowCount = sessionsWithMessages.count + 1
-            }
-		}
-		
+		let rowCount = calculateElementsToDisplay()
 		displayEmptyState(rowCount)
-		
 		// return normal count
 		return rowCount
 	}
@@ -195,9 +177,9 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
     }
     
     func sessionListWithNoMessages() -> [Session]{
-        return [Session]()/*self.sessions.filter ({ session -> Bool in
+        return self.sessions.filter ({ session -> Bool in
             return session.lastMessage.timestamp == 0
-        })*/
+        })
         
         // should sort by creation date
         //return sessions.sorted(by: { $0.lastMessage.timestamp > $1.lastMessage.timestamp })
@@ -225,42 +207,47 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 	}
 	
 //MARK: - BAChatHeaderCellNodeDelegate
+    
+    func calculateElementsToDisplay() -> Int {
+        var rowCount = 0
+        // gets item count (includes header)
+        if (displayMode == .requests){
+            rowCount = requests.count > 0 ? requests.count + 1 : 1
+        } else if (displayMode == .sessions){
+            if (sessions.count == 0){
+                return 1;
+            }
+            
+            if (sessionListWithNoMessages().count > 0){
+                // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
+                rowCount = rowCountForSessionsAndNoMessages()
+            } else {
+                rowCount = sessionsWithMessages.count + 1
+            }
+        }
+        return rowCount
+    }
 	
 	func chatHeaderCellNodeDidClickButton(_ chatViewCell: BAChatHeaderCellNode) {
 		displayMode = displayMode.next()
 		
 		// adds the header to the final count
-		var elementsToDisplay = 0
-		if (displayMode == .requests){
-			elementsToDisplay = requests.count + 1
-		} else if (displayMode == .sessions){
-            if (sessions.count == 0){
-                elementsToDisplay = 1;
-            } else {
-                if (sessionListWithNoMessages().count > 0){
-                    // adds horizontal scrolling list (this means +1 rowCount for all of the messages)
-                    elementsToDisplay = rowCountForSessionsAndNoMessages()
-                } else {
-                    // no horizontal scrolling list
-                    elementsToDisplay = sessions.count + 1
-                }
-            }
-        }
+		let rowCount = calculateElementsToDisplay()
 		
 		// current row count
 		let tableRows = tableNode.numberOfRows(inSection: 0)
-		if (tableRows < elementsToDisplay){
+		if (tableRows < rowCount){
 			// need to add more rows to make up for elementsToDisplay
 			var idxToInsert = [IndexPath]()
-			for idx in tableRows...elementsToDisplay - 1{
+			for idx in tableRows...rowCount - 1{
 				let idxPath = IndexPath(item:idx, section:0)
 				idxToInsert.append(idxPath)
 			}
 			tableNode.insertRows(at: idxToInsert, with: .fade)
-		} else if (elementsToDisplay < tableRows){
+		} else if (rowCount < tableRows){
 			// need to remove rows to make up for elementsToDisplay
 			var idxToRemove = [IndexPath]()
-			for idx in elementsToDisplay...tableRows - 1{
+			for idx in rowCount...tableRows - 1{
 				let idxPath = IndexPath(item:idx, section:0)
 				idxToRemove.append(idxPath)
 			}
@@ -268,8 +255,8 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 		}
 		
 		var idxToReload = [IndexPath]()
-		if (elementsToDisplay > 1){
-			for idx in 1...elementsToDisplay-1{
+		if (rowCount > 1){
+			for idx in 1...rowCount-1{
 				let idxPath = IndexPath(row: idx, section: 0)
 				idxToReload.append(idxPath)
 			}
@@ -393,23 +380,32 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				}
 			}
 			
-			// removes from screen
-			for (idx, session) in self.sessions.enumerated(){
-				if (session.id == snapshot.key){
-					self.sessions.remove(at: idx)
-					if(self.displayMode == .sessions){
-						let idxPath = IndexPath(row: idx + 1, section: 0)
-						self.tableNode.deleteRows(at: [idxPath], with: .fade)
-					}
-					return
-				}
-			}
+            if (self.removeSession(snapshot.key)) {
+                self.tableNode.reloadData()
+            }
 			
 			let tableRows = self.tableNode.numberOfRows(inSection: 0)
 			self.displayEmptyState(tableRows)
 		}
 	}
 
+    private func removeSession(_ sessionIdToDelete: String) -> Bool {
+        var removedSession = false
+        for (idx, session) in self.sessions.enumerated() {
+            if (session.id == sessionIdToDelete) {
+                self.sessions.remove(at: idx)
+                removedSession = true
+            }
+        }
+        for (idx, session) in self.sessionsWithMessages.enumerated() {
+            if (session.id == sessionIdToDelete) {
+                self.sessionsWithMessages.remove(at: idx)
+                removedSession = true
+            }
+        }
+        return removedSession
+    }
+    
 	private func selectDisplayMode(){
 		if (sessions.count == 0 && requests.count == 0){
 			// show empty message
@@ -452,7 +448,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 				message.timestamp = messageDictionary["timestamp"] as! CGFloat
                 
                 // if session didnt have messages (or first time retrieving)
-                if (!self.sessionsWithMessages.contains(where: { s -> Bool in session.id == s.id})){
+                if (!self.sessionsWithMessages.contains(where: { s -> Bool in session.id == s.id})) {
                     self.sessionsWithMessages.append(session)
                 }
                 

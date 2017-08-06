@@ -72,7 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		let options = FIROptions(contentsOfFile: firebaseSettingsPath)
 		FIRApp.configure(with: options!)
-		
 		FIRDatabase.database().persistenceEnabled = false
 		
 		let screen: UIViewController!
