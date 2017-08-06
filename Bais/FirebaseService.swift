@@ -62,24 +62,28 @@ class FirebaseService{
             // reference id is for current user, do not grant coupon
             return
         }
-        FirebaseService.promotionsReference.child("on_referral").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
+        promotionsReference.child("on_referral").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
             // checks if promotion exists
             guard let couponId = snapshot.value as? String else { return }
             let coupon = ["coupon_id": couponId,
                           "redeemed": false] as [String : Any]
             let promotionId = "on_referral_" + userId
-            FirebaseService.usersReference.child(userId).child("coupons").child(promotionId).setValue(coupon)
+            usersReference.child(userId).child("coupons").child(promotionId).setValue(coupon)
+            // notifies user
+            self.getUser(with: userId).then(execute: { user -> Void in
+                postPushNotification(to: user, body: "You just earned a coupon!", sound: true)
+            }).catch(execute: { _ in })
         }
     }
     
     static func grantCoupon(for promotionId: String, to userId: String) {
         // fetches coupon
-        FirebaseService.promotionsReference.child(promotionId).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
+        promotionsReference.child(promotionId).observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
             // checks if promotion exists
             guard let couponId = snapshot.value as? String else { return }
             let coupon = ["coupon_id": couponId,
                           "redeemed": false] as [String : Any]
-            FirebaseService.usersReference.child(userId).child("coupons").child(promotionId).setValue(coupon)
+            usersReference.child(userId).child("coupons").child(promotionId).setValue(coupon)
         }
     }
     

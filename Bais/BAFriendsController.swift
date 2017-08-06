@@ -312,7 +312,7 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			
 		}
 		userFriendsRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
-			for (idx, request) in self.requests.enumerated(){
+			for (idx, request) in self.requests.enumerated() {
 				if (request.id == snapshot.key){
 					self.requests.remove(at: idx)
 					if(self.displayMode == .requests){
@@ -368,12 +368,11 @@ final class BAFriendsController: ASViewController<ASDisplayNode>, ASTableDataSou
 			if (sessionIsActive){
 				// should update the cell
 				guard let unreadCount = sessionValues["unread_count"] as? Int else { return }
-				for (idx, session) in self.sessions.enumerated(){
+				for session in self.sessions {
 					if (session.id == snapshot.key){
 						if(self.displayMode == .sessions){
 							session.unreadCount = unreadCount
-							let idxPath = IndexPath(row: idx + 1, section: 0)
-							self.tableNode.reloadRows(at: [idxPath], with: .fade)
+                            self.tableNode.reloadData()
 						}
 						return
 					}

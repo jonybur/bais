@@ -17,7 +17,8 @@ class Session{
 	var lastMessage = Message()
 	var participants = [User]()
 	var messages = [Message]()
-	
+	var started: CGFloat = 0
+    
 	convenience init (from snapshot: FIRDataSnapshot){
 		self.init()
 		self.id = snapshot.key
@@ -28,6 +29,11 @@ class Session{
 			guard let dictionary = snapshot.value as? NSDictionary else { return fulfill() }
 			guard let participants = dictionary["participants"] as? [String:Bool] else { return fulfill() }
 			
+            if (dictionary["started"] != nil){
+                started = dictionary["started"] as! CGFloat
+                print("setted started")
+            }
+            
 			for (id, status) in participants{
 				if (status){
 					FirebaseService.getUser(with: id).then(execute: { user -> Void in
