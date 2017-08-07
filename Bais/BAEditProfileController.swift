@@ -23,7 +23,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
     var showCountryPicker: Bool = false
     var keyboardHeight: CGFloat = 0
 	
-	enum EditProfileMode: String{
+	enum EditProfileMode: String {
 		case settings = "settings", create = "create"
 	}
 	

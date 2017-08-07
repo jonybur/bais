@@ -37,7 +37,7 @@ class BAEditBasicUserInfoCellNode: ASCellNode {
 		nameAndAgeNode.attributedText = NSAttributedString(string: nameAndAgeString, attributes: nameAndAgeAttributes)
 
 		let distanceAttributes = [
-			NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 16),
+			NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 18),
 			NSForegroundColorAttributeName: ColorPalette.grey]
 		
 		var nationalityText = ""

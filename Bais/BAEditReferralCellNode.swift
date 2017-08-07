@@ -20,7 +20,7 @@ class BAEditReferralCellNode: ASCellNode, ASEditableTextNodeDelegate {
     let descriptionNode = ASEditableTextNode()
     let buttonNode = ASButtonNode()
     let titleAttributes = [
-        NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 14),
+        NSFontAttributeName: UIFont.init(name: "Nunito-SemiBold", size: 16),
         NSForegroundColorAttributeName: ColorPalette.grey]
     
     override init() {
@@ -30,7 +30,7 @@ class BAEditReferralCellNode: ASCellNode, ASEditableTextNodeDelegate {
         paragraphAttributes.lineSpacing = 5
         
         descriptionNode.typingAttributes = [
-            NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 16),
+            NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 18),
             NSForegroundColorAttributeName: ColorPalette.grey,
             NSParagraphStyleAttributeName: paragraphAttributes]
         
@@ -38,7 +38,7 @@ class BAEditReferralCellNode: ASCellNode, ASEditableTextNodeDelegate {
         
         descriptionNode.attributedPlaceholderText = NSAttributedString(string: "Optional",
                                                                        attributes: [
-                                                                        NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 16),
+                                                                        NSFontAttributeName: UIFont.init(name: "Nunito-Regular", size: 18),
                                                                         NSForegroundColorAttributeName: ColorPalette.lightGrey,
                                                                         NSParagraphStyleAttributeName: paragraphAttributes])
         descriptionNode.attributedText = NSAttributedString(string: "", attributes: descriptionNode.typingAttributes)
