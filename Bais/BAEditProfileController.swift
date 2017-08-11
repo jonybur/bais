@@ -282,7 +282,7 @@ final class BAEditProfileController: ASViewController<ASDisplayNode>, ASTableDat
 //MARK: - BAEditReferralCellNodeDelegate methods
 
     func editReferralCellNodeDidUpdateText(text: String) {
-        user.promoId = text
-        FirebaseService.updateUserPromoId(with: text)
+        user.promoId = text.uppercased()
+        FirebaseService.updateUserPromoId(with: text.uppercased())
     }
 }

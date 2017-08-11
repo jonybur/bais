@@ -67,7 +67,7 @@ class FirebaseService{
             guard let couponId = snapshot.value as? String else { return }
             let coupon = ["coupon_id": couponId,
                           "redeemed": false] as [String : Any]
-            let promotionId = "on_referral_" + userId
+            let promotionId = "on_referral_" + currentUserId
             usersReference.child(userId).child("coupons").child(promotionId).setValue(coupon)
             // notifies user
             self.getUser(with: userId).then(execute: { user -> Void in
