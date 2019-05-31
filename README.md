@@ -6,6 +6,4 @@ BAIS (acronym for Buenos Aires International Students) is the biggest exchange s
 
 The app provided a social platform from which students could meet and chat with other students residing in the same area.
 
-<img src="./assets/screen1.jpg" width="300" height="533"/>
-<img src="./assets/screen2.jpg" width="300" height="533"/>
-<img src="./assets/screen3.jpg" width="300" height="533"/>
+![Screenshots](./assets/screens.jpg)
